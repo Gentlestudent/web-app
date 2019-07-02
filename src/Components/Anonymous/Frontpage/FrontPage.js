@@ -19,32 +19,35 @@ const newStyle = {
 
 class FrontPage extends Component {
 	constructor() {
-        super();
-        this.state = {
-            iFrameHeight: '0px'
-        }
+		super();
+		this.state = {
+			iFrameHeight: '0px'
+		}
 	}
-	
-	componentDidMount() {
+
+	componentDidMount = () => {
 		// this.props.check();
 		window.scrollTo(0, 0);
 		// window.addEventListener('load', () => {
-			// console.log("loaded");
-			setTimeout( () => {
-				var img = document.getElementById("startpage").getElementsByTagName('img')[0]; 
-				// console.log(img);
-				img.style['filter'] = 'blur(0px)';
-				img.style['-webkit-filter'] = 'blur(0px)';
-			}, 1000 );
+		// console.log("loaded");
+		setTimeout(() => {
+			var img = document.getElementById("startpage").getElementsByTagName('img')[0];
+			// console.log(img);
+			img.style['filter'] = 'blur(0px)';
+			img.style['-webkit-filter'] = 'blur(0px)';
+		}, 1000);
 		// });
 
 		this.updateDimensions();
-    	window.addEventListener("resize", this.updateDimensions.bind(this));
+		window.addEventListener("resize", this.updateDimensions);
 	}
-	updateDimensions(){
+	componentWillUnmount = () => {
+		window.removeEventListener("resize", this.updateDimensions);
+	}
+	updateDimensions() {
 		const el = ReactDOM.findDOMNode(this).querySelector('.dynamic-iframe');
 		this.setState({
-			"iFrameHeight":  405/720*el.offsetWidth
+			"iFrameHeight": 405 / 720 * el.offsetWidth
 		});
 		// console.log(el.offsetWidth);
 	}
@@ -71,18 +74,18 @@ class FrontPage extends Component {
 								<p>Laat van je missie horen en betrek als <b>organisatie of buurt</b> studenten bij jullie projecten en geef ze de kans om ervaringen op te doen in een authentieke setting.</p>
 							</div>
 							<div className="introductory-video">
-								<iframe 
+								<iframe
 									className="dynamic-iframe"
 									src="https://arteveldehogeschool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=dc47c1a8-68b9-413b-812a-aa1400a18754&v=1"
-									style={{objectFit: 'cover', maxWidth:720, width:'100%', maxHeight:405, height:this.state.iFrameHeight, overflow:'visible'}}
-									width="100%" 
+									style={{ objectFit: 'cover', maxWidth: 720, width: '100%', maxHeight: 405, height: this.state.iFrameHeight, overflow: 'visible' }}
+									width="100%"
 									height={this.state.iFrameHeight}
 									frameborder="0"
 									allowfullscreen allow="autoplay">
 								</iframe>
 							</div>
 						</div>
-						<a className="scroll-down-arrow"href="#anchor"><span></span></a>
+						<a className="scroll-down-arrow" href="#anchor"><span></span></a>
 					</div>
 				</div>
 				<div id="anchor"></div>
@@ -101,5 +104,5 @@ class FrontPage extends Component {
 		);
 	}
 }
-  
+
 export default FrontPage;
