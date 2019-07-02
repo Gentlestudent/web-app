@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 // import { columns, row } from 'glamor/ous';
 
-import Eyecatcher from '../SignedIn/Issuer/Eyecatcher';
-import Info from '../SignedIn/Issuer/Info';
-import StepsIssuer from '../SignedIn/Issuer/Steps';
+import Eyecatcher from './Eyecatcher';
+import Info from './Info';
+import StepsIssuer from './Steps';
 
-import { Breadcrumbs } from '../../Shared/Utils';
+import { Breadcrumbs } from '../../../Shared/Utils';
 
 class BecomeIssuer extends Component {
   componentDidMount(){
