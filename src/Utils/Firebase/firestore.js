@@ -132,7 +132,7 @@ export const onceGetPrivacyPage = () =>
 export const softDeleteOpportunity = (id) =>
   firestore.collection('Opportunities').doc(id).update({authority: 2})
 
-export const onceGetVoorwaarden = () =>
+export const onceGetConditions = () =>
   firestore.collection('Voorwaarden').doc("Voorwaarden").get()
 
 export const onceGetLatestOpportunities = () =>
@@ -141,7 +141,7 @@ export const onceGetLatestOpportunities = () =>
 export const onceGetLatestExperiences = () =>
   firestore.collection('Experiences').limit(3).get()
 
-export const onceGetOverOns = () =>
+export const onceGetAboutUs = () =>
   firestore.collection('OverOns').doc("OverOns").get()
 
 export const onceGetNewsItems = () =>

@@ -35,19 +35,19 @@ const Navigation = ({ authUser }) =>
 const NavigationNonAuth = () =>
 	<ul id="gs-nav" className="menu">
 		<li className="nav_item">
-			<NavLink to={routes.Leerkansen} activeClassName="active">Leerkansen</NavLink>
+			<NavLink to={routes.Opportunities} activeClassName="active">Opportunities</NavLink>
 		</li>
 		<li className="nav_item">
-			<NavLink to={routes.WordIssuer} activeClassName="active">Word Issuer</NavLink>
+			<NavLink to={routes.BecomeIssuer} activeClassName="active">Word Issuer</NavLink>
 		</li>
 		{/* <li className="nav_item">
-			<NavLink to={routes.Ervaringen}>Ervaringen</NavLink>
+			<NavLink to={routes.Experiences}>Ervaringen</NavLink>
 		</li> */}
 		<li className="nav_item">
-			<NavLink to={routes.Nieuws}>Nieuws</NavLink>
+			<NavLink to={routes.News}>Nieuws</NavLink>
 		</li>
 		<li className="nav_item">
-			<NavLink to={routes.OverOns}>Over ons</NavLink>
+			<NavLink to={routes.AboutUs}>Over ons</NavLink>
 		</li>
 		<React.Fragment>
 				<li className="nav_item">
@@ -144,17 +144,17 @@ class NavigationAuth extends Component{
 		return (
 			<ul id="gs-nav" className="menu">
 				<li className="nav_item">
-					<NavLink to={routes.Leerkansen} activeClassName="active">Leerkansen</NavLink>
+					<NavLink to={routes.Opportunities} activeClassName="active">Leerkansen</NavLink>
 				</li>
-				{ ! isIssuer && <WordIssuer/> }
+				{ ! isIssuer && <BecomeIssuer/> }
 				{/* <li className="nav_item">
-					<NavLink to={routes.Ervaringen}>Ervaringen</NavLink>
+					<NavLink to={routes.Experiences}>Ervaringen</NavLink>
 				</li> */}
 				<li className="nav_item">
-					<NavLink to={routes.Nieuws}>Nieuws</NavLink>
+					<NavLink to={routes.News}>Nieuws</NavLink>
 				</li>
 				<li className="nav_item">
-					<NavLink to={routes.OverOns}>Over ons</NavLink>
+					<NavLink to={routes.AboutUs}>Over ons</NavLink>
 				</li>
 				<li className="nav_item dropdown">
 					<button className="nav_item primary" onClick={this.showMenu}>
@@ -171,7 +171,7 @@ class NavigationAuth extends Component{
 								}}
 								>
 								<div className="dropdown-menu-list">
-									<NavLink to={routes.Profiel}>Profiel</NavLink>
+									<NavLink to={routes.Profile}>Profiel</NavLink>
 									<NavLink to={routes.Backpack}>Backpack</NavLink>
 									{ !! isIssuer && 
 										<div class="nav-dropdown-ext">
@@ -193,29 +193,29 @@ class NavigationAuth extends Component{
 				</li>
 				<div className="dropdown_mobile">
 					<li className="nav_item">
-						<NavLink to={routes.Profiel}>Profiel</NavLink>
+						<NavLink to={routes.Profile}>Profiel</NavLink>
 					</li>
 					<li className="nav_item">
 						<NavLink to={routes.Backpack}>Backpack</NavLink>
 					</li>
 					{ !! isIssuer && 
 						<li className="nav_item">
-							<NavLink to={routes.AangemaakteLeerkansen}>Aangemaakte leerkansen</NavLink>
+							<NavLink to={routes.CreatedOpportunities}>Aangemaakte leerkansen</NavLink>
 						</li>
 					}
 					{ !! isIssuer && 
 						<li className="nav_item">
-							<NavLink to={routes.MaakLeerkans}>Maak leerkans</NavLink>
+							<NavLink to={routes.CreateOpportunity}>Maak leerkans</NavLink>
 						</li>
 					}
 					{ !! isAdmin && 
 						<li className="nav_item">
-							<NavLink to={routes.ValideerIssuer}>Valideer issuer</NavLink>
+							<NavLink to={routes.ValidateIssuer}>Valideer issuer</NavLink>
 						</li>
 					}
 					{ !! isAdmin && 
 						<li className="nav_item">
-							<NavLink to={routes.MaakLeerkans}>Maak leerkans</NavLink>
+							<NavLink to={routes.CreateOpportunity}>Maak leerkans</NavLink>
 						</li>
 					}
 				</div>
@@ -231,21 +231,21 @@ class NavigationAuth extends Component{
 	}
 }
 
-const WordIssuer = () =>
+const BecomeIssuer = () =>
 	<li className="nav_item">
-		<NavLink to={routes.WordIssuer} activeClassName="active">Word Issuer</NavLink>
+		<NavLink to={routes.BecomeIssuer} activeClassName="active">Word Issuer</NavLink>
 	</li>
 
 const NavigationIssuer= () =>
 	<React.Fragment>
-		<NavLink to={routes.AangemaakteLeerkansen}>Aangemaakte leerkansen</NavLink>
-		<NavLink to={routes.MaakLeerkans}>Maak leerkans</NavLink>
+		<NavLink to={routes.CreatedOpportunities}>Aangemaakte leerkansen</NavLink>
+		<NavLink to={routes.CreateOpportunity}>Maak leerkans</NavLink>
 	</React.Fragment>
 
 const NavigationAdmin = () =>
 	<React.Fragment>
-		<NavLink to={routes.ValideerIssuer}>Valideer issuer</NavLink>
-		<NavLink to={routes.ValideerLeerkans}>Valideer leerkans</NavLink>
+		<NavLink to={routes.ValidateIssuer}>Valideer issuer</NavLink>
+		<NavLink to={routes.ValidateOpportunity}>Valideer leerkans</NavLink>
 	</React.Fragment>
 
 export default Navigation;

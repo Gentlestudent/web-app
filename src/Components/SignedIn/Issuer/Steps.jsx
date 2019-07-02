@@ -111,7 +111,7 @@ class Steps extends Component {
 }
 
 const RegisterAuth = () =>
-	<a href={routes.RegistreerIssuer} className="primary">Word Issuer</a>
+	<a href={routes.RegisterIssuer} className="primary">Word Issuer</a>
 
 const RegisterNonAuth = () =>
 	<a href={routes.Register} className="primary">Word Issuer</a>

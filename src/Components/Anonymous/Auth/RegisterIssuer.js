@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import FormRegisterUser from './RegistreerIssuer';
+import FormRegisterUser from './RegisterIssuer';
 
-class RegistreerIssuer extends Component {
+class RegisterIssuer extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,4 +37,4 @@ class RegistreerIssuer extends Component {
 	}
 }
 
-export default RegistreerIssuer;
+export default RegisterIssuer;

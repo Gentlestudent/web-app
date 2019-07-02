@@ -8,7 +8,7 @@ import StepsIssuer from '../SignedIn/Issuer/Steps';
 
 import { Breadcrumbs } from '../../Shared/Utils';
 
-class WordIssuer extends Component {
+class BecomeIssuer extends Component {
   componentDidMount(){
     window.scrollTo(0, 0);
   }
@@ -24,4 +24,4 @@ class WordIssuer extends Component {
   }
 }
 
-export default WordIssuer;
+export default BecomeIssuer;

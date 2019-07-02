@@ -9,7 +9,7 @@ import SearchFilter from './SearchFilters';
 import Detail from './Detail';
 import List from './List';
 
-class Leerkansen extends Component {
+class Opportunities extends Component {
 	constructor(props) {
 		super(props);
 	
@@ -85,12 +85,12 @@ class Leerkansen extends Component {
 
 		return (
 			<Switch>
-				<Route path={'/leerkansen/:id'} render={({match}) => <Detail opportunities={opportunities}  match={match}/>} />
-				<Route path={'/leerkansen'} render={() => 
-					<div className="leerkansen-content">
+				<Route path={'/opportunities/:id'} render={({match}) => <Detail opportunities={opportunities}  match={match}/>} />
+				<Route path={'/opportunities'} render={() => 
+					<div className="opportunities-content">
 						<div className="content">
 							<SearchFilter filterFunction={this.filterOpportunities} />
-							<div id="leerkansen">
+							<div id="opportunities">
 								<div className="content-left">
 									<List opportunities={opportunities} />
 								</div>
@@ -108,4 +108,4 @@ class Leerkansen extends Component {
 	}
 }
 
-export default Leerkansen;
+export default Opportunities;

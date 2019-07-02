@@ -6,7 +6,7 @@ import { firestore } from '../../../Utils/Firebase';
 import Detail from './Detail';
 import List from './List';
 
-class Ervaringen extends Component {
+class Experiences extends Component {
     constructor(props) {
 		super(props);
 	
@@ -33,8 +33,8 @@ class Ervaringen extends Component {
 
 		return (
             <Switch>
-				<Route path={'/ervaringen/:id'} render={({match}) => <Detail experiences={experiences}  match={match}/>} />
-				<Route path={'/ervaringen'} render={() => 
+				<Route path={'/experiences/:id'} render={({match}) => <Detail experiences={experiences}  match={match}/>} />
+				<Route path={'/experiences'} render={() => 
 					<div className="news-items-content">
 						<div className="container">
 							<div className="content content-with-padding">
@@ -51,4 +51,4 @@ class Ervaringen extends Component {
     }
 }
 
-export default Ervaringen;
+export default Experiences;

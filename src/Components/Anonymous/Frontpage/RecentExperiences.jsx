@@ -3,11 +3,11 @@ import { firestore } from '../../../Utils/Firebase';
 
 import * as routes from '../../../routes/routes.js';
 
-import ER12345 from '../../../assets/ervaringen/ER12345.png';
-import ER12346 from '../../../assets/ervaringen/ER12346.png';
-import ER12347 from '../../../assets/ervaringen/ER12347.png';
+import ER12345 from '../../../assets/experiences/ER12345.png';
+import ER12346 from '../../../assets/experiences/ER12346.png';
+import ER12347 from '../../../assets/experiences/ER12347.png';
 
-class RecenteErvaringen extends Component {
+class RecentExperiences extends Component {
 	constructor(props){
 		super(props);
 
@@ -38,7 +38,7 @@ class RecenteErvaringen extends Component {
 						{!!experiences && 
 							<div className="card-container">
 								{Object.keys(experiences).map(key =>
-									<a href={`${ routes.Ervaringen }/${ key }`} className="card-item ervaring ervaring-gradient" style={{backgroundImage: `url(${experiences[key].imageUrl})`, backgroundPosition: 'center center'}}>
+									<a href={`${ routes.Experiences }/${ key }`} className="card-item ervaring ervaring-gradient" style={{backgroundImage: `url(${experiences[key].imageUrl})`, backgroundPosition: 'center center'}}>
 										<div className="data">
 											<h2>{experiences[key].title}</h2>
 											<small>{experiences[key].author} - {experiences[key].published}</small>
@@ -67,7 +67,7 @@ class RecenteErvaringen extends Component {
 								</div>
 							</a>
 						</div> */}
-						<a className="meer" href="/ervaringen">Meer ervaringen</a>
+						<a className="meer" href="/experiences">Meer ervaringen</a>
 					</div>
 				</div>
 			</div>
@@ -75,4 +75,4 @@ class RecenteErvaringen extends Component {
 	}
 }
 
-export default RecenteErvaringen;
+export default RecentExperiences;

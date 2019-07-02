@@ -8,18 +8,18 @@ class List extends Component {
 
 		return (
 			<React.Fragment>
-				{ !! opportunities && <LeerkansenList opportunities={ opportunities } /> }
+				{ !! opportunities && <OpportunitiesList opportunities={ opportunities } /> }
 				{ ! opportunities && <EmptyList/> }
 			</React.Fragment>
 		)
 	}
 }
 
-const LeerkansenList = ({ opportunities }) =>
+const OpportunitiesList = ({ opportunities }) =>
 	<div>
-		<div className="card-container leerkansen">
+		<div className="card-container opportunities">
 			{Object.keys(opportunities).map(key =>
-				<a href={`/leerkansen/${key}`} className={`card-item leerkans ${ opportunities[key].category }`} key={opportunities[key].addressId}>
+				<a href={`/opportunities/${key}`} className={`card-item opportunity ${ opportunities[key].category }`} key={opportunities[key].addressId}>
 					<div className="crop-opp-img">
 						<img src={opportunities[key].oppImageUrl ? `${opportunities[key].oppImageUrl}` : null} className="photo" alt="" />
 					</div>

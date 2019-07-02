@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
-import FormCreateLeerkans from '../Leerkansen/FormCreateLeerkans';
+import FormCreateOpportunity from '../Opportunities/FormCreateOpportunity';
 
 import { firestore } from '../../../Utils/Firebase';
 
-// import { Category, Difficulty} from '../../Components/Leerkansen/Constants';
+// import { Category, Difficulty} from '../../Components/Opportunities/Constants';
 
-const CreateLeerkansPage = ({ history, match }) =>
+const CreateOpportunityPage = ({ history, match }) =>
   <div>
-    <CreateLeerkans history={history} match={match}/>
+    <CreateOpportunity history={history} match={match}/>
   </div>
 
-class CreateLeerkans extends Component {
+class CreateOpportunity extends Component {
   constructor(props) {
     super(props);
     // this.submit = this.submit.bind(this);
@@ -101,18 +101,18 @@ class CreateLeerkans extends Component {
   //   * Split the name in 2 and automatically assign level and type to the database without inputs
   //   */
   //    const index = this.props.badge.list.findIndex(b => {
-  //     return b.slug === this.props.form.createLeerkansForm.values.badge
+  //     return b.slug === this.props.form.createOpportunityForm.values.badge
   //   });
   //   const nameBadge = this.props.badge.list[index].name.split(' #');
-  //   this.props.createLeerkans(
+  //   this.props.createOpportunity(
   //     {
-  //       ...this.props.form.createLeerkansForm.values,
+  //       ...this.props.form.createOpportunityForm.values,
   //       type: nameBadge[0].replace(' ', '-').toLowerCase(),
   //       level: nameBadge[1]
   //     }
   //   );
-  //   console.log(this.props.form.createLeerkansForm.values.image);
-  //   console.log(this.props.form.createLeerkansForm.values);
+  //   console.log(this.props.form.createOpportunityForm.values.image);
+  //   console.log(this.props.form.createOpportunityForm.values);
   // }
   showResults = (values) =>
     new Promise(resolve => {
@@ -127,21 +127,21 @@ class CreateLeerkans extends Component {
       <div>
         {/* <div className="container"> */}
           <div className="content content-create-opp">
-            <Link to="/aangemaakte-leerkansen" className="back">&lt; Terug</Link>
-            <h1>Maak Leerkans</h1>
+            <Link to="/created-opportunities" className="back">&lt; Terug</Link>
+            <h1>Maak Opportunity</h1>
             <div className="content-flex create_opportunity">
               <div className="content-left">
-                <div className="form" id="create_leerkans">
-                  {/* <FormCreateLeerkans onSubmit={this.submit} badges={badges}/> */}
-                  {/* <FormCreateLeerkans badges={badges} history={history} opportunity={opportunity}/> */}
-                  {/* {!initValues && <FormCreateLeerkans badges={badges} history={history}/>} */}
-                  {/* {!!initValues && <FormCreateLeerkans badges={badges} history={history} initialValues={initValues}/>} */}
-                  <FormCreateLeerkans badges={badges} history={history} initialValues={initValues} initValues={initValues}/>
+                <div className="form" id="create_opportunity">
+                  {/* <FormCreateOpportunity onSubmit={this.submit} badges={badges}/> */}
+                  {/* <FormCreateOpportunity badges={badges} history={history} opportunity={opportunity}/> */}
+                  {/* {!initValues && <FormCreateOpportunity badges={badges} history={history}/>} */}
+                  {/* {!!initValues && <FormCreateOpportunity badges={badges} history={history} initialValues={initValues}/>} */}
+                  <FormCreateOpportunity badges={badges} history={history} initialValues={initValues} initValues={initValues}/>
                 </div>
               </div>
-              <div className="content-right voorbeeld_leerkans">
+              <div className="content-right example_opportunity">
                 <h3>Voorbeeld leerkans:</h3>
-                <div className="voorbeeld_leerkans_wrapper">
+                <div className="example_opportunity_wrapper">
                   <img src="https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Formopportunity%2FvoorbeeldLeerkans.png?alt=media"/>
                 </div>
               </div>
@@ -153,4 +153,4 @@ class CreateLeerkans extends Component {
   }
 }
 
-export default withRouter(CreateLeerkansPage);
+export default withRouter(CreateOpportunityPage);

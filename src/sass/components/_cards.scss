@@ -19,7 +19,7 @@
 @media screen and (min-width: 650px) {
 	.card-container {
 		grid-template-columns: auto auto;
-		&.leerkansen {
+		&.opportunities {
 			grid-template-columns: auto;
 		}
 	}
@@ -27,7 +27,7 @@
 @media screen and (min-width: 960px) {
 	.card-container {
 		grid-template-columns: auto auto auto;
-		&.leerkansen {
+		&.opportunities {
 			grid-template-columns: auto auto;
 		}
 	}

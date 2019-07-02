@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 
 import Spinner from '../../../Shared/Spinner';
 
-import FormBewerkLeerkans from './FormBewerkLeerkans';
+import FormEditOpportunity from './FormEditOpportunity';
 
 import { auth, firestore } from '../../../Utils/Firebase';
 
-class BewerkLeerkans extends Component {
+class EditOpportunity extends Component {
   constructor(props){
     super(props);
 
@@ -85,7 +85,7 @@ class BewerkLeerkans extends Component {
 
     return (
       <React.Fragment>
-        { !! opportunity && <LeerkansDetail history={this.props.history} opportunity={ opportunity } id={this.props.match.params.id} initValues={ initValues } /> }
+        { !! opportunity && <OpportunityDetail history={this.props.history} opportunity={ opportunity } id={this.props.match.params.id} initValues={ initValues } /> }
 				{ ! opportunity && <EmptyList/> }
 			</React.Fragment>
       
@@ -93,7 +93,7 @@ class BewerkLeerkans extends Component {
   }
 }
 
-class LeerkansDetail extends Component {
+class OpportunityDetail extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -168,9 +168,9 @@ class LeerkansDetail extends Component {
           </div>
         </div>
         <div id="page" className="opportunity-container">
-          {/* <a href="/leerkansen" className="back">&lt; Terug</a> */}
+          {/* <a href="/opportunities" className="back">&lt; Terug</a> */}
           <img className="badge" src={opportunity.pinImageUrl}/>
-          <FormBewerkLeerkans history={this.props.history} opportunity={opportunity} id={id} address={address} issuer={issuer} initialValues={ initValues} initValues={ initValues} />
+          <FormEditOpportunity history={this.props.history} opportunity={opportunity} id={id} address={address} issuer={issuer} initialValues={ initValues} initValues={ initValues} />
           {/* {!!userHasRights && <List opportunity={ opportunity } id={ id }/>} */}
         </div>
         <br/>
@@ -185,4 +185,4 @@ const EmptyList = () =>
 		<Spinner />
 	</div>
 
-export default withRouter(BewerkLeerkans);
+export default withRouter(EditOpportunity);

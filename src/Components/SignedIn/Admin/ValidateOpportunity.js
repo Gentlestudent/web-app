@@ -8,7 +8,7 @@ import { Field, reduxForm } from 'redux-form';
 
 import { renderInput, renderAutomaticInput, renderTextarea, renderSelect, RenderDropzoneInput, validate } from '../../../Shared/Utils';
 
-class ValideerLeerkans extends Component {
+class ValidateOpportunity extends Component {
   constructor() {
     super();
     // this.submit = this.submit.bind(this);
@@ -245,7 +245,7 @@ class Opportunity extends Component{
             ;
 
         return(
-            <div className={`card-item leerkans ${ opportunity.category }`} key={opportunity.addressId}>
+            <div className={`card-item opportunity ${ opportunity.category }`} key={opportunity.addressId}>
                 {/* <img src={opportunity.oppImageUrl ? `${opportunity.pinImageUrl}` : null} className="photo" alt={opportunity.title} /> */}
                 <div style={{position: "relative"}}>
                     {/* <img src={opportunity.oppImageUrl ? `${opportunity.oppImageUrl}` : null} className="badge" /> */}
@@ -378,4 +378,4 @@ Opportunity = reduxForm({
     fields: ['beaconId']
   })(Opportunity);
 
-export default ValideerLeerkans;
+export default ValidateOpportunity;

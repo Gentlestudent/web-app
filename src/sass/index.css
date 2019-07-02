@@ -74,13 +74,13 @@ a {
 @media screen and (min-width: 650px) {
   .card-container {
     grid-template-columns: auto auto; }
-    .card-container.leerkansen {
+    .card-container.opportunities {
       grid-template-columns: auto; } }
 
 @media screen and (min-width: 960px) {
   .card-container {
     grid-template-columns: auto auto auto; }
-    .card-container.leerkansen {
+    .card-container.opportunities {
       grid-template-columns: auto auto; } }
 
 #recente-ervaringen h1 {
@@ -109,11 +109,11 @@ a {
     #recente-ervaringen .ervaring:hover .data {
       transform: translateY(-120px); }
 
-#create_leerkans form {
+#create_opportunity form {
   width: 100%; }
-  #create_leerkans form .form-group {
+  #create_opportunity form .form-group {
     width: 100%; }
-    #create_leerkans form .form-group label {
+    #create_opportunity form .form-group label {
       display: block;
       width: 100%;
       padding: 8px 0 0;
@@ -121,8 +121,8 @@ a {
       text-transform: uppercase;
       font-weight: bold;
       color: #666; }
-    #create_leerkans form .form-group input,
-    #create_leerkans form .form-group textarea {
+    #create_opportunity form .form-group input,
+    #create_opportunity form .form-group textarea {
       display: block;
       padding: 8px 16px;
       margin-bottom: 8px;
@@ -130,54 +130,54 @@ a {
       border: 1px solid #ddd;
       border-radius: 8px;
       outline: none; }
-      #create_leerkans form .form-group input:focus,
-      #create_leerkans form .form-group textarea:focus {
+      #create_opportunity form .form-group input:focus,
+      #create_opportunity form .form-group textarea:focus {
         border: 1px solid turquoise; }
 
-#leerkansen {
+#opportunities {
   display: flex;
   flex-direction: row; }
-  #leerkansen h1.uitgelicht {
+  #opportunities h1.uitgelicht {
     text-align: center; }
-  #leerkansen .content-left {
+  #opportunities .content-left {
     width: 60%; }
-  #leerkansen .content-right {
+  #opportunities .content-right {
     height: calc(100vh - 209px);
     width: 40%;
     margin-right: -15px;
     width: calc(40% + 15px); }
-  #leerkansen .card-item.leerkans {
+  #opportunities .card-item.opportunity {
     border-radius: 15px;
     border: 2px solid #F2F0ED;
     transition: all 200ms ease-in-out; }
-    #leerkansen .card-item.leerkans:hover {
+    #opportunities .card-item.opportunity:hover {
       box-shadow: 0 0px 10px rgba(0, 0, 0, 0.26); }
-    #leerkansen .card-item.leerkans.digitale-geletterdheid:hover {
+    #opportunities .card-item.opportunity.digitale-geletterdheid:hover {
       border-color: #00AACC; }
-    #leerkansen .card-item.leerkans.duurzaamheid:hover {
+    #opportunities .card-item.opportunity.duurzaamheid:hover {
       border-color: #BBCC00; }
-    #leerkansen .card-item.leerkans.ons:hover {
+    #opportunities .card-item.opportunity.ons:hover {
       border-color: #A8A8A8; }
-    #leerkansen .card-item.leerkans.wbs:hover {
+    #opportunities .card-item.opportunity.wbs:hover {
       border-color: #EE9900; }
-    #leerkansen .card-item.leerkans.ond:hover {
+    #opportunities .card-item.opportunity.ond:hover {
       border-color: #CC0077; }
-    #leerkansen .card-item.leerkans > img.photo {
+    #opportunities .card-item.opportunity > img.photo {
       margin: -15px -15px 0 -15px;
       width: calc(100% + 30px); }
-    #leerkansen .card-item.leerkans img.badge {
+    #opportunities .card-item.opportunity img.badge {
       position: absolute;
       width: 70px;
       height: auto;
       top: -60px;
       right: 0; }
-    #leerkansen .card-item.leerkans h2 {
+    #opportunities .card-item.opportunity h2 {
       color: #00AACC; }
-    #leerkansen .card-item.leerkans .meta-data small {
+    #opportunities .card-item.opportunity .meta-data small {
       display: block;
       color: #aeaeae;
       font-size: 12px; }
-    #leerkansen .card-item.leerkans p {
+    #opportunities .card-item.opportunity p {
       color: #707070;
       font-size: 14px; }
 
@@ -200,21 +200,21 @@ form .search-wrapper {
       top: 10px;
       right: 10px;
       height: 48px; }
-  form .search-wrapper.leerkansen i {
+  form .search-wrapper.opportunities i {
     font-size: 14px;
     top: 22px;
     left: 22px; }
-  form .search-wrapper.leerkansen input {
+  form .search-wrapper.opportunities input {
     width: calc(100% - 71px);
     border-radius: 8px 8px 0 0;
     font-size: 16px;
     border: 1px solid #E8E8E8;
     padding: 10px 20px 10px 50px; }
-  form .search-wrapper.leerkansen > .filters {
+  form .search-wrapper.opportunities > .filters {
     border: 1px solid #E8E8E8;
     margin-top: -1px;
     border-radius: 0 0 6px 6px; }
-    form .search-wrapper.leerkansen > .filters > button {
+    form .search-wrapper.opportunities > .filters > button {
       padding: 0;
       height: 40px;
       width: 25%;
@@ -223,14 +223,14 @@ form .search-wrapper {
       border-right: 1px solid #E8E8E8;
       outline: none;
       transition: all 200ms ease-in-out; }
-      form .search-wrapper.leerkansen > .filters > button:first-child {
+      form .search-wrapper.opportunities > .filters > button:first-child {
         margin-left: 1px;
         width: calc(25% - 1px);
         border-radius: 0 0 0 6px; }
-      form .search-wrapper.leerkansen > .filters > button:last-child {
+      form .search-wrapper.opportunities > .filters > button:last-child {
         border-right: none;
         border-radius: 0 0 6px 0; }
-      form .search-wrapper.leerkansen > .filters > button:hover {
+      form .search-wrapper.opportunities > .filters > button:hover {
         background-color: #E8E8E8;
         cursor: pointer; }
   form .search-wrapper i {

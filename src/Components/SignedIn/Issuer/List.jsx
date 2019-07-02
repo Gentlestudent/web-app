@@ -18,7 +18,7 @@ class List extends Component {
 
 		return (
 			<React.Fragment>
-				{ !! opportunities && Object.keys(opportunities).length!=0 && <LeerkansenList opportunities={ opportunities } getOpportunities={getOpportunities}/> }
+				{ !! opportunities && Object.keys(opportunities).length!=0 && <OpportunitiesList opportunities={ opportunities } getOpportunities={getOpportunities}/> }
 				{ !! opportunities && Object.keys(opportunities).length==0 && <EmptyList/> }
 				{ ! opportunities && <LoadingList/> }
 			</React.Fragment>
@@ -26,7 +26,7 @@ class List extends Component {
 	}
 }
 
-class LeerkansenList extends Component {
+class OpportunitiesList extends Component {
 	constructor(props){
 		super(props);
 
@@ -73,12 +73,12 @@ class LeerkansenList extends Component {
 			<div class="l-container">
 			<ul>
 				{Object.keys(opportunities).map(key =>
-					<a href={`leerkansen/${key}`}>
+					<a href={`opportunities/${key}`}>
 					<li class="list">
 						<div class="list__opportunity_title">
 							<div> <img className="pin" src={opportunities[key].pinImageUrl ? `${opportunities[key].pinImageUrl}` : null}/> </div>
 							<div class="list__label list__label__title">
-								{/* <div class="list__label--header"> Leerkans </div> */}
+								{/* <div class="list__label--header"> Opportunity </div> */}
 								<div class="list__label--value"><h2> {opportunities[key].title}</h2> </div>
 							</div>
 						</div>
@@ -100,18 +100,18 @@ class LeerkansenList extends Component {
 						</div>
 						{/* <div class="filler"/> */}
 						<div class="icon-options">
-							{!!(opportunities[key].authority==0) && <a href={routes.BewerkLeerkans+"/"+key}><div class="edit icon-container"><i class="fas fa-edit fa-lg"></i></div></a>}
+							{!!(opportunities[key].authority==0) && <a href={routes.EditOpportunity+"/"+key}><div class="edit icon-container"><i class="fas fa-edit fa-lg"></i></div></a>}
 							{!(opportunities[key].authority==0) && <div class="edit icon-container"><i class="fas fa-edit fa-lg" style={{visibility:'hidden'}}></i></div>}
 							<a href="#" onClick={this.confirmDelete}><div class="delete icon-container"><i class="fas fa-trash-alt fa-lg" id={key}></i></div></a>
-							<a href={routes.MaakLeerkans+"/"+key}><div class="copy icon-container"><i class="fas fa-plus fa-lg"></i></div></a>
+							<a href={routes.CreateOpportunity+"/"+key}><div class="copy icon-container"><i class="fas fa-plus fa-lg"></i></div></a>
 						</div>
 						{/* {!!(opportunities[key].authority==0) && <a href="#"><div class="edit icon-container"><i class="fas fa-edit fa-lg"></i></div></a>}
 						{!(opportunities[key].authority==0) && <div class="edit icon-container"><i class="fas fa-edit fa-lg" style={{visibility:'hidden'}}></i></div>}
 						<a href="#" onClick={this.confirmDelete}><div class="delete icon-container"><i class="fas fa-trash-alt fa-lg" id={key}></i></div></a>
-						<a href={routes.MaakLeerkans+"/"+key}><div class="copy icon-container"><i class="fas fa-plus fa-lg"></i></div></a> */}
+						<a href={routes.CreateOpportunity+"/"+key}><div class="copy icon-container"><i class="fas fa-plus fa-lg"></i></div></a> */}
 					</li>
 					</a>
-					// <a href={`aangemaakte-leerkansen/${key}`} className={`card-item leerkans ${ opportunities[key].category }`} key={opportunities[key].addressId}>
+					// <a href={`created-opportunities/${key}`} className={`card-item opportunity ${ opportunities[key].category }`} key={opportunities[key].addressId}>
 					//     <img src={opportunities[key].oppImageUrl ? `${opportunities[key].oppImageUrl}` : null} className="photo" alt="" />
 					//     <div style={{position: "relative"}}>
 					//     <img src={`${opportunities[key].pinImageUrl}`} className="badge" alt="" />
@@ -131,17 +131,17 @@ class LeerkansenList extends Component {
 	}
 }
 
-// const LeerkansenList = ({ opportunities }) =>
+// const OpportunitiesList = ({ opportunities }) =>
 // 	<div class="l-container">
 // 	<ul>
 // 		{Object.keys(opportunities).map(key =>
-// 			<a href={`aangemaakte-leerkansen/${key}`}>
+// 			<a href={`created-opportunities/${key}`}>
 // 			<li class="list">
 				
 // 				<div class="list__opportunity_title">
 // 					<div> <img src={opportunities[key].pinImageUrl ? `${opportunities[key].pinImageUrl}` : null}/> </div>
 // 					<div class="list__label">
-// 						{/* <div class="list__label--header"> Leerkans </div> */}
+// 						{/* <div class="list__label--header"> Opportunity </div> */}
 // 						<div class="list__label--value"><h2> {opportunities[key].title}</h2> </div>
 // 					</div>
 // 				</div>
@@ -168,10 +168,10 @@ class LeerkansenList extends Component {
 // 				<div class="filler"/>
 // 				{!!(opportunities[key].authority==0) && <div class="edit tooltip"><a href="#"><i class="fas fa-edit fa-2x"></i></a></div>}
 // 				<div class="delete tooltip"><a href="#"><i class="fas fa-trash-alt fa-2x"></i></a></div>
-// 				<div class="copy tooltip"><a href={routes.MaakLeerkans+"/"+key}><i class="fas fa-plus fa-2x"></i></a></div>
+// 				<div class="copy tooltip"><a href={routes.CreateOpportunity+"/"+key}><i class="fas fa-plus fa-2x"></i></a></div>
 // 			</li>
 // 			</a>
-// 			// <a href={`aangemaakte-leerkansen/${key}`} className={`card-item leerkans ${ opportunities[key].category }`} key={opportunities[key].addressId}>
+// 			// <a href={`created-opportunities/${key}`} className={`card-item opportunity ${ opportunities[key].category }`} key={opportunities[key].addressId}>
 // 			//     <img src={opportunities[key].oppImageUrl ? `${opportunities[key].oppImageUrl}` : null} className="photo" alt="" />
 // 			//     <div style={{position: "relative"}}>
 // 			//     <img src={`${opportunities[key].pinImageUrl}`} className="badge" alt="" />
@@ -191,7 +191,7 @@ class LeerkansenList extends Component {
 const EmptyList = () =>
 	<div class="container">
 		<p>Je hebt nog geen leerkansen aangemaakt.</p>
-		<p><a href={routes.MaakLeerkans}>Klik hier </a>om een nieuwe leerkans aan te maken.</p>
+		<p><a href={routes.CreateOpportunity}>Klik hier </a>om een nieuwe leerkans aan te maken.</p>
 	</div>
 
 const LoadingList = () =>

@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import FrontPage from '../Screens/FrontPage';
-import Leerkansen from '../Screens/Leerkansen';
+import Opportunities from '../Screens/Opportunities';
 
 export default () => {(
     <Router>

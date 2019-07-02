@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import Leerkansen from './Leerkansen';
-import RecenteErvaringen from './RecenteErvaringen';
+import Opportunities from './Opportunities';
+import RecentExperiences from './RecentExperiences';
 import Download from './Download';
 
 import eyecather from '../../../assets/eyecatcher.jpg';
@@ -86,16 +86,16 @@ class FrontPage extends Component {
 					</div>
 				</div>
 				<div id="anchor"></div>
-				<Leerkansen />
+				<Opportunities />
 				<div id="new" style={newStyle}>
 					<div className="container">
 						<div>
 							<h2>Zie wat Gentlestudent heeft te bieden en wat je mag verwachten in de toekomst</h2>
-							<a href="/nieuws">Wat is er nieuw?</a>
+							<a href="/news">Wat is er nieuw?</a>
 						</div>
 					</div>
 				</div>
-				<RecenteErvaringen />
+				<RecentExperiences />
 				<Download />
 			</div>
 		);

@@ -16,7 +16,7 @@ class SearchFilters extends Component {
           <div className="fixed">
             <h1>Leerkansen</h1>
             <form action="">
-              <div className="search-wrapper leerkansen">
+              <div className="search-wrapper opportunities">
                 <i className="fas fa-search"></i>
                 <input type="text" placeholder="zoeken" onChange={this.props.filterFunction}/>
                   {/* <div className="filters">

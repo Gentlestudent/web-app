@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import List from '../Issuer/Deelnemers';
+import List from '../Issuer/Participants';
 
 import Spinner from '../../../Shared/Spinner';
 
@@ -36,7 +36,7 @@ class Detail extends Component {
     return (
       <React.Fragment>
         { !! opportunity &&
-            <LeerkansDetail opportunity={ opportunity } id={ id } />
+            <OpportunityDetail opportunity={ opportunity } id={ id } />
         }
 				{ ! opportunity && <EmptyList/> }
 			</React.Fragment>
@@ -45,7 +45,7 @@ class Detail extends Component {
   }
 }
 
-class LeerkansDetail extends Component {
+class OpportunityDetail extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -129,12 +129,12 @@ class LeerkansDetail extends Component {
           </div>
         </div>
         <div id="page" className="opportunity-container">
-          {/* <a href="/leerkansen" className="back">&lt; Terug</a> */}
+          {/* <a href="/opportunities" className="back">&lt; Terug</a> */}
           
           <img className="badge" src={opportunity.pinImageUrl}/>
           {!!opportunity.authority==0 && <div style={{display: 'flex'}}>
               {!!userHasRights && <a className="opp-detail-option" href={'/issuer/bewerk-leerkans/'+id}>Bewerken</a>}
-              {!!isAdmin && <a className="opp-detail-option" href="/admin/valideer-leerkans">Goedkeuren</a>}
+              {!!isAdmin && <a className="opp-detail-option" href="/admin/validate-leerkans">Goedkeuren</a>}
             </div>}
           <div className="content content-flex">
             <div className="content-left">

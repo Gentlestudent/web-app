@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import { firestore } from '../../Utils/Firebase';
 
+class AboutUs extends Component {
+    constructor(props) {
+        super(props)
 
-class Voorwaarden extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state={
-        text: ""
-    }
+        this.state={
+            text: ""
+        }
     }
     componentDidMount() {
         window.scrollTo(0, 0);
         var self = this;
-        firestore.onceGetVoorwaarden().then(snapshot => {
+        firestore.onceGetAboutUs().then(snapshot => {
             console.log("content:");
             console.log(snapshot.data().content);
             self.setState({text: snapshot.data().content});
@@ -22,15 +21,16 @@ class Voorwaarden extends Component {
         });
     }
     render() {
-        const {text} = this.state;
         return (
-            <React.Fragment>
-                <div class="content content-with-padding">
-                    <div class="privacycontent" dangerouslySetInnerHTML={{ __html: this.state.text }} />
+            <div>
+                <div className="container">
+                    <div className="content content-with-padding">
+                        <div className="aboutcontent" dangerouslySetInnerHTML={{ __html: this.state.text }} />
+                        </div>
                 </div>
-            </React.Fragment>
+            </div>
         )
     }
 }
 
-export default Voorwaarden;
+export default AboutUs;

@@ -9,7 +9,7 @@ import { auth, firestore } from '../../../Utils/Firebase';
 import firebase from 'firebase';
 import 'firebase/storage';
 
-import { Category, Difficulty} from '../Leerkansen/Constants';
+import { Category, Difficulty} from '../Opportunities/Constants';
 
 import * as routes from '../../../routes/routes';
 
@@ -22,7 +22,7 @@ var defaultPosition = {
   lng: 3.7114566
 };
 
-class FormBewerkLeerkans extends Component{
+class FormEditOpportunity extends Component{
     constructor(props){
       super(props);
   
@@ -285,7 +285,7 @@ class FormBewerkLeerkans extends Component{
           console.error("Error updating field contact: ", error);
         });
       }
-      this.props.history.push(routes.Leerkansen+'/'+this.props.id);
+      this.props.history.push(routes.Opportunities+'/'+this.props.id);
     }
     render() {
       const { opportunity, address, issuer, submitting, pristine } = this.props;
@@ -550,14 +550,14 @@ class FormBewerkLeerkans extends Component{
     }
   }
 
-  FormBewerkLeerkans = reduxForm({
-    form: 'FormBewerkLeerkans',
+  FormEditOpportunity = reduxForm({
+    form: 'FormEditOpportunity',
     validate,
     // fields: ['title', 'synopsis'],
     enableReinitialize: true
     // initialValues: {
     //   title: "test"
     // }
-  })(FormBewerkLeerkans);
+  })(FormEditOpportunity);
 
-  export default FormBewerkLeerkans;
+  export default FormEditOpportunity;

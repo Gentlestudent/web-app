@@ -5,7 +5,7 @@ import { firestore } from '../../../Utils/Firebase';
 
 import Spinner from '../../../Shared/Spinner';
 
-class ValideerIssuer extends Component {
+class ValidateIssuer extends Component {
   constructor() {
     super();
     // this.submit = this.submit.bind(this);
@@ -36,7 +36,7 @@ class ValideerIssuer extends Component {
 
     return (
         <React.Fragment>
-            { !! issuers && <LeerkansenList issuers={ issuers } getIssuers={ this.getIssuers } /> }
+            { !! issuers && <OpportunitiesList issuers={ issuers } getIssuers={ this.getIssuers } /> }
             { !! issuers && Object.getOwnPropertyNames(issuers).length === 0 && <EmptyList/> }
             { ! issuers && <Loading/> }
         </React.Fragment>
@@ -44,7 +44,7 @@ class ValideerIssuer extends Component {
   }
 }
 
-class LeerkansenList extends Component{
+class OpportunitiesList extends Component{
     constructor(props) {
         super(props);
 
@@ -103,4 +103,4 @@ const Loading = () =>
 		<Spinner />
 	</div>
 
-export default ValideerIssuer;
+export default ValidateIssuer;

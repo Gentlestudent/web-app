@@ -25,7 +25,7 @@ var defaultPosition = {
   lng: 3.7114566
 };
 
-class FormCreateLeerkans extends React.Component {
+class FormCreateOpportunity extends React.Component {
   constructor(props) {
     super(props);
 
@@ -290,8 +290,8 @@ class FormCreateLeerkans extends React.Component {
   }
 
   redirect(id){
-    this.props.history.push(routes.AangemaakteLeerkansen);
-    // this.props.history.push(routes.Leerkansen+"/"+id);
+    this.props.history.push(routes.CreatedOpportunities);
+    // this.props.history.push(routes.Opportunities+"/"+id);
   }
 
   changeLat(newLat) {
@@ -683,14 +683,14 @@ class BeaconLocationPicker extends Component {
   }
 }
 
-FormCreateLeerkans = reduxForm({
-  form: 'createLeerkansForm',
+FormCreateOpportunity = reduxForm({
+  form: 'createOpportunityForm',
   validate,
   // fields: ['title', 'synopsis'],
   enableReinitialize: true
   // initialValues: {
   //   title: "test"
   // }
-})(FormCreateLeerkans);
+})(FormCreateOpportunity);
 
-export default FormCreateLeerkans;
+export default FormCreateOpportunity;

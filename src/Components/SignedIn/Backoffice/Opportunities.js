@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class BOLeerkansen extends Component {
+class BOOpportunities extends Component {
   constructor(props) {
     super(props)
 
@@ -9,10 +9,10 @@ class BOLeerkansen extends Component {
   }
   componentDidMount() {
     window.scrollTo(0, 0);
-	  // this.props.fetchLeerkansen();
+	  // this.props.fetchOpportunities();
 	}
   delete(id) {
-    // this.props.deleteLeerkans(id);
+    // this.props.deleteOpportunity(id);
   }
   render() {
     return (
@@ -20,9 +20,9 @@ class BOLeerkansen extends Component {
         <div className="container">
           <div className="content">
             <h1>Manage Leerkansen</h1>
-            <button><Link to="/backoffice/create-leerkansen"> + Create leerkans</Link></button><hr />
+            <button><Link to="/backoffice/create-opportunities"> + Create leerkans</Link></button><hr />
             {
-              this.props.leerkansen.items.map((lk, key) => {
+              this.props.opportunities.items.map((lk, key) => {
                 return(
                   <div key={key}>
                     <p>
@@ -40,4 +40,4 @@ class BOLeerkansen extends Component {
   }
 }
 
-export default BOLeerkansen;
+export default BOOpportunities;

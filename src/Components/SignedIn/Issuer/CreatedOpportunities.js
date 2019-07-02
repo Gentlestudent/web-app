@@ -4,11 +4,11 @@ import { Route, Switch } from 'react-router-dom';
 import { firestore } from '../../../Utils/Firebase';
 import { auth } from '../../../Utils/Firebase/firebase';
 
-// import AangemaakteLeerkansDetail from './../../Components/SignedIn/Issuer/AangemaakteLeerkansDetail';
+// import CreatedOpportunityDetail from './../../Components/SignedIn/Issuer/CreatedOpportunityDetail';
 import List from './List';
-// import Detail from './../../Components/Leerkansen/Detail';
+// import Detail from './../../Components/Opportunities/Detail';
 
-class AangemaakteLeerkansen extends Component {
+class CreatedOpportunities extends Component {
 	constructor(props) {
 		super(props);
 	
@@ -79,7 +79,7 @@ class AangemaakteLeerkansen extends Component {
 		const { opportunities } = this.state;
 
 		return (
-			<div className="leerkansen-content">
+			<div className="opportunities-content">
 				<div className="container">
 					<div className="content content-with-padding">
 						{/* <SearchFilter /> */}
@@ -87,11 +87,11 @@ class AangemaakteLeerkansen extends Component {
 							<h1>Aangemaakte leerkansen</h1>
 							<p> Deze leerkansen werden door jou aangemaakt:</p>
 						</div>
-						<div id="aangemaakte-leerkansen">
+						<div id="created-opportunities">
 							<Switch>
-								{/* <Route path={'/aangemaakte-leerkansen/:id'} render={({match}) => <Detail opportunities={opportunities}  match={match}/>} /> */}
-								{/* <Route path={'/aangemaakte-leerkansen/:id'} render={({match}) => <AangemaakteLeerkansDetail opportunities={opportunities}  match={match}/>} /> */}
-								<Route path={'/aangemaakte-leerkansen'} render={() => <List opportunities={opportunities} getOpportunities={this.getOpportunities}/>} />
+								{/* <Route path={'/created-opportunities/:id'} render={({match}) => <Detail opportunities={opportunities}  match={match}/>} /> */}
+								{/* <Route path={'/created-opportunities/:id'} render={({match}) => <CreatedOpportunityDetail opportunities={opportunities}  match={match}/>} /> */}
+								<Route path={'/created-opportunities'} render={() => <List opportunities={opportunities} getOpportunities={this.getOpportunities}/>} />
 							</Switch>
 						</div>
 					</div>
@@ -101,4 +101,4 @@ class AangemaakteLeerkansen extends Component {
 	}
 }
 
-export default AangemaakteLeerkansen;
+export default CreatedOpportunities;

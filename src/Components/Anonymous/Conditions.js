@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { firestore } from '../../Utils/Firebase';
 
-class OverOns extends Component {
-    constructor(props) {
-        super(props)
 
-        this.state={
-            text: ""
-        }
+class Conditions extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state={
+        text: ""
+    }
     }
     componentDidMount() {
         window.scrollTo(0, 0);
         var self = this;
-        firestore.onceGetOverOns().then(snapshot => {
+        firestore.onceGetConditions().then(snapshot => {
             console.log("content:");
             console.log(snapshot.data().content);
             self.setState({text: snapshot.data().content});
@@ -21,16 +22,15 @@ class OverOns extends Component {
         });
     }
     render() {
+        const {text} = this.state;
         return (
-            <div>
-                <div className="container">
-                    <div className="content content-with-padding">
-                        <div className="aboutcontent" dangerouslySetInnerHTML={{ __html: this.state.text }} />
-                        </div>
+            <React.Fragment>
+                <div class="content content-with-padding">
+                    <div class="privacycontent" dangerouslySetInnerHTML={{ __html: this.state.text }} />
                 </div>
-            </div>
+            </React.Fragment>
         )
     }
 }
 
-export default OverOns;
+export default Conditions;

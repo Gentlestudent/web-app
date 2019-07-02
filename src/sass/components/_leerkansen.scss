@@ -1,4 +1,4 @@
-#leerkansen {
+#opportunities {
 	display: flex;
 	flex-direction: row;
 	h1.uitgelicht {
@@ -12,7 +12,7 @@
 		width: calc(40% + 15px);
 	}
 	.card-item {
-		&.leerkans {
+		&.opportunity {
 			border-radius: 15px;
 			border: 2px solid $light-gray;
 			transition: $transition;

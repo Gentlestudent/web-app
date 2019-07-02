@@ -12,25 +12,25 @@ import store from './store';
 import { firebase } from './Utils/Firebase';
 
 import FrontPage from './Components/Anonymous/Frontpage/FrontPage';
-import Leerkansen from './Components/SignedIn/Leerkansen/Leerkansen';
-import WordIssuer from './Components/Anonymous/WordIssuer';
-import Ervaringen from './Components/Anonymous/Ervaringen/Ervaringen';
-import Nieuws from './Components/Anonymous/Nieuws/Nieuws';
-import OverOns from './Components/Anonymous/OverOns';
+import Opportunities from './Components/SignedIn/Opportunities/Opportunities';
+import BecomeIssuer from './Components/Anonymous/BecomeIssuer';
+import Experiences from './Components/Anonymous/Experiences/Experiences';
+import News from './Components/Anonymous/News/News';
+import AboutUs from './Components/Anonymous/AboutUs';
 import Register from './Components/Anonymous/Auth/Register';
 import Login from './Components/Anonymous/Auth/Login';
 
-import BOLeerkansen from './Components/SignedIn/Backoffice/Leerkansen';
-import MaakLeerkans from './Components/SignedIn/Issuer/MaakLeerkans';
+import BOOpportunities from './Components/SignedIn/Backoffice/Opportunities';
+import CreateOpportunity from './Components/SignedIn/Issuer/CreateOpportunity';
 import IssueBadgeRecipient from './Components/SignedIn/Issuer/IssueBadgeRecipient';
-import RegistreerIssuer from './Components/Anonymous/Auth/RegistreerIssuer';
-import ValideerIssuer from './Components/SignedIn/Admin/ValideerIssuer';
-import ValideerLeerkans from './Components/SignedIn/Admin/ValideerLeerkans';
-import AangemaakteLeerkansen from './Components/SignedIn/Issuer/AangemaakteLeerkansen';
-import BewerkLeerkans from './Components/SignedIn/Issuer/BewerkLeerkans';
-import Profiel from './Components/SignedIn/Backoffice/Profiel';
+import RegisterIssuer from './Components/Anonymous/Auth/RegisterIssuer';
+import ValidateIssuer from './Components/SignedIn/Admin/ValidateIssuer';
+import ValidateOpportunity from './Components/SignedIn/Admin/ValidateOpportunity';
+import CreatedOpportunities from './Components/SignedIn/Issuer/CreatedOpportunities';
+import EditOpportunity from './Components/SignedIn/Issuer/EditOpportunity';
+import Profile from './Components/SignedIn/Backoffice/Profile';
 import Privacy from './Components/Anonymous/Privacy';
-import Voorwaarden from './Components/Anonymous/Voorwaarden';
+import Conditions from './Components/Anonymous/Conditions';
 import NoMatch from './Shared/NoMatch';
 import Backpack from './Components/SignedIn/Backoffice/Backpack';
 
@@ -51,29 +51,29 @@ class App extends Component {
 						<div class="main-content">
 						<Switch>
 								<Route path={routes.FrontPage} exact render={() => <FrontPage />} />
-								<Route path={routes.Leerkansen} render={() => <Leerkansen />} />
-								<Route path={routes.WordIssuer} exact render={() => <WordIssuer />} />
-								<Route path={routes.Ervaringen} render={() => <Ervaringen />} />
-								<Route path={routes.Nieuws} render={() => <Nieuws />} />
-								<Route path={routes.OverOns} exact render={() => <OverOns />} />
+								<Route path={routes.Opportunities} render={() => <Opportunities />} />
+								<Route path={routes.BecomeIssuer} exact render={() => <BecomeIssuer />} />
+								<Route path={routes.Experiences} render={() => <Experiences />} />
+								<Route path={routes.News} render={() => <News />} />
+								<Route path={routes.AboutUs} exact render={() => <AboutUs />} />
 								<Route path={routes.Register} render={() => <Register />} />
 								<Route path={routes.Login} render={() => <Login />} />
 								{/* <Route path="/login" render={() => <Login />} /> */}
 								{/* BACKOFFICE */}
 								{/* <Auth> */}
-								<Route path={routes.BOLeerkansen} exact render={() => <BOLeerkansen />} />
-								<Route path={routes.MaakLeerkans} exact render={() => <MaakLeerkans />} />
-								<Route path={routes.MaakLeerkans+'/:id'} exact render={({match}) => <MaakLeerkans match={match}/>} />
+								<Route path={routes.BOOpportunities} exact render={() => <BOOpportunities />} />
+								<Route path={routes.CreateOpportunity} exact render={() => <CreateOpportunity />} />
+								<Route path={routes.CreateOpportunity+'/:id'} exact render={({match}) => <CreateOpportunity match={match}/>} />
 								<Route path={routes.IssueBadgeRecipient} exact render={() => <IssueBadgeRecipient />} />
-								<Route path={routes.RegistreerIssuer} exact render={() => <RegistreerIssuer />} />
-								<Route path={routes.ValideerIssuer} exact render={() => <ValideerIssuer />} />
-								<Route path={routes.ValideerLeerkans} exact render={() => <ValideerLeerkans />} />
-								<Route path={routes.AangemaakteLeerkansen} render={() => <AangemaakteLeerkansen />} />
-								<Route path={routes.BewerkLeerkans+'/:id'} render={() => <BewerkLeerkans />} />
-								<Route path={routes.Profiel} exact render={() => <Profiel />} />
+								<Route path={routes.RegisterIssuer} exact render={() => <RegisterIssuer />} />
+								<Route path={routes.ValidateIssuer} exact render={() => <ValidateIssuer />} />
+								<Route path={routes.ValidateOpportunity} exact render={() => <ValidateOpportunity />} />
+								<Route path={routes.CreatedOpportunities} render={() => <CreatedOpportunities />} />
+								<Route path={routes.EditOpportunity+'/:id'} render={() => <EditOpportunity />} />
+								<Route path={routes.Profile} exact render={() => <Profile />} />
 								<Route path={routes.Backpack} exact render={() => <Backpack />} />
 								<Route path={routes.Privacy} exact render={() => <Privacy />} />
-								<Route path={routes.Voorwaarden} exact render={() => <Voorwaarden />} />
+								<Route path={routes.Conditions} exact render={() => <Conditions />} />
 								<Route path="*" render={() => <NoMatch />} />
 								{/* </Auth> */}
 						</Switch>

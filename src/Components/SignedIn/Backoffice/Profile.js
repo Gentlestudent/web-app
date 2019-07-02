@@ -6,7 +6,7 @@ import AuthUserContext from '../../../Shared/AuthUserContext';
 import { firestore } from '../../../Utils/Firebase';
 import firebase from 'firebase';
 
-class Profiel extends Component {
+class Profile extends Component {
   constructor(props) {
     super(props)
 
@@ -125,4 +125,4 @@ class Profiel extends Component {
   }
 }
 
-export default Profiel;
+export default Profile;

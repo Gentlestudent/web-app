@@ -23,7 +23,7 @@ const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
 });
 
-class RegistreerIssuer extends Component {
+class RegisterIssuer extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
@@ -221,4 +221,4 @@ class RegistreerIssuer extends Component {
     );
   }
 }
-export default withRouter(RegistreerIssuer);
+export default withRouter(RegisterIssuer);
