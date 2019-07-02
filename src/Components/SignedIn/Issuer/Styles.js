@@ -40,7 +40,7 @@ export const eyecatcherWrapper = css({
   overflow: 'hidden !important',
   contain: 'strict !important',
   backgroundColor: $grayD,
-  '> img.eyecatcher-word-issuer': {
+  '> img.eyecatcher-become-issuer': {
     position: 'absolute',
     height: '100%',
     width: 'auto',

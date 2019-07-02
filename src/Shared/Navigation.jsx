@@ -35,7 +35,7 @@ const Navigation = ({ authUser }) =>
 const NavigationNonAuth = () =>
 	<ul id="gs-nav" className="menu">
 		<li className="nav_item">
-			<NavLink to={routes.Opportunities} activeClassName="active">Opportunities</NavLink>
+			<NavLink to={routes.Opportunities} activeClassName="active">Leerkansen</NavLink>
 		</li>
 		<li className="nav_item">
 			<NavLink to={routes.BecomeIssuer} activeClassName="active">Word Issuer</NavLink>

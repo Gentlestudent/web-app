@@ -1,12 +1,12 @@
 export const FrontPage = '/';
 export const Opportunities = '/opportunities';
-export const BecomeIssuer = '/word-issuer';
+export const BecomeIssuer = '/become-issuer';
 export const Experiences = '/experiences';
 export const News = '/news';
 export const AboutUs = '/about';
 export const Register = '/Register';
 export const Login = '/login';
-export const RegisterIssuer = '/word-issuer/registratie';
+export const RegisterIssuer = '/become-issuer/registratie';
 export const Profile = '/profile';
 export const BOOpportunities = '/backoffice/opportunities';
 export const CreateOpportunity = '/issuer/create-opportunity';
