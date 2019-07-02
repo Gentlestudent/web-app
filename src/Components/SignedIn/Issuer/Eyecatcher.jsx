@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { eyecatcherWrapper, section } from './Styles';
 
-import Image from '../../../assets/word-issuer.jpg';
+import Image from '../../../assets/become-issuer.jpg';
 
 class Eyecatcher extends Component {
   constructor(props){
@@ -41,9 +41,9 @@ class Eyecatcher extends Component {
 	render() {
 		return (
       <React.Fragment>
-        <div id="word-issuer" {...section}>
+        <div id="become-issuer" {...section}>
           <div id="eyecatcherwrapper" {...eyecatcherWrapper}>
-            <img src={Image} alt="eyecatcher-word-issuer" className="eyecatcher-word-issuer" />
+            <img src={Image} alt="eyecatcher-become-issuer" className="eyecatcher-become-issuer" />
           </div>
           <div className="container">
             <div className="content">
