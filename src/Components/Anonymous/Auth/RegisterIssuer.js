@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import FormRegisterUser from './RegisterIssuer';
+import FormRegisterUser from './FormRegisterIssuer';
 
 class RegisterIssuer extends Component {
   constructor(props) {
