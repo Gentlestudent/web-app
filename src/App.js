@@ -13,7 +13,7 @@ import { firebase } from './Utils/Firebase';
 
 import FrontPage from './Components/Anonymous/Frontpage/FrontPage';
 import Opportunities from './Components/SignedIn/Opportunities/Opportunities';
-import BecomeIssuer from './Components/Anonymous/BecomeIssuer';
+import BecomeIssuer from './Components/Anonymous/Become-issuer/BecomeIssuer';
 import Experiences from './Components/Anonymous/Experiences/Experiences';
 import News from './Components/Anonymous/News/News';
 import AboutUs from './Components/Anonymous/AboutUs';
