@@ -21,8 +21,10 @@ class FrontPage extends Component {
 	constructor() {
 		super();
 		this.state = {
-			iFrameHeight: '0px'
+			iFrameHeight: '0px',
 		}
+		this.videoRef = React.createRef();
+		this.updateDimensions = this.updateDimensions.bind(this);
 	}
 
 	componentDidMount = () => {
@@ -31,10 +33,13 @@ class FrontPage extends Component {
 		// window.addEventListener('load', () => {
 		// console.log("loaded");
 		setTimeout(() => {
-			var img = document.getElementById("startpage").getElementsByTagName('img')[0];
-			// console.log(img);
-			img.style['filter'] = 'blur(0px)';
-			img.style['-webkit-filter'] = 'blur(0px)';
+			var img = document.getElementById("startpage");
+			if (img != null){
+				img = img.getElementsByTagName('img')[0];
+				// console.log(img);
+				img.style['filter'] = 'blur(0px)';
+				img.style['-webkit-filter'] = 'blur(0px)';
+			}
 		}, 1000);
 		// });
 
@@ -45,10 +50,13 @@ class FrontPage extends Component {
 		window.removeEventListener("resize", this.updateDimensions);
 	}
 	updateDimensions() {
-		const el = ReactDOM.findDOMNode(this).querySelector('.dynamic-iframe');
-		this.setState({
-			"iFrameHeight": 405 / 720 * el.offsetWidth
-		});
+		// const el = ReactDOM.findDOMNode(this).querySelector('.dynamic-iframe');
+		if (this.videoRef != undefined) {
+			let el = this.videoRef.current;
+			this.setState({
+				"iFrameHeight": 405 / 720 * el.offsetWidth
+			});
+		}
 		// console.log(el.offsetWidth);
 	}
 	render() {
@@ -76,6 +84,7 @@ class FrontPage extends Component {
 							<div className="introductory-video">
 								<iframe
 									className="dynamic-iframe"
+									ref={this.videoRef}
 									src="https://arteveldehogeschool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=dc47c1a8-68b9-413b-812a-aa1400a18754&v=1"
 									style={{ objectFit: 'cover', maxWidth: 720, width: '100%', maxHeight: 405, height: this.state.iFrameHeight, overflow: 'visible' }}
 									width="100%"
