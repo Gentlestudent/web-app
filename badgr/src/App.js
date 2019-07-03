@@ -17,12 +17,12 @@ class App extends Component {
   }
   componentDidMount() {
     // let data = {username: 'van-driessche-maxime@hotmail.com', password: 'osocosoc'};
-    let data = "username=van-driessche-maxime@hotmail.com&password=osocosoc";
+    let data = "username=freek.de.sagher21@gmail.com&password=summerofcode2019";
     let self = this;
     console.log("fetching tokens");
     axios.post(badgr_api + 'o/token', data)
       .then(res => {
-        console.log(res);
+        // console.log(res);
         self.setState({
           access_token: res.data.access_token,
           expiration: res.data.expires_in,
@@ -34,8 +34,9 @@ class App extends Component {
   }
   componentDidUpdate() {
     if (this.state.access_token != null) {
-      let issuers = this.getIssuers();
-      console.log(issuers);
+      // this.createIssuer();
+      this.getIssuers();
+      // console.log(issuers);
       // let id = issuers[0].entityId;
       // console.log(id);
     }
@@ -47,32 +48,23 @@ class App extends Component {
         console.log(res);
       }).catch(err => {
         console.log(err);
-        console.log(this.state.access_token);
+        // console.log(this.state.access_token);
       });
   }
   createIssuer() {
     console.log("creating issuer");
     let data = {
-      // entityType: "Issuer",
-      // entityId: "March",
-      // openBadgeId: "",
-      // createdAt: "",
-      // createdBy: "",
-      // image: "",
-      // description: "",
-      // staff: [],
-      // extensions: "",
-      // badgrDomain: "",
-      name: "dsjfsfdjds",
-      email: "user@example.com",
-      url: "https://www.arteveldehogeschool.be/"
-    }
+      name: "string",
+      email: "freek.de.sagher21@gmail.com",
+      description: "test",
+      url: "https://www.google.com"
+    };
     axios.post(badgr_api + 'v2/issuers', data , { headers: { Authorization: "Bearer " + this.state.access_token } })
       .then(res => {
         console.log(res);
       }).catch(err => {
         console.log(err);
-        console.log(this.state.access_token);
+        // console.log(this.state.access_token);
       });
   }
   getIssuers(){
@@ -83,7 +75,7 @@ class App extends Component {
         return res.data;
       }).catch(err => {
         console.log(err);
-        console.log(this.state.access_token);
+        // console.log(this.state.access_token);
       });
   }
   render() {
