@@ -57,6 +57,7 @@ class Opportunities extends Component {
 		});
 	}
 	filterOpportunities(event){
+		event.preventDefault();
 		var initialList = this.state.initialOpportunities;
 		var filteredArray = Object.keys(initialList).map(function(key) {
 			return [key, initialList[key]];

@@ -9,13 +9,16 @@ class SearchFilters extends Component {
   // filterTouched(event){
   //   console.log("kaas");
   // }
+  handleSubmit(e){
+    e.preventDefault();
+  }
   render() {
     return (
       <React.Fragment>
         <div className="searchfilters">
           <div className="fixed">
             <h1>Leerkansen</h1>
-            <form action="">
+            <form action="" onSubmit={this.handleSubmit}>
               <div className="search-wrapper opportunities">
                 <i className="fas fa-search"></i>
                 <input type="text" placeholder="zoeken" onChange={this.props.filterFunction}/>
