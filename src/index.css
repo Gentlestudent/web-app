@@ -1231,8 +1231,13 @@ ul li.list:hover .delete {
   padding-left: 20px;
   padding-bottom: 20px;
 }
+.infobox-content table{
+  table-layout: fixed;
+  width: 100%;
+}
 .infobox td{
   padding-right: 20px;
+  word-wrap:break-word
 }
 .opportunity-container img.badge{
   position: absolute;
