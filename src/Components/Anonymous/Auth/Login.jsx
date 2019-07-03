@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { SignUpLink } from './Register';
+import { ResetPasswordLink } from './ResetPassword';
 import { auth } from '../../../Utils/Firebase';
 
 import * as routes from '../../../routes/routes';
@@ -11,6 +12,7 @@ const SignInPage = ({ history }) =>
     {/* <h1>SignIn</h1> */}
     <SignInForm history={history} />
     <SignUpLink />
+    <ResetPasswordLink />
   </div>
 
 const byPropKey = (propertyName, value) => () => ({

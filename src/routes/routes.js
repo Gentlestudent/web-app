@@ -6,6 +6,7 @@ export const News = '/news';
 export const AboutUs = '/about';
 export const Register = '/Register';
 export const Login = '/login';
+export const ResetPassword = '/resetPassword';
 export const RegisterIssuer = '/become-issuer/registratie';
 export const Profile = '/profile';
 export const BOOpportunities = '/backoffice/opportunities';

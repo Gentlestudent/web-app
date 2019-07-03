@@ -19,6 +19,7 @@ import News from './Components/Anonymous/News/News';
 import AboutUs from './Components/Anonymous/AboutUs';
 import Register from './Components/Anonymous/Auth/Register';
 import Login from './Components/Anonymous/Auth/Login';
+import ResetPassword from './Components/Anonymous/Auth/ResetPassword';
 
 import BOOpportunities from './Components/SignedIn/Backoffice/Opportunities';
 import CreateOpportunity from './Components/SignedIn/Issuer/CreateOpportunity';
@@ -58,6 +59,7 @@ class App extends Component {
 								<Route path={routes.AboutUs} exact render={() => <AboutUs />} />
 								<Route path={routes.Register} render={() => <Register />} />
 								<Route path={routes.Login} render={() => <Login />} />
+								<Route path={routes.ResetPassword} render={ () => <ResetPassword />} />
 								{/* <Route path="/login" render={() => <Login />} /> */}
 								{/* BACKOFFICE */}
 								{/* <Auth> */}
