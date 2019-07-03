@@ -1067,8 +1067,8 @@ ul li.list:hover .delete {
 
 .opportunity-detail h1{
     position: absolute;
-    top: 35px;
-    font-size: 60px;
+    top: 0;
+    font-size: 4vw;
     color: #fff;
     text-align: center;
     width: calc(100% - 20px);
