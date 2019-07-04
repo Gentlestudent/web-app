@@ -52,6 +52,46 @@ class List extends Component {
 			console.log('Error getting documents', err);
 		});
 	}
+
+	render() {
+		const { participants, isEmpty } = this.state;
+
+		return (
+			<React.Fragment>
+				{ !! participants && 
+					<div className="content">
+						<h3>Deelnemers:</h3>
+						<div className="participants">
+							<table>
+								<tr className='participant'>
+									<th>Deelnemer</th>
+									<th>Institutie</th>
+									<th>Email</th>
+									<th>Status</th>
+									<th>Acties</th>
+								</tr>
+							{Object.keys(participants).map(key =>
+                                <Participant participant={participants[key]} />
+							)}
+							</table>
+						</div>
+					</div>
+				}
+				{ ! participants && !isEmpty && <LoadingList/> }
+			</React.Fragment>
+		)
+	}
+}
+
+class Participant extends Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+
+        }
+    }
+
     giveBadge(event) {
         event.preventDefault();
         let participantId = event.target.id;
@@ -90,10 +130,11 @@ class List extends Component {
 				self.loadParticipants();
 			})
 			.catch(err => {
-				console.log("failed completing participation:"+err);
+				console.log("failed completing participation:", err);
 			});
         // this.loadParticipants();
     }
+
     accept(event) {
         event.preventDefault();
         var self = this;
@@ -102,7 +143,7 @@ class List extends Component {
             self.loadParticipants();
         })
         .catch(err => {
-            console.log("failed accepting participation:"+err);
+            console.log("failed accepting participation:", err);
         });
         // self.loadParticipants();
     }
@@ -130,50 +171,38 @@ class List extends Component {
         });  
         // self.loadParticipants();
     }
-	render() {
-		const { participants, isEmpty } = this.state;
 
-		return (
-			<React.Fragment>
-				{ !! participants && 
-					<div className="content">
-						<h3>Deelnemers:</h3>
-						<div className="participants">
-							<table>
-								<tr className='participant'>
-									<th>Deelnemer</th>
-									<th>Institutie</th>
-									<th>Email</th>
-									<th>Status</th>
-									<th>Acties</th>
-								</tr>
-							{Object.keys(participants).map(key =>
-								<tr className='participant'>
-									<td><div className="table-el">{participants[key].name}</div></td>
-									<td><div className="table-el">{participants[key].education}</div></td>
-									<td><div className="table-el">{participants[key].email}</div></td>
-									{ participants[key]["participationStatus"]===0 && <td><div className="table-el">In afwachting</div></td>}
-									{ participants[key]["participationStatus"]===1 && <td><div className="table-el">Goedgekeurd</div></td>}
-									{ participants[key]["participationStatus"]===2 && <td><div className="table-el">Geweigerd</div></td>}
-									{ participants[key]["participationStatus"]===3 && <td><div className="table-el">Afgewerkt</div></td>}
-									{ participants[key]["participationStatus"]===0 && 
-										<td><div className="table-el">
-											<button onClick={this.accept} id={participants[key]["participationId"]}>Accepteer</button>
-											<button onClick={this.reject} id={participants[key]["participationId"]}>Weiger</button>
-										</div></td>
-									}
-									{ participants[key]["participationStatus"]===1 && <td><div className="table-el"><button onClick={this.giveBadge} id={key}>Geef badge</button></div></td>}
-									{ participants[key]["participationStatus"]===2 && <td><div className="table-el"><button onClick={this.undo} id={participants[key]["participationId"]}>Maak ongedaan</button></div></td>}
-								</tr>
-							)}
-							</table>
-						</div>
-					</div>
-				}
-				{ ! participants && !isEmpty && <LoadingList/> }
-			</React.Fragment>
-		)
-	}
+    render() {
+
+        const {participant} = this.props;
+
+        return (
+            <tr className='participant'>
+            <td>
+                <div className="table-el">{participant.name}</div>
+            </td>
+            <td>
+                <div className="table-el">{participant.education}</div>
+            </td>
+            <td>
+                <div className="table-el">{participant.email}</div>
+            </td>
+
+            { participant.participationStatus===0 && <td><div className="table-el">In afwachting</div></td>}
+            { participant.participationStatus===1 && <td><div className="table-el">Goedgekeurd</div></td>}
+            { participant.participationStatus===2 && <td><div className="table-el">Geweigerd</div></td>}
+            { participant.participationStatus===3 && <td><div className="table-el">Afgewerkt</div></td>}
+            { participant.participationStatus===0 && 
+                <td><div className="table-el">
+                    <button onClick={this.accept} id={participant.participationId}>Accepteer</button>
+                    <button onClick={this.reject} id={participant.participationId}>Weiger</button>
+                </div></td>
+            }
+            { participant.participationStatus===1 && <td><div className="table-el"><button onClick={this.giveBadge}>Geef badge</button></div></td>}
+            { participant.participationStatus===2 && <td><div className="table-el"><button onClick={this.undo}>Maak ongedaan</button></div></td>}
+        </tr>
+        );
+    }
 }
 
 const LoadingList = () =>
