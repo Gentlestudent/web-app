@@ -26,7 +26,8 @@ export async function createIssuer(institution, longName, url, phonenumber,stree
             name: longName,
             phonenumber: phonenumber,
             url: url,
-            validated: false
+            validated: false,
+            badgrId: ""
         };
         console.log(userId, issuerdata);
         firestore.collection('Issuers').doc(userId).set(issuerdata).catch(function(error) {
@@ -56,6 +57,9 @@ export const onceGetValidatedIssuers = () =>
 
 export const validateIssuer = (id) =>
   firestore.collection('Issuers').doc(id).update({ validated: true })
+
+export const updateIssuerBadgrId = (id, badgrId) =>
+  firestore.collection('Issuers').doc(id).update({ badgrId: badgrId})
 
 export const onceGetNonValidatedOpportunities = () =>
   firestore.collection('Opportunities').where('authority', '==', 0).get()
