@@ -7,6 +7,22 @@ import Spinner from '../../../Shared/Spinner';
 import { Field, reduxForm } from 'redux-form';
 
 import { renderInput, renderAutomaticInput, renderTextarea, renderSelect, RenderDropzoneInput, validate } from '../../../Shared/Utils';
+import axios from 'axios';
+
+function toDataUrl(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        callback(reader.result);
+      }
+      reader.readAsDataURL(xhr.response);
+    };
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.send();
+  }
+
 
 class ValidateOpportunity extends Component {
   constructor() {
@@ -167,6 +183,26 @@ class Opportunity extends Component{
         event.preventDefault();
         const {beaconId} = this.state;
         this.validateOpportunity(beaconId);
+      }
+
+      createBadgeClass() {
+        let self = this;
+        let data;
+        let accessToken = "";
+        let header = { headers: { Authorization: "Bearer" + accessToken } };
+        // TODO fill in fields
+        toDataUrl("https://raw.githubusercontent.com/FreekDS/Wof/master/res/player0.png", function (myBase64) {
+            data = {
+                name: "",
+                description: "",
+                issuer: "",
+                image: myBase64,
+                criteriaNarrative: ""
+            }
+
+            axios.post();
+
+        });
       }
 
       validateOpportunity(beaconId){
