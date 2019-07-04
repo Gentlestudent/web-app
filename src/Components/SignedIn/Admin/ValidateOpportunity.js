@@ -31,15 +31,29 @@ class ValidateOpportunity extends Component {
         super();
         // this.submit = this.submit.bind(this);
         this.state = {
+            issuers: null,
             opportunities: null,
             beacons: null
         };
         this.getOpportunities = this.getOpportunities.bind(this);
     };
     componentDidMount() {
+        this.getIssuers();
         this.getOpportunities();
         this.getBeacons();
         window.scrollTo(0, 0);
+    }
+    getIssuers() {
+        firestore.onceGetValidatedIssuers().then(snapshot => {
+            var res = new Object();
+            snapshot.forEach(doc => {
+                res[doc.id] = doc.data();
+            });
+            this.setState(() => ({ issuers: res }));
+        })
+            .catch(err => {
+                console.log('Error getting documents', err);
+            });
     }
     getOpportunities() {
         firestore.onceGetNonValidatedOpportunities().then(snapshot => {
@@ -70,7 +84,7 @@ class ValidateOpportunity extends Component {
             });
     }
     render() {
-        const { opportunities, beacons, getOpportunities } = this.state;
+        const { opportunities, beacons, getOpportunities, issuers } = this.state;
 
         return (
             <BadgrContext.Consumer>
@@ -79,6 +93,7 @@ class ValidateOpportunity extends Component {
                         {!!opportunities && !!beacons &&
                             <OpportunitiesList
                                 opportunities={opportunities}
+                                issuers={issuers}
                                 getOpportunities={this.getOpportunities}
                                 beacons={beacons}
                                 badgrAuth={badgrAuth}
@@ -145,7 +160,7 @@ class OpportunitiesList extends Component {
     // }
 
     render() {
-        const { opportunities, beacons, getOpportunities, badgrAuth } = this.props;
+        const { opportunities, beacons, getOpportunities, badgrAuth, issuers } = this.props;
 
         return (
             <React.Fragment>
@@ -157,6 +172,7 @@ class OpportunitiesList extends Component {
                             {Object.keys(opportunities).map(key =>
                                 <Opportunity
                                     opportunity={opportunities[key]}
+                                    issuer={issuers[opportunities[key].issuerId]}
                                     key={key}
                                     id={key}
                                     getOpportunities={getOpportunities}
@@ -180,7 +196,7 @@ class Opportunity extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { beaconId: "", makeNew: false };
+        this.state = { badge: null, beaconId: "", makeNew: false, issuer: null };
 
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -188,6 +204,13 @@ class Opportunity extends Component {
         this.validateOpportunity = this.validateOpportunity.bind(this);
         this.postNewBeacon = this.postNewBeacon.bind(this);
     };
+
+    componentDidUpdate() {
+        if (this.state.badge != undefined && this.state.badge.badgrId != undefined) {
+            console.log("badgr badge created: ", this.state.badge);
+            this.validateOpportunity();
+        }
+    }
 
     handleChange(event) {
         // console.log(event.target.value);
@@ -202,39 +225,21 @@ class Opportunity extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        const { beaconId } = this.state;
-        this.validateOpportunity(beaconId);
+        this.createBadge();
     }
 
-    createBadgeClass() {
-        let self = this;
-        let data;
-        let accessToken = "";
-        let header = { headers: { Authorization: "Bearer" + accessToken } };
-        // TODO fill in fields
-        toDataUrl("https://raw.githubusercontent.com/FreekDS/Wof/master/res/player0.png", function (myBase64) {
-            data = {
-                name: "",
-                description: "",
-                issuer: "",
-                image: myBase64,
-                criteriaNarrative: ""
-            }
-
-            axios.post();
-
-        });
-    }
-
-    validateOpportunity(beaconId) {
+    validateOpportunity() {
+        let beaconId = this.state.beaconId;
         let opportunityId = this.props.id;
+        console.log("validating opportunity");
         firestore.validateOpportunity(opportunityId).catch(function (error) {
             console.error("Error validating opportunity: ", error);
         });
-        console.log(beaconId);
+        console.log("linking beacon to opportunity", beaconId);
         firestore.linkBeaconToOpportunity(opportunityId, beaconId).catch(function (error) {
             console.error("Error linking beacon: ", error);
         });
+        console.log("linking opportunity to beacon");
         firestore.linkOpportunityToBeacon(beaconId, opportunityId).catch(function (error) {
             console.error("Error linking opportunity: ", error);
         });
@@ -242,25 +247,7 @@ class Opportunity extends Component {
         this.props.getOpportunities();
     }
 
-    postNewBeacon(major, minor, name) {
-        let addressId = this.props.opportunity.addressId;
-        let beacon = new Object();
-        beacon["major"] = major;
-        beacon["minor"] = minor;
-        beacon["range"] = 0;
-        beacon["addressId"] = addressId;
-        beacon["opportunities"] = {};
-        beacon["name"] = name;
-        let self = this;
-        firestore.createNewBeacon(beacon).then(function (docRef) {
-            console.log("Document written with ID: ", docRef.id);
-            self.validateOpportunity(docRef.id);
-        }).catch(function (error) {
-            console.log("Error adding document: ", error);
-        });
-    }
-
-    postNewBadge(opportunityId) {
+    createBadge() {
         let opportunity = this.props.opportunity;
         let badge = new Object();
         let name = "";
@@ -286,14 +273,59 @@ class Opportunity extends Component {
         badge["image"] = image;
         badge["criteria"] = opportunity.shortDescription;
         badge["issuerId"] = opportunity.issuerId;
-        console.log(JSON.stringify(badge));
-        firestore.createNewBadge(badge).then(function (docRef) {
+
+        let self = this;
+        let accessToken = this.props.badgrAuth.accessToken;
+        let header = { headers: { Authorization: "Bearer " + accessToken } };
+        // TODO fill in fields
+        toDataUrl("https://raw.githubusercontent.com/FreekDS/Wof/master/res/player0.png", function (myBase64) {
+            let data = {
+                name: badge.name,
+                description: badge.description,
+                issuer: self.props.issuer.badgrId,
+                image: myBase64,
+                criteriaNarrative: badge.criteria
+            }
+            axios.post("https://api.badgr.io/v2/badgeclasses", data, header)
+                .then(res => {
+                    console.log("Created badgr badgeclass", res);
+                    // console.log(JSON.stringify(badge));
+                    badge["badgrId"] = res.data.result[0].entityId;
+                    self.setState({ badge: badge });
+                })
+                .catch(err => {console.error(err); console.log(data)});
+        });
+    }
+
+    postNewBeacon(major, minor, name) {
+        let addressId = this.props.opportunity.addressId;
+        let beacon = new Object();
+        beacon["major"] = major;
+        beacon["minor"] = minor;
+        beacon["range"] = 0;
+        beacon["addressId"] = addressId;
+        beacon["opportunities"] = {};
+        beacon["name"] = name;
+        let self = this;
+        console.log("posting beacon to firebase: ", beacon);
+        firestore.createNewBeacon(beacon).then(function (docRef) {
+            console.log("Document written with ID: ", docRef.id);
+            self.validateOpportunity(docRef.id);
+        }).catch(function (error) {
+            console.log("Error adding document: ", error);
+        });
+    }
+
+    postNewBadge(opportunityId) {
+        console.log("posting badge to firebase: ", this.state.badge);
+        firestore.createNewBadge(this.state.badge).then(function (docRef) {
             console.log("Document written with ID: ", docRef.id);
             firestore.linkBadgeToOpportunity(opportunityId, docRef.id);
         }).catch(function (error) {
             console.log("Error adding document: ", error);
         });
     }
+
     render() {
         const { opportunity, beacons, id } = this.props;
         const { beaconId, makeNew, error, validateOpportunity, postNewBeacon } = this.state;

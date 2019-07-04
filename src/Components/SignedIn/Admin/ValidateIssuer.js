@@ -109,7 +109,7 @@ class IssuersList extends Component {
             firestore.updateIssuerBadgrId(id, res.data.result[0].entityId);
             firestore.validateIssuer(id);
         })
-        // .catch(err => console.error(err));
+        .catch(err => console.error(err));
         // console.log("fetching issuers");
         // axios.get("https://api.badgr.io/v2/issuers", header)
         //     .then(res => {
