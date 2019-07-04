@@ -10,10 +10,10 @@ class ValidateIssuer extends Component {
     super();
     // this.submit = this.submit.bind(this);
     this.state = {
-		  issuers: null,
-        };
-        this.getIssuers = this.getIssuers.bind(this);
+	    issuers: null,
     };
+    this.getIssuers = this.getIssuers.bind(this);
+    }
 
     componentDidMount() {
         this.getIssuers();
