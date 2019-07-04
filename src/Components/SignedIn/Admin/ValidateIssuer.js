@@ -40,9 +40,9 @@ class ValidateIssuer extends Component {
         return (
             <React.Fragment>
                 <BadgrContext.Consumer>
-                    {badgrAuth => badgrAuth
+                    {badgrAuth => badgrAuth!=undefined
                         ? <React.Fragment>
-                            {!!issuers && <OpportunitiesList issuers={issuers} getIssuers={getIssuers} />}
+                            {!!issuers && <OpportunitiesList issuers={issuers} getIssuers={getIssuers} badgrAuth={badgrAuth}/>}
                             {!!issuers && Object.getOwnPropertyNames(issuers).length === 0 && <EmptyList />}
                             {!issuers && <Loading />}
                         </React.Fragment>
@@ -71,7 +71,8 @@ class OpportunitiesList extends Component {
 
     createBadgrIssuer(id) {
         console.log("Trying to create badgr issuer...");
-        let header = { headers: { Authorization: "Bearer NggIVeIAj5FTlrSLoomidEqxG5tOpZ" } };
+        let accessToken = this.props.badgrAuth.accessToken;
+        let header = { headers: { Authorization: "Bearer" + accessToken } };
         let issuer = this.props.issuers[id];
         // TODO: append http:// to url if it does not exist
         let data = {

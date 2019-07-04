@@ -24,9 +24,9 @@ const withBadgr = (Component) =>
                     // console.log(res);
                     self.setState({
                         badgrAuth: {
-                            access_token: res.data.access_token,
+                            accessToken: res.data.access_token,
                             expiration: res.data.expires_in,
-                            refresh_token: res.data.refresh_token
+                            refreshToken: res.data.refresh_token
                         }
                     }
                     );
