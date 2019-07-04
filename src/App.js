@@ -39,6 +39,7 @@ import Navigation from './Shared/Navigation';
 import Footer from './Shared/Footer';
 
 import withAuthentication from './Shared/withAuthentication';
+import withBadgr from './Shared/withBadgr';
 
 import * as routes from './routes/routes';
 
@@ -89,4 +90,4 @@ class App extends Component {
 }
 
 
-export default withAuthentication(App);
+export default withBadgr(withAuthentication(App));

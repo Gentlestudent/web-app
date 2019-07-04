@@ -3,16 +3,18 @@ import { Link } from 'react-router-dom';
 
 import { firestore } from '../../../Utils/Firebase';
 
+import BadgrContext from '../../../Shared/BadgrContext';
+
 import Spinner from '../../../Shared/Spinner';
 
 class ValidateIssuer extends Component {
-  constructor() {
-    super();
-    // this.submit = this.submit.bind(this);
-    this.state = {
-	    issuers: null,
-    };
-    this.getIssuers = this.getIssuers.bind(this);
+    constructor() {
+        super();
+        // this.submit = this.submit.bind(this);
+        this.state = {
+            issuers: null,
+        };
+        this.getIssuers = this.getIssuers.bind(this);
     }
 
     componentDidMount() {
@@ -27,41 +29,48 @@ class ValidateIssuer extends Component {
             });
             this.setState(() => ({ issuers: res }))
         })
-        .catch(err => {
-            console.log('Error getting documents', err);
-        });
+            .catch(err => {
+                console.log('Error getting documents', err);
+            });
     }
-  render() {
-    const { issuers, getIssuers } = this.state;
+    render() {
+        const { issuers, getIssuers } = this.state;
 
-    return (
-        <React.Fragment>
-            { !! issuers && <OpportunitiesList issuers={ issuers } getIssuers={ this.getIssuers } /> }
-            { !! issuers && Object.getOwnPropertyNames(issuers).length === 0 && <EmptyList/> }
-            { ! issuers && <Loading/> }
-        </React.Fragment>
-    );
-  }
+        return (
+            <React.Fragment>
+                <BadgrContext.Consumer>
+                    {badgrAuth => badgrAuth
+                        ? <React.Fragment>
+                            {!!issuers && <OpportunitiesList issuers={issuers} getIssuers={getIssuers} />}
+                            {!!issuers && Object.getOwnPropertyNames(issuers).length === 0 && <EmptyList />}
+                            {!issuers && <Loading />}
+                        </React.Fragment>
+                        : <p>Could not connect to Badgr API</p>
+                    }
+                </BadgrContext.Consumer>
+            </React.Fragment>
+        );
+    }
 }
 
-class OpportunitiesList extends Component{
+class OpportunitiesList extends Component {
     constructor(props) {
         super(props);
 
         this.state = {};
 
         this.handleClick = this.handleClick.bind(this);
-      };
-    
-      handleClick(event) {
+    };
+
+    handleClick(event) {
         console.log(event.target.id);
         firestore.validateIssuer(event.target.id);
         this.props.getIssuers();
-      }
+    }
 
-      render() {
+    render() {
         const { issuers } = this.props;
-    
+
         return (
             <React.Fragment>
                 <div className="container">
@@ -73,10 +82,10 @@ class OpportunitiesList extends Component{
                                 <div className={`card-item issuer`} key={issuers[key].addressId}>
                                     <h2>{issuers[key].name}</h2>
                                     <div className="meta-data">
-                                    <small>institutie:{issuers[key].institution}</small>
-                                    <small>tel.:{issuers[key].phonenumber}</small>
-                                    <small>url:{issuers[key].url}</small>
-                                    <button onClick={this.handleClick} id={key}>Accepteren</button>
+                                        <small>institutie:{issuers[key].institution}</small>
+                                        <small>tel.:{issuers[key].phonenumber}</small>
+                                        <small>url:{issuers[key].url}</small>
+                                        <button onClick={this.handleClick} id={key}>Accepteren</button>
                                     </div>
                                 </div>
                             )}
@@ -87,7 +96,7 @@ class OpportunitiesList extends Component{
         );
     }
 }
-    
+
 
 const EmptyList = () =>
     <div>
@@ -99,8 +108,8 @@ const EmptyList = () =>
     </div>
 
 const Loading = () =>
-	<div>
-		<Spinner />
-	</div>
+    <div>
+        <Spinner />
+    </div>
 
 export default ValidateIssuer;
