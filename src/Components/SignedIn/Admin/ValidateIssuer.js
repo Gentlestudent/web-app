@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 
 import { firestore } from '../../../Utils/Firebase';
 
@@ -57,6 +58,22 @@ class OpportunitiesList extends Component{
         console.log(event.target.id);
         firestore.validateIssuer(event.target.id);
         this.props.getIssuers();
+      }
+
+      createBadgrIssuer(id) {
+        let issuer = this.props.issuers[id];
+        let data = {
+            name: issuer.name,
+            email: "freek.de.sagher21@gmail.com", // TODO: change to gentlestudent
+            description: "Phone: " + issuer.phonenumber,
+            url: issuer.url
+        };
+
+        // TODO: fill in header
+        axios.post("https://api.badgr.io/v2/issuers", data, header)
+        .then(console.log("Created issuer"))
+        .catch(err => console.error(err));
+
       }
 
       render() {
