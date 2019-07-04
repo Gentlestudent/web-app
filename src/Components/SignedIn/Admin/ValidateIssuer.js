@@ -42,11 +42,11 @@ class ValidateIssuer extends Component {
                 <BadgrContext.Consumer>
                     {badgrAuth => badgrAuth!=undefined
                         ? <React.Fragment>
-                            {!!issuers && <OpportunitiesList issuers={issuers} getIssuers={getIssuers} badgrAuth={badgrAuth}/>}
+                            {!!issuers && <IssuersList issuers={issuers} getIssuers={getIssuers} badgrAuth={badgrAuth}/>}
                             {!!issuers && Object.getOwnPropertyNames(issuers).length === 0 && <EmptyList />}
                             {!issuers && <Loading />}
                         </React.Fragment>
-                        : <p>Could not connect to Badgr API</p>
+                        : <Loading />
                     }
                 </BadgrContext.Consumer>
             </React.Fragment>
@@ -54,7 +54,7 @@ class ValidateIssuer extends Component {
     }
 }
 
-class OpportunitiesList extends Component {
+class IssuersList extends Component {
     constructor(props) {
         super(props);
 
