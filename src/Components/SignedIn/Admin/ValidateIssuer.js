@@ -70,26 +70,32 @@ class OpportunitiesList extends Component {
     }
 
     createBadgrIssuer(id) {
+
+        function urlify(s){
+             let prefix = 'http://';
+             if (s.substr(0, prefix.length) !== prefix) {
+                 s = prefix + s;
+             }
+        }   
+
         console.log("Trying to create badgr issuer...");
         let accessToken = this.props.badgrAuth.accessToken;
         let header = { headers: { Authorization: "Bearer" + accessToken } };
         let issuer = this.props.issuers[id];
-        // TODO: append http:// to url if it does not exist
+
         let data = {
             name: issuer.name,
             email: "freek.de.sagher21@gmail.com", // TODO: change to gentlestudent
             description: "Phone: " + issuer.phonenumber,
-            url: issuer.url
+            url: urlify(issuer.url)
         };
 
-        // TODO: fill in header
         axios.post("https://api.badgr.io/v2/issuers", data, header)
-            .then(res => {
-                console.log("Created badgr issuer", res);
-                firestore.validateIssuer(id);
-            })
-            .catch(err => console.error(err));
-
+        .then(res => {
+            console.log("Created badgr issuer", res);
+            firestore.validateIssuer(id);
+        })
+        .catch(err => console.error(err));
     }
 
     render() {
