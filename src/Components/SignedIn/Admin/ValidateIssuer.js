@@ -65,12 +65,15 @@ class OpportunitiesList extends Component {
 
     handleClick(event) {
         console.log(event.target.id);
-        firestore.validateIssuer(event.target.id);
+        this.createBadgrIssuer(event.target.id);
         this.props.getIssuers();
     }
 
     createBadgrIssuer(id) {
+        console.log("Trying to create badgr issuer...");
+        let header = { headers: { Authorization: "Bearer NggIVeIAj5FTlrSLoomidEqxG5tOpZ" } };
         let issuer = this.props.issuers[id];
+        // TODO: append http:// to url if it does not exist
         let data = {
             name: issuer.name,
             email: "freek.de.sagher21@gmail.com", // TODO: change to gentlestudent
@@ -80,7 +83,10 @@ class OpportunitiesList extends Component {
 
         // TODO: fill in header
         axios.post("https://api.badgr.io/v2/issuers", data, header)
-            .then(console.log("Created issuer"))
+            .then(res => {
+                console.log("Created badgr issuer", res);
+                firestore.validateIssuer(id);
+            })
             .catch(err => console.error(err));
 
     }
