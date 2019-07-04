@@ -1,33 +1,30 @@
-import React, { Component } from 'react';
-import {
-  Link,
-  withRouter,
-} from 'react-router-dom';
+import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
 
-import { auth, firebase, firestore } from '../../../Utils/Firebase';
+import { auth, firebase, firestore } from "../../../Utils/Firebase";
 
-import * as routes from '../../../routes/routes';
+import * as routes from "../../../routes/routes";
 
-const SignUpPage = ({ history }) =>
+const SignUpPage = ({ history }) => (
   <div className="content content-with-padding register-form-content">
     {/* <h1>SignUp</h1> */}
     <SignUpForm history={history} />
   </div>
+);
 
 const INITIAL_STATE = {
-  firstname: '',
-  lastname: '',
-  email: '',
-  passwordOne: '',
-  passwordTwo: '',
+  firstname: "",
+  lastname: "",
+  email: "",
+  passwordOne: "",
+  passwordTwo: "",
   accepted: false,
-  error: null,
+  error: null
 };
 
 const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value,
+  [propertyName]: value
 });
-
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -35,7 +32,7 @@ class SignUpForm extends Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  onSubmit = (event) => {
+  onSubmit = event => {
     event.preventDefault();
 
     const {
@@ -49,12 +46,10 @@ class SignUpForm extends Component {
       accepted
     } = this.state;
 
-    const {
-      history,
-    } = this.props;
+    const { history } = this.props;
 
     let user = new Object();
-    user["name"] = firstname+" "+lastname;
+    user["name"] = firstname + " " + lastname;
     user["email"] = email;
     // user["birthday"] = birthday;
     // user["education"] = education;
@@ -65,28 +60,30 @@ class SignUpForm extends Component {
 
     var self = this;
 
-    auth.doCreateUserWithEmailAndPassword(email, passwordOne)
+    auth
+      .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
         console.log(auth.getUserId());
+        authUser.user.sendEmailVerification();
         self.setState(() => ({ ...INITIAL_STATE }));
       })
       .catch(error => {
-        self.setState(byPropKey('error', error));
+        self.setState(byPropKey("error", error));
       });
-    
+
     firebase.auth.onAuthStateChanged(authUser => {
       authUser
-          ? firestore.createNewParticipant(authUser.uid, user)
-          .then(res => {
-            history.push(routes.FrontPage);
-          })
-          .catch(error => {
-            console.log('Error: Could not create participant: ', error);
-          })
-          : console.log("authUser is null");
+        ? firestore
+            .createNewParticipant(authUser.uid, user)
+            .then(res => {
+              history.push(routes.FrontPage);
+            })
+            .catch(error => {
+              console.log("Error: Could not create participant: ", error);
+            })
+        : console.log("authUser is null");
     });
-
-  }
+  };
 
   render() {
     const {
@@ -99,50 +96,58 @@ class SignUpForm extends Component {
       passwordOne,
       passwordTwo,
       accepted,
-      error,
+      error
     } = this.state;
 
     const isInvalid =
-      passwordOne !== passwordTwo
-      || passwordOne === ''
-      || email === ''
-      || firstname === ''
-      || lastname === ''
+      passwordOne !== passwordTwo ||
+      passwordOne === "" ||
+      email === "" ||
+      firstname === "" ||
+      lastname === "" ||
       // || ! /^(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/.test(birthday)
       // || education === ''
-      || institute === ''
-      || accepted == false
-      ;
-
+      institute === "" ||
+      accepted == false;
     return (
       <div className="register-form">
-        <div class="cl-wh" id="f-mlb">Maak een account</div>
+        <div class="cl-wh" id="f-mlb">
+          Maak een account
+        </div>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label class="cl-wh f-lb">E-mailadres:</label>
             <div class="f-i-bx b3 mrg3b">
               <div class="tb">
-                  <div class="td icon"><i class="fas fa-envelope"></i></div>
-                  <div class="td prt">
-                    <input
-                      value={email}
-                      onChange={event => this.setState(byPropKey('email', event.target.value))}
-                      type="text"
-                      placeholder="Email"
-                    />
-                  </div>
+                <div class="td icon">
+                  <i class="fas fa-envelope" />
+                </div>
+                <div class="td prt">
+                  <input
+                    value={email}
+                    onChange={event =>
+                      this.setState(byPropKey("email", event.target.value))
+                    }
+                    type="text"
+                    placeholder="Email"
+                  />
                 </div>
               </div>
             </div>
+          </div>
           <div className="form-group">
             <label class="cl-wh f-lb">Naam:</label>
             <div class="f-i-bx b3 mrg3b">
               <div class="tb">
-                  <div class="td icon"><i class="fas fa-user"></i></div>
-                  <div class="td prt">
+                <div class="td icon">
+                  <i class="fas fa-user" />
+                </div>
+                <div class="td prt">
                   <input
                     value={firstname}
-                    onChange={event => this.setState(byPropKey('firstname', event.target.value))}
+                    onChange={event =>
+                      this.setState(byPropKey("firstname", event.target.value))
+                    }
                     type="text"
                     placeholder="Voornaam"
                   />
@@ -150,16 +155,20 @@ class SignUpForm extends Component {
               </div>
             </div>
             <div class="f-i-bx b3 mrg3b">
-                <div class="tb">
-                    <div class="td icon"><i class="fas fa-user"></i></div>
-                    <div class="td prt">
-                    <input
-                      value={lastname}
-                      onChange={event => this.setState(byPropKey('lastname', event.target.value))}
-                      type="text"
-                      placeholder="Achternaam"
-                    />
-                  </div>
+              <div class="tb">
+                <div class="td icon">
+                  <i class="fas fa-user" />
+                </div>
+                <div class="td prt">
+                  <input
+                    value={lastname}
+                    onChange={event =>
+                      this.setState(byPropKey("lastname", event.target.value))
+                    }
+                    type="text"
+                    placeholder="Achternaam"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -185,11 +194,15 @@ class SignUpForm extends Component {
             <label class="cl-wh f-lb">Organisatie/onderwijsinstelling:</label>
             <div class="f-i-bx b3 mrg3b">
               <div class="tb">
-                <div class="td icon"><i class="fas fa-building"></i></div>
+                <div class="td icon">
+                  <i class="fas fa-building" />
+                </div>
                 <div class="td prt">
                   <input
                     value={institute}
-                    onChange={event => this.setState(byPropKey('institute', event.target.value))}
+                    onChange={event =>
+                      this.setState(byPropKey("institute", event.target.value))
+                    }
                     type="text"
                     placeholder="Organisatie/onderwijsinstelling"
                   />
@@ -198,14 +211,20 @@ class SignUpForm extends Component {
             </div>
           </div>
           <div className="form-group">
-          <label class="cl-wh f-lb">Wachtwoord:</label>
+            <label class="cl-wh f-lb">Wachtwoord:</label>
             <div class="f-i-bx b3 mrg3b">
               <div class="tb">
-                <div class="td icon"><i class="fas fa-lock"></i></div>
+                <div class="td icon">
+                  <i class="fas fa-lock" />
+                </div>
                 <div class="td prt">
                   <input
                     value={passwordOne}
-                    onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+                    onChange={event =>
+                      this.setState(
+                        byPropKey("passwordOne", event.target.value)
+                      )
+                    }
                     type="password"
                     placeholder="Wachtwoord"
                   />
@@ -214,11 +233,17 @@ class SignUpForm extends Component {
             </div>
             <div class="f-i-bx b3 mrg3b">
               <div class="tb">
-                <div class="td icon"><i class="fas fa-lock"></i></div>
+                <div class="td icon">
+                  <i class="fas fa-lock" />
+                </div>
                 <div class="td prt">
                   <input
                     value={passwordTwo}
-                    onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+                    onChange={event =>
+                      this.setState(
+                        byPropKey("passwordTwo", event.target.value)
+                      )
+                    }
                     type="password"
                     placeholder="Herhaal wachtwoord"
                   />
@@ -235,25 +260,26 @@ class SignUpForm extends Component {
               placeholder="Instituut"
             />
           </div> */}
-          <div id="tc-bx">Je gaat akkoord met onze <a href={routes.Conditions}>voorwaarden</a> &amp; <a href={routes.Privacy}>privacy beleid</a>.</div>
-          <div id="s-btn" class="mrg25t"><input type="submit" value="Sign up" class="b3"/></div>
-          { error && <p>{error.message}</p> }
+          <div id="tc-bx">
+            Je gaat akkoord met onze <a href={routes.Conditions}>voorwaarden</a>{" "}
+            &amp; <a href={routes.Privacy}>privacy beleid</a>.
+          </div>
+          <div id="s-btn" class="mrg25t">
+            <input type="submit" value="Sign up" class="b3" />
+          </div>
+          {error && <p>{error.message}</p>}
         </form>
       </div>
     );
   }
 }
 
-const SignUpLink = () =>
+const SignUpLink = () => (
   <p>
-    Don't have an account?
-    {' '}
-    <Link to={routes.Register}>Sign Up</Link>
+    Don't have an account? <Link to={routes.Register}>Sign Up</Link>
   </p>
+);
 
 export default withRouter(SignUpPage);
 
-export {
-  SignUpForm,
-  SignUpLink,
-};
+export { SignUpForm, SignUpLink };
