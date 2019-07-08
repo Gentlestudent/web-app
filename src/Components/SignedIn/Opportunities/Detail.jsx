@@ -5,6 +5,7 @@ import List from '../Issuer/Participants';
 import Spinner from '../../../Shared/Spinner';
 
 import { auth, firestore } from '../../../Utils/Firebase';
+import NoMatch from '../../../Shared/NoMatch';
 
 class Detail extends Component {
   constructor(props){
@@ -12,14 +13,17 @@ class Detail extends Component {
 
     this.state={
       opportunity: null,
-      id: this.props.match.params.id
+      id: this.props.match.params.id,
+      loading : true
     };
   }
   componentDidMount(){
     if(this.props.opportunities==undefined){
       firestore.onceGetOpportunity(this.state.id).then(doc => {
         if(doc.data()){
-          this.setState(() => ({ opportunity: doc.data() }));
+          this.setState(() => ({ opportunity: doc.data(), loading : false }));
+        }else{
+          this.setState(() => ({ opportunity: null, loading : false }));
         }
       })
       .catch(err => {
@@ -27,18 +31,19 @@ class Detail extends Component {
       });
     }
     else{
-      this.setState(() => ({ opportunity: this.props.opportunities[this.state.id] }));
+      this.setState(() => ({ opportunity: this.props.opportunities[this.state.id], loading : false }));
     }
   }
   render() {
-    const {opportunity, id} = this.state;
+    const {opportunity, id, loading} = this.state;
 
     return (
       <React.Fragment>
-        { !! opportunity &&
+        { !loading && !! opportunity &&
             <OpportunityDetail opportunity={ opportunity } id={ id } />
         }
-				{ ! opportunity && <EmptyList/> }
+        { !loading && ! opportunity && <NoMatch/> }
+        { loading && <EmptyList />}
 			</React.Fragment>
       
     )
