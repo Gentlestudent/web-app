@@ -274,11 +274,14 @@ class Opportunity extends Component {
         badge["criteria"] = opportunity.shortDescription;
         badge["issuerId"] = opportunity.issuerId;
 
+
+        console.log("Firebase Image: ", image);
+
         let self = this;
         let accessToken = this.props.badgrAuth.accessToken;
         let header = { headers: { Authorization: "Bearer " + accessToken } };
         // TODO fill in fields
-        toDataUrl("https://raw.githubusercontent.com/FreekDS/Wof/master/res/player0.png", function (myBase64) {
+        toDataUrl(image, function (myBase64) {
             let data = {
                 name: badge.name,
                 description: badge.description,

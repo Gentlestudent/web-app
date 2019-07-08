@@ -8,11 +8,6 @@ class List extends Component {
 	constructor(props){
         super(props);
 
-        this.giveBadge = this.giveBadge.bind(this);
-        this.accept = this.accept.bind(this);
-        this.reject = this.reject.bind(this);
-        this.undo = this.undo.bind(this);
-
         this.state ={
             participants: null,
             isEmpty: false
