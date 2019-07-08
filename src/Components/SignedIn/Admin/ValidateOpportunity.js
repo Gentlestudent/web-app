@@ -268,7 +268,7 @@ class Opportunity extends Component {
             case 2: image += "_3.png?alt=media"; break;
         }
         badge["type"] = "BadgeClass";
-        badge["name"] = name;
+        badge["name"] = opportunity.title;
         badge["description"] = opportunity.longDescription;
         badge["image"] = image;
         badge["criteria"] = opportunity.shortDescription;
