@@ -4,7 +4,8 @@ import { Provider } from 'react-redux';
 import {
 	BrowserRouter as Router,
 	Route,
-	Switch
+	Switch,
+	Redirect
 } from "react-router-dom";
 
 import store from './store';
@@ -41,6 +42,18 @@ import Footer from './Shared/Footer';
 import withAuthentication from './Shared/withAuthentication';
 
 import * as routes from './routes/routes';
+import AuthUserContext from './Shared/AuthUserContext';
+
+const PrivateRoute = ({ component: Component, needAuth, ...rest }) => (
+	<Route {...rest} render = { (props) => (
+		<AuthUserContext.Consumer>
+			{authUser => (authUser && needAuth) || (!authUser && !needAuth)
+				? <Component {...props} />
+				: <Redirect to={routes.FrontPage} />
+			}
+		</AuthUserContext.Consumer>
+	)} />
+)
 
 class App extends Component {
 	render() {
@@ -57,9 +70,9 @@ class App extends Component {
 								<Route path={routes.Experiences} render={() => <Experiences />} />
 								<Route path={routes.News} render={() => <News />} />
 								<Route path={routes.AboutUs} exact render={() => <AboutUs />} />
-								<Route path={routes.Register} render={() => <Register />} />
-								<Route path={routes.Login} render={() => <Login />} />
-								<Route path={routes.ResetPassword} render={ () => <ResetPassword />} />
+								<PrivateRoute path={routes.Register} component={Register} needAuth={false} /*render={() => <Register />}*/ />
+								<PrivateRoute path={routes.Login} component={Login} needAuth={false} /*render={() => <Login />}*/ />
+								<PrivateRoute path={routes.ResetPassword} component={ResetPassword} needAuth={false} /*render={ () => <ResetPassword />}*/ />
 								{/* <Route path="/login" render={() => <Login />} /> */}
 								{/* BACKOFFICE */}
 								{/* <Auth> */}
@@ -67,7 +80,7 @@ class App extends Component {
 								<Route path={routes.CreateOpportunity} exact render={() => <CreateOpportunity />} />
 								<Route path={routes.CreateOpportunity+'/:id'} exact render={({match}) => <CreateOpportunity match={match}/>} />
 								<Route path={routes.IssueBadgeRecipient} exact render={() => <IssueBadgeRecipient />} />
-								<Route path={routes.RegisterIssuer} exact render={() => <RegisterIssuer />} />
+								<Route path={routes.RegisterIssuer} component={RegisterIssuer} /*exact render={() => <RegisterIssuer />}*/ />
 								<Route path={routes.ValidateIssuer} exact render={() => <ValidateIssuer />} />
 								<Route path={routes.ValidateOpportunity} exact render={() => <ValidateOpportunity />} />
 								<Route path={routes.CreatedOpportunities} render={() => <CreatedOpportunities />} />
