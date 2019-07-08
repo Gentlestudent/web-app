@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
-
-import { firestore } from '../../../Utils/Firebase';
-
+import { firestore } from "../../../Utils/Firebase";
 import BadgrContext from '../../../Shared/BadgrContext';
-
 import Spinner from '../../../Shared/Spinner';
+
 
 class ValidateIssuer extends Component {
     constructor() {
@@ -22,9 +20,11 @@ class ValidateIssuer extends Component {
         this.getIssuers();
         window.scrollTo(0, 0);
     }
+  
+  
     getIssuers() {
         firestore.onceGetNonValidatedIssuers().then(snapshot => {
-            var res = new Object();
+            let res = new Object();
             snapshot.forEach(doc => {
                 res[doc.id] = doc.data();
             });
@@ -34,6 +34,7 @@ class ValidateIssuer extends Component {
                 console.log('Error getting documents', err);
             });
     }
+  
     render() {
         const { issuers } = this.state;
 
@@ -160,19 +161,18 @@ class IssuersList extends Component {
     }
 }
 
-
-const EmptyList = () =>
-    <div>
-        <div className="container">
-            <div className="content">
-                Er zijn geen te valideren issuers.
-            </div>
-        </div>
+const EmptyList = () => (
+  <div>
+    <div className="container">
+      <div className="content">Er zijn geen te valideren issuers.</div>
     </div>
+  </div>
+);
 
 const Loading = () =>
     <div>
         <Spinner />
     </div>
+
 
 export default ValidateIssuer;

@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
 import { firestore } from '../../../Utils/Firebase';
-
 import Spinner from '../../../Shared/Spinner';
 import { Field, reduxForm } from 'redux-form';
-
 import BadgrContext from '../../../Shared/BadgrContext';
-
 import { renderInput, renderAutomaticInput, renderTextarea, renderSelect, RenderDropzoneInput, validate } from '../../../Shared/Utils';
 import axios from 'axios';
 
@@ -339,14 +335,14 @@ class Opportunity extends Component {
         return (
             <div className={`card-item opportunity ${opportunity.category}`} key={opportunity.addressId}>
                 {/* <img src={opportunity.oppImageUrl ? `${opportunity.pinImageUrl}` : null} className="photo" alt={opportunity.title} /> */}
-                <div style={{ position: "relative" }}>
+                <div className="opportunity--info">
                     {/* <img src={opportunity.oppImageUrl ? `${opportunity.oppImageUrl}` : null} className="badge" /> */}
-                    <h2>{opportunity.title}</h2>
+                    <h2 className="title-opportunity-info">{opportunity.title}</h2>
                     <div className="meta-data">
                         <small>{opportunity.beginDate + ' - ' + opportunity.endDate}</small>
                         {/* <small>{opportunity.street + ' ' + opportunity.house_number + ', ' + opportunity.postal_code + ' ' + opportunity.city}</small> */}
                     </div>
-                    <p>{opportunity.shortDescription}</p>
+                    <p className="text--opportunity-description">{opportunity.shortDescription}</p>
                     <form onSubmit={this.onSubmit}>
                         <div className="form-group">
                             <Field
@@ -366,7 +362,7 @@ class Opportunity extends Component {
                             />
                             {!makeNew && <small>(Of maak een nieuwe beacon door de optie "> Maak een nieuwe beacon" te selecteren)</small>}
                         </div>
-                        {!makeNew && <button disabled={isInvalid} type="submit">
+                        {!makeNew && <button className="button--opportunity-accept" disabled={isInvalid} type="submit">
                             Accepteren
                         </button>}
 
