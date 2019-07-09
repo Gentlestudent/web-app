@@ -74,7 +74,7 @@ class ResetPasswordForm extends Component {
 }
 
 const ResetPasswordLink = () => 
-    <p>
+    <p className="text__clickable-link">
         Forgot your password ? 
         { ' ' }
         <Link to={routes.ResetPassword}> Click here </Link>

@@ -27,10 +27,12 @@ const NewsList = ({ newsItems }) =>
                         <div className="crop-news-img">
                             <img className="news-img" src={newsItems[key].imageUrl ? `${newsItems[key].imageUrl}` : null} alt="Article thumbnail" />
                         </div>
-                        <h1>{newsItems[key].title}</h1>
-                        {!!newsItems[key].published && <small><time datetime={newsItems[key].published}>{newsItems[key].published}</time></small>}
-                        {!!newsItems[key].author && <small>{newsItems[key].author}</small>}
-                        <p>{newsItems[key].shortText}</p> 
+												<div className="news-content">
+													<h1>{newsItems[key].title}</h1>
+                        	{!!newsItems[key].published && <small><time datetime={newsItems[key].published}>{newsItems[key].published}</time></small>}
+                        	{!!newsItems[key].author && <small>{newsItems[key].author}</small>}
+                        	<p>{newsItems[key].shortText}</p> 
+												</div>
                     </article>
                     </li>
                 </a>

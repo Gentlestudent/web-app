@@ -275,7 +275,7 @@ class SignUpForm extends Component {
 }
 
 const SignUpLink = () => (
-  <p>
+  <p className="text__clickable-link">
     Don't have an account? <Link to={routes.Register}>Sign Up</Link>
   </p>
 );
