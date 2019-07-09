@@ -202,7 +202,7 @@ class Opportunity extends Component {
     };
 
     componentDidUpdate() {
-        if (this.state.badge !== undefined && this.state.badge.badgrId !== undefined) {
+        if (this.state.badge !== null && this.state.badge.badgrId !== undefined) {
             console.log("badgr badge created: ", this.state.badge);
             this.validateOpportunity();
         }
@@ -287,6 +287,9 @@ class Opportunity extends Component {
                 image: myBase64,
                 criteriaNarrative: badge.criteria
             }
+
+            console.log("BADGR DATA", data);
+
             axios.post("https://api.badgr.io/v2/badgeclasses", data, header)
                 .then(res => {
                     console.log("Created badgr badgeclass", res);
@@ -294,7 +297,7 @@ class Opportunity extends Component {
                     badge["badgrId"] = res.data.result[0].entityId;
                     self.setState({ badge: badge });
                 })
-                .catch(err => { console.error(err); console.log(data) });
+                .catch(err => { console.error("ERROR"); console.error(err); console.log("data", data) });
         });
     }
 

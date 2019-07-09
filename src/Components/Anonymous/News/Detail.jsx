@@ -24,6 +24,7 @@ class Detail extends Component {
       });
     }
     else{
+      console.log("News items", this.props);
       this.setState(() => ({ newsItem: this.props.newsItems[this.state.id] }));
     }
   }
