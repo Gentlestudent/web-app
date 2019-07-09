@@ -44,7 +44,7 @@ const MapComponent = compose(
 				<React.Fragment key={key}>
 					<Marker
 						position={{ lat: props.addresses[props.opportunities[key].addressId].latitude, lng:  props.addresses[props.opportunities[key].addressId].longitude }}
-						title={ props.issuers[props.opportunities[key].issuerId].name}
+						//title={ props.issuers[props.opportunities[key].issuerId].name}
 						onClick={()=>{ props.showInfo(key)}}
 					>
 						{props.showInfoIndex === key &&
