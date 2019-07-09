@@ -41,26 +41,26 @@ const MapComponent = compose(
 		defaultOptions={{ styles: mapStyles }}
 	>
 		{Object.keys(props.opportunities).map(key =>
-			<React.Fragment key={key}>
-				<Marker
-					position={{ lat: props.addresses[props.opportunities[key].addressId].latitude, lng: props.addresses[props.opportunities[key].addressId].longitude }}
-					// title={props.issuers[props.opportunities[key].issuerId].name}
-					onClick={() => { props.showInfo(key) }}
-				>
-					{props.showInfoIndex === key &&
-						<InfoBox
-							onCloseClick={props.onToggleOpen}
-							options={{ closeBoxURL: ``, enableEventPropagation: true }}
-						>
-							<div style={{ backgroundColor: '#FFF', opacity: 0.95, padding: 15, width: 200 }}>
-								<span style={{ fontSize: 16, fontWeight: 'bold', display: 'block' }}>{props.issuers[props.opportunities[key].issuerId].name}</span>
-								{/* <small>{props.opportunities[key].synopsis}</small> */}
-							</div>
-						</InfoBox>
-					}
-				</Marker>
-			</React.Fragment>
-		)
+				<React.Fragment key={key}>
+					<Marker
+						position={{ lat: props.addresses[props.opportunities[key].addressId].latitude, lng:  props.addresses[props.opportunities[key].addressId].longitude }}
+						//title={ props.issuers[props.opportunities[key].issuerId].name}
+						onClick={()=>{ props.showInfo(key)}}
+					>
+						{props.showInfoIndex === key &&
+							<InfoBox
+								onCloseClick={props.onToggleOpen}
+								options={{ closeBoxURL: ``, enableEventPropagation: true }}
+							>
+								<div style={{ backgroundColor: '#FFF', opacity: 0.95, padding: 15, width: 200 }}>
+									<span style={{ fontSize: 16 , fontWeight: 'bold', display: 'block' }}>{props.issuers[props.opportunities[key].issuerId].name}</span>
+									{/* <small>{props.opportunities[key].synopsis}</small> */}
+								</div>
+							</InfoBox>
+						}
+					</Marker>
+				</React.Fragment>
+			)
 		}
 	</GoogleMap>
 ));

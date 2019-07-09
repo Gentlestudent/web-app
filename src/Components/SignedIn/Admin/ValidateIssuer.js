@@ -1,58 +1,70 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import { firestore } from "../../../Utils/Firebase";
-import BadgrContext from '../../../Shared/BadgrContext';
-import Spinner from '../../../Shared/Spinner';
-
+import BadgrContext from "../../../Shared/BadgrContext";
+import Spinner from "../../../Shared/Spinner";
 
 class ValidateIssuer extends Component {
-    constructor() {
-        super();
-        // this.submit = this.submit.bind(this);
-        this.state = {
-            issuers: null,
-        };
-        this.getIssuers = this.getIssuers.bind(this);
-    }
+  constructor() {
+    super();
+    // this.submit = this.submit.bind(this);
+    this.state = {
+      issuers: null
+    };
+    this.getIssuers = this.getIssuers.bind(this);
+  }
 
-    componentDidMount() {
-        this.getIssuers();
-        window.scrollTo(0, 0);
-    }
+  componentDidMount() {
+    this.getIssuers();
+    window.scrollTo(0, 0);
+  }
 
+  getIssuers() {
+    firestore
+      .onceGetNonValidatedIssuers()
+      .then(snapshot => {
+        let res = {};
+        snapshot.forEach(doc => {
+          res[doc.id] = doc.data();
+        });
+        this.setState(() => ({ issuers: res }));
+      })
+      .catch(err => {
+        console.log("Error getting documents", err);
+      });
+  }
 
-    getIssuers() {
-        firestore.onceGetNonValidatedIssuers().then(snapshot => {
-            let res = {}
-            snapshot.forEach(doc => {
-                res[doc.id] = doc.data();
-            });
-            this.setState(() => ({ issuers: res }))
-        })
-            .catch(err => {
-                console.log('Error getting documents', err);
-            });
-    }
+  render() {
+    const { issuers } = this.state;
 
-    render() {
-        const { issuers } = this.state;
-
-        return (
-            <React.Fragment>
-                <BadgrContext.Consumer>
-                    {badgrAuth => badgrAuth !== undefined
-                        ? <React.Fragment>
-                            {!!issuers && <IssuersList issuers={issuers} getIssuers={this.getIssuers} badgrAuth={badgrAuth} />}
-                            {!!issuers && Object.getOwnPropertyNames(issuers).length === 0 && <EmptyList />}
-                            {!issuers && <Loading />}
-                        </React.Fragment>
-                        : <Loading />
-                    }
-                </BadgrContext.Consumer>
-            </React.Fragment>
-        );
-    }
+    return (
+      <React.Fragment>
+        <BadgrContext.Consumer>
+          {badgrAuth =>
+            badgrAuth !== undefined ? (
+              <React.Fragment>
+                {!!issuers && (
+                  <IssuersList
+                    issuers={issuers}
+                    getIssuers={this.getIssuers}
+                    badgrAuth={badgrAuth}
+                  />
+                )}
+                {!!issuers &&
+                  Object.getOwnPropertyNames(issuers).length === 0 && (
+                    <EmptyList />
+                  )}
+                {!issuers && <Loading />}
+              </React.Fragment>
+            ) : (
+              <Loading />
+            )
+          }
+        </BadgrContext.Consumer>
+      </React.Fragment>
+    );
+  }
 }
 
 class IssuersList extends Component {
@@ -138,57 +150,86 @@ class IssuersList extends Component {
         //     });
     }
 
-    deleteIssuer(issuerID) {
-        console.log(issuerID);
-        let accessToken = this.props.badgrAuth.accessToken;
-        let header = { headers: { Authorization: "Bearer " + accessToken } };
-        console.log("deleting issuer");
-        axios.delete("https://api.badgr.io/v2/issuers/" + issuerID, header)
-            .then(res => console.log(res))
-            .catch(err => console.error(err));
-    }
+  deleteIssuer(issuerID) {
+    console.log(issuerID);
+    let accessToken = this.props.badgrAuth.accessToken;
+    let header = { headers: { Authorization: "Bearer " + accessToken } };
+    console.log("deleting issuer");
+    axios
+      .delete("https://api.badgr.io/v2/issuers/" + issuerID, header)
+      .then(res => console.log(res))
+      .catch(err => console.error(err));
+  }
 
-    render() {
-        const { issuers } = this.props;
+  render() {
+    const { issuers } = this.props;
 
-        return (
-            <React.Fragment>
-                <div className="container">
-                    <div className="content">
-                        <Link to="/" className="back">&lt; Terug</Link>
-                        <h1>Valideer Issuer</h1>
-                        <div className="card-container issuers">
-                            {Object.keys(issuers).map(key =>
-                                <div className={`card-item issuer`} key={issuers[key].addressId}>
-                                    <h2>{issuers[key].name}</h2>
-                                    <div className="meta-data">
-                                        <small>institutie:{issuers[key].institution}</small>
-                                        <small>tel.:{issuers[key].phonenumber}</small>
-                                        <small>url:{issuers[key].url}</small>
-                                        <button onClick={this.handleClick} id={key}>Accepteren</button>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
+    return (
+      <React.Fragment>
+        <div className="container">
+          <div className="content">
+            <Link to="/" className="back">
+              &lt; Terug
+            </Link>
+            <h1>Valideer Issuer</h1>
+            <div className="card-container issuers">
+              {Object.keys(issuers).map(key => (
+                <div
+                  className={`card-item issuer`}
+                  key={issuers[key].addressId}
+                >
+                  <h2>{issuers[key].name}</h2>
+                  <div className="issuer-data">
+                    <table className="table--issuers-info">
+                      <tr className="row--issuers-info">
+                        <th className="tablehead--issuers-info">Institutie:</th>
+                        <td className="tabledata--issuers-info">
+                          {issuers[key].institution}
+                        </td>
+                      </tr>
+                      <tr className="row--issuers-info">
+                        <th className="tablehead--issuers-info">Tel:</th>
+                        <td className="tabledata--issuers-info">
+                          {issuers[key].phonenumber}
+                        </td>
+                      </tr>
+                      <tr className="row--issuers-info">
+                        <th className="tablehead--issuers-info">URL:</th>
+                        <td className="tabledata--issuers-info">
+                          {issuers[key].url}
+                        </td>
+                      </tr>
+                    </table>
+                    <button
+                      className="button--issuer-accept"
+                      onClick={this.handleClick}
+                      id={key}
+                    >
+                      Accepteren
+                    </button>
+                  </div>
                 </div>
-            </React.Fragment>
-        );
-    }
+              ))}
+            </div>
+          </div>
+        </div>
+      </React.Fragment>
+    );
+  }
 }
 
 const EmptyList = () => (
-    <div>
-        <div className="container">
-            <div className="content">Er zijn geen te valideren issuers.</div>
-        </div>
+  <div>
+    <div className="container">
+      <div className="content">Er zijn geen te valideren issuers.</div>
     </div>
+  </div>
 );
 
-const Loading = () =>
-    <div>
-        <Spinner />
-    </div>
-
+const Loading = () => (
+  <div>
+    <Spinner />
+  </div>
+);
 
 export default ValidateIssuer;
