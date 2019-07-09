@@ -1,19 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 
-import newImage from './../assets/wat-is-er-nieuw.png';
-
-const newStyle = {
-	width: '100vw',
-	height: '100%',
-	minHeight: '300px',
-	backgroundImage: `url(${newImage})`,
-	backgroundSize: 'cover',
-	backgroundColor: 'black'
-};
-
 class NoMatch extends Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
 
 		this.state = {
@@ -24,9 +13,9 @@ class NoMatch extends Component {
 		window.scrollTo(0, 0);
 		// this.props.check();
 		setInterval(() => {
-			this.setState({redirect: true});
+			this.setState({ redirect: true });
 		}, 10000);
-  }
+	}
 	render() {
 		const { redirect } = this.state;
 		return (
@@ -52,8 +41,8 @@ class NoMatch extends Component {
 
 const DelayedRedirect = withRouter(({ history }) => (
 	<React.Fragment>
-		{ history.push('/') }
+		{history.push('/')}
 	</React.Fragment>
-  ))
-  
+))
+
 export default NoMatch;

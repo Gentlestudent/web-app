@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import Spinner from '../../../Shared/Spinner';
-
 import { firestore } from '../../../Utils/Firebase';
 
 class Detail extends Component {
@@ -14,7 +12,7 @@ class Detail extends Component {
     };
   }
   componentDidMount(){
-    if(this.props.newsItems==undefined){
+    if(this.props.newsItems===undefined){
       firestore.onceGetNewsItem(this.state.id).then(doc => {
         if(doc.data()){
           this.setState(() => ({ newsItem: doc.data() }));
@@ -53,7 +51,7 @@ class NewsDetail extends Component {
   componentDidMount() {
   }
   render() {
-    const { newsItem, id } = this.props;
+    const { newsItem } = this.props;
 
     return (
       <div className="opportunity-detail">

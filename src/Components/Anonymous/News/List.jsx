@@ -17,13 +17,13 @@ class List extends Component {
 
 const NewsList = ({ newsItems }) =>
 	<div>
-		<div class="l-container">
+		<div className="l-container">
 			<ul>
 			{Object.keys(newsItems).map(key =>
                 // <p>{key}</p>
-                <a href={`news/${key}`}>
-                    <li class="news-item">
-                    <article class="post">
+                <a href={`news/${key}`} key={key}>
+                    <li className="news-item">
+                    <article className="post">
                         <div className="crop-news-img">
                             <img className="news-img" src={newsItems[key].imageUrl ? `${newsItems[key].imageUrl}` : null} alt="Article thumbnail" />
                         </div>
@@ -33,6 +33,8 @@ const NewsList = ({ newsItems }) =>
                         	{!!newsItems[key].author && <small>{newsItems[key].author}</small>}
                         	<p>{newsItems[key].shortText}</p> 
 												</div>
+
+
                     </article>
                     </li>
                 </a>

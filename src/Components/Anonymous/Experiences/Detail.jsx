@@ -14,7 +14,7 @@ class Detail extends Component {
     };
   }
   componentDidMount(){
-    if(this.props.experiences==undefined){
+    if(this.props.experiences===undefined){
       firestore.onceGetExperience(this.state.id).then(doc => {
         if(doc.data()){
           this.setState(() => ({ experience: doc.data() }));
@@ -53,7 +53,7 @@ class NewsDetail extends Component {
   componentDidMount() {
   }
   render() {
-    const { experience, id } = this.props;
+    const { experience } = this.props;
 
     return (
       <div className="opportunity-detail">

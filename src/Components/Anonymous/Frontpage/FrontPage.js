@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
 import Opportunities from './Opportunities';
 import RecentExperiences from './RecentExperiences';
@@ -34,7 +33,7 @@ class FrontPage extends Component {
 		// console.log("loaded");
 		setTimeout(() => {
 			var img = document.getElementById("startpage");
-			if (img != null){
+			if (img != null) {
 				img = img.getElementsByTagName('img')[0];
 				// console.log(img);
 				img.style['filter'] = 'blur(0px)';
@@ -51,7 +50,7 @@ class FrontPage extends Component {
 	}
 	updateDimensions() {
 		// const el = ReactDOM.findDOMNode(this).querySelector('.dynamic-iframe');
-		if (this.videoRef != undefined) {
+		if (this.videoRef !== undefined) {
 			let el = this.videoRef.current;
 			this.setState({
 				"iFrameHeight": 405 / 720 * el.offsetWidth
@@ -83,14 +82,15 @@ class FrontPage extends Component {
 							</div>
 							<div className="introductory-video">
 								<iframe
+									title="Intro video"
 									className="dynamic-iframe"
 									ref={this.videoRef}
 									src="https://arteveldehogeschool.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=dc47c1a8-68b9-413b-812a-aa1400a18754&v=1"
 									style={{ objectFit: 'cover', maxWidth: 720, width: '100%', maxHeight: 405, height: this.state.iFrameHeight, overflow: 'visible' }}
 									width="100%"
 									height={this.state.iFrameHeight}
-									frameborder="0"
-									allowfullscreen allow="autoplay">
+									frameBorder="0"
+									allowFullScreen allow="autoplay">
 								</iframe>
 							</div>
 						</div>
