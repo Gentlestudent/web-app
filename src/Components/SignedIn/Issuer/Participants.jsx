@@ -20,8 +20,8 @@ class List extends Component {
         this.setState({ isEmpty: true });
     }
     loadParticipants() {
-        var res = new Object();
-        var self = this;
+        let res = {};
+        let self = this;
         console.log("fetching participations for opportunity with id " + this.props.id);
         firestore.onceGetParticipationsForOpportunity(this.props.id).then((participations) => {
             participations.forEach(function (participation) {
@@ -55,7 +55,7 @@ class List extends Component {
 
         return (
             <BadgrContext.Consumer>
-                {badgrAuth => badgrAuth != undefined
+                {badgrAuth => badgrAuth !== undefined
                     ? <React.Fragment>
                         {!!participants &&
                             <div className="content">
@@ -149,7 +149,7 @@ class Participant extends Component {
             firestore.completeParticipation(participationId)
                 .then(res => {
                     console.log("Completed participation", res);
-                    self.props.loadParticipants;
+                    self.props.loadParticipants();
                 })
                 .catch(err => {
                     console.log("failed completing participation:", err);
@@ -168,18 +168,18 @@ class Participant extends Component {
         // Create today date
         let date = new Date();
         let month = "" + (date.getMonth() + 1);
-        if (month.length == 1) {
+        if (month.length === 1) {
             month = "0" + month;
         }
         let day = "" + (date.getDate());
-        if (day.length == 1) {
+        if (day.length === 1) {
             day = "0" + day;
         }
         let today = date.getFullYear() + "-" + month + "-" + day;
         console.log(today);
 
         // Create assertion
-        let newAssertion = new Object();
+        let newAssertion = {};
         newAssertion["badge"] = badgeId;
         newAssertion["badgeId"] = badgeId;
         newAssertion["id"] = "";
@@ -207,7 +207,7 @@ class Participant extends Component {
         let self = this;
         firestore.acceptParticipation(event.target.id)
             .then(res => {
-                self.props.loadParticipants;
+                self.props.loadParticipants();
             })
             .catch(err => {
                 console.log("failed accepting participation:", err);

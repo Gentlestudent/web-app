@@ -4,7 +4,7 @@ import { firestore } from '../../../Utils/Firebase';
 import Spinner from '../../../Shared/Spinner';
 import { Field, reduxForm } from 'redux-form';
 import BadgrContext from '../../../Shared/BadgrContext';
-import { renderInput, renderAutomaticInput, renderTextarea, renderSelect, RenderDropzoneInput, validate } from '../../../Shared/Utils';
+import { renderSelect, validate } from '../../../Shared/Utils';
 import axios from 'axios';
 
 function toDataUrl(url, callback) {
@@ -41,7 +41,7 @@ class ValidateOpportunity extends Component {
     }
     getIssuers() {
         firestore.onceGetValidatedIssuers().then(snapshot => {
-            var res = new Object();
+            let res = {};
             snapshot.forEach(doc => {
                 res[doc.id] = doc.data();
             });
@@ -53,7 +53,7 @@ class ValidateOpportunity extends Component {
     }
     getOpportunities() {
         firestore.onceGetNonValidatedOpportunities().then(snapshot => {
-            var res = new Object();
+            let res = {};
             snapshot.forEach(doc => {
                 res[doc.id] = doc.data();
             });
@@ -65,7 +65,7 @@ class ValidateOpportunity extends Component {
     }
     getBeacons() {
         firestore.onceGetBeacons().then(snapshot => {
-            var res = new Object();
+            let res = {};
             snapshot.forEach(doc => {
                 // console.log("id:"+doc.data().beaconId);
                 if (doc.data().major !== undefined && doc.data().minor !== undefined && doc.data().name !== undefined) {
@@ -80,11 +80,11 @@ class ValidateOpportunity extends Component {
             });
     }
     render() {
-        const { opportunities, beacons, getOpportunities, issuers } = this.state;
+        const { opportunities, beacons, issuers } = this.state;
 
         return (
             <BadgrContext.Consumer>
-                {badgrAuth => badgrAuth != undefined
+                {badgrAuth => badgrAuth !== undefined
                     ? <React.Fragment>
                         {!!opportunities && !!beacons &&
                             <OpportunitiesList
@@ -202,7 +202,7 @@ class Opportunity extends Component {
     };
 
     componentDidUpdate() {
-        if (this.state.badge != undefined && this.state.badge.badgrId != undefined) {
+        if (this.state.badge !== undefined && this.state.badge.badgrId !== undefined) {
             console.log("badgr badge created: ", this.state.badge);
             this.validateOpportunity();
         }
@@ -211,11 +211,11 @@ class Opportunity extends Component {
     handleChange(event) {
         // console.log(event.target.value);
         this.setState({ [event.target.id]: event.target.value });
-        if (event.target.value == "MakeNewTrue") {
-            this.state.makeNew = true;
+        if (event.target.value === "MakeNewTrue") {
+            this.setState({ makeNew: true });
         }
         else {
-            this.state.makeNew = false;
+            this.setState({ makeNew: false });
         }
     }
 
@@ -245,8 +245,8 @@ class Opportunity extends Component {
 
     createBadge() {
         let opportunity = this.props.opportunity;
-        let badge = new Object();
-        let name = "";
+        let name;
+        let badge = {};
         let baseUrl = "https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Badges%2F";
         let image = baseUrl;
         console.log(opportunity.category);
@@ -257,17 +257,19 @@ class Opportunity extends Component {
             case 2: name = "Ondernemingszin"; image += "badge_entre-spirit"; break;
             case 3: name = "Onderzoekende houding"; image += "badge_research"; break;
             case 4: name = "Wereldburgerschap"; image += "badge_global-citizenship"; break;
+            default: break;
         }
         switch (opportunity.difficulty) {
             case 0: image += "_1.png?alt=media"; break;
             case 1: image += "_2.png?alt=media"; break;
             case 2: image += "_3.png?alt=media"; break;
+            default: break;
         }
         badge["type"] = "BadgeClass";
         badge["name"] = opportunity.title;
         badge["description"] = opportunity.longDescription;
         badge["image"] = image;
-        badge["criteria"] = opportunity.shortDescription;
+        badge["criteria"] = opportunity.shortDescription + " - " + name;
         badge["issuerId"] = opportunity.issuerId;
 
 
@@ -292,13 +294,13 @@ class Opportunity extends Component {
                     badge["badgrId"] = res.data.result[0].entityId;
                     self.setState({ badge: badge });
                 })
-                .catch(err => {console.error(err); console.log(data)});
+                .catch(err => { console.error(err); console.log(data) });
         });
     }
 
     postNewBeacon(major, minor, name) {
         let addressId = this.props.opportunity.addressId;
-        let beacon = new Object();
+        let beacon = {};
         beacon["major"] = major;
         beacon["minor"] = minor;
         beacon["range"] = 0;
@@ -326,8 +328,8 @@ class Opportunity extends Component {
     }
 
     render() {
-        const { opportunity, beacons, id } = this.props;
-        const { beaconId, makeNew, error, validateOpportunity, postNewBeacon } = this.state;
+        const { opportunity, beacons } = this.props;
+        const { beaconId, makeNew, error } = this.state;
         const isInvalid =
             beaconId === ""
             ;
@@ -397,7 +399,6 @@ class AddBeacon extends Component {
     }
 
     render() {
-        const { opportunity, beacons, id } = this.props;
         const { major, minor, name, error } = this.state;
         const isInvalid =
             major === "" ||

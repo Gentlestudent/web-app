@@ -20,11 +20,11 @@ class ValidateIssuer extends Component {
         this.getIssuers();
         window.scrollTo(0, 0);
     }
-  
-  
+
+
     getIssuers() {
         firestore.onceGetNonValidatedIssuers().then(snapshot => {
-            let res = new Object();
+            let res = {}
             snapshot.forEach(doc => {
                 res[doc.id] = doc.data();
             });
@@ -34,14 +34,14 @@ class ValidateIssuer extends Component {
                 console.log('Error getting documents', err);
             });
     }
-  
+
     render() {
         const { issuers } = this.state;
 
         return (
             <React.Fragment>
                 <BadgrContext.Consumer>
-                    {badgrAuth => badgrAuth != undefined
+                    {badgrAuth => badgrAuth !== undefined
                         ? <React.Fragment>
                             {!!issuers && <IssuersList issuers={issuers} getIssuers={this.getIssuers} badgrAuth={badgrAuth} />}
                             {!!issuers && Object.getOwnPropertyNames(issuers).length === 0 && <EmptyList />}
@@ -105,12 +105,12 @@ class IssuersList extends Component {
         };
 
         axios.post("https://api.badgr.io/v2/issuers", data, header)
-        .then(res => {
-            console.log("Created badgr issuer", res);
-            firestore.updateIssuerBadgrId(id, res.data.result[0].entityId);
-            firestore.validateIssuer(id);
-        })
-        .catch(err => console.error(err));
+            .then(res => {
+                console.log("Created badgr issuer", res);
+                firestore.updateIssuerBadgrId(id, res.data.result[0].entityId);
+                firestore.validateIssuer(id);
+            })
+            .catch(err => console.error(err));
         // console.log("fetching issuers");
         // axios.get("https://api.badgr.io/v2/issuers", header)
         //     .then(res => {
@@ -127,8 +127,8 @@ class IssuersList extends Component {
         let accessToken = this.props.badgrAuth.accessToken;
         let header = { headers: { Authorization: "Bearer " + accessToken } };
         console.log("deleting issuer");
-        axios.delete("https://api.badgr.io/v2/issuers/" + issuerID, header).
-            then(res => console.log(res))
+        axios.delete("https://api.badgr.io/v2/issuers/" + issuerID, header)
+            .then(res => console.log(res))
             .catch(err => console.error(err));
     }
 
@@ -162,11 +162,11 @@ class IssuersList extends Component {
 }
 
 const EmptyList = () => (
-  <div>
-    <div className="container">
-      <div className="content">Er zijn geen te valideren issuers.</div>
+    <div>
+        <div className="container">
+            <div className="content">Er zijn geen te valideren issuers.</div>
+        </div>
     </div>
-  </div>
 );
 
 const Loading = () =>

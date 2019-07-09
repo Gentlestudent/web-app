@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Waypoint from 'react-waypoint';
 
 import { cta, stepsIssuer } from '../../../Shared/Utils';
-import { NavLink } from 'react-router-dom';
 
 import step1 from '../../../assets/step1.jpg';
 import step2 from '../../../assets/step2.jpg';
@@ -34,7 +33,6 @@ class Steps extends Component {
 	}
 
 	render() {
-		const { authUser } = this.state;
 		return (
 			<React.Fragment>
 				<div className="container">

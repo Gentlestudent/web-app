@@ -8,18 +8,18 @@ export const onceGetOpportunities = () =>
   firestore.collection('Opportunities').where('authority', '<', 2).get()
 
 export async function createIssuer(institution, longName, url, phonenumber,street, housenumber,bus, postalcode, city, userId, userEmail) {
-    var addressdata = {
+    let addressdata = {
         bus: bus,
         city: city,
-        housenumber: parseInt(housenumber),
-        postalcode: parseInt(postalcode),
+        housenumber: parseInt(housenumber, 10),
+        postalcode: parseInt(postalcode, 10),
         street: street
     };
-    var addressid;
-    firestore.collection('Addresses').add(addressdata).
-    then(function(docRef) {
+    let addressid;
+    firestore.collection('Addresses').add(addressdata)
+    .then(function(docRef) {
         addressid = docRef.id;
-        var issuerdata = {
+        let issuerdata = {
             addressID: addressid,
             email: userEmail,
             institution: institution,

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
     Link,
     withRouter,
-    Redirect
   } from 'react-router-dom';
 import { auth } from '../../../Utils/Firebase';
 import * as routes from '../../../routes/routes';
@@ -44,15 +43,15 @@ class ResetPasswordForm extends Component {
 
         return (
             <div className="register-form login-page">
-            <div class="cl-wh" id="f-mlb">Reset Password</div>
+            <div className="cl-wh" id="f-mlb">Reset Password</div>
             <br/>
             <form onSubmit={this.onSubmit}>
               <div className="form-group">
-                <label class="cl-wh f-lb">E-mailadres:</label>
-                <div class="f-i-bx b3 mrg3b">
-                  <div class="tb">
-                    <div class="td icon"><i class="fas fa-envelope"></i></div>
-                    <div class="td prt">
+                <label className="cl-wh f-lb">E-mailadres:</label>
+                <div className="f-i-bx b3 mrg3b">
+                  <div className="tb">
+                    <div className="td icon"><i className="fas fa-envelope"></i></div>
+                    <div className="td prt">
                       <input
                         value={email}
                         onChange={event => this.setState(byPropKey('email', event.target.value))}
@@ -64,7 +63,7 @@ class ResetPasswordForm extends Component {
                 </div>
               </div>
 
-              <div id="s-btn" class="mrg25t"><input type="submit" value="Reset Password" class="b3"/></div>
+              <div id="s-btn" className="mrg25t"><input type="submit" value="Reset Password" className="b3"/></div>
               { error && <p>{error.message}</p> }
               { success && <p> {success} </p>}
             </form>

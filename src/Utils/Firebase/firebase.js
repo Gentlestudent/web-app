@@ -19,7 +19,7 @@ if (!firebase.apps.length) {
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
-const settings = {/* your settings... */ timestampsInSnapshots: true};
+const settings = {/* your settings... */ /*timestampsInSnapshots: true*/};
 firestore.settings(settings);
 const storage = firebase.storage();
 

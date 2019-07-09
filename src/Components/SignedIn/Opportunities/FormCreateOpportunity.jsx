@@ -3,17 +3,16 @@ import LocationPicker from 'react-location-picker';
 import Geocode from "react-geocode";
 
 import { Field, reduxForm } from 'redux-form';
-import Spinner from '../../../Shared/Spinner';
 
 import { auth, firestore } from '../../../Utils/Firebase';
 import firebase from 'firebase';
 import 'firebase/storage';
 
-import { Category, Difficulty} from './Constants';
+import { Category, Difficulty } from './Constants';
 
 import * as routes from '../../../routes/routes';
 
-import { renderInput, renderAutomaticInput, renderTextarea, renderSelect, RenderDropzoneInput, validate } from '../../../Shared/Utils';
+import { renderInput, renderAutomaticInput, renderTextarea, renderSelect, validate } from '../../../Shared/Utils';
 // import { FirebaseStorage } from '@firebase/storage-types';
 
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
@@ -70,33 +69,32 @@ class FormCreateOpportunity extends React.Component {
     // this.componentDidMount = this.componentDidMount.bind(this);
   }
   componentDidMount() {
-    let userId= auth.getUserId();
-      this.setState({issuerId: userId});
-      if(userId!=""){
-        // console.log("is user "+userId+" an admin?");
-        firestore.onceGetAdmin(userId).then(doc => {
-          var res = new Object();
-          if(doc.data()){
-            // console.log("user is admin");
-            this.setState(() => ({ isAdmin: true }));
-            firestore.onceGetValidatedIssuers().then(snapshot => {
-              var res = new Object();
-              snapshot.forEach(issuer => {
-                res[issuer.id] = issuer.data();
-              });
-              this.setState(() => ({ issuers: res }));
-            }).catch(err => {
-              console.log('Error fetching issuers', err);
+    let userId = auth.getUserId();
+    this.setState({ issuerId: userId });
+    if (userId !== "") {
+      // console.log("is user "+userId+" an admin?");
+      firestore.onceGetAdmin(userId).then(doc => {
+        if (doc.data()) {
+          // console.log("user is admin");
+          this.setState(() => ({ isAdmin: true }));
+          firestore.onceGetValidatedIssuers().then(snapshot => {
+            let res = {};
+            snapshot.forEach(issuer => {
+              res[issuer.id] = issuer.data();
             });
-          }
-        })
+            this.setState(() => ({ issuers: res }));
+          }).catch(err => {
+            console.log('Error fetching issuers', err);
+          });
+        }
+      })
         .catch(err => {
           console.log('User is not an admin', err);
         });
-      }
+    }
   }
   componentDidUpdate() {
-    if(!this.state.initialised && this.props.initValues && Object.keys(this.props.initValues).length>0){
+    if (!this.state.initialised && this.props.initValues && Object.keys(this.props.initValues).length > 0) {
       this.setState({
         initialised: true,
         start_date: this.props.initValues.start_date,
@@ -152,110 +150,112 @@ class FormCreateOpportunity extends React.Component {
 
   }
 
-  getEnumValue(enumTable, i){
-    var keys = Object.keys(enumTable).sort(function(a, b){
+  getEnumValue(enumTable, i) {
+    var keys = Object.keys(enumTable).sort(function (a, b) {
       return enumTable[a] - enumTable[b];
     }); //sorting is required since the order of keys is not guaranteed.
-    
-    var getEnum = function(ordinal) {
+
+    var getEnum = function (ordinal) {
       return keys[ordinal];
     }
 
     return getEnum(i);
   }
 
-  choosePin(){
+  choosePin() {
     let baseUrl = "https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2F";
     let url = baseUrl;
-    switch(parseInt(this.state.category)){
+    switch (parseInt(this.state.category, 10)) {
       case 0: url += "pin_digitale-geletterdheid"; break;
       case 1: url += "pin_duurzaamheid"; break;
       case 2: url += "pin_ondernemingszin"; break;
       case 3: url += "pin_onderzoekende-houding"; break;
       case 4: url += "pin_wereldburgerschap"; break;
+      default: break;
     }
-    switch(parseInt(this.state.difficulty)){
+    switch (parseInt(this.state.difficulty, 10)) {
       case 0: url += "_1.png?alt=media"; break;
       case 1: url += "_2.png?alt=media"; break;
       case 2: url += "_3.png?alt=media"; break;
+      default: break;
     }
-    this.state.pinImageUrl= url;
+    this.setState({ pinImageUrl: url });
   }
 
   handleChange(event) {
     // console.log(event.target.value);
-    this.setState({[event.target.id]: event.target.value});
+    this.setState({ [event.target.id]: event.target.value });
     // this.event.target.props.change(value, )
     // console.log(event.target.id);
     // console.log(event.target.value);
-    if(event.target.id=="street" 
-      || "house_number" 
-      || "city" 
-      || "postal_code" 
-      || "country" ){
+    if (event.target.id === "street"
+      || "house_number"
+      || "city"
+      || "postal_code"
+      || "country") {
       this.changeAddress();
     }
   }
 
   handleImage(event) {
-    this.setState({image: event.target.files[0]});
-    this.setState({imageExtension: event.target.value.split('.').pop()});
+    this.setState({ image: event.target.files[0] });
+    this.setState({ imageExtension: event.target.value.split('.').pop() });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     this.choosePin();
-    if(this.state.image != ""){
-      let fileName = this.state.title+"."+this.state.imageExtension;
+    if (this.state.image !== "") {
+      let fileName = this.state.title + "." + this.state.imageExtension;
       let baseUrl = "https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Opportunityimages%2F";
-      this.setState({imageUrl: baseUrl + encodeURIComponent(fileName)+"?alt=media"});
+      this.setState({ imageUrl: baseUrl + encodeURIComponent(fileName) + "?alt=media" });
       this.uploadImage(fileName);
     }
     this.postNewAddress(this.postNewOpportunity);
   }
 
-  uploadImage(fileName){
+  uploadImage(fileName) {
     console.log(fileName);
-    let path = "Opportunityimages/"+fileName;
+    let path = "Opportunityimages/" + fileName;
     let ref = firebase.storage().ref().child(path);
-    ref.put(this.state.image).then(function(snapshot) {
+    ref.put(this.state.image).then(function (snapshot) {
       console.log('Uploaded file!');
-    }).catch(function(error) {
+    }).catch(function (error) {
       console.error("Error uploading file: ", error);
     });
   }
 
-  postNewAddress(postNewOpportunity){
-    let address = new Object();
+  postNewAddress(postNewOpportunity) {
+    let address = {};
     address["bus"] = "";
     address["city"] = this.state.city;
     address["country"] = this.state.country;
-    address["housenumber"] = parseInt(this.state.house_number);
+    address["housenumber"] = parseInt(this.state.house_number, 10);
     address["latitude"] = this.state.lat;
     address["longitude"] = this.state.lng;
-    address["postalcode"] = parseInt(this.state.postal_code);
+    address["postalcode"] = parseInt(this.state.postal_code, 10);
     address["street"] = this.state.street;
 
-    var self = this;
+    let self = this;
 
-    firestore.createAddress(address).then(function(docRef) {
+    firestore.createAddress(address).then(function (docRef) {
       console.log("Document written with ID: ", docRef.id);
       postNewOpportunity(docRef.id, self);
-    }).catch(function(error) {
+    }).catch(function (error) {
       console.error("Error adding document: ", error);
     });
   }
 
-  postNewOpportunity(addressId, self){
+  postNewOpportunity(addressId, self) {
     console.log(this.state.start_date);
-    let opportunity = new Object();
+    let opportunity = {};
     opportunity["addressId"] = addressId;
     opportunity["badgeId"] = this.state.badgeId;
     opportunity["beaconId"] = "";
     opportunity["beginDate"] = this.checkDate(this.state.start_date);
     opportunity["authority"] = 0;
-    opportunity["category"] = parseInt(this.state.category);
-    opportunity["difficulty"] = parseInt(this.state.difficulty);
+    opportunity["category"] = parseInt(this.state.category, 10);
+    opportunity["difficulty"] = parseInt(this.state.difficulty, 10);
     opportunity["endDate"] = this.checkDate(this.state.end_date);
     opportunity["international"] = false;
     opportunity["issuerId"] = this.state.issuerId;
@@ -270,26 +270,26 @@ class FormCreateOpportunity extends React.Component {
     opportunity["participations"] = 0;
 
     firestore.createOpportunity(opportunity)
-    .then(function(docRef){
-      self.redirect(docRef);
-    })
-    .catch(function(error) {
-      console.error("Error adding document: ", error);
-      console.error(JSON.stringify(opportunity));
-    });
+      .then(function (docRef) {
+        self.redirect(docRef);
+      })
+      .catch(function (error) {
+        console.error("Error adding document: ", error);
+        console.error(JSON.stringify(opportunity));
+      });
   }
 
-  checkDate(s){
-    if(/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/.test(s)){
+  checkDate(s) {
+    if (/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/.test(s)) {
       return s;
     }
     let day = s.split("-")[0];
     let month = s.split("-")[1];
     let year = s.split("-")[2];
-    return year+"-"+month+"-"+day;
+    return year + "-" + month + "-" + day;
   }
 
-  redirect(id){
+  redirect(id) {
     this.props.history.push(routes.CreatedOpportunities);
     // this.props.history.push(routes.Opportunities+"/"+id);
   }
@@ -307,12 +307,12 @@ class FormCreateOpportunity extends React.Component {
   }
 
   changeAddress() {
-    Geocode.fromAddress(this.state.street+" "+this.state.houseNr+", "+this.state.city+" "+this.state.postCode+", "+this.state.country).then(
+    Geocode.fromAddress(this.state.street + " " + this.state.houseNr + ", " + this.state.city + " " + this.state.postCode + ", " + this.state.country).then(
       response => {
         const { lat, lng } = response.results[0].geometry.location;
-        this.setState({lat: lat});
-        this.setState({lng: lng});
-        defaultPosition = {lat, lng};
+        this.setState({ lat: lat });
+        this.setState({ lng: lng });
+        defaultPosition = { lat, lng };
       },
       error => {
         console.error(error);
@@ -321,12 +321,9 @@ class FormCreateOpportunity extends React.Component {
   }
 
   render() {
-    const { 
-      handleSubmit,
+    const {
       submitting,
       pristine,
-      badge,
-      badges
     } = this.props
 
     return (
@@ -335,19 +332,19 @@ class FormCreateOpportunity extends React.Component {
         {/* {this.state.title} */}
         {!!this.state.isAdmin && this.state.issuers && <div className="form-group">
           <Field
-              id="issuerId"
-              name="issuerId"
-              label="Kies een issuer: "
-              data={{
+            id="issuerId"
+            name="issuerId"
+            label="Kies een issuer: "
+            data={{
               list: Object.keys(this.state.issuers).map(key => {
-                  return {
+                return {
                   value: key,
                   display: this.state.issuers[key].name
-                  };
+                };
               })
-              }}
-              component={renderSelect}
-              onChange={this.handleChange}
+            }}
+            component={renderSelect}
+            onChange={this.handleChange}
           />
         </div>}
         <div className="form-group">
@@ -361,7 +358,7 @@ class FormCreateOpportunity extends React.Component {
             defaultValue="Titel"
             placeholder="Titel"
             value={this.state.title}
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
           />
         </div>
         <div className="form-group">
@@ -391,7 +388,7 @@ class FormCreateOpportunity extends React.Component {
             component={renderTextarea}
             placeholder="Volledige beschrijving van de leerkans"
             value={this.state.description}
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
           />
         </div>
         <div className="form-group">
@@ -404,7 +401,7 @@ class FormCreateOpportunity extends React.Component {
             component={renderTextarea}
             placeholder="Korte beschrijving van wat er verwacht wordt"
             value={this.state.synopsis}
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
           />
         </div>
         <div className="form-group">
@@ -436,7 +433,7 @@ class FormCreateOpportunity extends React.Component {
             defaultValue="Meer info"
             placeholder="Meer info"
             value={this.state.moreInfo}
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
           />
         </div>
         <div className="form-group">
@@ -449,7 +446,7 @@ class FormCreateOpportunity extends React.Component {
             defaultValue="E-mailadres contactpersoon"
             placeholder="E-mailadres contactpersoon"
             value={this.state.contact}
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
           />
         </div>
         <div className="form-group">
@@ -462,7 +459,7 @@ class FormCreateOpportunity extends React.Component {
             defaultValue="Website"
             placeholder="Website"
             value={this.state.website}
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
           />
         </div>
         {/* <div className="form-group">
@@ -481,7 +478,7 @@ class FormCreateOpportunity extends React.Component {
             component={renderInput}
             placeholder="DD/MM/JJJJ"
             value={this.state.start_date}
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
             required
           />
         </div>
@@ -495,7 +492,7 @@ class FormCreateOpportunity extends React.Component {
             component={renderInput}
             placeholder="DD/MM/JJJJ"
             value={this.state.end_date}
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
             required
           />
         </div>
@@ -508,7 +505,7 @@ class FormCreateOpportunity extends React.Component {
             component={renderInput}
             placeholder="Straatnaam"
             value={this.state.street}
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
           />
         </div>
         <div className="form-group">
@@ -521,7 +518,7 @@ class FormCreateOpportunity extends React.Component {
             component={renderInput}
             placeholder="Huisnummer"
             value={this.state.house_number}
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
           />
         </div>
         <div className="form-group">
@@ -534,7 +531,7 @@ class FormCreateOpportunity extends React.Component {
             component={renderInput}
             placeholder="Post code"
             value={this.state.postal_code}
-            onChange={ this.handleChange }
+            onChange={this.handleChange}
           />
         </div>
         <div className="form-group">
@@ -546,7 +543,7 @@ class FormCreateOpportunity extends React.Component {
             component={renderInput}
             placeholder="Stad"
             value={this.state.city}
-            onChange={this.handleChange }
+            onChange={this.handleChange}
           />
         </div>
         <div className="form-group">
@@ -558,7 +555,7 @@ class FormCreateOpportunity extends React.Component {
             component={renderInput}
             placeholder="Land"
             value={this.state.country}
-            onChange={ this.handleChange } 
+            onChange={this.handleChange}
           />
         </div>
         <div className="form-group">
@@ -566,7 +563,7 @@ class FormCreateOpportunity extends React.Component {
             Pas locatie aan (Optioneel)
           </label>
           <div>
-            <BeaconLocationPicker changeLat={this.changeLat} changeLng={this.changeLng}/>
+            <BeaconLocationPicker changeLat={this.changeLat} changeLng={this.changeLng} />
           </div>
           <small>Verplaats de marker indien de locatie van het adres op google maps niet volledig overeenkomt met de beacon</small>
         </div>
@@ -600,12 +597,12 @@ class FormCreateOpportunity extends React.Component {
           <label htmlFor="Image">
             Afbeelding uploaden
           </label>
-          <input 
+          <input
             type="file"
             label="Afbeelding uploaden"
             className="input"
             id="image"
-            onChange={ this.handleImage } 
+            onChange={this.handleImage}
           />
           <small>Gelieve een rechtenvrije afbeelding te kiezen met een hoge resolutie.</small>
         </div>
@@ -619,61 +616,61 @@ class FormCreateOpportunity extends React.Component {
   }
 }
 
-const BadgesList = ({badges}) =>
-  <Field
-    id="badgeId"
-    name="badge"
-    label="Badge"
-    data={{
-      list: Object.keys(badges).map(key => {
-        return {
-          value: key,
-          display: badges[key].name
-        };
-      })
-    }}
-    component={renderSelect}
-  />
+// const BadgesList = ({ badges }) =>
+//   <Field
+//     id="badgeId"
+//     name="badge"
+//     label="Badge"
+//     data={{
+//       list: Object.keys(badges).map(key => {
+//         return {
+//           value: key,
+//           display: badges[key].name
+//         };
+//       })
+//     }}
+//     component={renderSelect}
+//   />
 
-const EmptyList = () =>
-	<div>
-		<Spinner />
-	</div>
+// const EmptyList = () =>
+//   <div>
+//     <Spinner />
+//   </div>
 
 class BeaconLocationPicker extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
       address: "Kala Pattar Ascent Trail, Khumjung 56000, Nepal",
       position: {
-         lat: 0,
-         lng: 0
+        lat: 0,
+        lng: 0
       }
     };
- 
+
     // Bind
     this.handleLocationChange = this.handleLocationChange.bind(this);
   }
-  
-  handleLocationChange ({ position, address }) {
- 
+
+  handleLocationChange({ position, address }) {
+
     // Set new location
     this.setState({ position, address });
-    if(!!position){
+    if (!!position) {
       this.props.changeLat(position.lat);
       this.props.changeLng(position.lng);
     }
   }
- 
-  render () {
+
+  render() {
     return (
       <div>
         {/* <h1>{this.state.address}</h1> */}
         <div>
           <LocationPicker
-            containerElement={ <div style={ {height: '100%'} } /> }
-            mapElement={ <div style={ {height: '400px'} } /> }
+            containerElement={<div style={{ height: '100%' }} />}
+            mapElement={<div style={{ height: '400px' }} />}
             defaultPosition={defaultPosition}
             onChange={this.handleLocationChange}
           />

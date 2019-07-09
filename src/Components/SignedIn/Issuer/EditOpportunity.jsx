@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 
-import { connect } from 'react-redux';
-
 import Spinner from '../../../Shared/Spinner';
 
 import FormEditOpportunity from './FormEditOpportunity';
@@ -10,20 +8,20 @@ import FormEditOpportunity from './FormEditOpportunity';
 import { auth, firestore } from '../../../Utils/Firebase';
 
 class EditOpportunity extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
-    this.state={
+    this.state = {
       opportunity: null,
       id: this.props.match.params.id,
       initValues: {}
     };
   }
-  componentDidMount(){
-    var self = this;
-    if(this.props.opportunities==undefined){
+  componentDidMount() {
+    let self = this;
+    if (this.props.opportunities === undefined) {
       firestore.onceGetOpportunity(this.state.id).then(doc => {
-        if(doc.data() && doc.data().authority==0){
+        if (doc.data() && doc.data().authority === 0) {
           this.setState(() => ({ opportunity: doc.data() }));
           var start_date = doc.data().beginDate;
           // var category= self.getEnumValue(Category, doc.data().category);
@@ -41,8 +39,8 @@ class EditOpportunity extends Component {
           firestore.onceGetAddress(doc.data().addressId).then(snapshot => {
             self.setState({
               initValues: {
-                address: snapshot.data().street+" "+snapshot.data().housenumber+
-                ", "+snapshot.data().postalcode+" "+snapshot.data().city,
+                address: snapshot.data().street + " " + snapshot.data().housenumber +
+                  ", " + snapshot.data().postalcode + " " + snapshot.data().city,
                 start_date: start_date,
                 category: category,
                 city: snapshot.data().city,
@@ -63,38 +61,38 @@ class EditOpportunity extends Component {
                 contact: contact
               }
             });
-          }).catch(function(error) {
+          }).catch(function (error) {
             console.error("Error getting document: ", error);
           });
         }
-        else{
+        else {
           throw new Error("Opportunity does not exist, has incorrect data or has elevated authority.")
         }
       })
-      .catch(err => {
-        console.log('Could not fetch opportunity data: ', err);
-        this.props.history.push("/404");
-      });
+        .catch(err => {
+          console.log('Could not fetch opportunity data: ', err);
+          this.props.history.push("/404");
+        });
     }
-    else{
+    else {
       this.setState(() => ({ opportunity: this.props.opportunities[this.state.id] }));
     }
   }
   render() {
-    const {opportunity, initValues} = this.state;
+    const { opportunity, initValues } = this.state;
 
     return (
       <React.Fragment>
-        { !! opportunity && <OpportunityDetail history={this.props.history} opportunity={ opportunity } id={this.props.match.params.id} initValues={ initValues } /> }
-				{ ! opportunity && <EmptyList/> }
-			</React.Fragment>
-      
+        {!!opportunity && <OpportunityDetail history={this.props.history} opportunity={opportunity} id={this.props.match.params.id} initValues={initValues} />}
+        {!opportunity && <EmptyList />}
+      </React.Fragment>
+
     )
   }
 }
 
 class OpportunityDetail extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       address: null,
@@ -102,50 +100,51 @@ class OpportunityDetail extends Component {
       diff: "",
       issuer: null,
       userHasRights: false,
-		};
+    };
   }
   componentDidMount() {
-    let userId= auth.getUserId();
-    if(userId!=""){
-      if(this.props.opportunity.issuerId == userId){this.setState(() => ({ userHasRights: true }));}
-      else{
+    let userId = auth.getUserId();
+    if (userId !== "") {
+      if (this.props.opportunity.issuerId === userId) { this.setState(() => ({ userHasRights: true })); }
+      else {
         firestore.onceGetAdmin(userId).then(doc => {
-          var res = new Object();
-          if(doc.data()){
+          if (doc.data()) {
             this.setState(() => ({ userHasRights: true }));
           }
         })
-        .catch(err => {
-          console.log('User is not an admin', err);
-        });
+          .catch(err => {
+            console.log('User is not an admin', err);
+          });
       }
-    }    
-    switch(this.props.opportunity.category){
-      case 0: this.setState({cat: "Digitale Geletterdheid"}); break;
-      case 1: this.setState({cat: "Duurzaamheid"}); break;
-      case 2: this.setState({cat: "Ondernemingszin"}); break;
-      case 3: this.setState({cat: "Onderzoekende houding"}); break;
-      case 4: this.setState({cat: "Wereldburgerschap"}); break;
     }
-    switch(this.props.opportunity.difficulty){
-      case 0: this.setState({diff: "Beginner"}); break;
-      case 1: this.setState({diff: "Intermediate"}); break;
-      case 2: this.setState({diff: "Expert"}); break;
+    switch (this.props.opportunity.category) {
+      case 0: this.setState({ cat: "Digitale Geletterdheid" }); break;
+      case 1: this.setState({ cat: "Duurzaamheid" }); break;
+      case 2: this.setState({ cat: "Ondernemingszin" }); break;
+      case 3: this.setState({ cat: "Onderzoekende houding" }); break;
+      case 4: this.setState({ cat: "Wereldburgerschap" }); break;
+      default: break;
+    }
+    switch (this.props.opportunity.difficulty) {
+      case 0: this.setState({ diff: "Beginner" }); break;
+      case 1: this.setState({ diff: "Intermediate" }); break;
+      case 2: this.setState({ diff: "Expert" }); break;
+      default: break;
     }
     firestore.onceGetAddress(this.props.opportunity.addressId).then(snapshot => {
       // console.log(JSON.stringify(snapshot.data()));
-			this.setState(() => ({ address: snapshot.data() }));
-		})
-		.catch(err => {
-			console.log('Error getting documents', err);
-    });
+      this.setState(() => ({ address: snapshot.data() }));
+    })
+      .catch(err => {
+        console.log('Error getting documents', err);
+      });
     firestore.onceGetIssuer(this.props.opportunity.issuerId).then(snapshot => {
       // console.log(JSON.stringify(snapshot.data()));
-			this.setState(() => ({ issuer: snapshot.data() }));
-		})
-		.catch(err => {
-			console.log('Error getting documents', err);
-		});
+      this.setState(() => ({ issuer: snapshot.data() }));
+    })
+      .catch(err => {
+        console.log('Error getting documents', err);
+      });
   }
   render() {
     const { opportunity, initValues, id } = this.props;
@@ -160,29 +159,29 @@ class OpportunityDetail extends Component {
           </div>
         } */}
         <div className="overlay"></div>
-        <div className="titlehead-wrapper" style={{backgroundImage: `url(${opportunity.oppImageUrl})`}}>
+        <div className="titlehead-wrapper" style={{ backgroundImage: `url(${opportunity.oppImageUrl})` }}>
           <div className="titlehead">
             <div className="opportunity-container">
-                <h1>Bewerk leerkans: {opportunity.title}</h1>
+              <h1>Bewerk leerkans: {opportunity.title}</h1>
             </div>
           </div>
         </div>
         <div id="page" className="opportunity-container">
           {/* <a href="/opportunities" className="back">&lt; Terug</a> */}
-          <img className="badge" src={opportunity.pinImageUrl}/>
-          <FormEditOpportunity history={this.props.history} opportunity={opportunity} id={id} address={address} issuer={issuer} initialValues={ initValues} initValues={ initValues} />
+          <img alt="badgePin" className="badge" src={opportunity.pinImageUrl} />
+          <FormEditOpportunity history={this.props.history} opportunity={opportunity} id={id} address={address} issuer={issuer} initialValues={initValues} initValues={initValues} />
           {/* {!!userHasRights && <List opportunity={ opportunity } id={ id }/>} */}
         </div>
-        <br/>
-        <br/>
+        <br />
+        <br />
       </div>
     )
   }
 }
 
 const EmptyList = () =>
-	<div>
-		<Spinner />
-	</div>
+  <div>
+    <Spinner />
+  </div>
 
 export default withRouter(EditOpportunity);

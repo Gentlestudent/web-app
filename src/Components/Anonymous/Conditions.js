@@ -3,12 +3,12 @@ import { firestore } from '../../Utils/Firebase';
 
 
 class Conditions extends Component {
-  constructor(props) {
-    super(props)
+    constructor(props) {
+        super(props)
 
-    this.state={
-        text: ""
-    }
+        this.state = {
+            text: ""
+        }
     }
     componentDidMount() {
         window.scrollTo(0, 0);
@@ -16,17 +16,17 @@ class Conditions extends Component {
         firestore.onceGetConditions().then(snapshot => {
             console.log("content:");
             console.log(snapshot.data().content);
-            self.setState({text: snapshot.data().content});
-        }).catch(function(error) {
+            self.setState({ text: snapshot.data().content });
+        }).catch(function (error) {
             console.error("Error getting document: ", error);
         });
     }
     render() {
-        const {text} = this.state;
+        // const {text} = this.state;
         return (
             <React.Fragment>
-                <div class="content content-with-padding">
-                    <div class="privacycontent" dangerouslySetInnerHTML={{ __html: this.state.text }} />
+                <div className="content content-with-padding">
+                    <div className="privacycontent" dangerouslySetInnerHTML={{ __html: this.state.text }} />
                 </div>
             </React.Fragment>
         )

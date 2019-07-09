@@ -10,8 +10,6 @@ import {
 
 import store from './store';
 
-import { firebase } from './Utils/Firebase';
-
 import FrontPage from './Components/Anonymous/Frontpage/FrontPage';
 import Opportunities from './Components/SignedIn/Opportunities/Opportunities';
 import BecomeIssuer from './Components/Anonymous/Become-issuer/BecomeIssuer';
@@ -63,7 +61,7 @@ class App extends Component {
 				<Router>
 					<div>
 						<Navigation/>
-						<div class="main-content">
+						<div className="main-content">
 						<Switch>
 								<Route path={routes.FrontPage} exact render={() => <FrontPage />} />
 								<Route path={routes.Opportunities} render={() => <Opportunities />} />

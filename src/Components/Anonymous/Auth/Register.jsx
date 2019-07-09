@@ -43,12 +43,11 @@ class SignUpForm extends Component {
       // education,
       institute,
       passwordOne,
-      accepted
     } = this.state;
 
     const { history } = this.props;
 
-    let user = new Object();
+    let user = {};
     user["name"] = firstname + " " + lastname;
     user["email"] = email;
     // user["birthday"] = birthday;
@@ -74,13 +73,13 @@ class SignUpForm extends Component {
     firebase.auth.onAuthStateChanged(authUser => {
       authUser
         ? firestore
-            .createNewParticipant(authUser.uid, user)
-            .then(res => {
-              history.push(routes.FrontPage);
-            })
-            .catch(error => {
-              console.log("Error: Could not create participant: ", error);
-            })
+          .createNewParticipant(authUser.uid, user)
+          .then(res => {
+            history.push(routes.FrontPage);
+          })
+          .catch(error => {
+            console.log("Error: Could not create participant: ", error);
+          })
         : console.log("authUser is null");
     });
   };
@@ -95,34 +94,23 @@ class SignUpForm extends Component {
       institute,
       passwordOne,
       passwordTwo,
-      accepted,
       error
     } = this.state;
 
-    const isInvalid =
-      passwordOne !== passwordTwo ||
-      passwordOne === "" ||
-      email === "" ||
-      firstname === "" ||
-      lastname === "" ||
-      // || ! /^(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/.test(birthday)
-      // || education === ''
-      institute === "" ||
-      accepted == false;
     return (
       <div className="register-form">
-        <div class="cl-wh" id="f-mlb">
+        <div className="cl-wh" id="f-mlb">
           Maak een account
         </div>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label class="cl-wh f-lb">E-mailadres:</label>
-            <div class="f-i-bx b3 mrg3b">
-              <div class="tb">
-                <div class="td icon">
-                  <i class="fas fa-envelope" />
+            <label className="cl-wh f-lb">E-mailadres:</label>
+            <div className="f-i-bx b3 mrg3b">
+              <div className="tb">
+                <div className="td icon">
+                  <i className="fas fa-envelope" />
                 </div>
-                <div class="td prt">
+                <div className="td prt">
                   <input
                     value={email}
                     onChange={event =>
@@ -136,13 +124,13 @@ class SignUpForm extends Component {
             </div>
           </div>
           <div className="form-group">
-            <label class="cl-wh f-lb">Naam:</label>
-            <div class="f-i-bx b3 mrg3b">
-              <div class="tb">
-                <div class="td icon">
-                  <i class="fas fa-user" />
+            <label className="cl-wh f-lb">Naam:</label>
+            <div className="f-i-bx b3 mrg3b">
+              <div className="tb">
+                <div className="td icon">
+                  <i className="fas fa-user" />
                 </div>
-                <div class="td prt">
+                <div className="td prt">
                   <input
                     value={firstname}
                     onChange={event =>
@@ -154,12 +142,12 @@ class SignUpForm extends Component {
                 </div>
               </div>
             </div>
-            <div class="f-i-bx b3 mrg3b">
-              <div class="tb">
-                <div class="td icon">
-                  <i class="fas fa-user" />
+            <div className="f-i-bx b3 mrg3b">
+              <div className="tb">
+                <div className="td icon">
+                  <i className="fas fa-user" />
                 </div>
-                <div class="td prt">
+                <div className="td prt">
                   <input
                     value={lastname}
                     onChange={event =>
@@ -191,13 +179,13 @@ class SignUpForm extends Component {
             />
             </div> */}
           <div className="form-group">
-            <label class="cl-wh f-lb">Organisatie/onderwijsinstelling:</label>
-            <div class="f-i-bx b3 mrg3b">
-              <div class="tb">
-                <div class="td icon">
-                  <i class="fas fa-building" />
+            <label className="cl-wh f-lb">Organisatie/onderwijsinstelling:</label>
+            <div className="f-i-bx b3 mrg3b">
+              <div className="tb">
+                <div className="td icon">
+                  <i className="fas fa-building" />
                 </div>
-                <div class="td prt">
+                <div className="td prt">
                   <input
                     value={institute}
                     onChange={event =>
@@ -211,13 +199,13 @@ class SignUpForm extends Component {
             </div>
           </div>
           <div className="form-group">
-            <label class="cl-wh f-lb">Wachtwoord:</label>
-            <div class="f-i-bx b3 mrg3b">
-              <div class="tb">
-                <div class="td icon">
-                  <i class="fas fa-lock" />
+            <label className="cl-wh f-lb">Wachtwoord:</label>
+            <div className="f-i-bx b3 mrg3b">
+              <div className="tb">
+                <div className="td icon">
+                  <i className="fas fa-lock" />
                 </div>
-                <div class="td prt">
+                <div className="td prt">
                   <input
                     value={passwordOne}
                     onChange={event =>
@@ -231,12 +219,12 @@ class SignUpForm extends Component {
                 </div>
               </div>
             </div>
-            <div class="f-i-bx b3 mrg3b">
-              <div class="tb">
-                <div class="td icon">
-                  <i class="fas fa-lock" />
+            <div className="f-i-bx b3 mrg3b">
+              <div className="tb">
+                <div className="td icon">
+                  <i className="fas fa-lock" />
                 </div>
-                <div class="td prt">
+                <div className="td prt">
                   <input
                     value={passwordTwo}
                     onChange={event =>
@@ -264,8 +252,8 @@ class SignUpForm extends Component {
             Je gaat akkoord met onze <a href={routes.Conditions}>voorwaarden</a>{" "}
             &amp; <a href={routes.Privacy}>privacy beleid</a>.
           </div>
-          <div id="s-btn" class="mrg25t">
-            <input type="submit" value="Sign up" class="b3" />
+          <div id="s-btn" className="mrg25t">
+            <input type="submit" value="Sign up" className="b3" />
           </div>
           {error && <p>{error.message}</p>}
         </form>

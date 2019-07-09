@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-
 
 import AuthUserContext from './AuthUserContext';
 // import SignOutButton from './Auth/Logout';
@@ -20,8 +18,8 @@ const Navigation = ({ authUser }) =>
 			</NavLink>
 		</div>
 		<div className="nav">
-			<input class="menu-btn" type="checkbox" id="menu-btn" />
-			<label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+			<input className="menu-btn" type="checkbox" id="menu-btn" />
+			<label className="menu-icon" htmlFor="menu-btn"><span className="navicon"></span></label>
 			<AuthUserContext.Consumer>
 				{authUser => authUser
 					? <NavigationAuth />
@@ -80,7 +78,6 @@ class NavigationAuth extends Component{
 		let id = auth.getUserId()
 		this.setState(() => ({ userId: id }))
 		firestore.onceGetParticipant(id).then(doc => {
-			var res = new Object();
 			if(doc.data()){
 				this.setState(() => ({ participant: doc.data() }));
 				this.setState(() => ({ name: doc.data().name.split(" ")[0] }));
@@ -100,7 +97,6 @@ class NavigationAuth extends Component{
 			console.log('User is not an issuer', err);
 		});
 		firestore.onceGetAdmin(id).then(doc => {
-			var res = new Object();
 			if(doc.data()){
 				this.setState(() => ({ isAdmin: true }));
 			}
@@ -174,12 +170,12 @@ class NavigationAuth extends Component{
 									<NavLink to={routes.Profile}>Profiel</NavLink>
 									<NavLink to={routes.Backpack}>Backpack</NavLink>
 									{ !! isIssuer && 
-										<div class="nav-dropdown-ext">
+										<div className="nav-dropdown-ext">
 											<NavigationIssuer/>
 										</div>
 									}
 									{ !! isAdmin && 
-										<div class="nav-dropdown-ext">
+										<div className="nav-dropdown-ext">
 											<NavigationAdmin/>
 										</div>
 									}

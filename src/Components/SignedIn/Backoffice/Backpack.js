@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
-import AuthUserContext from '../../../Shared/AuthUserContext';
 import { firestore } from '../../../Utils/Firebase';
 import firebase from 'firebase';
 
@@ -11,26 +9,26 @@ import downloadiOS from '../../../assets/ios.png';
 import Spinner from '../../../Shared/Spinner';
 
 class Backpack extends Component {
-  constructor(props) {
-    super(props)
+    constructor(props) {
+        super(props)
 
-    this.state={
-        backpack: null,
-        isEmpty: false,
-    }
+        this.state = {
+            backpack: null,
+            isEmpty: false,
+        }
 
-    this.downloadBadge = this.downloadBadge.bind(this);
+        this.downloadBadge = this.downloadBadge.bind(this);
     }
     componentDidMount() {
         window.scrollTo(0, 0);
-        var self = this
+        let self = this
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 let id = user.uid;
                 // console.log(id);
                 //fetching assertions
                 firestore.onceGetAssertions(id).then(snapshot => {
-                    var res = new Object();
+                    let res = {};
                     snapshot.forEach(doc => {
                         let key = doc.id;
                         res[key] = doc.data();
@@ -42,54 +40,54 @@ class Backpack extends Component {
                         });
                     });
                 })
-                .catch(err => {
-                    console.log('Error getting documents', err);
-                });
+                    .catch(err => {
+                        console.log('Error getting documents', err);
+                    });
             }
         });
-        this.setState({isEmpty: true});
+        this.setState({ isEmpty: true });
     }
-    downloadBadge(){
+    downloadBadge() {
         console.log("Deze feature is nog niet geimplementeerd.");
     }
-  render() {
-    const { backpack, isEmpty } = this.state;
-    return (
-      <React.Fragment>
-          <div className="container">
-                <div className="content content-with-padding">
-                    <h1>Backpack</h1>
-                    {!!backpack && <div className="backpack">
-                        {Object.keys(backpack).map(key =>
-                            <div className="backpack-item">
-                                <img src={backpack[key]['badge'].image ? `${backpack[key]['badge'].image}` : null}/>
-                                <button className="download-badge" onClick={this.downloadBadge}>Download</button>
-                            </div>
-                        )}
-                    </div>}
-                    {!backpack && <div className="backpack">
-                        {!!isEmpty && <EmptyList/>}
-                        {!isEmpty && <LoadingList/>}
-                    </div>}
+    render() {
+        const { backpack, isEmpty } = this.state;
+        return (
+            <React.Fragment>
+                <div className="container">
+                    <div className="content content-with-padding">
+                        <h1>Backpack</h1>
+                        {!!backpack && <div className="backpack">
+                            {Object.keys(backpack).map(key =>
+                                <div className="backpack-item" key={key}>
+                                    <img alt="badgeIMG" src={backpack[key]['badge'].image ? `${backpack[key]['badge'].image}` : null} />
+                                    <button className="download-badge" onClick={this.downloadBadge}>Download</button>
+                                </div>
+                            )}
+                        </div>}
+                        {!backpack && <div className="backpack">
+                            {!!isEmpty && <EmptyList />}
+                            {!isEmpty && <LoadingList />}
+                        </div>}
+                    </div>
                 </div>
-            </div>
-      </React.Fragment>
-    )
-  }
+            </React.Fragment>
+        )
+    }
 }
 
 const LoadingList = () =>
-	<div>
-		<Spinner />
-	</div>
+    <div>
+        <Spinner />
+    </div>
 
 const EmptyList = () =>
     <div>
         <p>Je hebt nog geen badges verdiend! Ga aan de slag door de mobile app te downloaden:</p>
-        <a href="https://itunes.apple.com/us/app/gentlestudent/id1417851918?mt=8&ign-mpt=uo%3D4" target="_blank">
+        <a href="https://itunes.apple.com/us/app/gentlestudent/id1417851918?mt=8&ign-mpt=uo%3D4" target="_blank" rel="noopener noreferrer">
             <img src={downloadiOS} alt="download-button-ios" />
         </a>
-        <a href="http://play.google.com/store/apps/details?id=gent.gentlestudent" target="_blank">
+        <a href="http://play.google.com/store/apps/details?id=gent.gentlestudent" target="_blank" rel="noopener noreferrer">
             <img src={downloadAndroid} alt="download-button-android" />
         </a>
     </div>

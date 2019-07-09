@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
 import FormCreateOpportunity from '../Opportunities/FormCreateOpportunity';
@@ -10,7 +9,7 @@ import { firestore } from '../../../Utils/Firebase';
 
 const CreateOpportunityPage = ({ history, match }) =>
   <div>
-    <CreateOpportunity history={history} match={match}/>
+    <CreateOpportunity history={history} match={match} />
   </div>
 
 class CreateOpportunity extends Component {
@@ -20,35 +19,35 @@ class CreateOpportunity extends Component {
     this.state = {
       badges: null,
       initValues: null
-		};
+    };
   };
   componentDidMount() {
     window.scrollTo(0, 0);
-		firestore.onceGetBadges().then(snapshot => {
-			var res = new Object();
-			snapshot.forEach(doc => {
-				res[doc.id] = doc.data();
-			});
-			this.setState(() => ({ badges: res }))
-		})
-		.catch(err => {
-			console.log('Error getting documents', err);
-    });
-    var self = this;
-    if(this.props.match.params.id!=undefined){
+    firestore.onceGetBadges().then(snapshot => {
+      let res = {};
+      snapshot.forEach(doc => {
+        res[doc.id] = doc.data();
+      });
+      this.setState(() => ({ badges: res }))
+    })
+      .catch(err => {
+        console.log('Error getting documents', err);
+      });
+    let self = this;
+    if (this.props.match.params.id !== undefined) {
       firestore.onceGetOpportunity(this.props.match.params.id).then(snapshot => {
-        var start_date= snapshot.data().beginDate;
+        let start_date = snapshot.data().beginDate;
         // var category= self.getEnumValue(Category, snapshot.data().category);
-        var category= snapshot.data().category;
+        let category = snapshot.data().category;
         // var difficulty= self.getEnumValue(Difficulty, snapshot.data().difficulty);
-        var difficulty = snapshot.data().difficulty;
-        var end_date= snapshot.data().endDate;
-        var description= snapshot.data().longDescription;
-        var oppImageUrl= snapshot.data().oppImageUrl;
-        var synopsis= snapshot.data().shortDescription;
-        var title= snapshot.data().title;
-        var moreInfo= snapshot.data().moreInfo;
-        var website= snapshot.data().website;
+        let difficulty = snapshot.data().difficulty;
+        let end_date = snapshot.data().endDate;
+        let description = snapshot.data().longDescription;
+        let oppImageUrl = snapshot.data().oppImageUrl;
+        let synopsis = snapshot.data().shortDescription;
+        let title = snapshot.data().title;
+        let moreInfo = snapshot.data().moreInfo;
+        let website = snapshot.data().website;
         firestore.onceGetAddress(snapshot.data().addressId).then(snapshot => {
           self.setState({
             initValues: {
@@ -71,24 +70,24 @@ class CreateOpportunity extends Component {
               website: website
             }
           });
-        }).catch(function(error) {
+        }).catch(function (error) {
           console.error("Error getting document: ", error);
         });
         console.log(self.state.initValues);
-      }).catch(function(error) {
+      }).catch(function (error) {
         console.error("Error getting document: ", error);
       });
     }
-    else{
-      this.stateopportunity=new Object;
-    }    
+    else {
+      this.stateopportunity = {};
+    }
   }
-  getEnumValue(enumTable, i){
-    var keys = Object.keys(enumTable).sort(function(a, b){
+  getEnumValue(enumTable, i) {
+    var keys = Object.keys(enumTable).sort(function (a, b) {
       return enumTable[a] - enumTable[b];
     }); //sorting is required since the order of keys is not guaranteed.
-    
-    var getEnum = function(ordinal) {
+
+    var getEnum = function (ordinal) {
       return keys[ordinal];
     }
 
@@ -121,34 +120,34 @@ class CreateOpportunity extends Component {
     })
   render() {
     const { badges, initValues } = this.state;
-    const { history, match } = this.props;
+    const { history } = this.props;
 
     return (
       <div>
         {/* <div className="container"> */}
-          <div className="content content-create-opp">
-            <Link to="/created-opportunities" className="back">&lt; Terug</Link>
-            <h1>Maak Opportunity</h1>
-            <div className="content-flex create_opportunity">
-              <div className="content-left">
-                <div className="form" id="create_opportunity">
-                  {/* <FormCreateOpportunity onSubmit={this.submit} badges={badges}/> */}
-                  {/* <FormCreateOpportunity badges={badges} history={history} opportunity={opportunity}/> */}
-                  {/* {!initValues && <FormCreateOpportunity badges={badges} history={history}/>} */}
-                  {/* {!!initValues && <FormCreateOpportunity badges={badges} history={history} initialValues={initValues}/>} */}
-                  <FormCreateOpportunity badges={badges} history={history} initialValues={initValues} initValues={initValues}/>
-                </div>
+        <div className="content content-create-opp">
+          <Link to="/created-opportunities" className="back">&lt; Terug</Link>
+          <h1>Maak Opportunity</h1>
+          <div className="content-flex create_opportunity">
+            <div className="content-left">
+              <div className="form" id="create_opportunity">
+                {/* <FormCreateOpportunity onSubmit={this.submit} badges={badges}/> */}
+                {/* <FormCreateOpportunity badges={badges} history={history} opportunity={opportunity}/> */}
+                {/* {!initValues && <FormCreateOpportunity badges={badges} history={history}/>} */}
+                {/* {!!initValues && <FormCreateOpportunity badges={badges} history={history} initialValues={initValues}/>} */}
+                <FormCreateOpportunity badges={badges} history={history} initialValues={initValues} initValues={initValues} />
               </div>
-              <div className="content-right example_opportunity">
-                <h3>Voorbeeld leerkans:</h3>
-                <div className="example_opportunity_wrapper">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Formopportunity%2FvoorbeeldLeerkans.png?alt=media"/>
-                </div>
+            </div>
+            <div className="content-right example_opportunity">
+              <h3>Voorbeeld leerkans:</h3>
+              <div className="example_opportunity_wrapper">
+                <img alt="example" src="https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Formopportunity%2FvoorbeeldLeerkans.png?alt=media" />
               </div>
             </div>
           </div>
+        </div>
         {/* </div> */}
-    </div>
+      </div>
     );
   }
 }

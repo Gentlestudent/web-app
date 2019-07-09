@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import Spinner from '../../../Shared/Spinner';
 
@@ -18,18 +17,18 @@ class List extends Component {
 
 const ExperiencesList = ({ experiences }) =>
 	<div>
-		<div class="l-container">
+		<div className="l-container">
 			<ul>
 			{Object.keys(experiences).map(key =>
                 // <p>{key}</p>
                 <a href={`ervaringen/${key}`}>
-                    <li class="news-item">
-                    <article class="post">
+                    <li className="news-item">
+                    <article className="post">
                         <div className="crop-news-img">
                             <img className="news-img" src={experiences[key].imageUrl ? `${experiences[key].imageUrl}` : null} alt="Article thumbnail" />
                         </div>
                         <h1>{experiences[key].title}</h1>
-                        {!!experiences[key].published && <small><time datetime={experiences[key].published}>{experiences[key].published}</time></small>}
+                        {!!experiences[key].published && <small><time dateTime={experiences[key].published}>{experiences[key].published}</time></small>}
                         {!!experiences[key].author && <small>{experiences[key].author}</small>}
                         <p>{experiences[key].shortText}</p> 
                     </article>
