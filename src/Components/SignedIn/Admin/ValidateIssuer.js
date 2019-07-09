@@ -92,15 +92,21 @@ class IssuersList extends Component {
 
         console.log("Trying to create badgr issuer...");
         let accessToken = this.props.badgrAuth.accessToken;
-        let header = { headers: { Authorization: "Bearer " + accessToken } };
+        // let header = { headers: { Authorization: "Bearer " + accessToken } };
+        let header = this.props.badgrAuth.getHeader();
         let issuer = this.props.issuers[id];
         let url = urlify(issuer.url);
-        console.log(url);
+
+        console.log("Issuer data", issuer);
+
+        let desc =  "Institution: " + issuer.institution + " - " +
+                    "Email: " + issuer.email + " - " +
+                    "Phone: " + issuer.phonenumber;
 
         let data = {
             name: issuer.name,
             email: "freek.de.sagher21@gmail.com", // TODO: change to gentlestudent
-            description: "Phone: " + issuer.phonenumber,
+            description: desc,
             url: url
         };
 
@@ -110,7 +116,17 @@ class IssuersList extends Component {
                 firestore.updateIssuerBadgrId(id, res.data.result[0].entityId);
                 firestore.validateIssuer(id);
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                switch (err.response.status) {
+                    case 403:
+                        console.log("Refreshing Badgr access token");
+                        this.props.badgrAuth.refreshAccessToken();
+                        break;
+                    default:
+                        console.error(err);
+                        break;
+                }
+            });
         // console.log("fetching issuers");
         // axios.get("https://api.badgr.io/v2/issuers", header)
         //     .then(res => {
