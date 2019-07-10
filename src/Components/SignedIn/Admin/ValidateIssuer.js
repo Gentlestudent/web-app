@@ -4,6 +4,7 @@ import axios from "axios";
 import { firestore } from "../../../Utils/Firebase";
 import BadgrContext from "../../../Shared/BadgrContext";
 import Spinner from "../../../Shared/Spinner";
+import badgr_email from "../../../Shared/withBadgr"
 
 class ValidateIssuer extends Component {
   constructor() {
@@ -74,6 +75,8 @@ class IssuersList extends Component {
         this.state = { badgrIssuers: null };
 
         this.handleClick = this.handleClick.bind(this);
+        this.createBadgrIssuer = this.createBadgrIssuer.bind(this);
+        this.deleteIssuer = this.deleteIssuer.bind(this);
     };
 
     // componentDidUpdate(prevState) {
@@ -102,14 +105,14 @@ class IssuersList extends Component {
             return s;
         }
 
-        console.log("Trying to create badgr issuer...");
-        let accessToken = this.props.badgrAuth.accessToken;
+        // console.log("Trying to create badgr issuer...");
+        // let accessToken = this.props.badgrAuth.accessToken;
         // let header = { headers: { Authorization: "Bearer " + accessToken } };
         let header = this.props.badgrAuth.getHeader();
         let issuer = this.props.issuers[id];
         let url = urlify(issuer.url);
 
-        console.log("Issuer data", issuer);
+        // console.log("Issuer data", issuer);
 
         let desc =  "Institution: " + issuer.institution + " - " +
                     "Email: " + issuer.email + " - " +
@@ -117,7 +120,7 @@ class IssuersList extends Component {
 
         let data = {
             name: issuer.name,
-            email: "freek.de.sagher21@gmail.com", // TODO: change to gentlestudent
+            email: badgr_email,
             description: desc,
             url: url
         };
@@ -139,6 +142,7 @@ class IssuersList extends Component {
                         break;
                 }
             });
+            
         // console.log("fetching issuers");
         // axios.get("https://api.badgr.io/v2/issuers", header)
         //     .then(res => {
