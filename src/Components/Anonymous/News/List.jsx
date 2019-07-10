@@ -21,7 +21,7 @@ const NewsList = ({ newsItems }) =>
 			<ul>
 				{Object.keys(newsItems).map(key =>
 					// <p>{key}</p>
-					<a href={`news/${key}`} key={key}>
+					<a href={`/news/${key}`} key={key}>
 						<li className="news-item">
 							<article className="post">
 								<div className="crop-news-img">
