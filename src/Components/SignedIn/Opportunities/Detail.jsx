@@ -7,6 +7,8 @@ import Spinner from "../../../Shared/Spinner";
 import { auth, firestore } from "../../../Utils/Firebase";
 import NoMatch from "../../../Shared/NoMatch";
 
+import AuthUserContext from '../../../Shared/AuthUserContext';
+
 class Detail extends Component {
   constructor(props) {
     super(props);
@@ -69,6 +71,16 @@ class OpportunityDetail extends Component {
       participations: 0
     };
   }
+
+  handleRegister = event => {
+    event.preventDefault();
+    let data = {participantId: auth.getUserId(), opportunityId: this.props.id, status: 0, reason: "", message:""}
+    console.log(data);
+    firestore.createNewParticipation(data);
+    console.log("geregistreerd voor leerkans");
+    
+  };
+
   componentDidMount() {
     let userId = auth.getUserId();
     let self = this;
@@ -308,6 +320,15 @@ class OpportunityDetail extends Component {
                     )}
                   </table>
                 </div>
+              </div>
+              <div>
+              <AuthUserContext.Consumer>
+				{authUser => authUser
+					? <button onClick={this.handleRegister}>Registreer</button>
+					: <button type="button" disabled></button>
+				}
+			</AuthUserContext.Consumer>
+                
               </div>
             </div>
           </div>
