@@ -1,0 +1,7 @@
+import  { functions } from './firebase'
+
+
+export let functionTest = functions.httpsCallable('functionTest');
+export let createBadgrIssuer = functions.httpsCallable('createIssuer');
+export let createBadgrBadgeClass = functions.httpsCallable('createBadgeClass');
+export let createBadgrAssertion = functions.httpsCallable('createAssertion');

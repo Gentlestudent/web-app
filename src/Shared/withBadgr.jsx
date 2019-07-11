@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 import BadgrContext from './BadgrContext';
-import { firestore } from '../Utils/Firebase';
+import { firestore, functions } from '../Utils/Firebase';
 
 const badgr_api = `https://api.badgr.io/`;
 
@@ -100,4 +100,4 @@ const withBadgr = (Component) =>
     }
 
 export default withBadgr;
-export const badgr_email = "freek.de.sagher21@gmail.com"; // TODO: change to gentle student account
+export let badgr_email = "freek.de.sagher21@gmail.com"; // TODO: change to gentle student account

@@ -28,21 +28,20 @@ admin.initializeApp();
 //     }
 // });
 
-function BADGR_PATH(path, ...extraPaths) {
-    const base = "https://api.badgr.io";
-    if (path === "o/token" || (path === 'o' && extraPaths[0] === 'token'))
-        return base + "/o/token";
-    for (let i = 0; i < extraPaths.length; i++) {
-        base.append('/').append(extraPaths[i].toString());
-    }
-    return base
+function BADGR_PATH(path) {
+    let base = "https://api.badgr.io";
+    if (path === "o/token")
+        return base + path;
+    return base + "/v2/" + path;
 }
 
-async function fetchAccessToken() {
+async function getHeader() {
     try {
         const res = await admin.firestore().collection('BadgrAuth').doc('auth').get();
         let data = res.data();
-        return data.access_token;
+        return {
+            header: { headers: { Authorization: "Bearer " + data.accessToken } }
+        }
     }
     catch (err) {
         return console.error(err);
@@ -57,7 +56,7 @@ async function refreshToken() {
         let docData = fireDoc.data();
         let refreshToken = docData.refreshToken;
         let url = BADGR_PATH('o', 'token');
-        let data = "grant_type=refresh_token&refresh_token=" + refreshToken.toString();
+        let data = "grant_type=refresh_token&²refresh_token=" + refreshToken.toString();
 
         let res = await axios.post(url, data);
         let newData = {
@@ -72,11 +71,11 @@ async function refreshToken() {
             }
         ).then(res => {
             console.log("Successfully updated access token");
-            return;
+            return newData.accessToken;
         })
-        .catch(err => {
-            throw err;
-        });
+            .catch(err => {
+                throw err;
+            });
 
     } catch (err) {
         return console.error(err);
@@ -103,18 +102,54 @@ exports.functionTest = functions.https.onCall(async (data, context) => {
 
 exports.createIssuer = functions.https.onCall(async (data) => {
     let url = BADGR_PATH("issuers");
-    console.log("Trying to post data to ", url);
+    let issuerData = data.issuerData;
+
+    if (issuerData === null || issuerData === undefined)
+        throw new functions.https.HttpsError("invalid-argument", "createIssuer function requires issuer data as argument");
+
+    if (issuerData.url === undefined || issuerData.url === null || issuerData.url === "")
+        throw new functions.https.HttpsError("invalid-argument", "createIssuer function requires valid issuer url")
+
+    if (issuerData.name === undefined || issuerData.name === null || issuerData === "")
+        throw new functions.https.HttpsError("invalid-argument", "createIssuer function requires valid issuer name");
+
+    return getHeader().then(async (res) => {
+        let header = res.header;
+        console.log("Fetched header", header);
+        console.log("Posting", issuerData, "to", url);
+        const res2 = await axios.post(url, issuerData, header);
+
+        switch (res2.status) {
+            case 201:
+                console.log("Created issuer API response:", res2);
+                console.log("Data?", res2.data);
+                return {
+                    status: res2.status,
+                    message: res2.message,
+                    createdIssuer: res2.data.result[0]
+                }
+            case 400:
+                throw new functions.https.HttpsError("invalid-argument", "Badgr could not validate the issuer");
+            case 403:
+                throw new functions.https.HttpsError("permission-denied", "Access token expired, try refreshing it");
+            default:
+                throw new functions.https.HttpsError("unknown", "Failed to create badgr issuer");
+        }
+    }).catch(err => {
+        console.error("An error happened :'(", err);
+        throw new functions.https.HttpsError("aborted", "an error occurred while trying to add new issuer...", err);
+    });
 });
 
 
 exports.createBadgeClass = functions.https.onCall(async (data) => {
     let entityID = data.entityID;
-    let url = BADGR_PATH("issuers", entityID, "badgeclasses");
+    let url = BADGR_PATH("issuers/" + entityID + "/badgeclasses");
     console.log("Trying to post data to ", url);
 });
 
 exports.createAssertion = functions.https.onCall(async (data) => {
     let entityID = data.entityID;
-    let url = BADGR_PATH("issuers", entityID, "assertions");
+    let url = BADGR_PATH("issuers/" + entityID + "/assertions");
     console.log("trying to post data to ", url);
 });

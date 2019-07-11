@@ -22,11 +22,13 @@ const firestore = firebase.firestore();
 const settings = {/* your settings... */ /*timestampsInSnapshots: true*/};
 firestore.settings(settings);
 const storage = firebase.storage();
+const functions = firebase.functions();
 
 
 export {
   auth,
   firebase,
   firestore,
-  storage
+  storage,
+  functions
 };

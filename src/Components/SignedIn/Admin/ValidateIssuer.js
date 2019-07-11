@@ -4,7 +4,8 @@ import axios from "axios";
 import { firestore } from "../../../Utils/Firebase";
 import BadgrContext from "../../../Shared/BadgrContext";
 import Spinner from "../../../Shared/Spinner";
-import badgr_email from "../../../Shared/withBadgr"
+import { badgr_email } from "../../../Shared/withBadgr"
+import { functions } from "../../../Utils/Firebase"
 
 class ValidateIssuer extends Component {
   constructor() {
@@ -75,7 +76,7 @@ class IssuersList extends Component {
         this.state = { badgrIssuers: null };
 
         this.handleClick = this.handleClick.bind(this);
-        this.createBadgrIssuer = this.createBadgrIssuer.bind(this);
+        this.createBadgrIssuer = this.createIssuer.bind(this);
         this.deleteIssuer = this.deleteIssuer.bind(this);
     };
 
@@ -90,11 +91,11 @@ class IssuersList extends Component {
 
     handleClick(event) {
         // console.log(event.target.id);
-        this.createBadgrIssuer(event.target.id);
+        this.createIssuer(event.target.id);
         this.props.getIssuers();
     }
 
-    createBadgrIssuer(id) {
+    createIssuer(id) {
 
         function urlify(s) {
             let prefix = 'http://';
@@ -118,31 +119,39 @@ class IssuersList extends Component {
                     "Email: " + issuer.email + " - " +
                     "Phone: " + issuer.phonenumber;
 
-        let data = {
+        let issuerData = {
             name: issuer.name,
             email: badgr_email,
             description: desc,
             url: url
         };
 
-        axios.post("https://api.badgr.io/v2/issuers", data, header)
-            .then(res => {
-                console.log("Created badgr issuer", res);
-                firestore.updateIssuerBadgrId(id, res.data.result[0].entityId);
-                firestore.validateIssuer(id);
-            })
-            .catch(err => {
-                switch (err.response.status) {
-                    case 403:
-                        console.log("Refreshing Badgr access token");
-                        this.props.badgrAuth.refreshAccessToken();
-                        break;
-                    default:
-                        console.error(err);
-                        break;
-                }
-            });
-            
+        functions.createBadgrIssuer({
+            issuerData
+        })
+        .then(result => {
+          console.log("Created badgr issuer successfully", result);
+        })
+        .catch(err => console.error(err));
+
+        // axios.post("https://api.badgr.io/v2/issuers", data, header)
+        //     .then(res => {
+        //         console.log("Created badgr issuer", res);
+        //         firestore.updateIssuerBadgrId(id, res.data.result[0].entityId);
+        //         firestore.validateIssuer(id);
+        //     })
+        //     .catch(err => {
+        //         switch (err.response.status) {
+        //             case 403:
+        //                 console.log("Refreshing Badgr access token");
+        //                 this.props.badgrAuth.refreshAccessToken();
+        //                 break;
+        //             default:
+        //                 console.error(err);
+        //                 break;
+        //         }
+        //     });
+
         // console.log("fetching issuers");
         // axios.get("https://api.badgr.io/v2/issuers", header)
         //     .then(res => {
