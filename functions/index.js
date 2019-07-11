@@ -102,6 +102,19 @@ exports.functionTest = functions.https.onCall(async (data, context) => {
 
 });
 
+/**
+ * Creates an issuer on the linked Badgr account.
+ * @param data required data for this function:
+ *  1. issuerData:
+ *      1. url: url of the issuer (required)
+ *      2. name: name of the issuer (required)
+ *      3. email: verified badgr email address (required)
+ *      4. description: description of the issuer (optional)
+ * @returns Promise containing:
+ *  1. status: the status of the request to badgr
+ *  2. message: a descriptive message of what happened
+ *  3. createdIssuer: data of the created issuer
+ */
 exports.createIssuer = functions.https.onCall(async (data) => {
     let url = BADGR_PATH("issuers");
     let issuerData = data.issuerData;
@@ -112,8 +125,11 @@ exports.createIssuer = functions.https.onCall(async (data) => {
     if (issuerData.url === undefined || issuerData.url === null || issuerData.url === "")
         throw new functions.https.HttpsError("invalid-argument", "createIssuer function requires valid issuer url")
 
-    if (issuerData.name === undefined || issuerData.name === null || issuerData === "")
+    if (issuerData.name === undefined || issuerData.name === null || issuerData.name === "")
         throw new functions.https.HttpsError("invalid-argument", "createIssuer function requires valid issuer name");
+
+    if (issuerData.email === undefined || issuerData.email === null || issuerData.email === "")
+        throw new functions.https.HttpsError("invalid-argument", "createIssuer function requires verified email address");
 
     return getHeader().then(async (res) => {
         let header = res.header;
@@ -123,11 +139,10 @@ exports.createIssuer = functions.https.onCall(async (data) => {
 
         switch (res2.status) {
             case 201:
-                console.log("Created issuer API response:", res2);
-                console.log("Data?", res2.data);
+                console.log("Created issuer\nAPI response:", res2);
                 return {
                     status: res2.status,
-                    message: res2.message,
+                    message: "Created Badgr Issuer!!",
                     createdIssuer: res2.data.result[0]
                 }
             case 400:
@@ -145,13 +160,71 @@ exports.createIssuer = functions.https.onCall(async (data) => {
 
 
 exports.createBadgeClass = functions.https.onCall(async (data) => {
-    let entityID = data.entityID;
-    let url = BADGR_PATH("issuers/" + entityID + "/badgeclasses");
-    console.log("Trying to post data to ", url);
+    console.log("Got data", data);
+    let issuerID = data.issuerID;
+    let badgeData = data.badgeData;
+    let url = BADGR_PATH("badgeclasses");
+
+    if (issuerID === null || issuerID === undefined)
+        throw new functions.https.HttpsError("invalid-argument", "createBadgeClass needs issuerID as argument");
+    if (badgeData === null || badgeData === undefined)
+        throw new functions.https.HttpsError("invalid-argument", "createBadgeClass needs badgeData as argument");
+
+    return getHeader().then(async (res) => {
+        let header = res.header;
+        console.log("Fetched header", header);
+        console.log("Posting", badgeData, "to", url);
+        const res2 = await axios.post(url, badgeData, header);
+
+        switch (res2.status) {
+            case 201:
+                console.log("Created badgeclass\nAPI response:", res2);
+                return {
+                    status: res2.status,
+                    message: "Created badge class!!",
+                    createBadgeClass: res2.data.result[0]
+                };
+            case 400:
+                throw new functions.https.HttpsError("invalid-argument", "Badgr could not validate the badge class");
+            case 403:
+                throw new functions.https.HttpsError("permission-denied", "Access token expired, try refreshing it");
+            default:
+                throw new functions.https.HttpsError("unknown", "Failed to create badge class");
+        }
+    }).catch(err => {
+        console.error("An error occurred :'(", err);
+        throw new functions.https.HttpsError("aborted", "An error occured while trying to add new badge class...", err);
+    });
 });
 
 exports.createAssertion = functions.https.onCall(async (data) => {
-    let entityID = data.entityID;
-    let url = BADGR_PATH("issuers/" + entityID + "/assertions");
-    console.log("trying to post data to ", url);
+    let issuerID = data.issuerID;
+    let assertionData = data.assertionData;
+    let url = BADGR_PATH("issuers/" + issuerID + "/assertions");
+
+    return getHeader().then(async (res) => {
+        let header = res.header;
+        console.log("Fetched header", header);
+        console.log("Posting", badgeData, "to", url);
+        const res2 = await axios.post(url, assertionData, header);
+
+        switch (res2.status) {
+            case 201:
+                console.log("Created assertion\nAPI response:", res2);
+                return {
+                    status: res2.status,
+                    message: "Created assertion!!",
+                    createdAssertion: res2.data.result[0]
+                };
+            case 400:
+                throw new functions.https.HttpsError("invalid-argument", "Badgr could not validate the assertion");
+            case 403:
+                throw new functions.https.HttpsError("permission-denied", "Access token expired, try refreshing it");
+            default:
+                throw new functions.https.HttpsError("unknown", "Failed to create assertion");
+        }
+    }).catch(err => {
+        console.error("An error occurred :'(", err);
+        throw new functions.https.HttpsError("aborted", "An error occured while trying to add new assertion", err);
+    });
 });
