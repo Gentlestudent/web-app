@@ -6,7 +6,6 @@ import BadgrContext from "../../../Shared/BadgrContext";
 import Spinner from "../../../Shared/Spinner";
 import { badgr_email } from "../../../Shared/withBadgr"
 import { functions } from "../../../Utils/Firebase"
-import { disabled } from "glamor";
 
 class ValidateIssuer extends Component {
   constructor() {
@@ -76,7 +75,8 @@ class IssuersList extends Component {
 
     this.state = {
       badgrIssuers: null,
-      load: false
+      load: false,
+      currentlyUpdating: null
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -130,7 +130,7 @@ class IssuersList extends Component {
       url: url
     };
 
-    this.setState({load: true});
+    this.setState({ load: true, currentlyUpdating: id });
     functions.createBadgrIssuer({
       issuerData
     })
@@ -139,7 +139,7 @@ class IssuersList extends Component {
         let entityId = result.data.createdIssuer.entityId;
         firestore.updateIssuerBadgrId(id, entityId);
         firestore.validateIssuer(id).then(() => {
-          this.setState({load: false});
+          this.setState({ load: false, currentlyUpdating: null });
           this.props.getIssuers();
         });
       })
@@ -188,6 +188,7 @@ class IssuersList extends Component {
   render() {
     const { issuers } = this.props;
     const load = this.state.load;
+    const currentlyUpdating = this.state.currentlyUpdating;
 
     return (
       <React.Fragment >
@@ -225,14 +226,17 @@ class IssuersList extends Component {
                         </td>
                       </tr>
                     </table>
-                    <button
-                      disabled={load}
-                      className="button--issuer-accept"
-                      onClick={this.handleClick}
-                      id={key}
-                    >
-                      Accepteren
+                    {/* <div> */}
+                      <button
+                        disabled={load}
+                        className="button--issuer-accept"
+                        onClick={this.handleClick}
+                        id={key}
+                      >
+                        Accepteren
                     </button>
+                      {/* {load && currentlyUpdating !== null && key === currentlyUpdating && */}
+                    {/* </div> */}
                   </div>
                 </div>
               ))}
@@ -257,5 +261,9 @@ const Loading = () => (
     <Spinner />
   </div>
 );
+
+
+
+
 
 export default ValidateIssuer;
