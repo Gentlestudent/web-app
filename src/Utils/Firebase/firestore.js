@@ -7,37 +7,51 @@ export const onceGetOpportunities = () =>
   // db.ref('Opportunities').once('value');
   firestore.collection('Opportunities').where('authority', '<', 2).get()
 
-export async function createIssuer(institution, longName, url, phonenumber,street, housenumber,bus, postalcode, city, userId, userEmail) {
-    var addressdata = {
-        bus: bus,
-        city: city,
-        housenumber: parseInt(housenumber),
-        postalcode: parseInt(postalcode),
-        street: street
-    };
-    var addressid;
-    firestore.collection('Addresses').add(addressdata).
-    then(function(docRef) {
-        addressid = docRef.id;
-        var issuerdata = {
-            addressID: addressid,
-            email: userEmail,
-            institution: institution,
-            name: longName,
-            phonenumber: phonenumber,
-            url: url,
-            validated: false
-        };
-        console.log(userId, issuerdata);
-        firestore.collection('Issuers').doc(userId).set(issuerdata).catch(function(error) {
+export async function createIssuer(institution, longName, url, phonenumber, street, housenumber, bus, postalcode, city, userId, userEmail) {
+  let addressdata = {
+    bus: bus,
+    city: city,
+    housenumber: parseInt(housenumber, 10),
+    postalcode: parseInt(postalcode, 10),
+    street: street
+  };
+  let addressid;
+  firestore.collection('Addresses').add(addressdata)
+    .then(function (docRef) {
+      addressid = docRef.id;
+      let issuerdata = {
+        addressID: addressid,
+        email: userEmail,
+        institution: institution,
+        name: longName,
+        phonenumber: phonenumber,
+        url: url,
+        validated: false,
+        badgrId: ""
+      };
+      console.log(userId, issuerdata);
+      firestore.collection('Issuers').doc(userId).set(issuerdata).catch(function (error) {
 
-            console.error("Error adding document: ", error);
+        console.error("Error adding document: ", error);
 
-        });
+      });
 
     });
 
 }
+
+export const updateBadgrAuth = (newAccessToken, newRefreshToken) => {
+  firestore.collection('BadgrAuth').doc('auth').update(
+    {
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken
+    }
+  )
+}
+
+export const onceGetBadgrAuth = () =>
+  firestore.collection('BadgrAuth').doc('auth').get();
+
 export const createAddress = (data) =>
   firestore.collection('Addresses').add(data)
 
@@ -56,6 +70,9 @@ export const onceGetValidatedIssuers = () =>
 
 export const validateIssuer = (id) =>
   firestore.collection('Issuers').doc(id).update({ validated: true })
+
+export const updateIssuerBadgrId = (id, badgrId) =>
+  firestore.collection('Issuers').doc(id).update({ badgrId: badgrId })
 
 export const onceGetNonValidatedOpportunities = () =>
   firestore.collection('Opportunities').where('authority', '==', 0).get()
@@ -91,7 +108,7 @@ export const linkBeaconToOpportunity = (opportunityId, beaconId) =>
   firestore.collection('Opportunities').doc(opportunityId).update({ beaconId: beaconId })
 
 export const linkOpportunityToBeacon = (beaconId, opportunityId) =>
-  firestore.collection('Beacons').doc(beaconId).set({ opportunities: {[opportunityId]: true} }, { merge: true })
+  firestore.collection('Beacons').doc(beaconId).set({ opportunities: { [opportunityId]: true } }, { merge: true })
 
 export const onceGetIssuer = (id) =>
   firestore.collection('Issuers').doc(id).get()
@@ -100,16 +117,16 @@ export const onceGetAdmin = (id) =>
   firestore.collection('Admins').doc(id).get()
 
 export const undoParticipation = (id) =>
-  firestore.collection('Participations').doc(id).update({status: 0})
+  firestore.collection('Participations').doc(id).update({ status: 0 })
 
 export const acceptParticipation = (id) =>
-  firestore.collection('Participations').doc(id).update({status: 1})
+  firestore.collection('Participations').doc(id).update({ status: 1 })
 
 export const rejectParticipation = (id) =>
-  firestore.collection('Participations').doc(id).update({status: 2})
+  firestore.collection('Participations').doc(id).update({ status: 2 })
 
 export const completeParticipation = (id) =>
-  firestore.collection('Participations').doc(id).update({status: 3})
+  firestore.collection('Participations').doc(id).update({ status: 3 })
 
 export const onceGetAddress = (id) =>
   firestore.collection('Addresses').doc(id).get()
@@ -117,7 +134,7 @@ export const onceGetAddress = (id) =>
 export const onceGetAddresses = () =>
   firestore.collection('Addresses').get()
 
-export const createNewBeacon = (data) => 
+export const createNewBeacon = (data) =>
   firestore.collection("Beacons").add(data)
 
 export const onceGetBeacons = () =>
@@ -130,7 +147,7 @@ export const onceGetPrivacyPage = () =>
   firestore.collection('PrivacyPage').doc("PrivacyPage").get()
 
 export const softDeleteOpportunity = (id) =>
-  firestore.collection('Opportunities').doc(id).update({authority: 2})
+  firestore.collection('Opportunities').doc(id).update({ authority: 2 })
 
 export const onceGetConditions = () =>
   firestore.collection('Voorwaarden').doc("Voorwaarden").get()
@@ -160,10 +177,10 @@ export const onceGetAssertions = (id) =>
   firestore.collection('Assertions').where('recipientId', '==', id).get()
 
 export const updateOpportunity = (id, field, data) =>
-  firestore.collection('Opportunities').doc(id).update({[field]: data})
+  firestore.collection('Opportunities').doc(id).update({ [field]: data })
 
 export const updateAddress = (id, field, data) =>
-  firestore.collection('Addresses').doc(id).update({[field]: data})
+  firestore.collection('Addresses').doc(id).update({ [field]: data })
 
 export const onceGetAmountParticipations = (id) => {
   var query = firestore.collection('Participations');
@@ -178,4 +195,4 @@ export const onceGetAmountParticipationsRejected = (id) => {
   query = query.where('status', "==", 2);
   return query.get();
 }
-  
+

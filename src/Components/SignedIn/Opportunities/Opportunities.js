@@ -24,7 +24,7 @@ class Opportunities extends Component {
 	componentDidMount() {
 		window.scrollTo(0, 0);
 		firestore.onceGetValidatedOpportunities().then(snapshot => {
-			var res = new Object()
+			let res = {};
 			snapshot.forEach(doc => {
 				res[doc.id] = doc.data();
 			});
@@ -35,7 +35,7 @@ class Opportunities extends Component {
 			console.log('Error getting documents', err);
 		});
 		firestore.onceGetAddresses().then(snapshot => {
-			var res = new Object()
+			let res = {};
 			snapshot.forEach(doc => {
 				res[doc.id] = doc.data();
 			});
@@ -46,7 +46,7 @@ class Opportunities extends Component {
 			console.log('Error getting documents', err);
 		});
 		firestore.onceGetValidatedIssuers().then(snapshot => {
-			var res = new Object()
+			let res = {};
 			snapshot.forEach(doc => {
 				res[doc.id] = doc.data();
 			});
@@ -58,13 +58,14 @@ class Opportunities extends Component {
 	}
 	filterOpportunities(event){
 		event.preventDefault();
-		var initialList = this.state.initialOpportunities;
-		var filteredArray = Object.keys(initialList).map(function(key) {
+		let initialList = this.state.initialOpportunities;
+		let filteredArray = Object.keys(initialList).map(function(key) {
 			return [key, initialList[key]];
 		  });
 		// console.log(filteredArray);
 		filteredArray = filteredArray.filter(function(item){
 			let content = "";
+			// eslint-disable-next-line
 			Object.keys(item[1]).map(function(key) {
 				// console.log(key);
 				content += item[1][key];
@@ -73,7 +74,7 @@ class Opportunities extends Component {
 			return content.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
 		});
 		// console.log(filteredArray);
-		var updatedList = new Object;
+		let updatedList = {};
 		filteredArray.forEach((item, index)=>{
 			let key = item[0];
 			updatedList[key] = item[1];

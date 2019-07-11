@@ -3,39 +3,33 @@ import { firestore } from '../../../Utils/Firebase';
 
 import * as routes from '../../../routes/routes.js';
 
-import LK12345 from '../../../assets/opportunities/LK12345.png';
-import LK12346 from '../../../assets/opportunities/LK12346.png';
-import LK12347 from '../../../assets/opportunities/LK12347.png';
-import dg2 from '../../../assets/dg2.svg';
-import dzh3 from '../../../assets/dzh3.svg';
-import ons1 from '../../../assets/ons1.svg';
 
 class Opportunities extends Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
 
-		this.state={
+		this.state = {
 			opportunities: null
 		};
 	}
-	componentDidMount(){
+	componentDidMount() {
 		firestore.onceGetLatestOpportunities().then(snapshot => {
-			var res = new Object()
+			let res = {};
 			snapshot.forEach(doc => {
 				res[doc.id] = doc.data();
 			});
 			this.setState(() => ({ opportunities: res }))
 			// console.log(this.state.opportunities);
-		  })
-		  .catch(err => {
-			console.log('Could not fetch opportunity data: ', err);
-		  });
+		})
+			.catch(err => {
+				console.log('Could not fetch opportunity data: ', err);
+			});
 	}
-	renderOpportunity (id, img, badge, type, title, synopsis, startDate, endDate) {
-		return(
-			<a href={`${ routes.Opportunities }/${ id }`} className={`card-item opportunity ${ type }`}>
+	renderOpportunity(id, img, badge, type, title, synopsis, startDate, endDate) {
+		return (
+			<a href={`${routes.Opportunities}/${id}`} className={`card-item opportunity ${type}`}>
 				<img src={img} className="photo" alt="photoo" />
-				<div style={{position: "relative"}}>
+				<div style={{ position: "relative" }}>
 					<img src={badge} className="badge" alt="badge" />
 					<h2>{title}</h2>
 					<div className="meta-data">
@@ -54,26 +48,26 @@ class Opportunities extends Component {
 				<div className="container">
 					<div className="content">
 						<h1 className="uitgelicht">Leerkansen</h1>
-							{!!opportunities && 
-								<div className="card-container">
-									{Object.keys(opportunities).map(key =>
-										<a href={`${ routes.Opportunities }/${ key }`} className={`card-item opportunity ${ opportunities[key].category }`}>
-											<div className="crop-opp-img">
-												<img src={opportunities[key].oppImageUrl} className="photo" alt="photoo" />
+						{!!opportunities &&
+							<div className="card-container">
+								{Object.keys(opportunities).map(key =>
+									<a key={key} href={`${routes.Opportunities}/${key}`} className={`card-item opportunity ${opportunities[key].category}`}>
+										<div className="crop-opp-img">
+											<img src={opportunities[key].oppImageUrl} className="photo" alt="photoo" />
+										</div>
+										<div style={{ position: "relative" }}>
+											<img src={opportunities[key].pinImageUrl} className="badge" alt="badge" />
+											<h2>{opportunities[key].title}</h2>
+											<div className="meta-data">
+												<small>{opportunities[key].beginDate + ' tot ' + opportunities[key].endDate}</small>
+												{/* <small>{address}</small> */}
 											</div>
-											<div style={{position: "relative"}}>
-												<img src={opportunities[key].pinImageUrl} className="badge" alt="badge" />
-												<h2>{opportunities[key].title}</h2>
-												<div className="meta-data">
-													<small>{opportunities[key].beginDate + ' tot ' + opportunities[key].endDate}</small>
-													{/* <small>{address}</small> */}
-												</div>
-												<p>{opportunities[key].shortDescription}</p>
-											</div>
-										</a>
-									)}
-								</div>
-							}
+											<p>{opportunities[key].shortDescription}</p>
+										</div>
+									</a>
+								)}
+							</div>
+						}
 						<a className="meer" href="/opportunities">Meer leerkansen</a>
 					</div>
 				</div>

@@ -24,9 +24,8 @@ class CreatedOpportunities extends Component {
 		window.scrollTo(0, 0);
         auth.onAuthStateChanged((user) => {
             if (user) {
-				this.state.userId = user.uid;
-				firestore.onceGetAdmin(this.state.userId).then(doc => {
-					var res = new Object();
+				this.setState({userId: user.uid});
+				firestore.onceGetAdmin(user.uid).then(doc => {
 					if(doc.data()){
 						this.setState(() => ({ isAdmin: true }));
 					}
@@ -45,9 +44,9 @@ class CreatedOpportunities extends Component {
 		if(this.state.isAdmin){
 			console.log("user is admin, fetching all opportunities");
 			firestore.onceGetOpportunities().then(snapshot => {
-				var res = new Object();
+				let res = {};
 				snapshot.forEach(doc => {
-					if(doc.data().authority!=2){
+					if(doc.data().authority!==2){
 						res[doc.id] = doc.data();
 					}
 				});
@@ -61,9 +60,9 @@ class CreatedOpportunities extends Component {
 		else{
 			console.log("user is not an admin, fetching only the opportunities made by the user")
 			firestore.onceGetCreatedOpportunities(id).then(snapshot => {
-				var res = new Object();
+				let res = {};
 				snapshot.forEach(doc => {
-					if(doc.data().authority!=2){
+					if(doc.data().authority!==2){
 						res[doc.id] = doc.data();
 					}
 				});

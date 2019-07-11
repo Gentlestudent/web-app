@@ -17,7 +17,7 @@ class Experiences extends Component {
 	componentDidMount() {
 		window.scrollTo(0, 0);
 		firestore.onceGetExperiences().then(snapshot => {
-			var res = new Object()
+			let res = {};
 			snapshot.forEach(doc => {
 				res[doc.id] = doc.data();
 			});

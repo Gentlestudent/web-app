@@ -5,50 +5,58 @@ import { firestore } from '../../../Utils/Firebase';
 
 import Detail from './Detail';
 import List from './List';
+import Spinner from '../../../Shared/Spinner';
 
 class News extends Component {
-    constructor(props) {
+	constructor(props) {
 		super(props);
-	
+
 		this.state = {
-		  newsItems: null
+			newsItems: null
 		};
-	  }
+	}
 	componentDidMount() {
 		window.scrollTo(0, 0);
 		firestore.onceGetNewsItems().then(snapshot => {
-			var res = new Object()
+			let res = {};
 			snapshot.forEach(doc => {
 				res[doc.id] = doc.data();
 			});
-            this.setState(() => ({ newsItems: res }))
-            // console.log(this.state.newsItems);
+			this.setState(() => ({ newsItems: res }));
+			// console.log(this.state.newsItems);
 		})
-		.catch(err => {
-			console.log('Error getting documents', err);
-		});
+			.catch(err => {
+				console.log('Error getting documents', err);
+			});
 	}
 	render() {
 		const { newsItems } = this.state;
-
 		return (
-            <Switch>
-				<Route path={'/news/:id'} render={({match}) => <Detail newsItems={newsItems}  match={match}/>} />
-				<Route path={'/news'} render={() => 
-					<div className="news-items-content">
-						<div className="container">
-							<div className="content content-with-padding">
-								<h1>Nieuws</h1>
-								<div id="nieuws">
-									<List newsItems={newsItems} />
+			<Switch>
+
+				{newsItems !== null ?
+					<React.Fragment>
+						<Route path={'/news/:id'} render={({ match }) => <Detail newsItems={newsItems} match={match} />} />
+						<Route path={'/news'} render={() =>
+							<div className="news-items-content">
+								<div className="container">
+									<div className="content content-with-padding">
+										<h1>Nieuws</h1>
+										<div id="nieuws">
+											<List newsItems={newsItems} />
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-                    </div>
-				} />
+						} />
+					</React.Fragment>
+					: <Spinner />
+
+				}
+
 			</Switch>
-        )
-    }
+		)
+	}
 }
 
 export default News;

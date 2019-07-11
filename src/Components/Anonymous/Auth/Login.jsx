@@ -61,21 +61,17 @@ class SignInForm extends Component {
       error,
     } = this.state;
 
-    const isInvalid =
-      password === '' ||
-      email === '';
-
     return (
       <div className="register-form login-page">
-        <div class="cl-wh" id="f-mlb">Log in</div>
+        <div className="cl-wh" id="f-mlb">Log in</div>
         <br/>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label class="cl-wh f-lb">E-mailadres:</label>
-            <div class="f-i-bx b3 mrg3b">
-              <div class="tb">
-                <div class="td icon"><i class="fas fa-envelope"></i></div>
-                <div class="td prt">
+            <label className="cl-wh f-lb">E-mailadres:</label>
+            <div className="f-i-bx b3 mrg3b">
+              <div className="tb">
+                <div className="td icon"><i className="fas fa-envelope"></i></div>
+                <div className="td prt">
                   <input
                     value={email}
                     onChange={event => this.setState(byPropKey('email', event.target.value))}
@@ -87,11 +83,11 @@ class SignInForm extends Component {
             </div>
           </div>
           <div className="form-group">
-            <label class="cl-wh f-lb">Wachtwoord:</label>
-              <div class="f-i-bx b3 mrg3b">
-                <div class="tb">
-                  <div class="td icon"><i class="fas fa-lock"></i></div>
-                  <div class="td prt">
+            <label className="cl-wh f-lb">Wachtwoord:</label>
+              <div className="f-i-bx b3 mrg3b">
+                <div className="tb">
+                  <div className="td icon"><i className="fas fa-lock"></i></div>
+                  <div className="td prt">
                     <input
                       value={password}
                       onChange={event => this.setState(byPropKey('password', event.target.value))}
@@ -102,7 +98,7 @@ class SignInForm extends Component {
                 </div>
               </div>
           </div>
-          <div id="s-btn" class="mrg25t"><input type="submit" value="Sign in" class="b3"/></div>
+          <div id="s-btn" className="mrg25t"><input type="submit" value="Sign in" className="b3"/></div>
           {/* <button disabled={isInvalid} type="submit"> */}
             {/* Sign In
           </button> */}

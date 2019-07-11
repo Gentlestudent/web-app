@@ -3,30 +3,26 @@ import { firestore } from '../../../Utils/Firebase';
 
 import * as routes from '../../../routes/routes.js';
 
-import ER12345 from '../../../assets/experiences/ER12345.png';
-import ER12346 from '../../../assets/experiences/ER12346.png';
-import ER12347 from '../../../assets/experiences/ER12347.png';
-
 class RecentExperiences extends Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
 
-		this.state={
+		this.state = {
 			experiences: null
 		};
 	}
-	componentDidMount(){
+	componentDidMount() {
 		firestore.onceGetLatestExperiences().then(snapshot => {
-			var res = new Object()
+			var res = {};
 			snapshot.forEach(doc => {
 				res[doc.id] = doc.data();
 			});
 			this.setState(() => ({ experiences: res }))
 			console.log(this.state.experiences);
-		  })
-		  .catch(err => {
-			console.log('Could not fetch opportunity data: ', err);
-		  });
+		})
+			.catch(err => {
+				console.log('Could not fetch opportunity data: ', err);
+			});
 	}
 	render() {
 		const { experiences } = this.state;
@@ -35,10 +31,10 @@ class RecentExperiences extends Component {
 				<div className="container">
 					<div className="content">
 						<h1>Recente Ervaringen</h1>
-						{!!experiences && 
+						{!!experiences &&
 							<div className="card-container">
 								{Object.keys(experiences).map(key =>
-									<a href={`${ routes.Experiences }/${ key }`} className="card-item ervaring ervaring-gradient" style={{backgroundImage: `url(${experiences[key].imageUrl})`, backgroundPosition: 'center center'}}>
+									<a href={`${routes.Experiences}/${key}`} className="card-item ervaring ervaring-gradient" style={{ backgroundImage: `url(${experiences[key].imageUrl})`, backgroundPosition: 'center center' }}>
 										<div className="data">
 											<h2>{experiences[key].title}</h2>
 											<small>{experiences[key].author} - {experiences[key].published}</small>

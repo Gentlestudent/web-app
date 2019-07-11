@@ -26,7 +26,7 @@ class RegisterIssuer extends Component {
 			<React.Fragment>
         <div className="content content-with-padding register-form-content">
           <div className="register-form">
-            <div class="cl-wh" id="f-mlb">Word issuer</div>
+            <div className="cl-wh" id="f-mlb">Word issuer</div>
             <div className="form" id="register_user">
               <FormRegisterUser onSubmit={this.handleSubmit}/>
             </div>
