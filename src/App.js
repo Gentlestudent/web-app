@@ -42,6 +42,7 @@ import withBadgr from './Shared/withBadgr';
 
 import * as routes from './routes/routes';
 import AuthUserContext from './Shared/AuthUserContext';
+import Spinner from './Shared/Spinner';
 
 const PrivateRoute = ({ component: Component, needAuth, ...rest }) => (
 	<Route {...rest} render = { (props) => (
@@ -54,48 +55,66 @@ const PrivateRoute = ({ component: Component, needAuth, ...rest }) => (
 	)} />
 )
 
+const LoadingScreen = () => <div> <Spinner /> </div>
+
 class App extends Component {
+
+	constructor(props){
+		super(props);
+		this.state = {loading : true, called : false}
+	}
+
+	componentDidUpdate(){
+		if (this.state.called === false){
+			this.setState({loading:false, called:true})
+		}
+	}
+
 	render() {
+		const{loading} = this.state;
 		return (
-			<Provider store={store}>
-				<Router>
-					<div>
-						<Navigation/>
-						<div className="main-content">
-						<Switch>
-								<Route path={routes.FrontPage} exact render={() => <FrontPage />} />
-								<Route path={routes.Opportunities} render={() => <Opportunities />} />
-								<Route path={routes.BecomeIssuer} exact render={() => <BecomeIssuer />} />
-								<Route path={routes.Experiences} render={() => <Experiences />} />
-								<Route path={routes.News} render={() => <News />} />
-								<Route path={routes.AboutUs} exact render={() => <AboutUs />} />
-								<PrivateRoute path={routes.Register} component={Register} needAuth={false} /*render={() => <Register />}*/ />
-								<PrivateRoute path={routes.Login} component={Login} needAuth={false} /*render={() => <Login />}*/ />
-								<PrivateRoute path={routes.ResetPassword} component={ResetPassword} needAuth={false} /*render={ () => <ResetPassword />}*/ />
-								{/* <Route path="/login" render={() => <Login />} /> */}
-								{/* BACKOFFICE */}
-								{/* <Auth> */}
-								<Route path={routes.BOOpportunities} exact render={() => <BOOpportunities />} />
-								<Route path={routes.CreateOpportunity} exact render={() => <CreateOpportunity />} />
-								<Route path={routes.CreateOpportunity+'/:id'} exact render={({match}) => <CreateOpportunity match={match}/>} />
-								<Route path={routes.IssueBadgeRecipient} exact render={() => <IssueBadgeRecipient />} />
-								<Route path={routes.RegisterIssuer} component={RegisterIssuer} /*exact render={() => <RegisterIssuer />}*/ />
-								<Route path={routes.ValidateIssuer} exact render={() => <ValidateIssuer />} />
-								<Route path={routes.ValidateOpportunity} exact render={() => <ValidateOpportunity />} />
-								<Route path={routes.CreatedOpportunities} render={() => <CreatedOpportunities />} />
-								<Route path={routes.EditOpportunity+'/:id'} render={() => <EditOpportunity />} />
-								<Route path={routes.Profile} exact render={() => <Profile />} />
-								<Route path={routes.Backpack} exact render={() => <Backpack />} />
-								<Route path={routes.Privacy} exact render={() => <Privacy />} />
-								<Route path={routes.Conditions} exact render={() => <Conditions />} />
-								<Route path="*" render={() => <NoMatch />} />
-								{/* </Auth> */}
-						</Switch>
+			<React.Fragment>
+				{loading && <LoadingScreen />}
+				{!loading && <Provider store={store}>
+					<Router>
+						<div>
+							<Navigation />
+							<div className="main-content">
+								<Switch>
+									<Route path={routes.FrontPage} exact render={() => <FrontPage />} />
+									<Route path={routes.Opportunities} render={() => <Opportunities />} />
+									<Route path={routes.BecomeIssuer} exact render={() => <BecomeIssuer />} />
+									<Route path={routes.Experiences} render={() => <Experiences />} />
+									<Route path={routes.News} render={() => <News />} />
+									<Route path={routes.AboutUs} exact render={() => <AboutUs />} />
+									<PrivateRoute path={routes.Register} component={Register} needAuth={false} /*render={() => <Register />}*/ />
+									<PrivateRoute path={routes.Login} component={Login} needAuth={false} /*render={() => <Login />}*/ />
+									<PrivateRoute path={routes.ResetPassword} component={ResetPassword} needAuth={false} /*render={ () => <ResetPassword />}*/ />
+									{/* <Route path="/login" render={() => <Login />} /> */}
+									{/* BACKOFFICE */}
+									{/* <Auth> */}
+									<PrivateRoute path={routes.BOOpportunities} component={BOOpportunities} needAuth={true} /*exact render={() => <BOOpportunities />}*/ />
+									<PrivateRoute path={routes.CreateOpportunity} component={CreateOpportunity} needAuth={true} /*exact render={() => <CreateOpportunity />}*/ />
+									<Route path={routes.CreateOpportunity + '/:id'} exact render={({ match }) => <CreateOpportunity match={match} />} />
+									<PrivateRoute path={routes.IssueBadgeRecipient} component={IssueBadgeRecipient} needAuth={true} /*exact render={() => <IssueBadgeRecipient />}*/ />
+									<PrivateRoute path={routes.RegisterIssuer} needAuth={true} component={RegisterIssuer} /*exact render={() => <RegisterIssuer />}*/ />
+									<PrivateRoute path={routes.ValidateIssuer} component={ValidateIssuer} needAuth={true} /*exact render={() => <ValidateIssuer />}*/ />
+									<PrivateRoute path={routes.ValidateOpportunity} component={ValidateOpportunity} needAuth={true} /*exact render={() => <ValidateOpportunity />}*/ />
+									<PrivateRoute path={routes.CreatedOpportunities} component={CreatedOpportunities} needAuth={true} /*render={() => <CreatedOpportunities />}*/ />
+									<PrivateRoute path={routes.EditOpportunity + '/:id'} component={EditOpportunity} needAuth={true} /*render={() => <EditOpportunity />}*/ />
+									<PrivateRoute path={routes.Profile} component={Profile} needAuth={true} /*exact render={() => <Profile />}*/ />
+									<Route path={routes.Backpack} exact render={() => <Backpack />} />
+									<Route path={routes.Privacy} exact render={() => <Privacy />} />
+									<Route path={routes.Conditions} exact render={() => <Conditions />} />
+									<Route path="*" render={() => <NoMatch />} />
+									{/* </Auth> */}
+								</Switch>
+							</div>
+							<Footer />
 						</div>
-						<Footer/>
-					</div>
-				</Router>
-			</Provider>
+					</Router>
+				</Provider>}
+			</React.Fragment>
 		);
 	}
 }
