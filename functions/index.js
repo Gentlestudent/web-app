@@ -80,6 +80,8 @@ async function refreshToken() {
     } catch (err) {
         return console.error(err);
     }
+
+    return true;
 }
 
 exports.functionTest = functions.https.onCall(async (data, context) => {

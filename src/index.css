@@ -168,7 +168,11 @@ button.primary {
     height: 40px;
   }
 
-  .button--issuer-accept:hover {
+  .button--issuer-accept:hover, button[disabled] {
+    background-color: #cccccc;
+  }
+
+  .button--issuer-accept:hover:enabled {
     color: #F7B335;
     border: solid 2px #F7B335;
     background-color: transparent;
