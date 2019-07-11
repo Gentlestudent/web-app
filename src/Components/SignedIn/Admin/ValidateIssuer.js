@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { firestore } from "../../../Utils/Firebase";
+import { firestore, functions } from "../../../Utils/Firebase";
 import BadgrContext from "../../../Shared/BadgrContext";
 import Spinner from "../../../Shared/Spinner";
 import { badgr_email } from "../../../Shared/withBadgr"
-import { functions } from "../../../Utils/Firebase"
 
 class ValidateIssuer extends Component {
   constructor() {

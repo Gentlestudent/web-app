@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { firestore } from '../../../Utils/Firebase';
+import { firestore, functions } from '../../../Utils/Firebase';
 import Spinner from '../../../Shared/Spinner';
 import { Field, reduxForm } from 'redux-form';
 import BadgrContext from '../../../Shared/BadgrContext';
 import { renderSelect, validate } from '../../../Shared/Utils';
-import { functions } from '../../../Utils/Firebase'
 
 function toDataUrl(url, callback) {
     var xhr = new XMLHttpRequest();
@@ -301,6 +300,7 @@ class Opportunity extends Component {
             ).then(res => {
                 console.log("Oi successs!!!", res);
                 badge["badgrId"] = res.data.createdBadgeClass.entityId;
+                console.log("Setting state...")
                 self.setState({badge: badge});
             }
             )

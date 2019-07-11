@@ -182,7 +182,7 @@ exports.createBadgeClass = functions.https.onCall(async (data) => {
                 return {
                     status: res2.status,
                     message: "Created badge class!!",
-                    createBadgeClass: res2.data.result[0]
+                    createdBadgeClass: res2.data.result[0]
                 };
             case 400:
                 throw new functions.https.HttpsError("invalid-argument", "Badgr could not validate the badge class");
@@ -198,14 +198,16 @@ exports.createBadgeClass = functions.https.onCall(async (data) => {
 });
 
 exports.createAssertion = functions.https.onCall(async (data) => {
-    let issuerID = data.issuerID;
+    console.log("Got data", data);
+
+    let badgeID = data.badgeID;
     let assertionData = data.assertionData;
-    let url = BADGR_PATH("issuers/" + issuerID + "/assertions");
+    let url = BADGR_PATH("badgeclasses/" + badgeID + "/assertions");
 
     return getHeader().then(async (res) => {
         let header = res.header;
         console.log("Fetched header", header);
-        console.log("Posting", badgeData, "to", url);
+        console.log("Posting", assertionData, "to", url);
         const res2 = await axios.post(url, assertionData, header);
 
         switch (res2.status) {
@@ -225,6 +227,6 @@ exports.createAssertion = functions.https.onCall(async (data) => {
         }
     }).catch(err => {
         console.error("An error occurred :'(", err);
-        throw new functions.https.HttpsError("aborted", "An error occured while trying to add new assertion", err);
+        throw new functions.https.HttpsError("aborted", "An error occured while trying to add new assertion" + err.toString());
     });
 });
