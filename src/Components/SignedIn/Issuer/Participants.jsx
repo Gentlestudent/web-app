@@ -271,13 +271,15 @@ class Participant extends Component {
 
         const { participant } = this.props;
 
+        console.log(participant);
+
         return (
             <tr className='participant'>
                 <td>
                     <div className="table-el">{participant.name}</div>
                 </td>
                 <td>
-                    <div className="table-el">{participant.education}</div>
+                    <div className="table-el">{participant.institute}</div>
                 </td>
                 <td>
                     <div className="table-el">{participant.email}</div>
