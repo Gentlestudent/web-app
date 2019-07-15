@@ -7,6 +7,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const axios = require('axios');
+const nodemailer = require('nodemailer');
 
 admin.initializeApp();
 
@@ -272,3 +273,64 @@ exports.createAssertion = functions.https.onCall(async (data) => {
         throw new functions.https.HttpsError("aborted", "An error occured while trying to add new assertion" + err.toString());
     });
 });
+
+
+
+// EMAIL FUNCTIONALITY
+
+
+/**
+ * Create a transporter to send the email
+ */
+let transporter = nodemailer.createTransport({
+    host: "smtp-mail.outlook.com",
+    secureConnection: false,
+    port: 587,
+    tls: {
+        ciphers: 'SSLv3'
+    },
+    auth: {
+        user: functions.config().mailer.email,
+        pass: functions.config().mailer.pass
+    }
+});
+
+
+
+exports.notifyIssuer = functions.https.onCall((data) => {
+
+    let opportunityTitle = data.opportunityTitle;
+    let participantName = data.participantName;
+    let issuerEmail = data.issuerEmail;
+    let participantEmail = data.participantEmail;
+
+    let subject = 'Inschrijving voor leerkans: ' + opportunityTitle;
+    let html = '<p>Dag partner van Gentlestudent,</p>' +
+    '<p>Er heeft zich zopas iemand ingeschreven voor de leerkans: "' + opportunityTitle + '"</p>' +
+        '<p>De gegevens van deze persoon zijn: </p>' +
+        '<p> - Naam: ' + participantName + '</p>' +
+        '<p> - E-mailadres: ' + participantEmail + '</p>' +
+        '<p>Met vriendelijke groet,</p>' +
+        '<p>Team Gentlestudent</p>';
+
+
+    let mailOptions = {
+        from: "Gentlestudent <" + functions.config().mailer.email + ">",
+        to: "freek.de.sagher21@gmail.com", // TODO swap out
+        subject: subject,
+        text: "",
+        html: html
+    }
+
+    return sendNotifyIssuerEmail(mailOptions)
+});
+
+
+async function sendNotifyIssuerEmail(mailOptions) {
+    transporter.sendMail(mailOptions, (error, info) => {
+        if(error) {
+            console.error(error);
+        }
+        console.log("Message sent!", info);
+    })
+}
