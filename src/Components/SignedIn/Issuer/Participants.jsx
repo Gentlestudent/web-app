@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 
 import Spinner from '../../../Shared/Spinner';
 
-import { firestore } from '../../../Utils/Firebase';
-import axios from 'axios';
+import { firestore, functions } from '../../../Utils/Firebase';
 import BadgrContext from '../../../Shared/BadgrContext';
 
 class List extends Component {
@@ -12,8 +11,12 @@ class List extends Component {
 
         this.state = {
             participants: null,
-            isEmpty: false
+            isEmpty: false,
+            id: props.id
         }
+
+        this.loadParticipants = this.loadParticipants.bind(this);
+
     }
     componentDidMount() {
         this.loadParticipants();
@@ -22,7 +25,7 @@ class List extends Component {
     loadParticipants() {
         let res = {};
         let self = this;
-        console.log("fetching participations for opportunity with id " + this.props.id);
+        console.log("fetching participations for opportunity with id ", self.state.id);
         firestore.onceGetParticipationsForOpportunity(this.props.id).then((participations) => {
             participations.forEach(function (participation) {
                 let id = participation.data().participantId;
@@ -106,28 +109,42 @@ class Participant extends Component {
         this.reject = this.reject.bind(this);
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevState) {
 
         // giveBadge() should make this if statement true
-        if (this.state.badgrBadgeClassID !== "" && this.state.assertion !== null) {
+        if (this.state.badgrBadgeClassID !== ""
+            && this.state.assertion !== null
+            && prevState.badgrBadgeClassID !== this.state.badgrBadgeClassID
+            && prevState.assertion !== this.state.assertion) {
+
             console.log("trying to post to badgr...");
             this.postBadgrBadge();
         }
     }
 
-    postBadgrBadge() {
-        console.log(this.props);
-        let accessToken = this.props.badgrAuth.accessToken;
-        let header = { headers: { Authorization: "Bearer " + accessToken } };
+    postBadgrBadge(tries = 0) {
+
+        if (tries >= 3) {
+            let error = {
+                name: "Failed to refresh access token",
+                message: "An internal error occurred, contact a system admin",
+                function: this.createBadge,
+                status: 500
+            }
+            throw error;
+        }
+
+        // let accessToken = this.props.badgrAuth.accessToken;
+        // let header = { headers: { Authorization: "Bearer " + accessToken } };
 
         let email = this.props.participant.email;
-        console.log("Participant email: ", email);
+        // console.log("Participant email: ", email);
 
         let participationId = this.props.participant["participationId"];
-        console.log("Participation id", participationId);
+        // console.log("Participation id", participationId);
 
         let badgrId = this.state.badgrBadgeClassID;
-        console.log("badgr id", badgrId);
+        // console.log("badgr id", badgrId);
 
         let data = {
             recipient: {
@@ -136,26 +153,61 @@ class Participant extends Component {
             }
         }
 
-        // Post to the badgr API
-        axios.post("https://api.badgr.io/v2/badgeclasses/" + badgrId + "/assertions", data, header).then(res => {
+        functions.createBadgrAssertion({
+            badgeID: badgrId,
+            assertionData: data
+        })
+            .then(res => {
+                let assertion = this.state.assertion;
+                assertion["badgrId"] = res.data.createdAssertion.entityId;
+                firestore.createNewAssertion(assertion);
+                firestore.completeParticipation(participationId)
+                    .then(res => {
+                        console.log("Completed participation", res);
+                        this.setState({
+                            assertion: null,
+                            badgrBadgeClassID: ""
+                        })
+                        this.props.loadParticipants();
+                    });
+            })
+            .catch(err => {
+                switch (err.status) {
+                    case 403:
+                        // 403 is thrown when an expired access token is used
+                        console.log("Access token expired, refreshing... (tried: [" + (tries + 1).toString() + "] time(s))");
+                        functions.refreshAccessToken().then(() => {
+                            this.postBadgrBadge(tries++);
+                        })
+                            .catch(err => {
+                                throw err;
+                            });
+                        break;
+                    default:
+                        console.error("Error occurred while trying to validate opportunity", err);
+                }
+            });
 
-            console.log("Post to badgr api successfull, result", res);
-            // Finalize giveBadge process
-            firestore.createNewAssertion(this.state.assertion).catch(err => {
-                console.log("failed creating assertion:" + err);
-            });;
-            var self = this;
-            // Complete the participation
-            firestore.completeParticipation(participationId)
-                .then(res => {
-                    console.log("Completed participation", res);
-                    self.props.loadParticipants();
-                })
-                .catch(err => {
-                    console.log("failed completing participation:", err);
-                });
-        }
-        ).catch(err => console.log(err));
+        // Post to the badgr API
+        // axios.post("https://api.badgr.io/v2/badgeclasses/" + badgrId + "/assertions", data, header).then(res => {
+
+        //     console.log("Post to badgr api successfull, result", res);
+        //     // Finalize giveBadge process
+        //     firestore.createNewAssertion(this.state.assertion).catch(err => {
+        //         console.log("failed creating assertion:" + err);
+        //     });;
+        //     var self = this;
+        //     // Complete the participation
+        //     firestore.completeParticipation(participationId)
+        //         .then(res => {
+        //             console.log("Completed participation", res);
+        //             self.props.loadParticipants();
+        //         })
+        //         .catch(err => {
+        //             console.log("failed completing participation:", err);
+        //         });
+        // }
+        // ).catch(err => console.log(err));
     }
 
     giveBadge(event) {
@@ -243,13 +295,15 @@ class Participant extends Component {
 
         const { participant } = this.props;
 
+        console.log(participant);
+
         return (
             <tr className='participant'>
                 <td>
                     <div className="table-el">{participant.name}</div>
                 </td>
                 <td>
-                    <div className="table-el">{participant.education}</div>
+                    <div className="table-el">{participant.institute}</div>
                 </td>
                 <td>
                     <div className="table-el">{participant.email}</div>

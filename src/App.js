@@ -45,7 +45,7 @@ import AuthUserContext from './Shared/AuthUserContext';
 import Spinner from './Shared/Spinner';
 
 const PrivateRoute = ({ component: Component, needAuth, ...rest }) => (
-	<Route {...rest} render = { (props) => (
+	<Route {...rest} render={(props) => (
 		<AuthUserContext.Consumer>
 			{authUser => (authUser && needAuth) || (!authUser && !needAuth)
 				? <Component {...props} />

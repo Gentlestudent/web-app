@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { firestore } from '../../../Utils/Firebase';
+import { firestore, functions } from '../../../Utils/Firebase';
 import Spinner from '../../../Shared/Spinner';
 import { Field, reduxForm } from 'redux-form';
 import BadgrContext from '../../../Shared/BadgrContext';
 import { renderSelect, validate } from '../../../Shared/Utils';
-import axios from 'axios';
 
 function toDataUrl(url, callback) {
     var xhr = new XMLHttpRequest();
@@ -201,8 +200,8 @@ class Opportunity extends Component {
         this.postNewBeacon = this.postNewBeacon.bind(this);
     };
 
-    componentDidUpdate() {
-        if (this.state.badge !== null && this.state.badge.badgrId !== undefined) {
+    componentDidUpdate(prevState) {
+        if (this.state.badge !== null && this.state.badge.badgrId !== undefined && prevState.badge !== this.state.badge) {
             console.log("badgr badge created: ", this.state.badge);
             this.validateOpportunity();
         }
@@ -243,15 +242,26 @@ class Opportunity extends Component {
         this.props.getOpportunities();
     }
 
-    createBadge() {
+    createBadge(tries = 0) {
+
+        if (tries >= 3) {
+            let error = {
+                name: "Failed to refresh access token",
+                message: "An internal error occurred, contact a system admin",
+                function: this.createBadge,
+                status: 500
+            }
+            throw error;
+        }
+
         let opportunity = this.props.opportunity;
         let name;
         let badge = {};
         let baseUrl = "https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Badges%2F";
         let image = baseUrl;
-        console.log(opportunity.category);
-        console.log(opportunity.difficulty);
-        switch (opportunity.category) {
+        // console.log(opportunity.category);
+        // console.log(opportunity.difficulty);
+        switch (parseInt(opportunity.category, 10)) {
             case 0: name = "Digitale Geletterdheid"; image += "badge_digital-literacy"; break;
             case 1: name = "Duurzaamheid"; image += "badge_sustainability"; break;
             case 2: name = "Ondernemingszin"; image += "badge_entre-spirit"; break;
@@ -259,12 +269,15 @@ class Opportunity extends Component {
             case 4: name = "Wereldburgerschap"; image += "badge_global-citizenship"; break;
             default: break;
         }
-        switch (opportunity.difficulty) {
+        switch (parseInt(opportunity.difficulty, 10)) {
             case 0: image += "_1.png?alt=media"; break;
-            case 1: image += "_2.png?alt=media"; break;
+            case 1: image += "_2.png?alt=media"; console.log("Entered!!"); break;
             case 2: image += "_3.png?alt=media"; break;
             default: break;
         }
+
+        // console.log("Image", opportunity.difficulty);
+
         badge["type"] = "BadgeClass";
         badge["name"] = opportunity.title;
         badge["description"] = opportunity.longDescription;
@@ -273,12 +286,12 @@ class Opportunity extends Component {
         badge["issuerId"] = opportunity.issuerId;
 
 
-        console.log("Firebase Image: ", image);
+        // console.log("Firebase Image: ", image);
 
         let self = this;
-        let accessToken = this.props.badgrAuth.accessToken;
-        let header = { headers: { Authorization: "Bearer " + accessToken } };
-        // TODO fill in fields
+        // let accessToken = this.props.badgrAuth.accessToken;
+        // let header = { headers: { Authorization: "Bearer " + accessToken } };
+
         toDataUrl(image, function (myBase64) {
             let data = {
                 name: badge.name,
@@ -288,16 +301,36 @@ class Opportunity extends Component {
                 criteriaNarrative: badge.criteria
             }
 
-            console.log("BADGR DATA", data);
+            // console.log("BADGR DATA", data);
 
-            axios.post("https://api.badgr.io/v2/badgeclasses", data, header)
-                .then(res => {
-                    console.log("Created badgr badgeclass", res);
-                    // console.log(JSON.stringify(badge));
-                    badge["badgrId"] = res.data.result[0].entityId;
-                    self.setState({ badge: badge });
-                })
-                .catch(err => { console.error("ERROR"); console.error(err); console.log("data", data) });
+            console.log("Entering createBadgeClass function");
+            functions.createBadgrBadgeClass({
+                badgeData: data,
+                issuerID: data.issuer
+            }
+            ).then(res => {
+                // console.log("Oi successs!!!", res);
+                badge["badgrId"] = res.data.createdBadgeClass.entityId;
+                console.log("Setting state...")
+                self.setState({ badge: badge });
+            }
+            )
+                .catch(err => {
+                    switch (err.status) {
+                        case 403:
+                            // 403 is thrown when an expired access token is used
+                            console.log("Access token expired, refreshing... (tried: [" + (tries + 1).toString() + "] time(s))");
+                            functions.refreshAccessToken().then(() => {
+                                this.createBadge(tries++);
+                            })
+                                .catch(err => {
+                                    throw err;
+                                });
+                            break;
+                        default:
+                            console.error("Error occurred while trying to validate opportunity", err);
+                    }
+                });
         });
     }
 

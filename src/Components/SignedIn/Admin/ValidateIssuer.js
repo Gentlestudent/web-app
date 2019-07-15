@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { firestore } from "../../../Utils/Firebase";
+import { firestore, functions } from "../../../Utils/Firebase";
 import BadgrContext from "../../../Shared/BadgrContext";
 import Spinner from "../../../Shared/Spinner";
+import { badgr_email } from "../../../Shared/withBadgr"
 
 class ValidateIssuer extends Component {
   constructor() {
@@ -58,8 +59,8 @@ class ValidateIssuer extends Component {
                 {!issuers && <Loading />}
               </React.Fragment>
             ) : (
-              <Loading />
-            )
+                <Loading />
+              )
           }
         </BadgrContext.Consumer>
       </React.Fragment>
@@ -68,87 +69,98 @@ class ValidateIssuer extends Component {
 }
 
 class IssuersList extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = { badgrIssuers: null };
-
-        this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      badgrIssuers: null,
+      load: false,
+      currentlyUpdating: null
     };
 
-    // componentDidUpdate(prevState) {
-    //     if (this.state.badgrIssuers != null) {
-    //         if(prevState.badgrIssuers != null && this.state.badgrIssuers[0]==prevState.badgrIssuers[0]){}
-    //         else{
-    //             this.deleteIssuer(this.state.badgrIssuers[0].entityId);
-    //         }
-    //     }
-    // }
+    this.handleClick = this.handleClick.bind(this);
+    this.createIssuer = this.createIssuer.bind(this);
+    this.deleteIssuer = this.deleteIssuer.bind(this);
+  };
 
-    handleClick(event) {
-        // console.log(event.target.id);
-        this.createBadgrIssuer(event.target.id);
-        this.props.getIssuers();
+  handleClick(event) {
+    // console.log(event.target.id);
+    this.createIssuer(event.target.id);
+    this.props.getIssuers();
+  }
+
+  createIssuer(id, tries = 0) {
+
+    if (tries >= 3) {
+      let error = {
+        name: "Failed to refresh access token",
+        message: "An internal error occurred, contact a system admin",
+        function: this.createIssuer,
+        status: 500
+      }
+      throw error;
     }
 
-    createBadgrIssuer(id) {
+    function urlify(s) {
+      let prefix = 'http://';
+      let prefix2 = 'https://';
+      if (s.substr(0, prefix.length) !== prefix && s.substr(0, prefix2.length) !== prefix2) {
+        s = prefix + s;
+      }
+      return s;
+    }
 
-        function urlify(s) {
-            let prefix = 'http://';
-            let prefix2 = 'https://';
-            if (s.substr(0, prefix.length) !== prefix && s.substr(0, prefix2.length) !== prefix2) {
-                s = prefix + s;
-            }
-            return s;
-        }
+    // console.log("Trying to create badgr issuer...");
+    // let accessToken = this.props.badgrAuth.accessToken;
+    // let header = { headers: { Authorization: "Bearer " + accessToken } };
+    // let header = this.props.badgrAuth.getHeader();
 
-        console.log("Trying to create badgr issuer...");
-        let accessToken = this.props.badgrAuth.accessToken;
-        // let header = { headers: { Authorization: "Bearer " + accessToken } };
-        let header = this.props.badgrAuth.getHeader();
-        let issuer = this.props.issuers[id];
-        let url = urlify(issuer.url);
+    let issuer = this.props.issuers[id];
+    let url = urlify(issuer.url);
 
-        console.log("Issuer data", issuer);
+    // console.log("Issuer data", issuer);
 
-        let desc =  "Institution: " + issuer.institution + " - " +
-                    "Email: " + issuer.email + " - " +
-                    "Phone: " + issuer.phonenumber;
+    let desc = "Institution: " + issuer.institution + " - " +
+      "Email: " + issuer.email + " - " +
+      "Phone: " + issuer.phonenumber;
 
-        let data = {
-            name: issuer.name,
-            email: "freek.de.sagher21@gmail.com", // TODO: change to gentlestudent
-            description: desc,
-            url: url
-        };
+    let issuerData = {
+      name: issuer.name,
+      email: badgr_email,
+      description: desc,
+      url: url
+    };
 
-        axios.post("https://api.badgr.io/v2/issuers", data, header)
-            .then(res => {
-                console.log("Created badgr issuer", res);
-                firestore.updateIssuerBadgrId(id, res.data.result[0].entityId);
-                firestore.validateIssuer(id);
+    this.setState({ load: true, currentlyUpdating: id });
+    functions.createBadgrIssuer({
+      issuerData
+    })
+      .then(result => {
+        console.log("Created badgr issuer successfully", result);
+        let entityId = result.data.createdIssuer.entityId;
+        firestore.updateIssuerBadgrId(id, entityId);
+        firestore.validateIssuer(id).then(() => {
+          this.setState({ load: false, currentlyUpdating: null });
+          this.props.getIssuers();
+        });
+      })
+      .catch(err => {
+        switch (err.status) {
+          case 403:
+            // 403 is thrown when an expired access token is used
+            console.log("Access token expired, refreshing... (tried: [" + (tries + 1).toString() + "] time(s))");
+            functions.refreshAccessToken().then(() => {
+              this.createIssuer(id, tries++);
             })
-            .catch(err => {
-                switch (err.response.status) {
-                    case 403:
-                        console.log("Refreshing Badgr access token");
-                        this.props.badgrAuth.refreshAccessToken();
-                        break;
-                    default:
-                        console.error(err);
-                        break;
-                }
-            });
-        // console.log("fetching issuers");
-        // axios.get("https://api.badgr.io/v2/issuers", header)
-        //     .then(res => {
-        //         console.log(res);
-        //         this.setState({ badgrIssuers: res.data.result });
-        //     }).catch(err => {
-        //         console.log(err);
-        //         // console.log(this.state.access_token);
-        //     });
-    }
+              .catch(err => {
+                throw err;
+              });
+            break;
+          default:
+            console.error("Error occurred while trying to validate issuer", err);
+        }
+      });
+  }
 
   deleteIssuer(issuerID) {
     console.log(issuerID);
@@ -163,9 +175,11 @@ class IssuersList extends Component {
 
   render() {
     const { issuers } = this.props;
+    const load = this.state.load;
+    // const currentlyUpdating = this.state.currentlyUpdating;
 
     return (
-      <React.Fragment>
+      <React.Fragment >
         <div className="container">
           <div className="content">
             <Link to="/" className="back">
@@ -200,20 +214,24 @@ class IssuersList extends Component {
                         </td>
                       </tr>
                     </table>
+                    {/* <div> */}
                     <button
+                      disabled={load}
                       className="button--issuer-accept"
                       onClick={this.handleClick}
                       id={key}
                     >
                       Accepteren
                     </button>
+                    {/* {load && currentlyUpdating !== null && key === currentlyUpdating && */}
+                    {/* </div> */}
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </React.Fragment >
     );
   }
 }
@@ -231,5 +249,9 @@ const Loading = () => (
     <Spinner />
   </div>
 );
+
+
+
+
 
 export default ValidateIssuer;
