@@ -44,7 +44,7 @@ import * as routes from './routes/routes';
 import AuthUserContext from './Shared/AuthUserContext';
 
 const PrivateRoute = ({ component: Component, needAuth, ...rest }) => (
-	<Route {...rest} render = { (props) => (
+	<Route {...rest} render={(props) => (
 		<AuthUserContext.Consumer>
 			{authUser => (authUser && needAuth) || (!authUser && !needAuth)
 				? <Component {...props} />
@@ -60,9 +60,9 @@ class App extends Component {
 			<Provider store={store}>
 				<Router>
 					<div>
-						<Navigation/>
+						<Navigation />
 						<div className="main-content">
-						<Switch>
+							<Switch>
 								<Route path={routes.FrontPage} exact render={() => <FrontPage />} />
 								<Route path={routes.Opportunities} render={() => <Opportunities />} />
 								<Route path={routes.BecomeIssuer} exact render={() => <BecomeIssuer />} />
@@ -77,22 +77,22 @@ class App extends Component {
 								{/* <Auth> */}
 								<Route path={routes.BOOpportunities} exact render={() => <BOOpportunities />} />
 								<Route path={routes.CreateOpportunity} exact render={() => <CreateOpportunity />} />
-								<Route path={routes.CreateOpportunity+'/:id'} exact render={({match}) => <CreateOpportunity match={match}/>} />
+								<Route path={routes.CreateOpportunity + '/:id'} exact render={({ match }) => <CreateOpportunity match={match} />} />
 								<Route path={routes.IssueBadgeRecipient} exact render={() => <IssueBadgeRecipient />} />
 								<Route path={routes.RegisterIssuer} component={RegisterIssuer} /*exact render={() => <RegisterIssuer />}*/ />
 								<Route path={routes.ValidateIssuer} exact render={() => <ValidateIssuer />} />
 								<Route path={routes.ValidateOpportunity} exact render={() => <ValidateOpportunity />} />
 								<Route path={routes.CreatedOpportunities} render={() => <CreatedOpportunities />} />
-								<Route path={routes.EditOpportunity+'/:id'} render={() => <EditOpportunity />} />
+								<Route path={routes.EditOpportunity + '/:id'} render={() => <EditOpportunity />} />
 								<Route path={routes.Profile} exact render={() => <Profile />} />
 								<Route path={routes.Backpack} exact render={() => <Backpack />} />
 								<Route path={routes.Privacy} exact render={() => <Privacy />} />
 								<Route path={routes.Conditions} exact render={() => <Conditions />} />
 								<Route path="*" render={() => <NoMatch />} />
 								{/* </Auth> */}
-						</Switch>
+							</Switch>
 						</div>
-						<Footer/>
+						<Footer />
 					</div>
 				</Router>
 			</Provider>

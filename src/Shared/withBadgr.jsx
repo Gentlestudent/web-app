@@ -1,10 +1,7 @@
 import React from 'react';
-import axios from 'axios';
-
 import BadgrContext from './BadgrContext';
-import { firestore, functions } from '../Utils/Firebase';
 
-const badgr_api = `https://api.badgr.io/`;
+// TODO check if this can be removed
 
 const withBadgr = (Component) =>
     class withBadgr extends React.Component {
@@ -19,29 +16,29 @@ const withBadgr = (Component) =>
                 }
             };
 
-            this.getHeader = this.getHeader.bind(this);
-            this.refreshAccessToken = this.refreshAccessToken.bind(this);
+            // this.getHeader = this.getHeader.bind(this);
+            // this.refreshAccessToken = this.refreshAccessToken.bind(this);
         }
 
-        componentDidMount() {
+        // componentDidMount() {
             // let data = "username=freek.de.sagher21@gmail.com&password=summerofcode2019";
 
-            let self = this;
+            // let self = this;
 
-            firestore.onceGetBadgrAuth()
-                .then(response => {
-                    console.log("Badgr auth:", response.data());
-                    let auth = response.data();
-                    self.setState({
-                        badgrAuth: {
-                            accessToken: auth.accessToken,
-                            expiration: auth.expireTime,
-                            refreshToken: auth.refreshToken,
-                            refreshAccessToken: this.refreshAccessToken
-                        }
-                    })
-                })
-                .catch(err => console.log(err));
+            // firestore.onceGetBadgrAuth()
+            //     .then(response => {
+            //         console.log("Badgr auth:", response.data());
+            //         let auth = response.data();
+            //         self.setState({
+            //             badgrAuth: {
+            //                 accessToken: auth.accessToken,
+            //                 expiration: auth.expireTime,
+            //                 refreshToken: auth.refreshToken,
+            //                 refreshAccessToken: this.refreshAccessToken
+            //             }
+            //         })
+            //     })
+            //     .catch(err => console.log(err));
 
 
             /*console.log("fetching tokens");
@@ -60,29 +57,29 @@ const withBadgr = (Component) =>
                 ).catch(err => {
                     console.log(err);
                 });*/
-        }
+        // }
 
-        getHeader() {
-            let header = { headers: { Authorization: "Bearer " + this.state.badgrAuth.accessToken } };
-            return header;
-        }
+        // getHeader() {
+        //     let header = { headers: { Authorization: "Bearer " + this.state.badgrAuth.accessToken } };
+        //     return header;
+        // }
 
-        refreshAccessToken() {
-            let data = "grant_type=refresh_token&refresh_token=" + this.state.badgrAuth.refreshToken;
-            axios.post(badgr_api + 'o/token', data)
-                .then(res => {
-                    let data = res.data();
-                    console.log("Refreshing Badgr API token...", data);
-                    this.setState({
-                        badgrAuth: {
-                            accessToken: data.accessToken,
-                            expiration: data.expireTime,
-                            refreshToken: data.refreshToken
-                        }
-                    });
-                    firestore.updateBadgrAuth(data.accessToken, data.refreshToken);
-                })
-        }
+        // refreshAccessToken() {
+        //     let data = "grant_type=refresh_token&refresh_token=" + this.state.badgrAuth.refreshToken;
+        //     axios.post(badgr_api + 'o/token', data)
+        //         .then(res => {
+        //             let data = res.data();
+        //             console.log("Refreshing Badgr API token...", data);
+        //             this.setState({
+        //                 badgrAuth: {
+        //                     accessToken: data.accessToken,
+        //                     expiration: data.expireTime,
+        //                     refreshToken: data.refreshToken
+        //                 }
+        //             });
+        //             firestore.updateBadgrAuth(data.accessToken, data.refreshToken);
+        //         })
+        // }
 
         render() {
             // const { badgrAuth } = this.state;

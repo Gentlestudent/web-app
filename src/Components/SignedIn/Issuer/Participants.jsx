@@ -122,7 +122,18 @@ class Participant extends Component {
         }
     }
 
-    postBadgrBadge() {
+    postBadgrBadge(tries = 0) {
+
+        if (tries >= 3) {
+            let error = {
+                name: "Failed to refresh access token",
+                message: "An internal error occurred, contact a system admin",
+                function: this.createBadge,
+                status: 500
+            }
+            throw error;
+        }
+
         // let accessToken = this.props.badgrAuth.accessToken;
         // let header = { headers: { Authorization: "Bearer " + accessToken } };
 
@@ -142,13 +153,11 @@ class Participant extends Component {
             }
         }
 
-        console.log("Hallokes we gaan de functie");
         functions.createBadgrAssertion({
             badgeID: badgrId,
             assertionData: data
         })
             .then(res => {
-                console.log("Oii success!!", res);
                 let assertion = this.state.assertion;
                 assertion["badgrId"] = res.data.createdAssertion.entityId;
                 firestore.createNewAssertion(assertion);
@@ -162,7 +171,22 @@ class Participant extends Component {
                         this.props.loadParticipants();
                     });
             })
-            .catch(err => console.error("Booo error", err));
+            .catch(err => {
+                switch (err.status) {
+                    case 403:
+                        // 403 is thrown when an expired access token is used
+                        console.log("Access token expired, refreshing... (tried: [" + (tries + 1).toString() + "] time(s))");
+                        functions.refreshAccessToken().then(() => {
+                            this.postBadgrBadge(tries++);
+                        })
+                            .catch(err => {
+                                throw err;
+                            });
+                        break;
+                    default:
+                        console.error("Error occurred while trying to validate opportunity", err);
+                }
+            });
 
         // Post to the badgr API
         // axios.post("https://api.badgr.io/v2/badgeclasses/" + badgrId + "/assertions", data, header).then(res => {

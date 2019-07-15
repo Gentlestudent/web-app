@@ -79,18 +79,9 @@ class IssuersList extends Component {
     };
 
     this.handleClick = this.handleClick.bind(this);
-    this.createBadgrIssuer = this.createIssuer.bind(this);
+    this.createIssuer = this.createIssuer.bind(this);
     this.deleteIssuer = this.deleteIssuer.bind(this);
   };
-
-  // componentDidUpdate(prevState) {
-  //     if (this.state.badgrIssuers != null) {
-  //         if(prevState.badgrIssuers != null && this.state.badgrIssuers[0]==prevState.badgrIssuers[0]){}
-  //         else{
-  //             this.deleteIssuer(this.state.badgrIssuers[0].entityId);
-  //         }
-  //     }
-  // }
 
   handleClick(event) {
     // console.log(event.target.id);
@@ -98,7 +89,17 @@ class IssuersList extends Component {
     this.props.getIssuers();
   }
 
-  createIssuer(id) {
+  createIssuer(id, tries = 0) {
+
+    if (tries >= 3) {
+      let error = {
+        name: "Failed to refresh access token",
+        message: "An internal error occurred, contact a system admin",
+        function: this.createIssuer,
+        status: 500
+      }
+      throw error;
+    }
 
     function urlify(s) {
       let prefix = 'http://';
@@ -112,7 +113,8 @@ class IssuersList extends Component {
     // console.log("Trying to create badgr issuer...");
     // let accessToken = this.props.badgrAuth.accessToken;
     // let header = { headers: { Authorization: "Bearer " + accessToken } };
-    let header = this.props.badgrAuth.getHeader();
+    // let header = this.props.badgrAuth.getHeader();
+
     let issuer = this.props.issuers[id];
     let url = urlify(issuer.url);
 
@@ -142,35 +144,22 @@ class IssuersList extends Component {
           this.props.getIssuers();
         });
       })
-      .catch(err => console.error(err));
-
-    // axios.post("https://api.badgr.io/v2/issuers", data, header)
-    //     .then(res => {
-    //         console.log("Created badgr issuer", res);
-    //         firestore.updateIssuerBadgrId(id, res.data.result[0].entityId);
-    //         firestore.validateIssuer(id);
-    //     })
-    //     .catch(err => {
-    //         switch (err.response.status) {
-    //             case 403:
-    //                 console.log("Refreshing Badgr access token");
-    //                 this.props.badgrAuth.refreshAccessToken();
-    //                 break;
-    //             default:
-    //                 console.error(err);
-    //                 break;
-    //         }
-    //     });
-
-    // console.log("fetching issuers");
-    // axios.get("https://api.badgr.io/v2/issuers", header)
-    //     .then(res => {
-    //         console.log(res);
-    //         this.setState({ badgrIssuers: res.data.result });
-    //     }).catch(err => {
-    //         console.log(err);
-    //         // console.log(this.state.access_token);
-    //     });
+      .catch(err => {
+        switch (err.status) {
+          case 403:
+            // 403 is thrown when an expired access token is used
+            console.log("Access token expired, refreshing... (tried: [" + (tries + 1).toString() + "] time(s))");
+            functions.refreshAccessToken().then(() => {
+              this.createIssuer(id, tries++);
+            })
+              .catch(err => {
+                throw err;
+              });
+            break;
+          default:
+            console.error("Error occurred while trying to validate issuer", err);
+        }
+      });
   }
 
   deleteIssuer(issuerID) {
@@ -187,7 +176,7 @@ class IssuersList extends Component {
   render() {
     const { issuers } = this.props;
     const load = this.state.load;
-    const currentlyUpdating = this.state.currentlyUpdating;
+    // const currentlyUpdating = this.state.currentlyUpdating;
 
     return (
       <React.Fragment >
@@ -226,15 +215,15 @@ class IssuersList extends Component {
                       </tr>
                     </table>
                     {/* <div> */}
-                      <button
-                        disabled={load}
-                        className="button--issuer-accept"
-                        onClick={this.handleClick}
-                        id={key}
-                      >
-                        Accepteren
+                    <button
+                      disabled={load}
+                      className="button--issuer-accept"
+                      onClick={this.handleClick}
+                      id={key}
+                    >
+                      Accepteren
                     </button>
-                      {/* {load && currentlyUpdating !== null && key === currentlyUpdating && */}
+                    {/* {load && currentlyUpdating !== null && key === currentlyUpdating && */}
                     {/* </div> */}
                   </div>
                 </div>

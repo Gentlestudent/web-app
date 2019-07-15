@@ -1,40 +1,29 @@
+/**
+ * @file This file contains the google cloud functions.
+ * BADGR docs: https://api.badgr.io/docs/v2/
+ */
+
+
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const axios = require('axios');
 
 admin.initializeApp();
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-
-
-// exports.functionTest = functions.https.onCall(async (data, context) => {
-//     console.log("Trying to read data from firebase");
-//     try {
-//         const res = await admin.firestore().collection('BadgrAuth').doc('auth').get();
-//         console.log("data: ", res.data());
-//         let data = res.data();
-//         console.log("Access token: ", data.accessToken);
-//         return {
-//             token: data.accessToken
-//         };
-//     }
-//     catch (err) {
-//         return console.log("Error happend :'(", err);
-//     }
-// });
-
+/**
+ * Creates the URL for the BADGR API
+ * @param {string} path 
+ */
 function BADGR_PATH(path) {
     let base = "https://api.badgr.io";
     if (path === "o/token")
-        return base + path;
+        return base + '/' + path;
     return base + "/v2/" + path;
 }
 
+/**
+ * Gets the header from the firestore and return it
+ */
 async function getHeader() {
     try {
         const res = await admin.firestore().collection('BadgrAuth').doc('auth').get();
@@ -48,11 +37,52 @@ async function getHeader() {
     }
 }
 
+/**
+ * Refreshes the BADGR API access token
+ */
+exports.refreshToken = functions.https.onCall(async () => {
+    let document = admin.firestore().collection('BadgrAuth').doc('auth');
+    try {
+        console.log("Trying to refresh access token");
+        const fireDoc = await document.get();
+        let docData = fireDoc.data();
+        let refreshToken = docData.refreshToken;
+        let url = BADGR_PATH('o/token');
+        let data = "grant_type=refresh_token&refresh_token=" + refreshToken.toString();
+
+        console.log("Posting", data, "to", url);
+
+        let res = await axios.post(url, data);
+        console.log("Got data from badgr", res.data);
+        let newData = {
+            accessToken: res.data.access_token,
+            refreshToken: res.data.refresh_token
+        }
+
+        document.update(
+            {
+                accessToken: newData.accessToken,
+                refreshToken: newData.refreshToken
+            }
+        ).then(res => {
+            console.log("Successfully updated access token to", newData.accessToken, "result:", res);
+            return newData.accessToken;
+        })
+            .catch(err => {
+                throw err;
+            });
+
+    } catch (err) {
+        return console.error(err);
+    }
+
+    return true;
+});
 async function refreshToken() {
     let document = admin.firestore().collection('BadgrAuth').doc('auth');
     try {
         console.log("Trying to refresh access token");
-        const fireDoc = document.get();
+        const fireDoc = await document.get();
         let docData = fireDoc.data();
         let refreshToken = docData.refreshToken;
         let url = BADGR_PATH('o', 'token');
@@ -84,6 +114,7 @@ async function refreshToken() {
     return true;
 }
 
+// TEST FUNCTION
 exports.functionTest = functions.https.onCall(async (data, context) => {
     try {
         let test = "username=freek.de.sagher21@gmail.com&password=summerofcode2019";
@@ -104,7 +135,7 @@ exports.functionTest = functions.https.onCall(async (data, context) => {
 
 /**
  * Creates an issuer on the linked Badgr account.
- * @param data required data for this function:
+ * @param {Object} data required data for this function:
  *  1. issuerData:
  *      1. url: url of the issuer (required)
  *      2. name: name of the issuer (required)
@@ -158,7 +189,12 @@ exports.createIssuer = functions.https.onCall(async (data) => {
     });
 });
 
-
+/**
+ * Creates a badge class on the linked Badgr account.
+ * @param {Object} data Badge class required data:
+ *  1. issuerID: BADGR ID of the issuer
+ *  2. badgeData: data that describes the badge class
+ */
 exports.createBadgeClass = functions.https.onCall(async (data) => {
     console.log("Got data", data);
     let issuerID = data.issuerID;
@@ -197,6 +233,12 @@ exports.createBadgeClass = functions.https.onCall(async (data) => {
     });
 });
 
+/**
+ * Creates an assertion on the linked Badgr account.
+ * @param {Object} data Assertion required data:
+ *  1. badgeID: Badgr ID of the badge
+ *  2. assertionData: data used to create a valid badge class
+ */
 exports.createAssertion = functions.https.onCall(async (data) => {
     console.log("Got data", data);
 
