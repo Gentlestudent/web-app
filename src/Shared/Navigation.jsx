@@ -211,6 +211,11 @@ class NavigationAuth extends Component{
 					}
 					{ !! isAdmin && 
 						<li className="nav_item">
+							<NavLink to={routes.ValidateOpportunity}>Valideer leerkans</NavLink>
+						</li>
+					}
+					{ !! isAdmin && 
+						<li className="nav_item">
 							<NavLink to={routes.CreateOpportunity}>Maak leerkans</NavLink>
 						</li>
 					}

@@ -1,6 +1,29 @@
 import React, { Component } from 'react';
 import grayLogo from './../assets/logo-gray.svg';
 import * as routes from '../routes/routes.js';
+import AuthUserContext from './AuthUserContext';
+import {auth} from '../Utils/Firebase';
+
+const AuthFooter = () =>
+    <ul className="first">
+        <li><a href={routes.Opportunities}>Leerkansen</a></li>
+        <li><a href={routes.BecomeIssuer}>Word Issuer</a></li>
+        <li><a href={routes.AboutUs}>Over ons</a></li>
+        <li><a href={routes.News}>Nieuws</a></li>
+        <li><a href={routes.Experiences}>Ervaringen</a></li>
+        <li><a href={routes.Login} onClick={auth.doSignOut}>Log uit</a></li>
+    </ul>
+
+const NoAuthFooter = () =>
+    <ul className="first">
+        <li><a href={routes.Opportunities}>Leerkansen</a></li>
+        <li><a href={routes.BecomeIssuer}>Word Issuer</a></li>
+        <li><a href={routes.AboutUs}>Over ons</a></li>
+        <li><a href={routes.News}>Nieuws</a></li>
+        <li><a href={routes.Experiences}>Ervaringen</a></li>
+        <li><a href={routes.Login}>Inloggen</a></li>
+        <li><a href={routes.Register}>Registreer</a></li>
+    </ul>
 
 class Footer extends Component {
     render() {
@@ -8,18 +31,9 @@ class Footer extends Component {
             <footer>
                 <div className="container footer">
                     <div className="content">
-                        <ul className="first">
-                            <li><a href={routes.Opportunities}>Leerkansen</a></li>
-                            <li><a href={routes.BecomeIssuer}>Word Issuer</a></li>
-                            <li><a href={routes.AboutUs}>Over ons</a></li>
-                            <li><a href={routes.News}>Nieuws</a></li>
-                            <li><a href={routes.Experiences}>Ervaringen</a></li>
-                            <li><a href={routes.Login}>Inloggen</a></li>
-                            <li><a href={routes.Register}>Registreer</a></li>
-                            {/* <li><a href={routes.}>Help</a></li> */}
-                            {/* <li><a href={routes.}>Contact</a></li> */}
-                            {/* <li><a href={routes.}>Sitemap</a></li> */}
-                        </ul>
+                        <AuthUserContext.Consumer>
+                            {authUser => authUser ? <AuthFooter /> : <NoAuthFooter />}
+                        </AuthUserContext.Consumer>
                         <div className="footer_bottom">
                             <img src={grayLogo} id="gray-logo" alt="logo" />
                             <div>

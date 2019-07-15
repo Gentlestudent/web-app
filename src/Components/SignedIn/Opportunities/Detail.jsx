@@ -243,69 +243,69 @@ class OpportunityDetail extends Component {
                     <p>{opportunity.participations}<br/></p>
                   </div> */}
                   <table>
-                    {!!issuer && (
+                    <tbody>
+                      {!!issuer && (
+                        <tr>
+                          <td>
+                            <b>Organisatie:</b>
+                          </td>
+                          <td>{issuer.name}</td>
+                        </tr>
+                      )}
                       <tr>
                         <td>
-                          <b>Organisatie:</b>
+                          <b>Website:</b>
                         </td>
-                        <td>{issuer.name}</td>
+                        <td>{opportunity.website}</td>
                       </tr>
-                    )}
-                    <tr>
-                      <td>
-                        <b>Website:</b>
-                      </td>
-                      <td>{opportunity.website}</td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <b>Contact:</b>
-                      </td>
-                      <td>{opportunity.contact}</td>
-                    </tr>
-                    {!!address && <br />}
-                    {!!address && (
                       <tr>
                         <td>
-                          <b>Locatie:</b>
+                          <b>Contact:</b>
                         </td>
-                        <td>
-                          {address.street} {address.housenumber},{" "}
-                          {address.postalcode} {address["city"]}
-                        </td>
+                        <td>{opportunity.contact}</td>
                       </tr>
-                    )}
-                    <tr>
-                      <td>
-                        <b>Periode:</b>
-                      </td>
-                      <td>
-                        {opportunity.beginDate +
-                          " tot en met " +
-                          opportunity.endDate}
-                      </td>
-                    </tr>
-                    {!!userHasRights && <br />}
-                    {!!userHasRights && (
+                      {!!address && (
+                        <tr>
+                          <td>
+                            <b>Locatie:</b>
+                          </td>
+                          <td>
+                            {address.street} {address.housenumber},{" "}
+                            {address.postalcode} {address["city"]}
+                          </td>
+                        </tr>
+                      )}
                       <tr>
                         <td>
-                          <b>Status:</b>
+                          <b>Periode:</b>
                         </td>
-                        {!!opportunity.authority === 0 && (
-                          <td>In afwachting</td>
-                        )}
-                        {!!opportunity.authority === 1 && <td>Goedgekeurd</td>}
-                        {!!opportunity.authority === 2 && <td>Verwijderd</td>}
-                      </tr>
-                    )}
-                    {!!userHasRights && (
-                      <tr>
                         <td>
-                          <b>Aantal deelnemers:</b>
+                          {opportunity.beginDate +
+                            " tot en met " +
+                            opportunity.endDate}
                         </td>
-                        <td>{participations}</td>
                       </tr>
-                    )}
+                      {!!userHasRights && (
+                        <tr>
+                          <td>
+                            <b>Status:</b>
+                          </td>
+                          {!!opportunity.authority === 0 && (
+                            <td>In afwachting</td>
+                          )}
+                          {!!opportunity.authority === 1 && <td>Goedgekeurd</td>}
+                          {!!opportunity.authority === 2 && <td>Verwijderd</td>}
+                        </tr>
+                      )}
+                      {!!userHasRights && (
+                        <tr>
+                          <td>
+                            <b>Aantal deelnemers:</b>
+                          </td>
+                          <td>{participations}</td>
+                        </tr>
+                      )}
+                    </tbody>
                   </table>
                 </div>
               </div>
