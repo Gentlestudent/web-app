@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import OSM from './OSM'
+
 import { firestore } from '../../../Utils/Firebase';
 
 import Maps from './Maps';
@@ -27,6 +29,7 @@ class Opportunities extends Component {
 			let res = {};
 			snapshot.forEach(doc => {
 				res[doc.id] = doc.data();
+				res[doc.id]["id"] = doc.id;
 			});
 			this.setState(() => ({ opportunities: res }))
 			this.setState(() => ({ initialOpportunities: res }))
@@ -49,6 +52,7 @@ class Opportunities extends Component {
 			let res = {};
 			snapshot.forEach(doc => {
 				res[doc.id] = doc.data();
+				res[doc.id]['id'] = doc.id;
 			});
 			this.setState(() => ({ issuers: res }))
 		})
@@ -98,7 +102,7 @@ class Opportunities extends Component {
 								</div>
 								<div className="content-right">
 									<div className="content map-container" id="stickybox">
-										{!!opportunities && !!addresses && !!issuers && <Maps opportunities={opportunities} addresses={addresses} issuers={issuers}/>}
+										{!!opportunities && !!addresses && !!issuers && <OSM opportunities={opportunities} addresses={addresses} issuers={issuers}/>}
 									</div>
 								</div>
 							</div>
