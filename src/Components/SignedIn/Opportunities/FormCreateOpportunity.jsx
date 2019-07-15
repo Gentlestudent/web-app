@@ -5,7 +5,7 @@ import Geocode from "react-geocode";
 import { Field, reduxForm } from 'redux-form';
 
 import { auth, firestore } from '../../../Utils/Firebase';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/storage';
 
 import { Category, Difficulty } from './Constants';

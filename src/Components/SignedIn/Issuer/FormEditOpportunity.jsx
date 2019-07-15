@@ -6,7 +6,7 @@ import { Field, reduxForm } from 'redux-form';
 import { renderInput, renderTextarea, renderSelect, validate } from '../../../Shared/Utils';
 
 import { firestore } from '../../../Utils/Firebase';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import 'firebase/storage';
 
 import { Category, Difficulty } from '../Opportunities/Constants';

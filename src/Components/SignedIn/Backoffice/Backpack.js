@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
 import { firestore } from '../../../Utils/Firebase';
-import firebase from 'firebase';
+
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 import downloadAndroid from '../../../assets/android.png';
 import downloadiOS from '../../../assets/ios.png';
@@ -21,7 +23,7 @@ class Backpack extends Component {
     }
     componentDidMount() {
         window.scrollTo(0, 0);
-        let self = this
+        let self = this;
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 let id = user.uid;

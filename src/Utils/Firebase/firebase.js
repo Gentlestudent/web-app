@@ -1,8 +1,10 @@
 // This is where all the configuration goes for Firebase.
 // In addition, Firebase itself will be instantiated in this file.
-import firebase from 'firebase';
-import 'firebase/auth/dist/index.cjs';
-import 'firebase/firestore/dist/index.cjs';
+import firebase from 'firebase/app';
+import 'firebase/storage'
+import 'firebase/functions'
+import 'firebase/auth'
+import 'firebase/firestore'
 
 const config = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
