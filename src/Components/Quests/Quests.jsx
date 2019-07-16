@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import QuestMap from './QuestMap'
+import SearchFilters from '../../Shared/SearchFilters'
 
 
 
@@ -14,7 +15,7 @@ class Quests extends Component {
     render() {
         return (
             <React.Fragment>
-                <h1>Quests</h1>
+                <SearchFilters title="Quests"/>
                 <QuestMap />
             </React.Fragment>
         );

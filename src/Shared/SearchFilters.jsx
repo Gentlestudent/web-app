@@ -17,7 +17,7 @@ class SearchFilters extends Component {
       <React.Fragment>
         <div className="searchfilters">
           <div className="fixed">
-            <h1>Leerkansen</h1>
+            <h1>{this.props.title}</h1>
             <form action="" onSubmit={this.handleSubmit}>
               <div className="search-wrapper opportunities">
                 <i className="fas fa-search"></i>
