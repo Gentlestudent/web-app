@@ -2163,6 +2163,16 @@ article.post small {
   height: 500px;
 }
 
-#map:hover {
+#map:hover, #map-2 {
   cursor: grab
+}
+
+#map-2 {
+  width: 100%;
+  height: 400px
+}
+
+#map-2 .leaflet-marker-icon,
+#map-2 .leaflet-overlay-pane path {
+  cursor: move;
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
-import FormCreateOpportunity from '../Opportunities/FormCreateOpportunity';
+import FormCreateOpportunity from './FormCreateOpportunity';
 
 import { firestore } from '../../../Utils/Firebase';
 

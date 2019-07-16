@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import LocationPicker from 'react-location-picker';
 import Geocode from "react-geocode";
 
+import OSM from './OSM'
+
 import { Field, reduxForm } from 'redux-form';
 
 import { auth, firestore } from '../../../Utils/Firebase';
 import firebase from 'firebase/app';
 import 'firebase/storage';
 
-import { Category, Difficulty } from './Constants';
+import { Category, Difficulty } from '../Opportunities/Constants';
 
 import * as routes from '../../../routes/routes';
 
 import { renderInput, renderAutomaticInput, renderTextarea, renderSelect, validate } from '../../../Shared/Utils';
+import Axios from 'axios';
 // import { FirebaseStorage } from '@firebase/storage-types';
 
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
@@ -54,7 +57,8 @@ class FormCreateOpportunity extends React.Component {
       imageExtension: "",
       isAdmin: false,
       issuerId: "",
-      issuers: null
+      issuers: null,
+      pinImageUrl: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -66,6 +70,7 @@ class FormCreateOpportunity extends React.Component {
     this.postNewOpportunity = this.postNewOpportunity.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
     this.choosePin = this.choosePin.bind(this);
+    this.changeLocation = this.changeLocation.bind(this);
     // this.componentDidMount = this.componentDidMount.bind(this);
   }
   componentDidMount() {
@@ -116,6 +121,7 @@ class FormCreateOpportunity extends React.Component {
         website: this.props.initValues.website,
         contact: this.props.initValues.contact
       });
+
     }
     // this.setState({title: "skjsd"});
     // var self = this;
@@ -182,9 +188,13 @@ class FormCreateOpportunity extends React.Component {
     this.setState({ pinImageUrl: url });
   }
 
-  handleChange(event) {
+  async handleChange(event) {
     // console.log(event.target.value);
-    this.setState({ [event.target.id]: event.target.value });
+    await this.setState({ [event.target.id]: event.target.value });
+
+    if (event.target.id === "category" || event.target.id === "difficulty") {
+      this.choosePin();
+    }
     // this.event.target.props.change(value, )
     // console.log(event.target.id);
     // console.log(event.target.value);
@@ -306,25 +316,57 @@ class FormCreateOpportunity extends React.Component {
     })
   }
 
+  changeLocation(latlng) {
+    this.setState({
+      lat: latlng.lat,
+      lng: latlng.lng
+    });
+  }
+
   changeAddress() {
-    Geocode.fromAddress(this.state.street + " " + this.state.houseNr + ", " + this.state.city + " " + this.state.postCode + ", " + this.state.country).then(
-      response => {
-        const { lat, lng } = response.results[0].geometry.location;
-        this.setState({ lat: lat });
-        this.setState({ lng: lng });
-        defaultPosition = { lat, lng };
-      },
-      error => {
-        console.error(error);
-      }
-    );
+
+    const { street, house_number, city, postCode, country } = this.state;
+
+    if (street !== "" && house_number !== "" && city !== "" && postCode !== "" && country !== "") {
+      let data = street + "+" + house_number + "+" + city + "+" + country
+      Axios.get("https://nominatim.openstreetmap.org/search?format=json&q=" + data).then(res => {
+        if (res.data.length === 0)
+          return;
+        else {
+          let latlng = {
+            lat: res.data[0].lat,
+            lng: res.data[0].lon
+          };
+          this.changeLocation(latlng);
+        }
+      });
+    }
+
+    // Geocode.fromAddress(this.state.street + " " + this.state.houseNr + ", " + this.state.city + " " + this.state.postCode + ", " + this.state.country).then(
+    //   response => {
+    //     const { lat, lng } = response.results[0].geometry.location;
+    //     this.setState({ lat: lat });
+    //     this.setState({ lng: lng });
+    //     defaultPosition = { lat, lng };
+    //   },
+    //   error => {
+    //     console.error(error);
+    //   }
+    // );
   }
 
   render() {
     const {
       submitting,
       pristine,
-    } = this.props
+    } = this.props;
+
+    let pinUrl = this.state.pinImageUrl;
+
+    let loc = {
+      lat: this.state.lat,
+      lng: this.state.lng
+    };
 
     return (
       <form onSubmit={this.handleSubmit}>
@@ -563,9 +605,10 @@ class FormCreateOpportunity extends React.Component {
             Pas locatie aan (Optioneel)
           </label>
           <div>
-            <BeaconLocationPicker changeLat={this.changeLat} changeLng={this.changeLng} />
+            <OSM changeLocation={this.changeLocation} location={loc} pinImage={pinUrl} />
+            {/* <BeaconLocationPicker changeLat={this.changeLat} changeLng={this.changeLng} /> */}
           </div>
-          <small>Verplaats de marker indien de locatie van het adres op google maps niet volledig overeenkomt met de beacon</small>
+          <small>Verplaats de marker indien de locatie van het adres op google maps niet volledig overeenkomt met het adres</small>
         </div>
         <div className="form-group">
           <Field
@@ -651,6 +694,17 @@ class BeaconLocationPicker extends Component {
 
     // Bind
     this.handleLocationChange = this.handleLocationChange.bind(this);
+  }
+
+  /**
+   * Updates parent location
+   * @param {Object} location 
+   */
+  updateLocation(location) {
+    if (location !== null || location !== undefined) {
+      this.props.changeLat(location.lat);
+      this.props.changeLng(location.lng);
+    }
   }
 
   handleLocationChange({ position, address }) {
