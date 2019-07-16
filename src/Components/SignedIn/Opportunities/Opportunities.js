@@ -5,7 +5,7 @@ import OSM from './OSM'
 
 import { firestore } from '../../../Utils/Firebase';
 
-import SearchFilter from './SearchFilters';
+import SearchFilter from '../../../Shared/SearchFilters';
 
 import Detail from './Detail';
 import List from './List';
@@ -94,7 +94,7 @@ class Opportunities extends Component {
 				<Route path={'/opportunities'} render={() => 
 					<div className="opportunities-content">
 						<div className="content">
-							<SearchFilter filterFunction={this.filterOpportunities} />
+							<SearchFilter filterFunction={this.filterOpportunities} title="Leerkansen"/>
 							<div id="opportunities">
 								<div className="content-left">
 									<List opportunities={opportunities} />
