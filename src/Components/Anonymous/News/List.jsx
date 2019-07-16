@@ -29,7 +29,7 @@ const NewsList = ({ newsItems }) =>
 								</div>
 								<div className="news-content">
 									<h1>{newsItems[key].title}</h1>
-									{!!newsItems[key].published && <small><time datetime={newsItems[key].published}>{newsItems[key].published}</time></small>}
+									{!!newsItems[key].published && <small><time dateTime={newsItems[key].published}>{newsItems[key].published}</time></small>}
 									{!!newsItems[key].author && <small>{newsItems[key].author}</small>}
 									<p>{newsItems[key].shortText}</p>
 								</div>
