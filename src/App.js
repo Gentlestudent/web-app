@@ -33,6 +33,7 @@ import Privacy from './Components/Anonymous/Privacy';
 import Conditions from './Components/Anonymous/Conditions';
 import NoMatch from './Shared/NoMatch';
 import Backpack from './Components/SignedIn/Backoffice/Backpack';
+import Quests from './Components/Quests/Quests'
 
 import Navigation from './Shared/Navigation';
 import Footer from './Shared/Footer';
@@ -83,6 +84,7 @@ class App extends Component {
 								<Switch>
 									<Route path={routes.FrontPage} exact render={() => <FrontPage />} />
 									<Route path={routes.Opportunities} render={() => <Opportunities />} />
+									<Route path={routes.Quests} render={() => <Quests/>} />
 									<Route path={routes.BecomeIssuer} exact render={() => <BecomeIssuer />} />
 									<Route path={routes.Experiences} render={() => <Experiences />} />
 									<Route path={routes.News} render={() => <News />} />
