@@ -18,4 +18,5 @@ export const ValidateOpportunity = '/admin/validate-opportunity';
 export const CreatedOpportunities = '/created-opportunities';
 export const Privacy = '/privacy';
 export const Conditions = '/voorwaarden';
-export const Backpack = '/backpack'
+export const Backpack = '/backpack';
+export const MyOpportunities = '/my-opportunities';
