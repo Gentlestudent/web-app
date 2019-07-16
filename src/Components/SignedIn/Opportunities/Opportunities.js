@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import OSM from './OSM'
+
 import { firestore } from '../../../Utils/Firebase';
 
-import Maps from './Maps';
-import SearchFilter from './SearchFilters';
+import SearchFilter from '../../../Shared/SearchFilters';
 
 import Detail from './Detail';
 import List from './List';
@@ -27,6 +28,7 @@ class Opportunities extends Component {
 			let res = {};
 			snapshot.forEach(doc => {
 				res[doc.id] = doc.data();
+				res[doc.id]["id"] = doc.id;
 			});
 			this.setState(() => ({ opportunities: res }))
 			this.setState(() => ({ initialOpportunities: res }))
@@ -49,6 +51,7 @@ class Opportunities extends Component {
 			let res = {};
 			snapshot.forEach(doc => {
 				res[doc.id] = doc.data();
+				res[doc.id]['id'] = doc.id;
 			});
 			this.setState(() => ({ issuers: res }))
 		})
@@ -91,14 +94,14 @@ class Opportunities extends Component {
 				<Route path={'/opportunities'} render={() => 
 					<div className="opportunities-content">
 						<div className="content">
-							<SearchFilter filterFunction={this.filterOpportunities} />
+							<SearchFilter filterFunction={this.filterOpportunities} title="Leerkansen"/>
 							<div id="opportunities">
 								<div className="content-left">
 									<List opportunities={opportunities} />
 								</div>
 								<div className="content-right">
 									<div className="content map-container" id="stickybox">
-										{!!opportunities && !!addresses && !!issuers && <Maps opportunities={opportunities} addresses={addresses} issuers={issuers}/>}
+										{!!opportunities && !!addresses && !!issuers && <OSM opportunities={opportunities} addresses={addresses} issuers={issuers}/>}
 									</div>
 								</div>
 							</div>

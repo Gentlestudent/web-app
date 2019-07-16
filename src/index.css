@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
+@import url("http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css");
+
 body {
   margin: 0;
   padding: 0;
@@ -2148,3 +2150,29 @@ article.post small {
     display: none;
   } 
 } */
+
+.leaflet-overlay-pane path,
+.leaflet-marker-icon {
+  cursor: pointer;
+}
+
+.leaflet-dragging .leaflet-grab {cursor: move;}
+
+#map {
+  width: 100%;
+  height: 500px;
+}
+
+#map:hover, #map-2 {
+  cursor: grab
+}
+
+#map-2 {
+  width: 100%;
+  height: 400px
+}
+
+#map-2 .leaflet-marker-icon,
+#map-2 .leaflet-overlay-pane path {
+  cursor: move;
+}
