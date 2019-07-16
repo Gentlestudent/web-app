@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import LocationPicker from 'react-location-picker';
-import Geocode from "react-geocode";
 
 import OSM from './OSM'
 
@@ -18,16 +16,13 @@ import { renderInput, renderAutomaticInput, renderTextarea, renderSelect, valida
 import Axios from 'axios';
 // import { FirebaseStorage } from '@firebase/storage-types';
 
-// set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
-Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
-
 /* Default position */
-var defaultPosition = {
-  lat: 51.0511164,
-  lng: 3.7114566
-};
+// var defaultPosition = {
+//   lat: 51.0511164,
+//   lng: 3.7114566
+// };
 
-class FormCreateOpportunity extends React.Component {
+class FormCreateOpportunity extends Component {
   constructor(props) {
     super(props);
 
@@ -608,7 +603,7 @@ class FormCreateOpportunity extends React.Component {
             <OSM changeLocation={this.changeLocation} location={loc} pinImage={pinUrl} />
             {/* <BeaconLocationPicker changeLat={this.changeLat} changeLng={this.changeLng} /> */}
           </div>
-          <small>Verplaats de marker indien de locatie van het adres op google maps niet volledig overeenkomt met het adres</small>
+          <small>Verplaats de marker indien de locatie van het adres op de kaart niet volledig overeenkomt met het adres</small>
         </div>
         <div className="form-group">
           <Field
@@ -656,81 +651,6 @@ class FormCreateOpportunity extends React.Component {
         </div>
       </form>
     );
-  }
-}
-
-// const BadgesList = ({ badges }) =>
-//   <Field
-//     id="badgeId"
-//     name="badge"
-//     label="Badge"
-//     data={{
-//       list: Object.keys(badges).map(key => {
-//         return {
-//           value: key,
-//           display: badges[key].name
-//         };
-//       })
-//     }}
-//     component={renderSelect}
-//   />
-
-// const EmptyList = () =>
-//   <div>
-//     <Spinner />
-//   </div>
-
-class BeaconLocationPicker extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      address: "Kala Pattar Ascent Trail, Khumjung 56000, Nepal",
-      position: {
-        lat: 0,
-        lng: 0
-      }
-    };
-
-    // Bind
-    this.handleLocationChange = this.handleLocationChange.bind(this);
-  }
-
-  /**
-   * Updates parent location
-   * @param {Object} location 
-   */
-  updateLocation(location) {
-    if (location !== null || location !== undefined) {
-      this.props.changeLat(location.lat);
-      this.props.changeLng(location.lng);
-    }
-  }
-
-  handleLocationChange({ position, address }) {
-
-    // Set new location
-    this.setState({ position, address });
-    if (!!position) {
-      this.props.changeLat(position.lat);
-      this.props.changeLng(position.lng);
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        {/* <h1>{this.state.address}</h1> */}
-        <div>
-          <LocationPicker
-            containerElement={<div style={{ height: '100%' }} />}
-            mapElement={<div style={{ height: '400px' }} />}
-            defaultPosition={defaultPosition}
-            onChange={this.handleLocationChange}
-          />
-        </div>
-      </div>
-    )
   }
 }
 

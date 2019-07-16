@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Geocode from "react-geocode";
 
 import { Field, reduxForm } from 'redux-form';
 
@@ -12,9 +11,9 @@ import 'firebase/storage';
 import { Category, Difficulty } from '../Opportunities/Constants';
 
 import * as routes from '../../../routes/routes';
+import Axios from 'axios'
 
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
-Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 
 // let defaultPosition;
 
@@ -94,17 +93,24 @@ class FormEditOpportunity extends Component {
     return getEnum(i);
   }
   changeAddress() {
-    Geocode.fromAddress(this.state.street + " " + this.state.houseNr + ", " + this.state.city + " " + this.state.postCode + ", " + this.state.country).then(
-      response => {
-        const { lat, lng } = response.results[0].geometry.location;
-        this.setState({ lat: lat });
-        this.setState({ lng: lng });
-      },
-      error => {
-        console.error(error);
-      }
-    );
+    const { street, house_number, city, postCode, country } = this.state;
+
+    if (street !== "" && house_number !== "" && city !== "" && postCode !== "" && country !== "") {
+      let data = street + "+" + house_number + "+" + city + "+" + country
+      Axios.get("https://nominatim.openstreetmap.org/search?format=json&q=" + data).then(res => {
+        if (res.data.length === 0)
+          return;
+        else {
+          let latlng = {
+            lat: res.data[0].lat,
+            lng: res.data[0].lon
+          };
+          this.changeLocation(latlng);
+        }
+      });
+    }
   }
+  
   choosePin() {
     let baseUrl = "https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2F";
     let url = baseUrl;

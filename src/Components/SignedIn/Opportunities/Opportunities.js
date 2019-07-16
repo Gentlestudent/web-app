@@ -5,7 +5,6 @@ import OSM from './OSM'
 
 import { firestore } from '../../../Utils/Firebase';
 
-import Maps from './Maps';
 import SearchFilter from './SearchFilters';
 
 import Detail from './Detail';
