@@ -19,6 +19,7 @@ import AboutUs from './Components/Anonymous/AboutUs';
 import Register from './Components/Anonymous/Auth/Register';
 import Login from './Components/Anonymous/Auth/Login';
 import ResetPassword from './Components/Anonymous/Auth/ResetPassword';
+import Quests from './Components/Quests/Quests';
 
 import BOOpportunities from './Components/SignedIn/Backoffice/Opportunities';
 import CreateOpportunity from './Components/SignedIn/Issuer/CreateOpportunity';
@@ -59,19 +60,19 @@ const LoadingScreen = () => <div> <Spinner /> </div>
 
 class App extends Component {
 
-	constructor(props){
+	constructor(props) {
 		super(props);
-		this.state = {loading : true, called : false}
+		this.state = { loading: true, called: false }
 	}
 
-	componentDidUpdate(){
-		if (this.state.called === false){
-			this.setState({loading:false, called:true})
+	componentDidUpdate() {
+		if (this.state.called === false) {
+			this.setState({ loading: false, called: true })
 		}
 	}
 
 	render() {
-		const{loading} = this.state;
+		const { loading } = this.state;
 		return (
 			<React.Fragment>
 				{loading && <LoadingScreen />}
@@ -83,6 +84,7 @@ class App extends Component {
 								<Switch>
 									<Route path={routes.FrontPage} exact render={() => <FrontPage />} />
 									<Route path={routes.Opportunities} render={() => <Opportunities />} />
+									<Route path={routes.Quests} render={() => <Quests />} />
 									<Route path={routes.BecomeIssuer} exact render={() => <BecomeIssuer />} />
 									<Route path={routes.Experiences} render={() => <Experiences />} />
 									<Route path={routes.News} render={() => <News />} />
