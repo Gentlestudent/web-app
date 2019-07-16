@@ -93,7 +93,7 @@ const breadcrumb = css({
 });
 
 // Breadcrumbs
-const BreadcrumbsItem = ({ ...rest, match }) => (
+const BreadcrumbsItem = ({ match, ...rest }) => (
   <span>
     <div {...breadcrumb}>
       <Link to="/" className="home">home</Link>
