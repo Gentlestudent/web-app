@@ -1,4 +1,6 @@
-import { firestore } from './firebase';
+import { firestore, Timestamp } from './firebase';
+import { isValidTimestamp } from '@firebase/util';
+
 
 export const createOpportunity = (data) =>
   firestore.collection('Opportunities').add(data)
@@ -194,5 +196,12 @@ export const onceGetAmountParticipationsRejected = (id) => {
   query = query.where('opportunityId', '==', id);
   query = query.where('status', "==", 2);
   return query.get();
+}
+
+export const onceGetActiveQuests = () => {
+  let yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  let timestamp = Timestamp.fromDate(yesterday);
+  return firestore.collection("Quests").where('created', ">=", timestamp).get();
 }
 

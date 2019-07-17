@@ -34,7 +34,6 @@ import Privacy from './Components/Anonymous/Privacy';
 import Conditions from './Components/Anonymous/Conditions';
 import NoMatch from './Shared/NoMatch';
 import Backpack from './Components/SignedIn/Backoffice/Backpack';
-import Quests from './Components/Quests/Quests'
 
 import Navigation from './Shared/Navigation';
 import Footer from './Shared/Footer';
