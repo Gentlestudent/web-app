@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import QuestList from './QuestList'
 import QuestMap from './QuestMap'
 import SearchFilters from '../../Shared/SearchFilters'
 
@@ -102,12 +103,13 @@ class Quests extends Component {
 
     render() {
         const { markers, filteredQuests } = this.state;
-        console.log(markers);
+        console.log(filteredQuests);
         return (
             <React.Fragment>
                 <div className="content">
                     <SearchFilters title="Quests" filterFunction={this.filterQuests} />
                     <QuestMap markers={markers}/>
+                    <QuestList allQuests={filteredQuests} />
                 </div>
             </React.Fragment>
         );
