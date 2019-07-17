@@ -41,9 +41,15 @@ class QuestMap extends Component {
         // Create markers
         this.updateMarkers(map);
 
-
         this.setState({ map: map });
         map.invalidateSize();
+    }
+
+    clearMarkers(map) {
+        for(let i = 0; i<this.state.markers.length; i++) {
+            map.removeLayer(this.state.markers[i]);
+        }
+        this.setState({markers: []});
     }
 
     updateMarkers(map) {
@@ -51,10 +57,11 @@ class QuestMap extends Component {
         if (markers === undefined || markers === null || markers.length <= 0)
             return;
 
+        this.clearMarkers(map);
+
+        let updatedMarkers = [];
         markers.forEach(el => {
             let quest = el.quest;
-
-            console.log(el);
 
             // Create icon for the pin
             let icon = L.icon({
@@ -87,8 +94,10 @@ class QuestMap extends Component {
 
             // Attach marker to map
             marker.addTo(map);
+            updatedMarkers.push(marker);
         });
 
+        this.setState({markers: updatedMarkers});
     }
 
     componentDidUpdate(prevProps, prevState) {

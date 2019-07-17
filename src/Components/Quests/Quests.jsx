@@ -85,7 +85,7 @@ class Quests extends Component {
         let initialArray = this.state.allQuests;
         let filtered = initialArray.filter(function (quest) {
             let title = quest.title;
-            return title.toLowerCase().search(filterInput) !== -1;
+            return title.toLowerCase().search(filterInput.toLowerCase()) !== -1;
         });
 
         // UPDATE MARKERS
