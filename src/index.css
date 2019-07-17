@@ -2207,3 +2207,11 @@ article.post small {
 #map-2 .leaflet-overlay-pane path {
   cursor: move;
 }
+
+.my-opportunity {
+  transition: all 200ms ease-in-out;
+}
+
+.my-opportunity:hover{
+  transform: scale(1.03);
+}

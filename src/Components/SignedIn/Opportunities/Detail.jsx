@@ -68,7 +68,8 @@ class OpportunityDetail extends Component {
       issuer: null,
       userHasRights: false,
       isAdmin: false,
-      participations: 0
+      participations: 0,
+      participation: {}
     };
   }
 
@@ -166,7 +167,18 @@ class OpportunityDetail extends Component {
       .catch(err => {
         console.log("Error getting documents", err);
       });
+    firestore
+      .onceGetParticipationFromOpportunity(this.props.id, userId)
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          this.setState(() => ({ participation: doc.data() }));
+        });
+      })
+      .catch(err => {
+        console.log("Error getting documents", err);
+      });
   }
+
   render() {
     const { opportunity, id } = this.props;
     const {
@@ -174,9 +186,10 @@ class OpportunityDetail extends Component {
       issuer,
       userHasRights,
       isAdmin,
-      participations
+      participations,
+      participation
     } = this.state;
-
+    console.log(participation.participantId, auth.getUserId());
     return (
       <div className="opportunity-detail">
         {!!opportunity.authority === 0 && (
@@ -298,7 +311,9 @@ class OpportunityDetail extends Component {
                           {!!opportunity.authority === 0 && (
                             <td>In afwachting</td>
                           )}
-                          {!!opportunity.authority === 1 && <td>Goedgekeurd</td>}
+                          {!!opportunity.authority === 1 && (
+                            <td>Goedgekeurd</td>
+                          )}
                           {!!opportunity.authority === 2 && <td>Verwijderd</td>}
                         </tr>
                       )}
@@ -318,12 +333,23 @@ class OpportunityDetail extends Component {
                 <AuthUserContext.Consumer>
                   {authUser =>
                     authUser ? (
-                      <button
-                        className="button-prim"
-                        onClick={this.handleRegister}
-                      >
-                        Doe mee
-                      </button>
+                      participation.opportunityId == this.props.id &&
+                      participation.participantId == auth.getUserId() ? (
+                        participation.status == 3 ? (
+                          <p>Je hebt deze leerkans al voltooid.</p>
+                        ) : this.props.opportunity.difficulty == 0 ? (
+                          <button className="button-prim">Claim</button>
+                        ) : (
+                          <p>Je hebt je al ingeschreven voor deze badge!</p>
+                        )
+                      ) : (
+                        <button
+                          className="button-prim"
+                          onClick={this.handleRegister}
+                        >
+                          Registreer
+                        </button>
+                      )
                     ) : (
                       <React.Fragment>
                         <button
