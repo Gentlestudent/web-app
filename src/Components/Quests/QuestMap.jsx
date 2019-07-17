@@ -34,9 +34,12 @@ class QuestMap extends Component {
 
     componentDidMount() {
         // Create map
+
+        let { center, zoom } = this.props;
+
         let map = L.map("map", {
-            center: [51.0511164, 3.7114566],
-            zoom: 13,
+            center: !!center ? center : [51.0511164, 3.7114566],
+            zoom: !!zoom ? zoom : 13,
             layers: [
                 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
                     attribution:
@@ -58,10 +61,10 @@ class QuestMap extends Component {
      * @param {L.Map} map map containing the markers. 
      */
     clearMarkers(map) {
-        for(let i = 0; i<this.state.markers.length; i++) {
+        for (let i = 0; i < this.state.markers.length; i++) {
             map.removeLayer(this.state.markers[i]);
         }
-        this.setState({markers: []});
+        this.setState({ markers: [] });
     }
 
     updateMarkers(map) {
@@ -84,9 +87,11 @@ class QuestMap extends Component {
             }
             );
 
+            const { disableClick, disablePopup } = this.props;
+
             // Create marker with correct properties
             let marker = L.marker(el.latlng, {
-                title: "Klik voor meer informatie",
+                title: disableClick ? "Locatie van de leerkans" : "Klik voor meer informatie",
                 icon
             });
 
@@ -94,23 +99,28 @@ class QuestMap extends Component {
             marker.bindPopup("<p><strong>" + quest.title + "</strong><br>" + quest.description + "</p>");
 
             // Add events to marker
-            marker.on('click', ev => {
-                console.log("Clicked marker", ev.target.options.title);
-                window.open("/quests/" + quest.id, "_self");
-            });
-            marker.on('mouseover', function (e) {
-                e.target.openPopup();
-            });
-            marker.on("mouseout", function (e) {
-                e.target.closePopup();
-            });
+            if (!disableClick) {
+                marker.on('click', ev => {
+                    console.log("Clicked marker", ev.target.options.title);
+                    window.open("/quests/" + quest.id, "_self");
+                });
+            }
+
+            if (!disablePopup) {
+                marker.on('mouseover', function (e) {
+                    e.target.openPopup();
+                });
+                marker.on("mouseout", function (e) {
+                    e.target.closePopup();
+                });
+            }
 
             // Attach marker to map
             marker.addTo(map);
             updatedMarkers.push(marker);
         });
 
-        this.setState({markers: updatedMarkers});
+        this.setState({ markers: updatedMarkers });
     }
 
     componentDidUpdate(prevProps, prevState) {
