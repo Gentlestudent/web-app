@@ -317,8 +317,8 @@ class Opportunity extends Component {
             )
                 .catch(err => {
                     switch (err.status) {
-                        case 403:
-                            // 403 is thrown when an expired access token is used
+                        case "permission-denied":
+                            // permission-denied is thrown when an expired access token is used
                             console.log("Access token expired, refreshing... (tried: [" + (tries + 1).toString() + "] time(s))");
                             functions.refreshAccessToken().then(() => {
                                 this.createBadge(tries++);

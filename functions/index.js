@@ -79,60 +79,8 @@ exports.refreshToken = functions.https.onCall(async () => {
 
     return true;
 });
-async function refreshToken() {
-    let document = admin.firestore().collection('BadgrAuth').doc('auth');
-    try {
-        console.log("Trying to refresh access token");
-        const fireDoc = await document.get();
-        let docData = fireDoc.data();
-        let refreshToken = docData.refreshToken;
-        let url = BADGR_PATH('o', 'token');
-        let data = "grant_type=refresh_token&²refresh_token=" + refreshToken.toString();
 
-        let res = await axios.post(url, data);
-        let newData = {
-            accessToken: res.data.access_token,
-            refreshToken: res.data.refresh_token
-        }
 
-        document.update(
-            {
-                accessToken: newData.accessToken,
-                refreshToken: newData.refreshToken
-            }
-        ).then(res => {
-            console.log("Successfully updated access token");
-            return newData.accessToken;
-        })
-            .catch(err => {
-                throw err;
-            });
-
-    } catch (err) {
-        return console.error(err);
-    }
-
-    return true;
-}
-
-// TEST FUNCTION
-exports.functionTest = functions.https.onCall(async (data, context) => {
-    try {
-        let test = "username=freek.de.sagher21@gmail.com&password=summerofcode2019";
-        console.log("fetching tokens");
-        const res = await axios.post("https://api.badgr.io/" + 'o/token', test);
-        console.log("Token time!", res.data);
-        return {
-            accessToken: res.data.access_token,
-            expiration: res.data.expires_in,
-            refreshToken: res.data.refresh_token
-        };
-    }
-    catch (err) {
-        return console.log("Error happened :'(", err);
-    }
-
-});
 
 /**
  * Creates an issuer on the linked Badgr account.
@@ -185,8 +133,13 @@ exports.createIssuer = functions.https.onCall(async (data) => {
                 throw new functions.https.HttpsError("unknown", "Failed to create badgr issuer");
         }
     }).catch(err => {
-        console.error("An error happened :'(", err);
-        throw new functions.https.HttpsError("aborted", "an error occurred while trying to add new issuer...", err);
+        switch (err.response.status) {
+            case 401:
+                throw new functions.https.HttpsError("permission-denied", "Access token expired, try refreshing it");
+            default:
+                console.error("An error happened :'(", err);
+                throw new functions.https.HttpsError("aborted", "an error occurred while trying to add new issuer...", err)
+        }
     });
 });
 
@@ -229,8 +182,13 @@ exports.createBadgeClass = functions.https.onCall(async (data) => {
                 throw new functions.https.HttpsError("unknown", "Failed to create badge class");
         }
     }).catch(err => {
-        console.error("An error occurred :'(", err);
-        throw new functions.https.HttpsError("aborted", "An error occured while trying to add new badge class...", err);
+        switch (err.response.status) {
+            case 401:
+                throw new functions.https.HttpsError("permission-denied", "Access token expired, try refreshing it");
+            default:
+                console.error("An error happened :'(", err);
+                throw new functions.https.HttpsError("aborted", "an error occurred while trying to add new badgeclass...", err)
+        }
     });
 });
 
@@ -269,8 +227,13 @@ exports.createAssertion = functions.https.onCall(async (data) => {
                 throw new functions.https.HttpsError("unknown", "Failed to create assertion");
         }
     }).catch(err => {
-        console.error("An error occurred :'(", err);
-        throw new functions.https.HttpsError("aborted", "An error occured while trying to add new assertion" + err.toString());
+        switch (err.response.status) {
+            case 401:
+                throw new functions.https.HttpsError("permission-denied", "Access token expired, try refreshing it");
+            default:
+                console.error("An error happened :'(", err);
+                throw new functions.https.HttpsError("aborted", "an error occurred while trying to add new assertion...", err)
+        }
     });
 });
 
@@ -306,7 +269,7 @@ exports.notifyIssuer = functions.https.onCall((data) => {
 
     let subject = 'Inschrijving voor leerkans: ' + opportunityTitle;
     let html = '<p>Dag partner van Gentlestudent,</p>' +
-    '<p>Er heeft zich zopas iemand ingeschreven voor de leerkans: "' + opportunityTitle + '"</p>' +
+        '<p>Er heeft zich zopas iemand ingeschreven voor de leerkans: "' + opportunityTitle + '"</p>' +
         '<p>De gegevens van deze persoon zijn: </p>' +
         '<p> - Naam: ' + participantName + '</p>' +
         '<p> - E-mailadres: ' + participantEmail + '</p>' +
@@ -328,7 +291,7 @@ exports.notifyIssuer = functions.https.onCall((data) => {
 
 async function sendNotifyIssuerEmail(mailOptions) {
     transporter.sendMail(mailOptions, (error, info) => {
-        if(error) {
+        if (error) {
             console.error(error);
         }
         console.log("Message sent!", info);
