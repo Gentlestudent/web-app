@@ -65,13 +65,16 @@ class List extends Component {
                                 <h3>Deelnemers:</h3>
                                 <div className="participants">
                                     <table>
-                                        <tr className='participant'>
-                                            <th>Deelnemer</th>
-                                            <th>Institutie</th>
-                                            <th>Email</th>
-                                            <th>Status</th>
-                                            <th>Acties</th>
-                                        </tr>
+                                        <thead>
+                                            <tr className='participant'>
+                                                <th>Deelnemer</th>
+                                                <th>Institutie</th>
+                                                <th>Email</th>
+                                                <th>Status</th>
+                                                <th>Acties</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                         {Object.keys(participants).map(key =>
                                             <Participant
                                                 participant={participants[key]}
@@ -80,6 +83,7 @@ class List extends Component {
                                                 badgrAuth={badgrAuth}
                                             />
                                         )}
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -298,6 +302,7 @@ class Participant extends Component {
         console.log(participant);
 
         return (
+
             <tr className='participant'>
                 <td>
                     <div className="table-el">{participant.name}</div>
