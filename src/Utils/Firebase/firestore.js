@@ -204,3 +204,6 @@ export const onceGetActiveQuests = () => {
   return firestore.collection("Quests").where('created', ">=", timestamp).get();
 }
 
+export const onceGetQuest = (id) => firestore.collection('Quests').doc(id).get();
+
+

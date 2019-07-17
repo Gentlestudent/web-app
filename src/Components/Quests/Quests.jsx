@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import {Route, Switch} from 'react-router-dom'
 
+import QuestDetail from './QuestDetail'
 import QuestList from './QuestList'
 import QuestMap from './QuestMap'
 import SearchFilters from '../../Shared/SearchFilters'
@@ -97,13 +99,18 @@ class Quests extends Component {
     render() {
         const { markers, filteredQuests } = this.state;
         return (
-            <React.Fragment>
-                <div className="content">
-                    <SearchFilters title="Quests" filterFunction={this.filterQuests} />
-                    <QuestMap markers={markers}/>
-                    <QuestList allQuests={filteredQuests} />
-                </div>
-            </React.Fragment>
+            <Switch>
+                <>
+                    <Route path={'/quests/:id'} render={ ({match}) => <QuestDetail match={match} /> } />
+                    <Route exact path={'/quests'} render={ () => 
+                        <div className="content">
+                            <SearchFilters title="Quests" filterFunction={this.filterQuests} />
+                            <QuestMap markers={markers}/>
+                            <QuestList allQuests={filteredQuests} />
+                        </div>
+                    } />
+                </>
+            </Switch>
         );
     }
 }
