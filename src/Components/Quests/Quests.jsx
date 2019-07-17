@@ -26,6 +26,7 @@ class Quests extends Component {
             snapshot.forEach(doc => {
                 let quest = doc.data();
                 quest.id = doc.id;
+                quest.created = quest.created.toDate();
                 quest.pinImage = 'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Quests%2Fquest_pin.png?alt=media';
                 quests.push(quest);
             });
