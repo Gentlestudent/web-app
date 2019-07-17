@@ -7,6 +7,8 @@ import Spinner from "../../../Shared/Spinner";
 import { auth, firestore } from "../../../Utils/Firebase";
 import NoMatch from "../../../Shared/NoMatch";
 
+import AuthUserContext from "../../../Shared/AuthUserContext";
+
 class Detail extends Component {
   constructor(props) {
     super(props);
@@ -69,6 +71,21 @@ class OpportunityDetail extends Component {
       participations: 0
     };
   }
+
+  handleRegister = event => {
+    event.preventDefault();
+    let data = {
+      participantId: auth.getUserId(),
+      opportunityId: this.props.id,
+      status: 0,
+      reason: "",
+      message: ""
+    };
+    console.log(data);
+    firestore.createNewParticipation(data);
+    console.log("geregistreerd voor leerkans");
+  };
+
   componentDidMount() {
     let userId = auth.getUserId();
     let self = this;
@@ -225,23 +242,11 @@ class OpportunityDetail extends Component {
                 </p>
               )}
             </div>
-            <div className="content-right">
+            <div className="content-right opportunity-info-btn">
               <br />
               <div className="infobox">
                 <h3>Info:</h3>
                 <div className="infobox-content">
-                  {/* <div className="content-left">
-                    {!!issuer && <p><b>Eigenaar:</b><br/></p>}
-                    {!!address && <p><b>Locatie:</b><br/></p>}
-                    <p><b>Periode:</b><br/></p>
-                    <p><b>Aantal deelnemers:</b><br/></p>
-                  </div>
-                  <div className="content-right">
-                    {!!issuer && <p>{issuer.name}<br/></p>}
-                    {!!address && <p>{address.street} {address.housenumber}, {address.postalcode} {address["city"]}<br/></p>}
-                    <p>{opportunity.beginDate + ' tot en met ' + opportunity.endDate}<br/></p>
-                    <p>{opportunity.participations}<br/></p>
-                  </div> */}
                   <table>
                     <tbody>
                       {!!issuer && (
@@ -308,6 +313,29 @@ class OpportunityDetail extends Component {
                     </tbody>
                   </table>
                 </div>
+              </div>
+              <div>
+                <AuthUserContext.Consumer>
+                  {authUser =>
+                    authUser ? (
+                      <button
+                        className="button-prim"
+                        onClick={this.handleRegister}
+                      >
+                        Doe mee
+                      </button>
+                    ) : (
+                      <React.Fragment>
+                        <button
+                          className="button-prim disabled"
+                          type="button"
+                          disabled
+                        />
+                        <small>Je moet ingelogd zijn om deel te nemen.</small>
+                      </React.Fragment>
+                    )
+                  }
+                </AuthUserContext.Consumer>
               </div>
             </div>
           </div>
