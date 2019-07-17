@@ -87,6 +87,18 @@ class OpportunityDetail extends Component {
     console.log("geregistreerd voor leerkans");
   };
 
+  handleClaim = event => {
+    event.preventDefault();
+    let data = {
+      badgeId: this.props.opportunity.badgeId,
+      issuedOn: "2000-01-01",
+      recipientId: auth.getUserId()
+    };
+    console.log(data, this.state.participation.id);
+    firestore.createNewAssertion(data).completeParticipation(this.state.participation.id);
+    console.log("badge geclaimed");
+  }
+
   componentDidMount() {
     let userId = auth.getUserId();
     let self = this;
@@ -171,7 +183,9 @@ class OpportunityDetail extends Component {
       .onceGetParticipationFromOpportunity(this.props.id, userId)
       .then(snapshot => {
         snapshot.forEach(doc => {
-          this.setState(() => ({ participation: doc.data() }));
+          let participation = doc.data();
+          participation.id = doc.id;
+          this.setState(() => ({ participation }));
         });
       })
       .catch(err => {
@@ -338,7 +352,7 @@ class OpportunityDetail extends Component {
                         participation.status == 3 ? (
                           <p>Je hebt deze leerkans al voltooid.</p>
                         ) : this.props.opportunity.difficulty == 0 ? (
-                          <button className="button-prim">Claim</button>
+                          <button className="button-prim" onClick={this.handleClaim}>Claim jouw badge</button>
                         ) : (
                           <p>Je hebt je al ingeschreven voor deze badge!</p>
                         )
