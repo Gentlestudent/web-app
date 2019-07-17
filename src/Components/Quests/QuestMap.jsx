@@ -39,29 +39,63 @@ class QuestMap extends Component {
 
 
         // Create markers
-        let markers = this.props.markers;
-        markers.forEach(el => {
+        this.updateMarkers(map);
 
-            let icon = L.icon( {
-                iconUrl: el.iconUrl,
-                iconSize: [30, 40],
-                iconAnchor: [15, 40],
-                popupAnchor: [15, -20] 
-            }
-            );
-
-            let marker = L.marker(el.latlng, {
-                title: el.title,
-                icon
-            });
-
-            marker.on('click', ev => {
-                console.log("Clicked marker", ev.target.options.title);
-            })
-        });
 
         this.setState({ map: map });
         map.invalidateSize();
+    }
+
+    updateMarkers(map) {
+        let markers = this.props.markers;
+        if (markers === undefined || markers === null || markers.length <= 0)
+            return;
+
+        markers.forEach(el => {
+            let quest = el.quest;
+
+            console.log(el);
+
+            // Create icon for the pin
+            let icon = L.icon({
+                iconUrl: el.pin,
+                iconSize: [30, 40],
+                iconAnchor: [15, 40],
+                popupAnchor: [0, -40]
+            }
+            );
+
+            // Create marker with correct properties
+            let marker = L.marker(el.latlng, {
+                title: "Klik voor meer informatie",
+                icon
+            });
+
+            // Create and bind popup
+            marker.bindPopup("<p><strong>" + quest.title + "</strong><br>" + quest.description + "</p>");
+
+            // Add events to marker
+            marker.on('click', ev => {
+                console.log("Clicked marker", ev.target.options.title);
+            });
+            marker.on('mouseover', function (e) {
+                e.target.openPopup();
+            });
+            marker.on("mouseout", function (e) {
+                e.target.closePopup();
+            });
+
+            // Attach marker to map
+            marker.addTo(map);
+        });
+
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.markers !== this.props.markers) {
+            this.updateMarkers(this.state.map);
+        }
+
     }
 
     render() {

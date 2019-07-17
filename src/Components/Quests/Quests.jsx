@@ -51,7 +51,7 @@ class Quests extends Component {
             let marker = {
                 latlng,
                 pin,
-                title: quest.title
+                quest
             }
             markers.push(marker);
         });
@@ -61,15 +61,8 @@ class Quests extends Component {
     componentDidUpdate(prevProps, prevState) {
         // Update markers
         if (prevState.allQuests !== this.state.allQuests) {
-            this.state.allQuests.forEach(quest => {
-                let latlng = { lat: quest.lat, lng: quest.lng };
-                let pin = quest.pinImage;
-                let marker = {
-                    latlng,
-                    pin
-                }
-                this.setState({ markers: [marker, ...this.state.markers] });
-            });
+            let markers = this.setupMarkers(this.state.allQuests);
+            this.setState({markers});
         }
     }
 
@@ -102,7 +95,6 @@ class Quests extends Component {
 
     render() {
         const { markers, filteredQuests } = this.state;
-        console.log(markers);
         return (
             <React.Fragment>
                 <div className="content">
