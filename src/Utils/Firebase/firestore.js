@@ -1,5 +1,4 @@
 import { firestore, Timestamp } from './firebase';
-import { isValidTimestamp } from '@firebase/util';
 
 
 export const createOpportunity = (data) =>

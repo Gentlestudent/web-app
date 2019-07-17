@@ -23,7 +23,6 @@ class Quests extends Component {
         // FETCH ALL VALID QUESTS
         firestore.onceGetActiveQuests().then(snapshot => {
             let quests = [];
-            console.log({snapshot});
             snapshot.forEach(doc => {
                 let quest = doc.data();
                 quest.id = doc.id;
@@ -31,11 +30,14 @@ class Quests extends Component {
                 quests.push(quest);
             });
 
+            console.log({quests});
+
             // SETUP MARKER OBJECTS
             let markers = this.setupMarkers(quests);
+            // console.log({markers});
 
             // SET STATE (only once)
-            this.setState({ allQuests: quests, filterQuests: quests, markers});
+            this.setState({ allQuests: quests, filteredQuests: quests, markers});
 
         }).catch(error => {
             console.error({ error }, error);
@@ -93,8 +95,9 @@ class Quests extends Component {
         });
 
         // UPDATE MARKERS
+        let markers = this.setupMarkers(filtered);
         
-        this.setState({ filteredQuests: filtered })
+        this.setState({ filteredQuests: filtered, markers })
     }
 
     render() {
@@ -103,7 +106,7 @@ class Quests extends Component {
             <React.Fragment>
                 <div className="content">
                     <SearchFilters title="Quests" filterFunction={this.filterQuests} />
-                    <QuestMap />
+                    <QuestMap markers={markers}/>
                 </div>
             </React.Fragment>
         );
