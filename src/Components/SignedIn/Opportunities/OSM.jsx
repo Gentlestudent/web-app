@@ -39,8 +39,26 @@ class OSM extends Component {
 
 
         // Create markers
+        let markers = this.updateMarkers(map);
+
+        this.setState({ map, markers });
+        map.invalidateSize();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.opportunities !== this.props.opportunities) {
+            let markers = this.updateMarkers(this.state.map);
+            this.setState({markers: markers});
+        }
+    }
+
+    updateMarkers(map) {
+        this.clearMarkers(map);
+
         let opps = this.props.opportunities;
+        console.log(opps.length);
         let addresses = this.props.addresses;
+        let markers = [];
         Object.keys(opps).map(key => {
 
 
@@ -74,13 +92,22 @@ class OSM extends Component {
                 // console.log(e.target.properties.opportunity);
                 window.open("/opportunities/" + e.target.properties.opportunity.id, "_self");
             });
+            markers.push(newMarker);
             newMarker.addTo(map);
-            this.state.markers.push(newMarker);
             return true;
         });
 
-        this.setState({ map: map });
-        map.invalidateSize();
+        return markers;
+    }
+
+    clearMarkers(map) {
+        let {markers} = this.state;
+        if(markers === undefined || markers === null)
+            return;
+        for (let i = 0; i < markers.length; i++) {
+            map.removeLayer(markers[i]);
+        }
+        this.setState({ markers: [] });
     }
 
     render() {
