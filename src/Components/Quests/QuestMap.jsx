@@ -39,49 +39,27 @@ class QuestMap extends Component {
 
 
         // Create markers
-        let opps = this.props.opportunities;
-        let addresses = this.props.addresses;
+        let markers = this.props.markers;
+        markers.forEach(el => {
 
-        if(opps !== undefined) {
+            let icon = L.icon( {
+                iconUrl: el.iconUrl,
+                iconSize: [30, 40],
+                iconAnchor: [15, 40],
+                popupAnchor: [15, -20] 
+            }
+            );
 
-        Object.keys(opps).map(key => {
-
-
-            let pinIcon = L.icon({
-                iconUrl: opps[key].pinImageUrl,
-                iconSize: [50, 80],
-                iconAnchor: [25, 40],
-                popupAnchor: [0, -20]
+            let marker = L.marker(el.latlng, {
+                title: el.title,
+                icon
             });
 
-
-            let addrID = opps[key].addressId;
-            let address = addresses[addrID];
-            let latlng = { lat: address.latitude, lng: address.longitude };
-            let newMarker = L.marker(latlng, {
-                title: "Klik voor meer info",
-                icon: pinIcon
-            });
-            newMarker.properties = {};
-            newMarker.properties.opportunity = opps[key];
-            newMarker.bindPopup("<p><strong>" + opps[key].title + "</strong><br>" + opps[key].shortDescription.substr(0, 140) + "...</p>", {
-                offset: L.point(0, 0)
-            });
-            newMarker.on('mouseover', function (e) {
-                e.target.openPopup();
-            });
-            newMarker.on("mouseout", function (e) {
-                newMarker.closePopup();
-            });
-            newMarker.on("click", function (e) {
-                // console.log(e.target.properties.opportunity);
-                window.open("/opportunities/" + e.target.properties.opportunity.id, "_self");
-            });
-            newMarker.addTo(map);
-            this.state.markers.push(newMarker);
-            return true;
+            marker.on('click', ev => {
+                console.log("Clicked marker", ev.target.options.title);
+            })
         });
-    }
+
         this.setState({ map: map });
         map.invalidateSize();
     }

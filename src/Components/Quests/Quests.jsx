@@ -30,8 +30,6 @@ class Quests extends Component {
                 quests.push(quest);
             });
 
-            console.log({quests});
-
             // SETUP MARKER OBJECTS
             let markers = this.setupMarkers(quests);
             // console.log({markers});
@@ -51,7 +49,8 @@ class Quests extends Component {
             let pin = quest.pinImage;
             let marker = {
                 latlng,
-                pin
+                pin,
+                title: quest.title
             }
             markers.push(marker);
         });
@@ -102,6 +101,7 @@ class Quests extends Component {
 
     render() {
         const { markers, filteredQuests } = this.state;
+        console.log(markers);
         return (
             <React.Fragment>
                 <div className="content">
