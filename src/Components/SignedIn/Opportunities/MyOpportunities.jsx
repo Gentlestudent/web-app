@@ -61,16 +61,19 @@ class MyOpportunities extends Component {
     });
   }
 
+  handleClaim() {
+    console.log("badge claimed");
+  }
+
   render() {
     const { opportunityList, loading, participations } = this.state;
     //console.log(opportunityList);
     console.log(participations);
     const opps = opportunityList.map((opp, key) => (
       <li key={opp.id} className="card-container opportunities">
-        {console.log(opp)};
         <a
-          href={`/opportunities/${opp.id}`}
           className={`card-item opportunity ${opp.category}`}
+          href={`/opportunities/${opp.id}`}
           key={opp.addressId}
         >
           <div className="crop-opp-img">

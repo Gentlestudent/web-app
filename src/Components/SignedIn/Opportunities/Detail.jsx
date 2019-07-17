@@ -68,7 +68,8 @@ class OpportunityDetail extends Component {
       issuer: null,
       userHasRights: false,
       isAdmin: false,
-      participations: 0
+      participations: 0,
+      participation: {}
     };
   }
 
@@ -85,6 +86,18 @@ class OpportunityDetail extends Component {
     firestore.createNewParticipation(data);
     console.log("geregistreerd voor leerkans");
   };
+
+  handleClaim = event => {
+    event.preventDefault();
+    let data = {
+      badgeId: this.props.opportunity.badgeId,
+      issuedOn: "2000-01-01",
+      recipientId: auth.getUserId()
+    };
+    console.log(data, this.state.participation.id);
+    firestore.createNewAssertion(data).completeParticipation(this.state.participation.id);
+    console.log("badge geclaimed");
+  }
 
   componentDidMount() {
     let userId = auth.getUserId();
@@ -166,7 +179,20 @@ class OpportunityDetail extends Component {
       .catch(err => {
         console.log("Error getting documents", err);
       });
+    firestore
+      .onceGetParticipationFromOpportunity(this.props.id, userId)
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          let participation = doc.data();
+          participation.id = doc.id;
+          this.setState(() => ({ participation }));
+        });
+      })
+      .catch(err => {
+        console.log("Error getting documents", err);
+      });
   }
+
   render() {
     const { opportunity, id } = this.props;
     const {
@@ -174,9 +200,10 @@ class OpportunityDetail extends Component {
       issuer,
       userHasRights,
       isAdmin,
-      participations
+      participations,
+      participation
     } = this.state;
-
+    console.log(participation.participantId, auth.getUserId());
     return (
       <div className="opportunity-detail">
         {!!opportunity.authority === 0 && (
@@ -298,7 +325,9 @@ class OpportunityDetail extends Component {
                           {!!opportunity.authority === 0 && (
                             <td>In afwachting</td>
                           )}
-                          {!!opportunity.authority === 1 && <td>Goedgekeurd</td>}
+                          {!!opportunity.authority === 1 && (
+                            <td>Goedgekeurd</td>
+                          )}
                           {!!opportunity.authority === 2 && <td>Verwijderd</td>}
                         </tr>
                       )}
@@ -318,12 +347,23 @@ class OpportunityDetail extends Component {
                 <AuthUserContext.Consumer>
                   {authUser =>
                     authUser ? (
-                      <button
-                        className="button-prim"
-                        onClick={this.handleRegister}
-                      >
-                        Doe mee
-                      </button>
+                      participation.opportunityId == this.props.id &&
+                      participation.participantId == auth.getUserId() ? (
+                        participation.status == 3 ? (
+                          <p>Je hebt deze leerkans al voltooid.</p>
+                        ) : this.props.opportunity.difficulty == 0 ? (
+                          <button className="button-prim" onClick={this.handleClaim}>Claim jouw badge</button>
+                        ) : (
+                          <p>Je hebt je al ingeschreven voor deze badge!</p>
+                        )
+                      ) : (
+                        <button
+                          className="button-prim"
+                          onClick={this.handleRegister}
+                        >
+                          Registreer
+                        </button>
+                      )
                     ) : (
                       <React.Fragment>
                         <button
