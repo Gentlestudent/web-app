@@ -4,6 +4,11 @@ import L from 'leaflet'
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
+
+/**
+ * Default icon for the markers.
+ * Without this code, default markers wouldn't be visible
+ */
 let DefaultIcon = L.icon({
     iconUrl: icon,
     shadowUrl: iconShadow,
@@ -14,6 +19,9 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
+/**
+ * Displays the map on the quest page
+ */
 class QuestMap extends Component {
     constructor(props) {
         super(props);
@@ -45,6 +53,10 @@ class QuestMap extends Component {
         map.invalidateSize();
     }
 
+    /**
+     * Remove the markers of the map. The markers are stored in the state.
+     * @param {L.Map} map map containing the markers. 
+     */
     clearMarkers(map) {
         for(let i = 0; i<this.state.markers.length; i++) {
             map.removeLayer(this.state.markers[i]);
@@ -84,6 +96,7 @@ class QuestMap extends Component {
             // Add events to marker
             marker.on('click', ev => {
                 console.log("Clicked marker", ev.target.options.title);
+                window.open("/quests/" + quest.id, "_self");
             });
             marker.on('mouseover', function (e) {
                 e.target.openPopup();
@@ -101,6 +114,7 @@ class QuestMap extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        // Update the markers whenever they change
         if (prevProps.markers !== this.props.markers) {
             this.updateMarkers(this.state.map);
         }
