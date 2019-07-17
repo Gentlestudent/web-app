@@ -2159,6 +2159,12 @@ article.post small {
   display: none;
 }
 
+.list-opportunities {
+  width: 100vw;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 /* @media screen and (min-width: 1080px) {
   #startpage .text{
     display: none;

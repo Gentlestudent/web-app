@@ -62,10 +62,38 @@ class MyOpportunities extends Component {
   }
 
   render() {
-    const { opportunityList, loading } = this.state;
+    const { opportunityList, loading, participations } = this.state;
     //console.log(opportunityList);
-    const opps = opportunityList.map((opp, key) =>
-    <li key= {opp.id}>{opp.title}</li>);
+    console.log(participations);
+    const opps = opportunityList.map((opp, key) => (
+      <li key={opp.id} className="card-container opportunities">
+        {console.log(opp)};
+        <a
+          href={`/opportunities/${opp.id}`}
+          className={`card-item opportunity ${opp.category}`}
+          key={opp.addressId}
+        >
+          <div className="crop-opp-img">
+            <img
+              src={opp.oppImageUrl ? `${opp.oppImageUrl}` : null}
+              className="photo"
+              alt=""
+            />
+          </div>
+          <div>
+            <div style={{ position: "relative" }}>
+              <img src={`${opp.pinImageUrl}`} className="badge" alt="" />
+              <h2>{opp.title}</h2>
+              <div className="meta-data">
+                <small>{opp.beginDate + " tot " + opp.endDate}</small>
+                {/* <small>{opp.street + ' ' + opp.house_number + ', ' + opp.postal_code + ' ' + opp.city}</small> */}
+              </div>
+              <p>{opp.shortDescription}</p>
+            </div>
+          </div>
+        </a>
+      </li>
+    ));
 
     return (
       <div className="main-content">
@@ -73,9 +101,13 @@ class MyOpportunities extends Component {
         {loading ? (
           <Spinner />
         ) : (
-          <ul>
-            {opps}
-          </ul>
+          <div className="opportunities-content">
+            <div className="content">
+              <div id="opportunities">
+                <ul className="list-opportunities">{opps}</ul>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     );
