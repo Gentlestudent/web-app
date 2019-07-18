@@ -306,7 +306,7 @@ exports.notifyIssuer = functions.https.onCall((data) => {
 
     let subject = 'Inschrijving voor leerkans: ' + opportunityTitle;
     let html = '<p>Dag partner van Gentlestudent,</p>' +
-    '<p>Er heeft zich zopas iemand ingeschreven voor de leerkans: "' + opportunityTitle + '"</p>' +
+        '<p>Er heeft zich zopas iemand ingeschreven voor de leerkans: "' + opportunityTitle + '"</p>' +
         '<p>De gegevens van deze persoon zijn: </p>' +
         '<p> - Naam: ' + participantName + '</p>' +
         '<p> - E-mailadres: ' + participantEmail + '</p>' +
@@ -322,15 +322,73 @@ exports.notifyIssuer = functions.https.onCall((data) => {
         html: html
     }
 
-    return sendNotifyIssuerEmail(mailOptions)
+    return sendEmail(mailOptions)
 });
 
 
-async function sendNotifyIssuerEmail(mailOptions) {
+exports.notifyQuestGiver = functions.https.onCall(data => {
+    let takerName = data.takerName;
+    let giverEmail = data.giverEmail;
+    let questTitle = data.questTitle;
+    let giverName = data.giverName;
+    let questId = data.questId;
+
+    let subject = "[QUEST] " + takerName + " kan je helpen";
+
+    let html = "<p>Beste " + giverName + ", </p> <p>" + takerName + " kan je helpen met de quest '" + questTitle +
+        "'</p> <p>Bekijk dit via de app of via de <a href=\"gentlestudent.gent/quests/" + questId + "\">webpagina</a>" +
+        "<p>Met vriendelijke groet,</p>" +
+        "<p>Team Gentlestudent</p>"
+
+    let mailOptions = {
+        from: "Gentlestudent <" + functions.config().mailer.email + ">",
+        to: "freek.de.sagher21@gmail.com", // TODO swap out
+        subject: subject,
+        text: "",
+        html: html
+    }
+
+    return sendMyMail(mailOptions);
+});
+
+
+exports.notifyQuestTaker = functions.https.onCall(data => {
+    let giverName = data.giverName;
+    let giverEmail = data.giverEmail;
+    let takerName = data.takerName;
+    let takerEmail = data.takerEmail;
+    let questTitle = data.questTitle;
+    let questId = data.questId;
+
+    let subject = "[QUEST] " + giverName + " heeft jou gekozen";
+
+    let html = "<p>Beste " + takerName + ",</p>" +
+        "<p>" + giverName + " heeft jou gekozen om hem/haar te helpen bij '" + questTitle + "'.</p>" +
+        "<p>Neem contact op met hem/haar via " + giverEmail + ", breng de quest tot een goed einde</p>" +
+        "<p>en verdien zo jouw token!</p>"
+    "<p>Met vriendelijke groet,</p>" +
+        "<p>Team Gentlestudent</p>";
+
+    let mailOptions = {
+        from: "Gentlestudent <" + functions.config().mailer.email + ">",
+        to: "freek.de.sagher21@gmail.com", // TODO swap out
+        subject: subject,
+        text: "",
+        html: html
+    }
+
+    return sendMyMail(mailOptions);
+});
+
+
+
+async function sendMyMail(mailOptions) {
     transporter.sendMail(mailOptions, (error, info) => {
-        if(error) {
+        if (error) {
             console.error(error);
         }
         console.log("Message sent!", info);
     })
 }
+
+
