@@ -11,21 +11,39 @@ const Title = styled.h1`
     background-color : #2980b9;
     color : white;
     width : 95%;
+    @media all and (max-width:1000px){
+        width : 100%;
+    }
 `
 
 const Table = styled.table`
     margin : 20px;
+    @media all and (max-width:1000px){
+        width : 95%;
+    }
+`
+
+const Tr = styled.tr`
+    @media all and (max-width:1000px){
+        display : block;
+        margin-bottom : 30px;
+    }
 `
 
 const Td = styled.td`
     border : ${props => props.withBorder ? '1px solid black' : '0'};
-    width : 65%;
-    text-align : ${props => props.alignCenter ? 'center' : 'left'}; 
+    width : 50%;
+    text-align : ${props => props.alignCenter ? 'center' : 'left'};
+    vertical-align : top;
+    
+    @media all and (max-width:1000px){
+        display : block;
+        width:95%;
+    }
 `
 
 const Description = styled.p`
     font-size : 20px;
-    font-family : Corbel
 `
 
 class QuestDetail extends Component {
@@ -89,7 +107,7 @@ class QuestDetail extends Component {
                 {!loading &&
                     <Table>
                         <tbody>
-                            <tr>
+                            <Tr>
                                 <Td>
                                     <Title> {questItem.title} </Title>
                                     <h4>
@@ -97,14 +115,14 @@ class QuestDetail extends Component {
                                         {questItem.phoneNumber} - {' '}
                                         {questItem.created.toDate().toLocaleString()}
                                     </h4>
+                                    <hr /> 
+                                    <Description> {questItem.description} </Description>
                                 </Td>
 
-                                <QuestMap center={center} zoom={zoom} markers={markers} disableClick={true} disablePopup={true} />
-                            </tr>
-
-                            <tr>
-                                <Td> <hr /> <Description> {questItem.description} </Description> </Td>
-                            </tr>
+                                <Td>
+                                    <QuestMap center={center} zoom={zoom} markers={markers} disableClick={true} disablePopup={true} />
+                                </Td>
+                            </Tr>
                         </tbody>
                     </Table>
                 }
