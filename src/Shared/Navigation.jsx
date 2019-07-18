@@ -235,6 +235,17 @@ class NavigationAuth extends Component {
 							<NavLink to={routes.CreateOpportunity}>Maak leerkans</NavLink>
 						</li>
 					}
+					{!!myQuest &&
+						<li className="nav_item">
+							<NavLink to={routes.MyQuest}>Mijn quest</NavLink>
+						</li>
+					}
+
+					{!myQuest &&
+						<li className="nav_item">
+							<NavLink to={routes.CreateQuest}>Maak quest </NavLink>
+						</li>
+					}
 					{!!isAdmin &&
 						<li className="nav_item">
 							<NavLink to={routes.ValidateIssuer}>Valideer issuer</NavLink>
