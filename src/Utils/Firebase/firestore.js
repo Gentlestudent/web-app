@@ -206,4 +206,12 @@ export const onceGetActiveQuests = () => {
 
 export const onceGetQuest = (id) => firestore.collection('Quests').doc(id).get();
 
+export const onceGetAuthUserQuest = (id) => {
+  return firestore.collection('Quests').where('questGiverId', '==', id).get();
+}
+
+export const onceGetParticipantsQuest = (id) => {
+  return firestore.collection('QuestTakers').where('questId', '==', id).get();
+}
+
 

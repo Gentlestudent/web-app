@@ -70,7 +70,8 @@ class NavigationAuth extends Component {
 			showMenu: false,
 			userId: "",
 			isIssuer: false,
-			isAdmin: false
+			isAdmin: false,
+			myQuest : null
 		};
 
 		this.showMenu = this.showMenu.bind(this);
@@ -107,6 +108,21 @@ class NavigationAuth extends Component {
 			.catch(err => {
 				console.log('User is not an admin', err);
 			});
+		
+		if (id !== null || id !== undefined || id !== "") {
+			firestore.onceGetAuthUserQuest(id)
+					 .then(snapshot => {
+						 snapshot.forEach( doc => {
+							if (doc.data()) {
+								this.setState( () => ({myQuest : doc.data()}) );
+							}
+						 })
+					 })
+					 .catch(err => {
+						 console.log('Error getting quest', err);
+						 this.setState( () => ({myQuest : null}));
+					 })
+		}
 		// firestore.onceGetParticipant(AuthUserContext).then(snapshot => {
 		// 	var res = new Object()
 		// 	snapshot.forEach(doc => {
@@ -138,7 +154,7 @@ class NavigationAuth extends Component {
 	}
 
 	render() {
-		const { isAdmin, isIssuer } = this.state;
+		const { isAdmin, isIssuer, myQuest } = this.state;
 
 		return (
 			<ul id="gs-nav" className="menu">
@@ -180,6 +196,15 @@ class NavigationAuth extends Component {
 												<NavigationIssuer />
 											</div>
 										}
+
+										{!!myQuest &&
+											<NavLink to={routes.MyQuest}>Mijn quest</NavLink>
+										}
+
+										{!myQuest &&
+											<NavLink to={routes.CreateQuest}>Maak quest </NavLink>
+										}
+
 										{!!isAdmin &&
 											<div className="nav-dropdown-ext">
 												<NavigationAdmin />
