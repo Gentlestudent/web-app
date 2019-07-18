@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { firestore } from '../../Utils/Firebase';
+import { firestore, auth } from '../../Utils/Firebase';
 import Spinner from '../../Shared/Spinner';
 import styled from 'styled-components';
 import QuestMap from './QuestMap'
@@ -46,6 +46,22 @@ const Description = styled.p`
     font-size : 20px;
 `
 
+const Button = styled.button`
+    background : ${props => props.primary ? '#2ecc71' : '#e74c3c'};
+    color : white;
+    font-size: 20px;
+    margin-top : 5%;
+    margin-right: 2%;
+    padding: 0.25em 1em;
+    border: 2px solid #bdc3c7;
+    border-radius: 3px;  
+
+    @media all and (max-width:1000px){
+        margin-bottom : 5%;
+        margin-top : 0;
+    }
+`
+
 class QuestDetail extends Component {
 
     constructor(props) {
@@ -53,6 +69,7 @@ class QuestDetail extends Component {
         this.state = {
             questItem: null,
             loading: true,
+            isAuthUserQuest : false,
             mapProperties: {
                 marker: null,
                 zoom: null,
@@ -81,14 +98,16 @@ class QuestDetail extends Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         const { id } = this.props.match.params;
-
+        const authUserId = auth.getUserId();
+        
         firestore.onceGetQuest(id)
             .then((doc) => {
                 let questItem = doc.data();
                 questItem.pinImage = 'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Quests%2Fquest_pin.png?alt=media';
                 
                 let mapProperties = this.setupMapProperties(questItem);
-                this.setState(() => ({ questItem, loading: false, mapProperties }));
+                let sameIdQuest = questItem.questGiverId.trim() === authUserId.trim();
+                this.setState(() => ({ questItem, loading: false, mapProperties, isAuthUserQuest : sameIdQuest }));
             })
             .catch(err => {
                 this.setState(() => ({ questItem: null, loading: true }));
@@ -97,7 +116,7 @@ class QuestDetail extends Component {
     }
 
     render() {
-        const { loading, questItem, mapProperties } = this.state;
+        const { loading, questItem, mapProperties, isAuthUserQuest } = this.state;
         const { zoom, center, marker } = mapProperties;
         const markers = [marker];
 
@@ -117,6 +136,15 @@ class QuestDetail extends Component {
                                     </h4>
                                     <hr /> 
                                     <Description> {questItem.description} </Description>
+                                    
+                                    {
+                                        !!isAuthUserQuest && 
+                                        <div>
+                                            <Button primary> Edit </Button>
+                                            <Button> Delete </Button>
+                                        </div>
+                                    }
+
                                 </Td>
 
                                 <Td>
