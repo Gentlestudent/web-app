@@ -19,5 +19,11 @@ export const CreatedOpportunities = '/created-opportunities';
 export const Privacy = '/privacy';
 export const Conditions = '/voorwaarden';
 export const Backpack = '/backpack';
+<<<<<<< HEAD
 export const Quests = '/quests'
 export const CreateQuest = '/create-quest'
+=======
+export const Quests = '/quests';
+export const CreateQuest = '/quests/create';
+export const MyQuest = '/quests/myquest';
+>>>>>>> c44d1872fd7aa9878e7874ecd204bb4effe84711

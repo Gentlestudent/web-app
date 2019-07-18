@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Route, Switch} from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
 import QuestDetail from './QuestDetail'
 import QuestList from './QuestList'
@@ -44,7 +44,7 @@ class Quests extends Component {
             // console.log({markers});
 
             // SET STATE (only once)
-            this.setState({ allQuests: quests, filteredQuests: quests, markers});
+            this.setState({ allQuests: quests, filteredQuests: quests, markers });
 
         }).catch(error => {
             console.error({ error }, error);
@@ -77,7 +77,7 @@ class Quests extends Component {
         // Update markers
         if (prevState.allQuests !== this.state.allQuests) {
             let markers = this.setupMarkers(this.state.allQuests);
-            this.setState({markers});
+            this.setState({ markers });
         }
     }
 
@@ -104,26 +104,29 @@ class Quests extends Component {
 
         // UPDATE MARKERS
         let markers = this.setupMarkers(filtered);
-        
+
         this.setState({ filteredQuests: filtered, markers })
     }
 
     render() {
         const { markers, filteredQuests } = this.state;
         return (
-            <Switch>
-                <>
-                    <Route path={'/quests/:id'} render={ ({match}) => <QuestDetail match={match} /> } />
-                    <Route exact path={'/quests'} render={ () => 
+            <>
+                <Switch>
+                    <Route path={routes.CreateQuest} render={ () => /*TODO*/ <Redirect to={'/quests'} /> } />
+                    <Route path={routes.MyQuest} render={ () => /*TODO*/ <Redirect to={'/quests'} /> } />
+                    <Route path={'/quests/:id'} render={({ match }) => <QuestDetail match={match} />} />
+                    <Route exact path={'/quests'} render={() =>
                         <div className="content">
                             <Link to={routes.CreateQuest} >Maak quest</Link>
                             <SearchFilters title="Quests" filterFunction={this.filterQuests} />
-                            <QuestMap markers={markers}/>
+                            <QuestMap markers={markers} />
                             <QuestList allQuests={filteredQuests} />
                         </div>
                     } />
-                </>
-            </Switch>
+                </Switch>
+            </>
+
         );
     }
 }
