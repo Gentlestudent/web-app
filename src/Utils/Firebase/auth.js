@@ -4,6 +4,7 @@ import { auth } from './firebase';
 
 var id = "";
 var email = "";
+var name = "";
 
 // Sign Up
 export const doCreateUserWithEmailAndPassword = (email, password) =>
@@ -17,6 +18,7 @@ auth.onAuthStateChanged((user) => {
     if (user) {
         id = user.uid;
         email = user.email;
+        name = user.displayName;
     }
 });
 
@@ -37,3 +39,5 @@ export const getUserId = () =>
 
 export const getUserEmail = () =>
 {return email;}
+
+export const getUserName = () => {return name}

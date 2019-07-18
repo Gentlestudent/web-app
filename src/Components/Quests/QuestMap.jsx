@@ -91,7 +91,7 @@ class QuestMap extends Component {
 
             // Create marker with correct properties
             let marker = L.marker(el.latlng, {
-                title: disableClick ? "Locatie van de leerkans" : "Klik voor meer informatie",
+                title: disableClick ? "Locatie van de quest" : "Klik voor meer informatie",
                 icon
             });
 
