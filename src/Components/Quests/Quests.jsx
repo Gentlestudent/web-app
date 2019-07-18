@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import QuestDetail from './QuestDetail'
 import QuestList from './QuestList'
 import QuestMap from './QuestMap'
+import CreateQuest from './Giver/CreateQuest'
 import SearchFilters from '../../Shared/SearchFilters'
 import { Link } from 'react-router-dom';
 import * as routes from '../../routes/routes';
@@ -113,8 +114,8 @@ class Quests extends Component {
         return (
             <>
                 <Switch>
-                    <Route path={routes.CreateQuest} render={ () => /*TODO*/ <Redirect to={'/quests'} /> } />
-                    <Route path={routes.MyQuest} render={ () => /*TODO*/ <Redirect to={'/quests'} /> } />
+                    <Route path={routes.CreateQuest} render={ () => <CreateQuest /> } />
+                    <Route path={routes.MyQuest} render={ () => /** TODO*/ <Redirect to={'/quests'} /> } />
                     <Route path={'/quests/:id'} render={({ match }) => <QuestDetail match={match} />} />
                     <Route exact path={'/quests'} render={() =>
                         <div className="content">
