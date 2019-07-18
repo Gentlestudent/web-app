@@ -40,6 +40,7 @@ import Footer from './Shared/Footer';
 
 import withAuthentication from './Shared/withAuthentication';
 import withBadgr from './Shared/withBadgr';
+import withQuest from './Shared/withQuest';
 
 import * as routes from './routes/routes';
 import AuthUserContext from './Shared/AuthUserContext';
@@ -122,4 +123,4 @@ class App extends Component {
 }
 
 
-export default withBadgr(withAuthentication(App));
+export default withBadgr(withAuthentication(withQuest(App)));

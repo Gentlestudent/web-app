@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
+import QuestContext from '../../Shared/QuestContext';
+
 import QuestDetail from './QuestDetail'
 import QuestList from './QuestList'
 import QuestMap from './QuestMap'
@@ -9,6 +11,15 @@ import { Link } from 'react-router-dom';
 import * as routes from '../../routes/routes';
 
 import { firestore } from '../../Utils/Firebase'
+
+const ComponentMyQuest = () =>
+    <QuestContext.Consumer>
+        {myQuest =>
+            myQuest
+                ? <Redirect to={'/quests/' + myQuest[1]} />
+                : <Redirect to={'/quests'} />
+        }
+    </QuestContext.Consumer>
 
 /**
  * Container for the quests page
@@ -112,7 +123,7 @@ class Quests extends Component {
             <>
                 <Switch>
                     <Route path={routes.CreateQuest} render={ () => /*TODO*/ <Redirect to={'/quests'} /> } />
-                    <Route path={routes.MyQuest} render={ () => /*TODO*/ <Redirect to={'/quests'} /> } />
+                    <Route path={routes.MyQuest} render={ () => <ComponentMyQuest /> } />
                     <Route path={'/quests/:id'} render={({ match }) => <QuestDetail match={match} />} />
                     <Route exact path={'/quests'} render={() =>
                         <div className="content">
