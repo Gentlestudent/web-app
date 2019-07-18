@@ -20,4 +20,4 @@ export const Privacy = '/privacy';
 export const Conditions = '/voorwaarden';
 export const Backpack = '/backpack';
 export const Quests = '/quests'
-export const CreateQuest = '/quests/create'
+export const CreateQuest = '/create-quest'

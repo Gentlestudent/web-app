@@ -8,7 +8,7 @@ import SearchFilters from '../../Shared/SearchFilters'
 import { Link } from 'react-router-dom';
 import * as routes from '../../routes/routes';
 
-import { firestore } from '../../Utils/Firebase'
+import { firestore, auth } from '../../Utils/Firebase'
 
 /**
  * Container for the quests page
@@ -27,6 +27,7 @@ class Quests extends Component {
 
     componentDidMount() {
         // FETCH ALL VALID QUESTS
+        let UUID = auth.getUserId();
         firestore.onceGetActiveQuests().then(snapshot => {
             let quests = [];
             snapshot.forEach(doc => {
@@ -34,7 +35,8 @@ class Quests extends Component {
                 quest.id = doc.id;
                 quest.created = quest.created.toDate();
                 quest.pinImage = 'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Quests%2Fquest_pin.png?alt=media';
-                quests.push(quest);
+                if(UUID !== quest.questGiverId)
+                    quests.push(quest);
             });
 
             // SETUP MARKER OBJECTS

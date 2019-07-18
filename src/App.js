@@ -20,6 +20,7 @@ import Register from './Components/Anonymous/Auth/Register';
 import Login from './Components/Anonymous/Auth/Login';
 import ResetPassword from './Components/Anonymous/Auth/ResetPassword';
 import Quests from './Components/Quests/Quests';
+import CreateQuest from './Components/Quests/Giver/CreateQuest'
 
 import BOOpportunities from './Components/SignedIn/Backoffice/Opportunities';
 import CreateOpportunity from './Components/SignedIn/Issuer/CreateOpportunity';
@@ -95,6 +96,7 @@ class App extends Component {
 									{/* <Route path="/login" render={() => <Login />} /> */}
 									{/* BACKOFFICE */}
 									{/* <Auth> */}
+									<PrivateRoute path={routes.CreateQuest} component={CreateQuest} needAuth={true} />
 									<PrivateRoute path={routes.BOOpportunities} component={BOOpportunities} needAuth={true} /*exact render={() => <BOOpportunities />}*/ />
 									<PrivateRoute path={routes.CreateOpportunity} component={CreateOpportunity} needAuth={true} /*exact render={() => <CreateOpportunity />}*/ />
 									<Route path={routes.CreateOpportunity + '/:id'} exact render={({ match }) => <CreateOpportunity match={match} />} />
