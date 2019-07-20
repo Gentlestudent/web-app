@@ -69,13 +69,15 @@ class QuestDetail extends Component {
         this.state = {
             questItem: null,
             loading: true,
-            isAuthUserQuest : false,
+            isAuthUserQuest: false,
             mapProperties: {
                 marker: null,
                 zoom: null,
                 center: []
             }
         }
+
+        this.handleClose = this.handleClose.bind(this);
     }
 
     setupMapProperties(quest) {
@@ -95,19 +97,29 @@ class QuestDetail extends Component {
         }
     }
 
+    async handleClose(event) {
+        event.preventDefault();
+        let {questItem} = this.state;
+        if (!!this.state.questItem) {
+            await firestore.closeQuest(questItem.id);
+            window.open("../quests", "_self");
+        }
+    }
+
     componentDidMount() {
         window.scrollTo(0, 0);
         const { id } = this.props.match.params;
         const authUserId = auth.getUserId();
-        
+
         firestore.onceGetQuest(id)
             .then((doc) => {
                 let questItem = doc.data();
+                questItem.id = doc.id;
                 questItem.pinImage = 'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Quests%2Fquest_pin.png?alt=media';
-                
+
                 let mapProperties = this.setupMapProperties(questItem);
-                let sameIdQuest = questItem.questGiverId.trim() === authUserId.trim();
-                this.setState(() => ({ questItem, loading: false, mapProperties, isAuthUserQuest : sameIdQuest }));
+                let sameIdQuest = (questItem.questGiverId.trim() === authUserId.trim() && questItem.questStatus !== 2);
+                this.setState(() => ({ questItem, loading: false, mapProperties, isAuthUserQuest: sameIdQuest }));
             })
             .catch(err => {
                 this.setState(() => ({ questItem: null, loading: true }));
@@ -134,14 +146,14 @@ class QuestDetail extends Component {
                                         {questItem.phoneNumber} - {' '}
                                         {questItem.created.toDate().toLocaleString()}
                                     </h4>
-                                    <hr /> 
+                                    <hr />
                                     <Description> {questItem.description} </Description>
-                                    
+
                                     {
-                                        !!isAuthUserQuest && 
+                                        !!isAuthUserQuest &&
                                         <div>
                                             <Button primary> Edit </Button>
-                                            <Button> Delete </Button>
+                                            <Button onClick={this.handleClose}> Close </Button>
                                         </div>
                                     }
 
