@@ -1,4 +1,5 @@
-import { firestore } from './firebase';
+import { firestore, Timestamp } from './firebase';
+
 
 export const createOpportunity = (data) =>
   firestore.collection('Opportunities').add(data)
@@ -187,6 +188,8 @@ firestore.collection("Participations").add(data)
 
 export const onceGetParticipations = (participantId) =>
 firestore.collection("Participations").where('participantId', '==', participantId).get()
+export const updateParticipant = (id, value) =>
+  firestore.collection('QuestTakers').doc(id).update({ isDoingQuest : value });
 
 export const onceGetAmountParticipations = (id) => {
   let query = firestore.collection('Participations');
@@ -208,4 +211,43 @@ export const onceGetParticipationFromOpportunity = (id, userId) => {
   query = query.where('participantId', '==', userId);
   return query.get();
 }
+
+export const onceGetActiveQuests = () => {
+  let yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  let timestamp = Timestamp.fromDate(yesterday);
+  let query = firestore.collection("Quests").where('created', ">=", timestamp);
+  return query.get();
+}
+
+export const onceGetQuest = (id) => firestore.collection('Quests').doc(id).get();
+
+export const createQuest = (data) =>
+  firestore.collection('Quests').add(data)
+
+export const onceGetAuthUserQuest = (id) => {
+  return firestore.collection('Quests').where('questGiverId', '==', id).get();
+}
+
+export const onceGetParticipantsQuest = (id) => {
+  return firestore.collection('QuestTakers').where('questId', '==', id).get();
+}
+
+export const onceGetWaitingParticipantsQuest = (id) => {
+  return firestore.collection('QuestTakers').where('questId', '==', id).where('isDoingQuest', '==', false).get();
+  //return firestore.collection('QuestTakers').get();
+}
+
+export const onceGetCurrentParticipant = (id) => {
+  return firestore.collection('QuestTakers').where('questId', '==', id).where('isDoingQuest', '==', true).get();
+}
+
+export const closeQuest = (id) => {
+  return firestore.collection('Quests').doc(id).update({ questStatus: 2 });
+}
+
+export const updateQuest = (id, description, latitude, longitude, phoneNumber, title, emailAddress) => {
+  return firestore.collection('Quests').doc(id).update({description, latitude, longitude, phoneNumber, title, emailAddress})
+}
+
 

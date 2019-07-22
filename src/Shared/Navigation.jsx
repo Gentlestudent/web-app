@@ -11,29 +11,32 @@ import * as routes from '../routes/routes';
 
 const Navigation = ({ authUser }) =>
 	<nav>
-	<div className="nav-wrapper">
-		<div className="logo">
-			<NavLink to="/">
-				<img src={logo} id="gs-logo" alt="logo" />
-			</NavLink>
+		<div className="nav-wrapper">
+			<div className="logo">
+				<NavLink to="/">
+					<img src={logo} id="gs-logo" alt="logo" />
+				</NavLink>
+			</div>
+			<div className="nav">
+				<input className="menu-btn" type="checkbox" id="menu-btn" />
+				<label className="menu-icon" htmlFor="menu-btn"><span className="navicon"></span></label>
+				<AuthUserContext.Consumer>
+					{authUser => authUser
+						? <NavigationAuth />
+						: <NavigationNonAuth />
+					}
+				</AuthUserContext.Consumer>
+			</div>
 		</div>
-		<div className="nav">
-			<input className="menu-btn" type="checkbox" id="menu-btn" />
-			<label className="menu-icon" htmlFor="menu-btn"><span className="navicon"></span></label>
-			<AuthUserContext.Consumer>
-				{authUser => authUser
-					? <NavigationAuth />
-					: <NavigationNonAuth />
-				}
-			</AuthUserContext.Consumer>
-		</div>
-	</div>
 	</nav>
 
 const NavigationNonAuth = () =>
 	<ul id="gs-nav" className="menu">
 		<li className="nav_item">
 			<NavLink to={routes.Opportunities} activeClassName="active">Leerkansen</NavLink>
+		</li>
+		<li className="nav_item">
+			<NavLink to={routes.Quests} activeClassName="active">Quests</NavLink>
 		</li>
 		<li className="nav_item">
 			<NavLink to={routes.BecomeIssuer} activeClassName="active">Word Issuer</NavLink>
@@ -48,28 +51,29 @@ const NavigationNonAuth = () =>
 			<NavLink to={routes.AboutUs}>Over ons</NavLink>
 		</li>
 		<React.Fragment>
-				<li className="nav_item">
-					<NavLink to={routes.Login} className="primary">Login</NavLink>
-				</li>
-				<li className="nav_item primary">
-					<NavLink to={routes.Register} className="primary">Registreer</NavLink>
-				</li>
+			<li className="nav_item">
+				<NavLink to={routes.Login} className="primary">Login</NavLink>
+			</li>
+			<li className="nav_item primary">
+				<NavLink to={routes.Register} className="primary">Registreer</NavLink>
+			</li>
 		</React.Fragment>
 	</ul>
 
-class NavigationAuth extends Component{
+class NavigationAuth extends Component {
 	constructor(props) {
 		super(props);
-		
+
 		this.state = {
 			name: "",
 			participant: null,
 			showMenu: false,
 			userId: "",
 			isIssuer: false,
-			isAdmin: false
+			isAdmin: false,
+			myQuest : null
 		};
-		
+
 		this.showMenu = this.showMenu.bind(this);
 		this.closeMenu = this.closeMenu.bind(this);
 	}
@@ -78,32 +82,47 @@ class NavigationAuth extends Component{
 		let id = auth.getUserId()
 		this.setState(() => ({ userId: id }))
 		firestore.onceGetParticipant(id).then(doc => {
-			if(doc.data()){
+			if (doc.data()) {
 				this.setState(() => ({ participant: doc.data() }));
 				this.setState(() => ({ name: doc.data().name.split(" ")[0] }));
 			}
 		})
-		.catch(err => {
-			console.log('Error getting documents', err);
-		});
+			.catch(err => {
+				console.log('Error getting documents', err);
+			});
 		firestore.onceGetIssuer(id).then(doc => {
-			if(doc.data()){
-				if(doc.data().validated){
+			if (doc.data()) {
+				if (doc.data().validated) {
 					this.setState(() => ({ isIssuer: true }));
 				}
 			}
 		})
-		.catch(err => {
-			console.log('User is not an issuer', err);
-		});
+			.catch(err => {
+				console.log('User is not an issuer', err);
+			});
 		firestore.onceGetAdmin(id).then(doc => {
-			if(doc.data()){
+			if (doc.data()) {
 				this.setState(() => ({ isAdmin: true }));
 			}
 		})
-		.catch(err => {
-			console.log('User is not an admin', err);
-		});
+			.catch(err => {
+				console.log('User is not an admin', err);
+			});
+		
+		if (id !== null || id !== undefined || id !== "") {
+			firestore.onceGetAuthUserQuest(id)
+					 .then(snapshot => {
+						 snapshot.forEach( doc => {
+							if (doc.data()) {
+								this.setState( () => ({myQuest : doc.data()}) );
+							}
+						 })
+					 })
+					 .catch(err => {
+						 console.log('Error getting quest', err);
+						 this.setState( () => ({myQuest : null}));
+					 })
+		}
 		// firestore.onceGetParticipant(AuthUserContext).then(snapshot => {
 		// 	var res = new Object()
 		// 	snapshot.forEach(doc => {
@@ -115,34 +134,39 @@ class NavigationAuth extends Component{
 		// 	console.log('Error getting documents', err);
 		// });
 	}
-	
+
 	showMenu(event) {
 		event.preventDefault();
-		
+
 		this.setState({ showMenu: true }, () => {
 			document.addEventListener('click', this.closeMenu);
 		});
 	}
-	
+
 	closeMenu(event) {
 		if (!this.dropdownMenu.contains(event.target)) {
-			
+
 			this.setState({ showMenu: false }, () => {
-			document.removeEventListener('click', this.closeMenu);
-			});  
-			
+				document.removeEventListener('click', this.closeMenu);
+			});
+
 		}
 	}
 
 	render() {
-		const { isAdmin, isIssuer } = this.state;
+		const { isAdmin, isIssuer, myQuest } = this.state;
+
+		console.log(`quest status : ${myQuest === null ? myQuest : myQuest.questStatus}`)
 
 		return (
 			<ul id="gs-nav" className="menu">
 				<li className="nav_item">
 					<NavLink to={routes.Opportunities} activeClassName="active">Leerkansen</NavLink>
 				</li>
-				{ ! isIssuer && <BecomeIssuer/> }
+				<li className="nav_item">
+					<NavLink to={routes.Quests} activeClassName="active">Quests</NavLink>
+				</li>
+				{!isIssuer && <BecomeIssuer />}
 				{/* <li className="nav_item">
 					<NavLink to={routes.Experiences}>Ervaringen</NavLink>
 				</li> */}
@@ -156,35 +180,44 @@ class NavigationAuth extends Component{
 					<button className="nav_item primary" onClick={this.showMenu}>
 						Welkom {this.state.name}!
 					<i className="fas fa-caret-down"></i></button>
-					
+
 					{
 						this.state.showMenu
-						? (
-							<div
-								className="dropdown-menu"
-								ref={(element) => {
-									this.dropdownMenu = element;
-								}}
+							? (
+								<div
+									className="dropdown-menu"
+									ref={(element) => {
+										this.dropdownMenu = element;
+									}}
 								>
-								<div className="dropdown-menu-list">
-									<NavLink to={routes.Profile}>Profiel</NavLink>
-									<NavLink to={routes.Backpack}>Backpack</NavLink>
-									{ !! isIssuer && 
-										<div className="nav-dropdown-ext">
-											<NavigationIssuer/>
-										</div>
-									}
-									{ !! isAdmin && 
-										<div className="nav-dropdown-ext">
-											<NavigationAdmin/>
-										</div>
-									}
+									<div className="dropdown-menu-list">
+										<NavLink to={routes.Profile}>Profiel</NavLink>
+										<NavLink to={routes.Backpack}>Backpack</NavLink>
+										{!!isIssuer &&
+											<div className="nav-dropdown-ext">
+												<NavigationIssuer />
+											</div>
+										}
+
+										{!!myQuest && myQuest.questStatus < 2 &&
+											<NavLink to={routes.MyQuest}>Mijn quest</NavLink>
+										}
+
+										{ (!myQuest || (!!myQuest && myQuest.questStatus === 2)) &&
+											<NavLink to={routes.CreateQuest}>Maak quest </NavLink>
+										}
+
+										{!!isAdmin &&
+											<div className="nav-dropdown-ext">
+												<NavigationAdmin />
+											</div>
+										}
+									</div>
 								</div>
-							</div>
-						)
-						: (
-							null
-						)
+							)
+							: (
+								null
+							)
 					}
 				</li>
 				<div className="dropdown_mobile">
@@ -194,27 +227,37 @@ class NavigationAuth extends Component{
 					<li className="nav_item">
 						<NavLink to={routes.Backpack}>Backpack</NavLink>
 					</li>
-					{ !! isIssuer && 
+					{!!isIssuer &&
 						<li className="nav_item">
 							<NavLink to={routes.CreatedOpportunities}>Aangemaakte leerkansen</NavLink>
 						</li>
 					}
-					{ !! isIssuer && 
+					{!!isIssuer &&
 						<li className="nav_item">
 							<NavLink to={routes.CreateOpportunity}>Maak leerkans</NavLink>
 						</li>
 					}
-					{ !! isAdmin && 
+					{!!myQuest && myQuest.questStatus < 2 &&
+						<li className="nav_item">
+							<NavLink to={routes.MyQuest}>Mijn quest</NavLink>
+						</li>
+					}
+					{ (!myQuest || (!!myQuest && myQuest.questStatus === 2)) &&
+						<li className="nav_item">
+							<NavLink to={routes.CreateQuest}>Maak quest </NavLink>
+						</li>
+					}
+					{!!isAdmin &&
 						<li className="nav_item">
 							<NavLink to={routes.ValidateIssuer}>Valideer issuer</NavLink>
 						</li>
 					}
-					{ !! isAdmin && 
+					{!!isAdmin &&
 						<li className="nav_item">
 							<NavLink to={routes.ValidateOpportunity}>Valideer leerkans</NavLink>
 						</li>
 					}
-					{ !! isAdmin && 
+					{!!isAdmin &&
 						<li className="nav_item">
 							<NavLink to={routes.CreateOpportunity}>Maak leerkans</NavLink>
 						</li>
@@ -237,7 +280,7 @@ const BecomeIssuer = () =>
 		<NavLink to={routes.BecomeIssuer} activeClassName="active">Word Issuer</NavLink>
 	</li>
 
-const NavigationIssuer= () =>
+const NavigationIssuer = () =>
 	<React.Fragment>
 		<NavLink to={routes.CreatedOpportunities}>Aangemaakte leerkansen</NavLink>
 		<NavLink to={routes.CreateOpportunity}>Maak leerkans</NavLink>

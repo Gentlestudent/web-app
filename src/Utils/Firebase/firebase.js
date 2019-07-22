@@ -4,7 +4,7 @@ import firebase from 'firebase/app';
 import 'firebase/storage'
 import 'firebase/functions'
 import 'firebase/auth'
-import 'firebase/firestore'
+import 'firebase/firestore/dist/index.cjs'
 
 const config = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -21,6 +21,7 @@ if (!firebase.apps.length) {
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
+const Timestamp = firebase.firestore.Timestamp;
 const settings = {/* your settings... */ /*timestampsInSnapshots: true*/};
 firestore.settings(settings);
 const storage = firebase.storage();
@@ -32,5 +33,6 @@ export {
   firebase,
   firestore,
   storage,
-  functions
+  functions,
+  Timestamp
 };
