@@ -156,6 +156,8 @@ class NavigationAuth extends Component {
 	render() {
 		const { isAdmin, isIssuer, myQuest } = this.state;
 
+		console.log(`quest status : ${myQuest === null ? myQuest : myQuest.questStatus}`)
+
 		return (
 			<ul id="gs-nav" className="menu">
 				<li className="nav_item">
@@ -197,11 +199,11 @@ class NavigationAuth extends Component {
 											</div>
 										}
 
-										{!!myQuest &&
+										{!!myQuest && myQuest.questStatus < 2 &&
 											<NavLink to={routes.MyQuest}>Mijn quest</NavLink>
 										}
 
-										{!myQuest &&
+										{ (!myQuest || (!!myQuest && myQuest.questStatus === 2)) &&
 											<NavLink to={routes.CreateQuest}>Maak quest </NavLink>
 										}
 
@@ -235,13 +237,12 @@ class NavigationAuth extends Component {
 							<NavLink to={routes.CreateOpportunity}>Maak leerkans</NavLink>
 						</li>
 					}
-					{!!myQuest &&
+					{!!myQuest && myQuest.questStatus < 2 &&
 						<li className="nav_item">
 							<NavLink to={routes.MyQuest}>Mijn quest</NavLink>
 						</li>
 					}
-
-					{!myQuest &&
+					{ (!myQuest || (!!myQuest && myQuest.questStatus === 2)) &&
 						<li className="nav_item">
 							<NavLink to={routes.CreateQuest}>Maak quest </NavLink>
 						</li>
