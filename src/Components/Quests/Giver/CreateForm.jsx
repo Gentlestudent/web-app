@@ -76,7 +76,8 @@ class CreateForm extends Component {
                     </label>
                     <label>
                         Beschrijving
-                        <textarea value={desc} name="desc" id="desc" onChange={this.handleChange} required />
+                        <textarea maxLength="140" value={desc} name="desc" id="desc" onChange={this.handleChange} required />
+                        <small>Max 140 karakters</small>
                     </label>
                     <label>
                         Email adres

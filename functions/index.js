@@ -3,7 +3,7 @@
  * BADGR docs: https://api.badgr.io/docs/v2/
  */
 
- 
+
 
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
@@ -358,8 +358,8 @@ exports.notifyQuestTaker = functions.https.onCall(data => {
     let html = "<p>Beste " + takerName + ",</p>" +
         "<p>" + giverName + " heeft jou gekozen om hem/haar te helpen bij '" + questTitle + "'.</p>" +
         "<p>Neem contact op met hem/haar via " + giverEmail + ", breng de quest tot een goed einde</p>" +
-        "<p>en verdien zo jouw token!</p><br>"
-    "<p>Met vriendelijke groet,</p>" +
+        "<p>en verdien zo jouw token!</p><br>" +
+        "<p>Met vriendelijke groet,</p>" +
         "<p>Team Gentlestudent</p>";
 
     let mailOptions = {
