@@ -16,7 +16,7 @@ import { firestore, auth } from '../../Utils/Firebase'
 const ComponentMyQuest = () =>
     <QuestContext.Consumer>
         {myQuest =>
-            myQuest
+            myQuest && myQuest[0].questStatus < 2
                 ? <Redirect to={'/quests/' + myQuest[1]} />
                 : <Redirect to={'/quests'} />
         }
