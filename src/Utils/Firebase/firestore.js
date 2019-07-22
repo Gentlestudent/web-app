@@ -183,20 +183,32 @@ export const updateOpportunity = (id, field, data) =>
 export const updateAddress = (id, field, data) =>
   firestore.collection('Addresses').doc(id).update({ [field]: data })
 
+export const createNewParticipation = (data) => 
+firestore.collection("Participations").add(data)
+
+export const onceGetParticipations = (participantId) =>
+firestore.collection("Participations").where('participantId', '==', participantId).get()
 export const updateParticipant = (id, value) =>
   firestore.collection('QuestTakers').doc(id).update({ isDoingQuest : value });
 
 export const onceGetAmountParticipations = (id) => {
-  var query = firestore.collection('Participations');
+  let query = firestore.collection('Participations');
   query = query.where('opportunityId', '==', id);
   // query = query.where('status', "==", 1);
   return query.get();
 }
 
 export const onceGetAmountParticipationsRejected = (id) => {
-  var query = firestore.collection('Participations');
+  let query = firestore.collection('Participations');
   query = query.where('opportunityId', '==', id);
   query = query.where('status', "==", 2);
+  return query.get();
+}
+
+export const onceGetParticipationFromOpportunity = (id, userId) => {
+  let query = firestore.collection('Participations');
+  query = query.where('opportunityId', '==', id);
+  query = query.where('participantId', '==', userId);
   return query.get();
 }
 

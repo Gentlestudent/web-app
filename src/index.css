@@ -323,9 +323,9 @@ button.primary {
   #opportunities .content-right {
     /* height: calc(100vh - 209px); */
     width: 100%;
-
     padding-left: 16px;
-    padding-right: 16px; }
+    padding-right: 16px;
+  }
 
     @media screen and (min-width: 1024px) {
       #opportunities .content-right {
@@ -333,6 +333,8 @@ button.primary {
         margin-right: -15px;
         width: calc(40% + 15px);
         padding: 0px;
+        position: sticky;
+        top: 6.5rem;
       }
 
     }
@@ -1301,6 +1303,31 @@ ul li.list:hover .delete {
   box-shadow: 0px 3px 10px 0px rgba(50, 50, 50, 0.5);
 }
 
+.opportunity-info-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-prim {
+  margin-top: 2.5rem;
+  background-color: #F7B335;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-family: 'Open Sans', Arial, 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 0.5rem 2rem;
+  box-shadow: 0px 2px 10px 3px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: all .3s ease-out;
+}
+
+.button-prim:hover {
+  background-color: #D49125;
+}
+
 .opportunity-detail #menu-button{
   position:fixed;
   left:20px;
@@ -2141,6 +2168,12 @@ article.post small {
   display: none;
 }
 
+.list-opportunities {
+  width: 100vw;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 /* @media screen and (min-width: 1080px) {
   #startpage .text{
     display: none;
@@ -2151,6 +2184,9 @@ article.post small {
     display: none;
   } 
 } */
+.leaflet-container {
+  z-index: 998;
+}
 
 .leaflet-overlay-pane path,
 .leaflet-marker-icon {
@@ -2176,4 +2212,75 @@ article.post small {
 #map-2 .leaflet-marker-icon,
 #map-2 .leaflet-overlay-pane path {
   cursor: move;
+}
+
+.my-opportunity {
+  transition: all 200ms ease-in-out;
+}
+
+.my-opportunity:hover{
+  transform: scale(1.03);
+}
+
+.quests-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+@media only screen and (min-width:1024px) {
+
+  .quests-content {
+    flex-direction: row-reverse;
+  }
+
+  .quests-content .content-left {
+    width: 60rem;
+  }
+  
+  .quests-content .content-right {
+    position: sticky;
+    top: 6.5rem;
+  }
+}
+
+.news-item .post {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.quest-logo {
+  min-width: 5rem;
+  min-height: 5rem;
+  max-width: 5rem;
+  max-height: 5rem;
+  padding: 1.5rem;
+}
+
+.questlist-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.questlist-container {
+  display: block;
+}
+
+.sc-bxivhb .dYhqhW {
+  display: flex;
+  width: 100vw;
+}
+
+.quest-info {
+  color: #1BA9C9;
+  font-weight: bold;
+  padding: 1rem;
+  border: solid 0.1rem #1BA9C9;
+  border-radius: .5rem;
+}
+
+.quest-info tr {
+  line-height: 150%;
 }

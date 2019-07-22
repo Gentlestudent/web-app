@@ -85,6 +85,8 @@ exports.refreshToken = functions.https.onCall(async () => {
     return true;
 });
 
+
+
 /**
  * Creates an issuer on the linked Badgr account.
  * @param {Object} data required data for this function:
@@ -136,8 +138,13 @@ exports.createIssuer = functions.https.onCall(async (data) => {
                 throw new functions.https.HttpsError("unknown", "Failed to create badgr issuer");
         }
     }).catch(err => {
-        console.error("An error happened :'(", err);
-        throw new functions.https.HttpsError("aborted", "an error occurred while trying to add new issuer...", err);
+        switch (err.response.status) {
+            case 401:
+                throw new functions.https.HttpsError("permission-denied", "Access token expired, try refreshing it");
+            default:
+                console.error("An error happened :'(", err);
+                throw new functions.https.HttpsError("aborted", "an error occurred while trying to add new issuer...", err)
+        }
     });
 });
 
@@ -180,8 +187,13 @@ exports.createBadgeClass = functions.https.onCall(async (data) => {
                 throw new functions.https.HttpsError("unknown", "Failed to create badge class");
         }
     }).catch(err => {
-        console.error("An error occurred :'(", err);
-        throw new functions.https.HttpsError("aborted", "An error occured while trying to add new badge class...", err);
+        switch (err.response.status) {
+            case 401:
+                throw new functions.https.HttpsError("permission-denied", "Access token expired, try refreshing it");
+            default:
+                console.error("An error happened :'(", err);
+                throw new functions.https.HttpsError("aborted", "an error occurred while trying to add new badgeclass...", err)
+        }
     });
 });
 
@@ -220,8 +232,13 @@ exports.createAssertion = functions.https.onCall(async (data) => {
                 throw new functions.https.HttpsError("unknown", "Failed to create assertion");
         }
     }).catch(err => {
-        console.error("An error occurred :'(", err);
-        throw new functions.https.HttpsError("aborted", "An error occured while trying to add new assertion" + err.toString());
+        switch (err.response.status) {
+            case 401:
+                throw new functions.https.HttpsError("permission-denied", "Access token expired, try refreshing it");
+            default:
+                console.error("An error happened :'(", err);
+                throw new functions.https.HttpsError("aborted", "an error occurred while trying to add new assertion...", err)
+        }
     });
 });
 

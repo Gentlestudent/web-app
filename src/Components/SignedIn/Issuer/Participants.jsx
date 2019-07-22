@@ -65,13 +65,16 @@ class List extends Component {
                                 <h3>Deelnemers:</h3>
                                 <div className="participants">
                                     <table>
-                                        <tr className='participant'>
-                                            <th>Deelnemer</th>
-                                            <th>Institutie</th>
-                                            <th>Email</th>
-                                            <th>Status</th>
-                                            <th>Acties</th>
-                                        </tr>
+                                        <thead>
+                                            <tr className='participant'>
+                                                <th>Deelnemer</th>
+                                                <th>Institutie</th>
+                                                <th>Email</th>
+                                                <th>Status</th>
+                                                <th>Acties</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                         {Object.keys(participants).map(key =>
                                             <Participant
                                                 participant={participants[key]}
@@ -80,6 +83,7 @@ class List extends Component {
                                                 badgrAuth={badgrAuth}
                                             />
                                         )}
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -173,8 +177,8 @@ class Participant extends Component {
             })
             .catch(err => {
                 switch (err.status) {
-                    case 403:
-                        // 403 is thrown when an expired access token is used
+                    case "permission-denied":
+                        // permission-denied is thrown when an expired access token is used
                         console.log("Access token expired, refreshing... (tried: [" + (tries + 1).toString() + "] time(s))");
                         functions.refreshAccessToken().then(() => {
                             this.postBadgrBadge(tries++);
@@ -298,6 +302,7 @@ class Participant extends Component {
         console.log(participant);
 
         return (
+
             <tr className='participant'>
                 <td>
                     <div className="table-el">{participant.name}</div>

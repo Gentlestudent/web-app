@@ -8,13 +8,6 @@ import *  as routes from '../../routes/routes'
 const Loading = () => <div> <Spinner /> </div>
 
 const Title = styled.h1`
-    font-size : 40px;
-    background-color : #2980b9;
-    color : white;
-    width : 95%;
-    @media all and (max-width:1000px){
-        width : 100%;
-    }
 `
 
 const Table = styled.table`
@@ -40,7 +33,7 @@ const Tr = styled.tr`
 
 const Td = styled.td`
     border : ${props => props.withBorder ? '1px solid #ddd' : '0'};
-    width : 50%;
+    width : 50vw;
     text-align : ${props => props.alignCenter ? 'center' : 'left'};
     vertical-align : top;
     
@@ -72,7 +65,10 @@ const Th = styled.th`
 `
 
 const Description = styled.p`
-    font-size : 20px;
+    font-size : 16px;
+    line-height: 150%;
+    width: 95%;
+    margin-top: 50px;
 `
 
 const Button = styled.button`
@@ -245,11 +241,20 @@ class QuestDetail extends Component {
                             <Tr>
                                 <Td>
                                     <Title> {questItem.title} </Title>
-                                    <h4>
-                                        {questItem.emailAddress} - {' '}
-                                        {questItem.phoneNumber} - {' '}
-                                        {questItem.created.toDate().toLocaleString()}
-                                    </h4>
+                                    <table className="quest-info">
+                                        <tr>
+                                        <th>Aangemaakt op:</th>
+                                        <td>{questItem.created.toDate().toLocaleString()}</td>
+                                        </tr>
+                                        <tr>
+                                        <th>E-mail:</th>
+                                        <td>{questItem.emailAddress}</td>
+                                        </tr>
+                                        <tr>
+                                        <th>GSM-nr:</th>
+                                        <td>{questItem.phoneNumber}</td>
+                                        </tr>
+                                     </table>
                             
                                     <Description> {questItem.description} </Description>
 

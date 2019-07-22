@@ -61,29 +61,51 @@ class Opportunities extends Component {
 	}
 	filterOpportunities(event){
 		event.preventDefault();
-		let initialList = this.state.initialOpportunities;
-		let filteredArray = Object.keys(initialList).map(function(key) {
-			return [key, initialList[key]];
-		  });
-		// console.log(filteredArray);
-		filteredArray = filteredArray.filter(function(item){
-			let content = "";
-			// eslint-disable-next-line
-			Object.keys(item[1]).map(function(key) {
-				// console.log(key);
-				content += item[1][key];
-			});
-			// console.log(content);
-			return content.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
+
+		let filterInput = event.target.value;
+
+		if(filterInput.toString().length === 0) {
+			this.setState({opportunities: this.state.initialOpportunities});
+			return;
+		}
+
+		let initialArray = this.state.initialOpportunities;
+		let filtered = Object.values(initialArray).filter(opp => {
+			let title = opp.title.toLowerCase();
+			return title.search(filterInput.toLowerCase()) !== -1;
 		});
-		// console.log(filteredArray);
-		let updatedList = {};
-		filteredArray.forEach((item, index)=>{
-			let key = item[0];
-			updatedList[key] = item[1];
-		});
-		// console.log(updatedList);
-		this.setState({opportunities: updatedList});
+
+		this.setState({opportunities: filtered});
+
+		// let filtered = initialArray.filter(function(opp) {
+			
+		// })
+
+
+
+		// let initialList = this.state.initialOpportunities;
+		// let filteredArray = Object.keys(initialList).map(function(key) {
+		// 	return [key, initialList[key]];
+		//   });
+		// // console.log(filteredArray);
+		// filteredArray = filteredArray.filter(function(item){
+		// 	let content = "";
+		// 	// eslint-disable-next-line
+		// 	Object.keys(item[1]).map(function(key) {
+		// 		// console.log(key);
+		// 		content += item[1][key];
+		// 	});
+		// 	// console.log(content);
+		// 	return content.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
+		// });
+		// // console.log(filteredArray);
+		// let updatedList = {};
+		// filteredArray.forEach((item, index)=>{
+		// 	let key = item[0];
+		// 	updatedList[key] = item[1];
+		// });
+		// // console.log(updatedList);
+		// this.setState({opportunities: updatedList});
 	  }
 	render() {
 		const { opportunities, addresses, issuers } = this.state;

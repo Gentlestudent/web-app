@@ -145,9 +145,9 @@ class IssuersList extends Component {
         });
       })
       .catch(err => {
-        switch (err.status) {
-          case 403:
-            // 403 is thrown when an expired access token is used
+        switch (err.code) {
+          case "permission-denied":
+            // permission-denied is thrown when an expired access token is used
             console.log("Access token expired, refreshing... (tried: [" + (tries + 1).toString() + "] time(s))");
             functions.refreshAccessToken().then(() => {
               this.createIssuer(id, tries++);
@@ -157,7 +157,7 @@ class IssuersList extends Component {
               });
             break;
           default:
-            console.error("Error occurred while trying to validate issuer", err);
+            console.error("Error occurred while trying to validate issuer", { err });
         }
       });
   }
@@ -190,29 +190,31 @@ class IssuersList extends Component {
               {Object.keys(issuers).map(key => (
                 <div
                   className={`card-item issuer`}
-                  key={issuers[key].addressId}
+                  key={issuers[key].email}
                 >
                   <h2>{issuers[key].name}</h2>
                   <div className="issuer-data">
                     <table className="table--issuers-info">
-                      <tr className="row--issuers-info">
-                        <th className="tablehead--issuers-info">Institutie:</th>
-                        <td className="tabledata--issuers-info">
-                          {issuers[key].institution}
-                        </td>
-                      </tr>
-                      <tr className="row--issuers-info">
-                        <th className="tablehead--issuers-info">Tel:</th>
-                        <td className="tabledata--issuers-info">
-                          {issuers[key].phonenumber}
-                        </td>
-                      </tr>
-                      <tr className="row--issuers-info">
-                        <th className="tablehead--issuers-info">URL:</th>
-                        <td className="tabledata--issuers-info">
-                          {issuers[key].url}
-                        </td>
-                      </tr>
+                      <tbody>
+                        <tr className="row--issuers-info">
+                          <th className="tablehead--issuers-info">Institutie:</th>
+                          <td className="tabledata--issuers-info">
+                            {issuers[key].institution}
+                          </td>
+                        </tr>
+                        <tr className="row--issuers-info">
+                          <th className="tablehead--issuers-info">Tel:</th>
+                          <td className="tabledata--issuers-info">
+                            {issuers[key].phonenumber}
+                          </td>
+                        </tr>
+                        <tr className="row--issuers-info">
+                          <th className="tablehead--issuers-info">URL:</th>
+                          <td className="tabledata--issuers-info">
+                            {issuers[key].url}
+                          </td>
+                        </tr>
+                      </tbody>
                     </table>
                     {/* <div> */}
                     <button

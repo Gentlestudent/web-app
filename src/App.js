@@ -36,6 +36,7 @@ import Privacy from './Components/Anonymous/Privacy';
 import Conditions from './Components/Anonymous/Conditions';
 import NoMatch from './Shared/NoMatch';
 import Backpack from './Components/SignedIn/Backoffice/Backpack';
+import MyOpportunities from './Components/SignedIn/Opportunities/MyOpportunities';
 
 import Navigation from './Shared/Navigation';
 import Footer from './Shared/Footer';
@@ -111,6 +112,7 @@ class App extends Component {
 									<PrivateRoute path={routes.Profile} component={Profile} needAuth={true} /*exact render={() => <Profile />}*/ />
 									<PrivateRoute path={routes.EditQuest + "/:id"} component={EditQuest} needAuth={true} />
 									<Route path={routes.Backpack} exact render={() => <Backpack />} />
+									<Route path={routes.MyOpportunities} exact render={() => <MyOpportunities />} />
 									<Route path={routes.Privacy} exact render={() => <Privacy />} />
 									<Route path={routes.Conditions} exact render={() => <Conditions />} />
 									<Route path="*" render={() => <NoMatch />} />
