@@ -138,7 +138,6 @@ class Quests extends Component {
                     } />
                 </Switch>
             </>
-
         );
     }
 }
