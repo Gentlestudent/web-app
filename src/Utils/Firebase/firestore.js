@@ -222,4 +222,8 @@ export const closeQuest = (id) => {
   return firestore.collection('Quests').doc(id).update({ questStatus: 2 });
 }
 
+export const updateQuest = (id, description, latitude, longitude, phoneNumber, title, emailAddress) => {
+  return firestore.collection('Quests').doc(id).update({description, latitude, longitude, phoneNumber, title, emailAddress})
+}
+
 

@@ -47,7 +47,7 @@ class Quests extends Component {
                 quest.id = doc.id;
                 quest.created = quest.created.toDate();
                 quest.pinImage = 'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Quests%2Fquest_pin.png?alt=media';
-                if(UUID !== quest.questGiverId)
+                if(UUID !== quest.questGiverId && quest.questStatus < 1)
                     quests.push(quest);
             });
 

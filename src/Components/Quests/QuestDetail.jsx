@@ -3,6 +3,7 @@ import { firestore, auth } from '../../Utils/Firebase';
 import Spinner from '../../Shared/Spinner';
 import styled from 'styled-components';
 import QuestMap from './QuestMap'
+import *  as routes from '../../routes/routes'
 
 const Loading = () => <div> <Spinner /> </div>
 
@@ -78,6 +79,7 @@ class QuestDetail extends Component {
         }
 
         this.handleClose = this.handleClose.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
 
     setupMapProperties(quest) {
@@ -104,6 +106,12 @@ class QuestDetail extends Component {
             await firestore.closeQuest(questItem.id);
             window.open("../quests", "_self");
         }
+    }
+
+    handleEdit(event) {
+        event.preventDefault();
+        let { questItem } = this.state;
+        window.open(routes.EditQuest + "/" + questItem.id, "_self");
     }
 
     componentDidMount() {
@@ -152,7 +160,7 @@ class QuestDetail extends Component {
                                     {
                                         !!isAuthUserQuest &&
                                         <div>
-                                            <Button primary> Edit </Button>
+                                            <Button primary onClick={this.handleEdit}> Edit </Button>
                                             <Button onClick={this.handleClose}> Close </Button>
                                         </div>
                                     }

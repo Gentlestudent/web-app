@@ -10,6 +10,7 @@ const QuestList = ( { allQuests } ) =>
         { !!allQuests && 
             <div>
                 <div className="l-container">
+                    {allQuests.length !== 0 ?
                     <ul>
                         {allQuests.map(item =>
                             <Link to={`/quests/${item.id}`} key={item.id}>
@@ -25,6 +26,11 @@ const QuestList = ( { allQuests } ) =>
                             </Link>
                         )}
                     </ul>
+                    :
+                    <React.Fragment>
+                        <p>Er zijn geen actieve quests :'(</p>
+                    </React.Fragment>
+                        }
                 </div>
             </div>     
         }

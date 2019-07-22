@@ -21,6 +21,7 @@ import Login from './Components/Anonymous/Auth/Login';
 import ResetPassword from './Components/Anonymous/Auth/ResetPassword';
 import Quests from './Components/Quests/Quests';
 import CreateQuest from './Components/Quests/Giver/CreateQuest'
+import EditQuest from './Components/Quests/Giver/EditQuest'
 
 import BOOpportunities from './Components/SignedIn/Backoffice/Opportunities';
 import CreateOpportunity from './Components/SignedIn/Issuer/CreateOpportunity';
@@ -108,6 +109,7 @@ class App extends Component {
 									<PrivateRoute path={routes.CreatedOpportunities} component={CreatedOpportunities} needAuth={true} /*render={() => <CreatedOpportunities />}*/ />
 									<PrivateRoute path={routes.EditOpportunity + '/:id'} component={EditOpportunity} needAuth={true} /*render={() => <EditOpportunity />}*/ />
 									<PrivateRoute path={routes.Profile} component={Profile} needAuth={true} /*exact render={() => <Profile />}*/ />
+									<PrivateRoute path={routes.EditQuest + "/:id"} component={EditQuest} needAuth={true} />
 									<Route path={routes.Backpack} exact render={() => <Backpack />} />
 									<Route path={routes.Privacy} exact render={() => <Privacy />} />
 									<Route path={routes.Conditions} exact render={() => <Conditions />} />
