@@ -360,7 +360,7 @@ const EmptyList = () => (
 
 const Urlify = (text) => {
   let urlRegex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/
-  return text.replace(urlRegex, (url) => `<a href=https://${url}> ${url} </a>`);
+  return text.replace(urlRegex, (url) => `<a href=${url.startsWith('http') ? url : 'https://'+url}> ${url} </a>`);
 }
 
 export default Detail;
