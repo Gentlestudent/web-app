@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactHtmlParser from 'react-html-parser';
 
 import List from "../Issuer/Participants";
 
@@ -177,6 +178,9 @@ class OpportunityDetail extends Component {
       participations
     } = this.state;
 
+    let longOpportunityWithLinks = ReactHtmlParser(Urlify(opportunity.longDescription));
+    let shortOpportunityWithLinks = ReactHtmlParser(Urlify(opportunity.shortDescription));
+
     return (
       <div className="opportunity-detail">
         {!!opportunity.authority === 0 && (
@@ -231,9 +235,9 @@ class OpportunityDetail extends Component {
           <div className="content content-flex">
             <div className="content-left">
               <h3>Beschrijving</h3>
-              <p>{opportunity.longDescription}</p>
+              <p>{longOpportunityWithLinks}</p>
               <h3>Wat wordt er verwacht?</h3>
-              <p>{opportunity.shortDescription}</p>
+              <p>{shortOpportunityWithLinks}</p>
               {!!opportunity.moreInfo && <h3>Meer weten?</h3>}
               {!!opportunity.moreInfo && (
                 <p>
@@ -261,13 +265,13 @@ class OpportunityDetail extends Component {
                         <td>
                           <b>Website:</b>
                         </td>
-                        <td>{opportunity.website}</td>
+                        <td><a href={opportunity.website}> {opportunity.website} </a></td>
                       </tr>
                       <tr>
                         <td>
                           <b>Contact:</b>
                         </td>
-                        <td>{opportunity.contact}</td>
+                        <td><a href={"mailto:"+opportunity.contact}> {opportunity.contact} </a></td>
                       </tr>
                       {!!address && (
                         <tr>
@@ -353,5 +357,10 @@ const EmptyList = () => (
     <Spinner />
   </div>
 );
+
+const Urlify = (text) => {
+  let urlRegex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/
+  return text.replace(urlRegex, (url) => `<a href=https://${url}> ${url} </a>`);
+}
 
 export default Detail;
