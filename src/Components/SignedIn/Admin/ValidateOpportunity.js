@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { firestore, functions } from '../../../Utils/Firebase';
 import Spinner from '../../../Shared/Spinner';
-import { Field, reduxForm } from 'redux-form';
 import BadgrContext from '../../../Shared/BadgrContext';
-import { renderSelect, validate } from '../../../Shared/Utils';
 
 /**
  * Converts an image to a BASE64 string
@@ -178,7 +176,6 @@ class Opportunity extends Component {
      * Validates the opportunity
      */
     validateOpportunity() {
-        let beaconId = this.state.beaconId;
         let opportunityId = this.props.id;
         console.log("validating opportunity");
         firestore.validateOpportunity(opportunityId).catch(function (error) {

@@ -156,8 +156,6 @@ class NavigationAuth extends Component {
 	render() {
 		const { isAdmin, isIssuer, myQuest } = this.state;
 
-		console.log(`quest status : ${myQuest === null ? myQuest : myQuest.questStatus}`)
-
 		return (
 			<ul id="gs-nav" className="menu">
 				<li className="nav_item">

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { firestore } from "../../../Utils/Firebase";
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth"
 import Spinner from "../../../Shared/Spinner";
 
 class MyOpportunities extends Component {
