@@ -183,6 +183,9 @@ export const updateOpportunity = (id, field, data) =>
 export const updateAddress = (id, field, data) =>
   firestore.collection('Addresses').doc(id).update({ [field]: data })
 
+export const updateParticipant = (id, value) =>
+  firestore.collection('QuestTakers').doc(id).update({ isDoingQuest : value });
+
 export const onceGetAmountParticipations = (id) => {
   var query = firestore.collection('Participations');
   query = query.where('opportunityId', '==', id);
@@ -216,6 +219,15 @@ export const onceGetAuthUserQuest = (id) => {
 
 export const onceGetParticipantsQuest = (id) => {
   return firestore.collection('QuestTakers').where('questId', '==', id).get();
+}
+
+export const onceGetWaitingParticipantsQuest = (id) => {
+  return firestore.collection('QuestTakers').where('questId', '==', id).where('isDoingQuest', '==', false).get();
+  //return firestore.collection('QuestTakers').get();
+}
+
+export const onceGetCurrentParticipant = (id) => {
+  return firestore.collection('QuestTakers').where('questId', '==', id).where('isDoingQuest', '==', true).get();
 }
 
 export const closeQuest = (id) => {
