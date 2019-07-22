@@ -84,11 +84,8 @@ exports.refreshToken = functions.https.onCall(async () => {
 
     return true;
 });
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 6cbefdbd019015d8d1121cbeb7c5e410b441f304
 
 /**
  * Creates an issuer on the linked Badgr account.

@@ -323,9 +323,9 @@ button.primary {
   #opportunities .content-right {
     /* height: calc(100vh - 209px); */
     width: 100%;
-
     padding-left: 16px;
-    padding-right: 16px; }
+    padding-right: 16px;
+  }
 
     @media screen and (min-width: 1024px) {
       #opportunities .content-right {
@@ -333,6 +333,8 @@ button.primary {
         margin-right: -15px;
         width: calc(40% + 15px);
         padding: 0px;
+        position: sticky;
+        top: 6.5rem;
       }
 
     }
@@ -2181,6 +2183,9 @@ article.post small {
     display: none;
   } 
 } */
+.leaflet-container {
+  z-index: 998;
+}
 
 .leaflet-overlay-pane path,
 .leaflet-marker-icon {
@@ -2214,4 +2219,67 @@ article.post small {
 
 .my-opportunity:hover{
   transform: scale(1.03);
+}
+
+.quests-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+@media only screen and (min-width:1024px) {
+
+  .quests-content {
+    flex-direction: row-reverse;
+  }
+
+  .quests-content .content-left {
+    width: 60rem;
+  }
+  
+  .quests-content .content-right {
+    position: sticky;
+    top: 6.5rem;
+  }
+}
+
+.news-item .post {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.quest-logo {
+  min-width: 5rem;
+  min-height: 5rem;
+  max-width: 5rem;
+  max-height: 5rem;
+  padding: 1.5rem;
+}
+
+.questlist-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.questlist-container {
+  display: block;
+}
+
+.sc-bxivhb .dYhqhW {
+  display: flex;
+  width: 100vw;
+}
+
+.quest-info {
+  color: #1BA9C9;
+  font-weight: bold;
+  padding: 1rem;
+  border: solid 0.1rem #1BA9C9;
+  border-radius: .5rem;
+}
+
+.quest-info tr {
+  line-height: 150%;
 }
