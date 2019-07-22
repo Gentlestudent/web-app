@@ -141,7 +141,8 @@ class EditQuest extends React.Component {
                     </label>
                     <label>
                         Beschrijving
-                        <textarea placeholder={description} name="newDescription" id="newDescription" onChange={this.handleChange} />
+                        <textarea maxLength="140" placeholder={description} name="newDescription" id="newDescription" onChange={this.handleChange} />
+                        <small>Max 140 karakters</small>
                     </label>
                     <label>
                         Email adres
