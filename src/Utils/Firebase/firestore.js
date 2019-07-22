@@ -205,7 +205,6 @@ export const onceGetAmountParticipationsRejected = (id) => {
 export const onceGetParticipationFromOpportunity = (id, userId) => {
   let query = firestore.collection('Participations');
   query = query.where('opportunityId', '==', id);
-  console.log(query.get());
   query = query.where('participantId', '==', userId);
   return query.get();
 }

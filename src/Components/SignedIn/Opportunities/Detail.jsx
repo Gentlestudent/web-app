@@ -91,9 +91,6 @@ class OpportunityDetail extends Component {
         console.log("trying to post to badgr...");
         this.postBadgrBadge();
     }
-    if(this.state.participant !== undefined && this.state.participant !== null) {
-      this.giveBadge()
-    }
 }
 
 postBadgrBadge(tries = 0) {
@@ -114,7 +111,7 @@ postBadgrBadge(tries = 0) {
     let email = this.state.participant.email;
     // console.log("Participant email: ", email);
 
-    let participationId = this.state.participation.participantId;
+    let participationId = this.state.participation.id;
     // console.log("Participation id", participationId);
 
     let badgrId = this.state.badgrBadgeClassID;
@@ -135,7 +132,7 @@ postBadgrBadge(tries = 0) {
             let assertion = this.state.assertion;
             assertion["badgrId"] = res.data.createdAssertion.entityId;
             console.log(this.state.participant);
-            firestore.createNewAssertion(assertion).catch(err => console.error(err))
+            firestore.createNewAssertion(assertion).catch(err => console.error(err));
             firestore.completeParticipation(participationId)
                 .then(res => {
                     console.log("Completed participation", res);
@@ -177,29 +174,8 @@ postBadgrBadge(tries = 0) {
     console.log("geregistreerd voor leerkans");
   };
 
-  handleClaim = event => {
+  giveBadge(event) {
     event.preventDefault();
-    this.getParticipant();
-
-    console.log("badge geclaimed");
-  };
-
-  getParticipant() {
-    firestore
-      .onceGetParticipant(this.state.participation.participantId)
-      .then(doc => {
-        let participant = doc.data();
-        participant.id = doc.id;
-          this.setState(() => ({ participant }));
-          console.log(participant);
-      })
-      .catch(err => {
-        console.log("Error getting documents", err);
-      });
-  }
-
-  giveBadge() {
-    // event.preventDefault();
 
     let participant = this.state.participant;
     console.log("Particpant ", participant);
@@ -336,6 +312,20 @@ postBadgrBadge(tries = 0) {
           participation.id = doc.id;
           this.setState(() => ({ participation }));
           console.log(participation.participantId);
+
+          if (this.state.participation !== undefined) {
+            firestore
+            .onceGetParticipant(this.state.participation.participantId)
+            .then(doc => {
+              let participant = doc.data();
+              participant.id = doc.id;
+                this.setState(() => ({ participant }));
+                console.log(participant);
+            })
+            .catch(err => {
+              console.log("Error getting documents", err);
+            });
+          }
         });
       })
       .catch(err => {
@@ -506,7 +496,7 @@ postBadgrBadge(tries = 0) {
                         ) : this.props.opportunity.difficulty === 0 ? (
                           <button
                             className="button-prim"
-                            onClick={this.handleClaim}
+                            onClick={this.giveBadge}
                           >
                             Claim jouw badge
                           </button>
