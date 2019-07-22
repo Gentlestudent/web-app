@@ -302,7 +302,7 @@ exports.notifyQuestGiver = functions.https.onCall(data => {
     let subject = "[QUEST] " + takerName + " kan je helpen";
 
     let html = "<p>Beste " + giverName + ", </p> <p>" + takerName + " kan je helpen met de quest '" + questTitle +
-        "'</p> <p>Bekijk dit via de app of via de <a href=\"gentlestudent.gent/quests/" + questId + "\">webpagina</a>" +
+        "'.<br>Bekijk dit via de app of via de <a href=\"gentlestudent.gent/quests/" + questId + "\">webpagina</a>." +
         "<p>Met vriendelijke groet,</p>" +
         "<p>Team Gentlestudent</p>"
 
