@@ -398,7 +398,7 @@ button.primary {
     height: 150px;
   }
 
-  .button--opportunity-accept {
+  .button-opportunity-accept {
     width: 120px;
     align-self: center;
     background-color: #F7B335;
@@ -413,7 +413,8 @@ button.primary {
     margin-top: 20px;
   }
 
-  .button--opportunity-accept:hover {
+
+  .button-opportunity-accept:hover:enabled {
     color: #F7B335;
     border: solid 2px #F7B335;
     background-color: transparent;
