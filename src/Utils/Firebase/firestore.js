@@ -204,14 +204,14 @@ export const onceGetActiveQuests = () => {
   let yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   let timestamp = Timestamp.fromDate(yesterday);
-  return firestore.collection("Quests").where('created', ">=", timestamp).get();
+  let query = firestore.collection("Quests").where('created', ">=", timestamp);
+  return query.get();
 }
 
 export const onceGetQuest = (id) => firestore.collection('Quests').doc(id).get();
 
 export const createQuest = (data) =>
   firestore.collection('Quests').add(data)
-
 
 export const onceGetAuthUserQuest = (id) => {
   return firestore.collection('Quests').where('questGiverId', '==', id).get();
@@ -228,6 +228,10 @@ export const onceGetWaitingParticipantsQuest = (id) => {
 
 export const onceGetCurrentParticipant = (id) => {
   return firestore.collection('QuestTakers').where('questId', '==', id).where('isDoingQuest', '==', true).get();
+}
+
+export const closeQuest = (id) => {
+  return firestore.collection('Quests').doc(id).update({ questStatus: 2 });
 }
 
 
