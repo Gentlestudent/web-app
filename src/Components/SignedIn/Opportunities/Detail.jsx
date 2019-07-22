@@ -265,7 +265,7 @@ class OpportunityDetail extends Component {
                         <td>
                           <b>Website:</b>
                         </td>
-                        <td><a href={"https://"+opportunity.website}> {opportunity.website} </a></td>
+                        <td><a href={opportunity.website.startsWith("http") ? opportunity.website : "https://" + opportunity.website}> {opportunity.website} </a></td>
                       </tr>
                       <tr>
                         <td>
