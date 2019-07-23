@@ -7,6 +7,7 @@ Enhance your skills with formal and informal learning.
 - [About Gentlestudent](#about-gentlestudent)
 - [The future](#possible-future)
 - [Used tools and frameworks](#used-tools-and-frameworks)
+- [License](#license)
 - [References](#references)
 
 ## Installing and running
@@ -49,11 +50,21 @@ Gentlestudent is an application which allows learners, mainly students, to parti
 
 Quests are in an early stage of development and may contain bugs. The version of quests is a prototype of the concept and does not have all functionality we planned. This feature is complementary with the mobile application: together they show the full possible functionality.
 
+## Possible future
+Gentlestudent is not finished yet. Open Summer of code 2019 comes to an end and we still have some ideas which might be interesting for the future of this application. In this section we will focus on the Quest part of Gentlestudent. 
+
+- Right now, users can get tokens for finishing quests. Those tokens don't really have any value right now. A possible improvement for the future might be a progress system. After reaching a certain amount of tokens, users can trade them for an Open Badge which contains a reference to all quests that user did. 
+
+- Right now, quests only have one icon. In the future it can be interesting if users can create their own quest icon, or at least be able to pick an icon of some presets. This can add a personal touch to the whole questing part.
+
 ## Used tools and frameworks
 - [React](https://reactjs.org/) for the core of the web application.
 - [Leaflet API](https://leafletjs.com/) for the [OpenStreetMap](https://www.openstreetmap.org/) displays.
 - [Google Firebase](https://firebase.google.com/) as a backend service.
-- [Badgr API](https://badgr.io/)
+- [Badgr API](https://badgr.io/) for creation and management of Open Badges
+
+## License
+This project is MIT licensed. View [LICENSE](./LICENSE) for details.
 
 ## References
 - [Mobile application repository](https://github.com/oSoc19/gentlestudent-mobile)
