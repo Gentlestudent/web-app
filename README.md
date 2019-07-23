@@ -2,16 +2,16 @@
 Gentlestudent is an application that allows learners to engage in learning opportunities. Companies can issue a learning opportunities and learners can choose to participate. After completing a learning opportunity, the learner is rewarded with an open badge, which is a verifiable record of their learning. This way, Gentlestudent stimulates informal learning and teaches valuable lessons about community life and social engagement.
 
 ## Contents
-- [Installation guide](#installing-and-running)
+- [Installation Guide](#installing-and-running)
 - [Deployment](#deployment)
 - [About Gentlestudent](#about-gentlestudent)
-- [The future](#possible-future)
-- [Used tools and frameworks](#used-tools-and-frameworks)
-- [The team](#the-team)
+- [The Future](#possible-future)
+- [Used Tools and Frameworks](#used-tools-and-frameworks)
+- [The Team](#the-team)
 - [License](#license)
 - [References](#references)
 
-## Installing and running
+## Installation Guide
 Clone or download the code and add a .env file to the project root. The .env file looks like this
 ```
 REACT_APP_FIREBASE_API_KEY=FIREBASEAPIKEY
@@ -51,14 +51,14 @@ Gentlestudent is an application which allows learners, mainly students, to parti
 
 Quests are in an early stage of development and may contain bugs. The version of quests is a prototype of the concept and does not have all functionality we planned. This feature is complementary with the mobile application: together they show the full possible functionality.
 
-## Possible future
+## Possible Future
 Gentlestudent is not finished yet. Open Summer of code 2019 comes to an end and we still have some ideas which might be interesting for the future of this application. In this section we will focus on the Quest part of Gentlestudent. 
 
 - Right now, users can get tokens for finishing quests. Those tokens don't really have any value right now. A possible improvement for the future might be a progress system. After reaching a certain amount of tokens, users can trade them for an Open Badge which contains a reference to all quests that user did. 
 
-- Right now, quests only have one icon. In the future it can be interesting if users can create their own quest icon, or at least be able to pick an icon of some presets. This can add a personal touch to the whole questing part.
+- Right now, quests only have one icon. In the future it can be interesting if users can create their own quest icon, or at least be able to pick an icon from some presets. This can add a personal touch to the whole questing part.
 
-## Used tools and frameworks
+## Used Tools and Frameworks
 - [React](https://reactjs.org/) for the core of the web application.
 - [Leaflet API](https://leafletjs.com/) for the [OpenStreetMap](https://www.openstreetmap.org/) displays.
 - [Google Firebase](https://firebase.google.com/) as a backend service.
@@ -68,7 +68,7 @@ Gentlestudent is not finished yet. Open Summer of code 2019 comes to an end and 
 | Member        | Function          |
 | ------------- |:-------------:| 
 | Bert Jehoul     | Coach |
-| Bram De Coninck    | Lead Developer |
+| Bram De Coninck    | Lead Developer & Mobile Developer |
 | Maxim De Geyter | Designer & Front-end Developer | 
 | Hamza Mahmoudi | Tester & Front-end Developer | 
 | Olivia Fontes de Mello | Communication Manager | 
