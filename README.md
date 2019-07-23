@@ -1,6 +1,8 @@
 # Gentlestudent
 Gentlestudent is an application that allows learners to engage in learning opportunities. Companies can issue a learning opportunities and learners can choose to participate. After completing a learning opportunity, the learner is rewarded with an open badge, which is a verifiable record of their learning. This way, Gentlestudent stimulates informal learning and teaches valuable lessons about community life and social engagement.
 
+Click [here](https://osoc19.github.io/gentlestudent-web) for Github page.
+
 ## Contents
 - [Installation Guide](#installation-guide)
 - [Deployment](#deployment)
