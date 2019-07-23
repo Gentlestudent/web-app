@@ -90,6 +90,12 @@ const Button = styled.button`
     }
 `
 
+const ButtonRegister = styled(Button)`
+    background : #A3CB38;
+    font-size : 18px;
+    border-radius : 7px;
+`
+
 const TextAccept = 'accept';
 const TextDecline = 'decline';
 
@@ -101,6 +107,7 @@ class QuestDetail extends Component {
             questItem: null,
             loading: true,
             isAuthUserQuest : false,
+            activeUser : null,
             activeParticipants : [],
             currentParticipant : null,
             mapProperties: {
@@ -115,6 +122,7 @@ class QuestDetail extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.getActiveParticipants = this.getActiveParticipants.bind(this);
         this.getCurrentParticipant = this.getCurrentParticipant.bind(this);
+        this.registerToQuest = this.registerToQuest.bind(this);
     }
 
     handleClick(req, item) {
@@ -171,6 +179,24 @@ class QuestDetail extends Component {
                 })
     }
 
+    async registerToQuest(){
+        const {id} = this.props.match.params;
+        const {activeUser} = this.state;
+        let userId = auth.getUserId();
+
+        await firestore.createNewQuestTakers({
+            isDoingQuest : false,
+            participantEmail : activeUser.email,
+            participantId : userId,
+            participantName : activeUser.name,
+            participatedOn : new Date(),
+            questId : id
+        })
+
+        window.location.reload();
+
+    }
+
     setupMapProperties(quest) {
         let center = [quest.latitude, quest.longitude];
         let pin = quest.pinImage;
@@ -208,6 +234,15 @@ class QuestDetail extends Component {
         const { id } = this.props.match.params;
         const authUserId = auth.getUserId();
 
+        firestore.onceGetParticipant(auth.getUserId())
+                 .then(doc => {
+                     this.setState(() => ({activeUser : doc.data()}))
+                 })
+                 .catch(err => {
+                     this.setState(() => ({activeUser : null}));
+                     console.log("Error getting active user : ", err);
+                 })
+
         firestore.onceGetQuest(id)
             .then((doc) => {
                 let questItem = doc.data();
@@ -228,7 +263,7 @@ class QuestDetail extends Component {
     }
 
     render() {
-        const { loading, questItem, mapProperties, isAuthUserQuest, activeParticipants, currentParticipant } = this.state;
+        const { loading, questItem, mapProperties, isAuthUserQuest, activeParticipants, currentParticipant, activeUser } = this.state;
         const { zoom, center, marker } = mapProperties;
         const markers = [marker];
 
@@ -257,6 +292,10 @@ class QuestDetail extends Component {
                                      </table>
                             
                                     <Description> {questItem.description} </Description>
+
+                                    { !isAuthUserQuest && !activeParticipants.map(x => x.participantEmail).includes(activeUser.email) &&
+                                        <ButtonRegister onClick={this.registerToQuest}> Registreer </ButtonRegister>
+                                    }
 
                                     {
                                         !!isAuthUserQuest &&
