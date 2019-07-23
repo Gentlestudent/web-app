@@ -1,5 +1,5 @@
 # Gentlestudent
-Enhance your skills with formal and informal learning.
+
 
 ## Contents
 - [Installation guide](#installing-and-running)
@@ -7,6 +7,7 @@ Enhance your skills with formal and informal learning.
 - [About Gentlestudent](#about-gentlestudent)
 - [The future](#possible-future)
 - [Used tools and frameworks](#used-tools-and-frameworks)
+- [The team](#the-team)
 - [License](#license)
 - [References](#references)
 
@@ -62,6 +63,16 @@ Gentlestudent is not finished yet. Open Summer of code 2019 comes to an end and 
 - [Leaflet API](https://leafletjs.com/) for the [OpenStreetMap](https://www.openstreetmap.org/) displays.
 - [Google Firebase](https://firebase.google.com/) as a backend service.
 - [Badgr API](https://badgr.io/) for creation and management of Open Badges
+
+## The Team
+| Member        | Function          |
+| ------------- |:-------------:| 
+| Bert Jehoul     | Coach |
+| Bram De Coninck    | Lead Developer |
+| Maxim De Geyter | Designer & Front-end Developer | 
+| Hamza Mahmoudi | Tester & Front-end Developer | 
+| Olivia Fontes de Mello | Communication Manager | 
+| Freek De Sagher | Front-end Developer | 
 
 ## License
 This project is MIT licensed. View [LICENSE](./LICENSE) for details.
