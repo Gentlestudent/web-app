@@ -1228,6 +1228,11 @@ ul li.list:hover .delete {
   width: 34%;
 }
 
+.icon-options button {
+  background: transparent;
+  border: none;
+}
+
 .map-container{
   overflow: hidden;
   object-fit: cover;
