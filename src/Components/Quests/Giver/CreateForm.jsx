@@ -69,31 +69,48 @@ class CreateForm extends Component {
         const location = { lat, lng }
         return (
             <React.Fragment>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
+                <form onSubmit={this.handleSubmit} className="quest-form">
+                    <div className="quest-form__left">
+                    <div className="quest-form__group">
+                    <label for="title" className="quest-form__label">
                         Titel
-                        <input value={title} type="text" name="title" id="title" onChange={this.handleChange} required />
-                    </label>
-                    <label>
+                        </label>
+                        <input className="quest-form__input"  value={title} type="text" name="title" id="title" onChange={this.handleChange} required />
+                    </div>
+                    <div className="quest-form__group">
+                    <label for="desc" className="quest-form__label">
                         Beschrijving
-                        <textarea maxLength="140" value={desc} name="desc" id="desc" onChange={this.handleChange} required />
+                        </label>
+                        <textarea className="quest-form__input" maxLength="140" value={desc} name="desc" id="desc" onChange={this.handleChange} required />
                         <small>Max 140 karakters</small>
-                    </label>
-                    <label>
+                    </div>
+                    <div className="quest-form__group">
+                    <label for="email" className="quest-form__label">
                         Email adres
-                        <input value={email} type="email" name="email" id="email" onChange={this.handleChange} required />
                     </label>
-                    <label>
+                    <input className="quest-form__input" value={email} type="email" name="email" id="email" onChange={this.handleChange} required />
+                    </div>
+                    <div className="quest-form__group">
+                    <label for="phone" className="quest-form__label">
                         Telefoonnummer
-                        <input value={phone} type="tel" name="phone" id="phone" onChange={this.handleChange} required />
                     </label>
+                    <input className="quest-form__input" value={phone} type="tel" name="phone" id="phone" onChange={this.handleChange} required />
+                    </div>
+                    </div>
+                    <div className="quest-form__right">
                     <OSM changeLocation={this.changeLatLng} center={[lat, lng]} pinImage={pinImage} location={location} isQuest={true} />
-                    <label>
+                    <div className="quest-form__group">
+                    <label className="quest-form__label">
                         Coordinaten
-                        <input value={lat} type="text" name="lat" id="lat" onChange={this.handleChange} />
-                        <input value={lng} type="text" name="lng" id="lng" onChange={this.handleChange} />
                     </label>
-                    <input type="submit" value="FINISH" />
+                    <div className="coordinates">
+                    <input className="quest-form__input input-coordinates" value={lat} type="text" name="lat" id="lat" onChange={this.handleChange} />
+                    <input className="quest-form__input input-coordinates" value={lng} type="text" name="lng" id="lng" onChange={this.handleChange} />
+                    </div>
+                    </div>
+                    </div>
+                    
+                    <input className="submit button-prim" type="submit" value="Maak Quest" />
                 </form>
             </React.Fragment>
         );

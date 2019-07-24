@@ -2234,12 +2234,13 @@ article.post small {
   }
 
   .quests-content .content-left {
-    width: 60rem;
+    width: 60vw;
   }
   
   .quests-content .content-right {
     position: sticky;
     top: 6.5rem;
+    width: 40vw;
   }
 }
 
@@ -2282,4 +2283,116 @@ article.post small {
 
 .quest-info tr {
   line-height: 150%;
+}
+
+.quest-form {
+  width: 100vw;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 8px 1fr 200px 1fr 8px;
+  grid-template-rows: 16px 40vh 30px 40vh 30px 1fr 30px;
+  grid-template-areas: 
+  ". . . . ."
+  ". form form form ."
+  ". . . . ."
+  ". map map map ."
+  ". . . . ."
+  ". . submit . .";
+}
+
+@media screen and (min-width: 1024px) {
+  .quest-form {
+    grid-template-columns: 16px 100px 200px 100px 50px 1fr 16px;
+  grid-template-rows: 5vw 40vh 50px 1fr 5vw;
+  grid-template-areas: 
+  ". . . . . . ."
+  ". form form form . map ."
+  ". form form form . . ."
+  ". . submit . . . ."
+  ". . . . . . .";
+  }
+
+  .coordinates {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+}
+
+@media screen and (min-width: 1440px) {
+  .quest-form {
+    grid-template-columns: 16px 200px 200px 200px 50px 1fr 16px;
+  grid-template-rows: 5vw 60% 50px 40px 5vw;
+  grid-template-areas: 
+  ". . . . . . ."
+  ". form form form . map ."
+  ". form form form . map ."
+  ". . submit . . . ."
+  ". . . . . . .";
+  }
+}
+
+.quest-form__group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.quest-form__left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  grid-area: form;
+}
+
+.quest-form__right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-area: map;
+}
+
+.submit {
+  margin-top: 0;
+  height: 100%;
+  grid-area: submit;
+}
+
+.quest-form__input {
+  display: block;
+  padding: 8px 16px;
+  margin-bottom: 8px;
+  width: calc(100% - 32px - 2px);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+}
+
+.quest-form__label {
+  display: block;
+  width: 100%;
+  padding: 8px 0 0;
+  font-size: 18px;
+  line-height: 24px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #707070;
+  padding-bottom: 2px; 
+}
+
+.coordinates {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.input-coordinates {
+  width: 200px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  border-radius: 0px;
+  font-size: 16px;
 }
