@@ -2,6 +2,7 @@ import React from 'react'
 import CreateForm from './CreateForm'
 import { firestore, auth } from '../../../Utils/Firebase'
 import { Timestamp } from '../../../Utils/Firebase/firebase'
+import * as routes from '../../../routes/routes'
 
 /**
  * Component which shows the create-quest page
@@ -18,6 +19,7 @@ const CreateQuest = () => {
         questData.questGiverId = auth.getUserId();
         questData.created = Timestamp.fromDate(new Date());
         firestore.createQuest(questData);
+        window.open(routes.Quests, "_self");
     }
 
     return (
