@@ -136,7 +136,6 @@ class IssuersList extends Component {
       issuerData
     })
       .then(result => {
-        console.log("Created badgr issuer successfully", result);
         let entityId = result.data.createdIssuer.entityId;
         firestore.updateIssuerBadgrId(id, entityId);
         firestore.validateIssuer(id).then(() => {

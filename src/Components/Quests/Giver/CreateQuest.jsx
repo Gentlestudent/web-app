@@ -23,7 +23,7 @@ const CreateQuest = () => {
     return (
         <React.Fragment>
             <h1>Creeër Quest</h1>
-            <CreateForm createFunction={createQuest} />
+            <CreateForm createFunction={createQuest} UUID={auth.getUserId()} />
         </React.Fragment>
     );
 }

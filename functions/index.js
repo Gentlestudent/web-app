@@ -138,6 +138,7 @@ exports.createIssuer = functions.https.onCall(async (data) => {
                 throw new functions.https.HttpsError("unknown", "Failed to create badgr issuer");
         }
     }).catch(err => {
+        console.log("Response status", err.response.status);
         switch (err.response.status) {
             case 401:
                 throw new functions.https.HttpsError("permission-denied", "Access token expired, try refreshing it");
