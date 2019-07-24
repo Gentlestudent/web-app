@@ -1993,10 +1993,16 @@ article.post small {
   padding-left: 80px;
   padding-right: 20px;
 }
+
+.backpack-item label p{
+  min-height: 5rem;
+}
+
 .backpack-item{
   width: 60vw;
   padding: 10px;
   text-align: center;
+  min-width: 1rem;
 }
   @media screen and (min-width: 360px) {
     .backpack-item{

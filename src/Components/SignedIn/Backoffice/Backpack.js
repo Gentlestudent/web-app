@@ -30,10 +30,10 @@ class Backpack extends Component {
                 let id = user.uid;
                 // console.log(id);
                 //fetching assertions
-                 firestore.onceGetAssertions(id).then(async snapshot => {
+                firestore.onceGetAssertions(id).then(async snapshot => {
                     let res = {};
                     await snapshot.forEach(doc => {
-                        this.setState({isEmpty: false})
+                        this.setState({ isEmpty: false })
                         let key = doc.id;
                         res[key] = doc.data();
                         firestore.onceGetBadge(res[key].badgeId).then(doc => {
@@ -43,14 +43,14 @@ class Backpack extends Component {
                             console.log('Error getting document', err);
                         });
                     });
-                    this.setState({loading: false})
+                    this.setState({ loading: false })
                 })
                     .catch(err => {
                         console.log('Error getting documents', err);
                     });
             }
         })
-        
+
     }
 
     downloadBadge(event) {
@@ -79,7 +79,10 @@ class Backpack extends Component {
                         {!!backpack && <div className="backpack">
                             {Object.keys(backpack).map(key =>
                                 <div className="backpack-item" key={key}>
-                                    <img alt="badgeIMG" src={backpack[key]['badge'].image ? `${backpack[key]['badge'].image}` : null} />
+                                    <label>
+                                        <p>{backpack[key]['badge'].name}</p>
+                                        <img alt="badgeIMG" src={backpack[key]['badge'].image ? `${backpack[key]['badge'].image}` : null} />
+                                    </label>
                                     <button className="download-badge" onClick={this.downloadBadge} value={backpack[key].badgrId}>Download</button>
                                 </div>
                             )}
