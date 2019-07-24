@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import { firestore } from '../../../Utils/Firebase';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth'
 
 class Profile extends Component {
     constructor(props) {

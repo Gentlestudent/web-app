@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
 import { firestore } from '../../../Utils/Firebase';
-import firebase from 'firebase';
+
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 import downloadAndroid from '../../../assets/android.png';
 import downloadiOS from '../../../assets/ios.png';
@@ -14,22 +16,24 @@ class Backpack extends Component {
 
         this.state = {
             backpack: null,
-            isEmpty: false,
+            isEmpty: true,
+            loading: true
         }
 
         this.downloadBadge = this.downloadBadge.bind(this);
     }
     componentDidMount() {
         window.scrollTo(0, 0);
-        let self = this
-        firebase.auth().onAuthStateChanged((user) => {
+        let self = this;
+        firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
                 let id = user.uid;
                 // console.log(id);
                 //fetching assertions
-                firestore.onceGetAssertions(id).then(snapshot => {
+                firestore.onceGetAssertions(id).then(async snapshot => {
                     let res = {};
-                    snapshot.forEach(doc => {
+                    await snapshot.forEach(doc => {
+                        this.setState({ isEmpty: false })
                         let key = doc.id;
                         res[key] = doc.data();
                         firestore.onceGetBadge(res[key].badgeId).then(doc => {
@@ -39,19 +43,34 @@ class Backpack extends Component {
                             console.log('Error getting document', err);
                         });
                     });
+                    this.setState({ loading: false })
                 })
                     .catch(err => {
                         console.log('Error getting documents', err);
                     });
             }
-        });
-        this.setState({ isEmpty: true });
+        })
+
     }
-    downloadBadge() {
-        console.log("Deze feature is nog niet geimplementeerd.");
+
+    downloadBadge(event) {
+
+
+        function getUrl(id) {
+            return "https://badgr.io/public/assertions/" + id + "?action=download";
+        }
+        let badgrID = event.currentTarget.value;
+        if (badgrID === undefined || badgrID === null || badgrID === "") {
+            console.log("Assertion was created before badgr support. No badgr ID was found, aborting...");
+            return;
+        }
+
+        let url = getUrl(badgrID);
+        window.open(url, "_blank");
     }
+
     render() {
-        const { backpack, isEmpty } = this.state;
+        const { backpack, isEmpty, loading } = this.state;
         return (
             <React.Fragment>
                 <div className="container">
@@ -60,15 +79,25 @@ class Backpack extends Component {
                         {!!backpack && <div className="backpack">
                             {Object.keys(backpack).map(key =>
                                 <div className="backpack-item" key={key}>
-                                    <img alt="badgeIMG" src={backpack[key]['badge'].image ? `${backpack[key]['badge'].image}` : null} />
-                                    <button className="download-badge" onClick={this.downloadBadge}>Download</button>
+                                    <label>
+                                        <p>{backpack[key]['badge'].name}</p>
+                                        <img alt="badgeIMG" src={backpack[key]['badge'].image ? `${backpack[key]['badge'].image}` : null} />
+                                    </label>
+                                    <button className="download-badge" onClick={this.downloadBadge} value={backpack[key].badgrId}>Download</button>
                                 </div>
                             )}
                         </div>}
-                        {!backpack && <div className="backpack">
-                            {!!isEmpty && <EmptyList />}
-                            {!isEmpty && <LoadingList />}
-                        </div>}
+                        {loading ? <LoadingList />
+                            : (
+                                <React.Fragment>
+                                    {!backpack && <div className="backpack">
+                                        {!!isEmpty && <EmptyList />}
+                                        {!isEmpty && <LoadingList />}
+                                    </div>}
+                                </React.Fragment>
+                            )
+                        }
+
                     </div>
                 </div>
             </React.Fragment>

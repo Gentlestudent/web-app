@@ -1,8 +1,10 @@
 // This is where all the configuration goes for Firebase.
 // In addition, Firebase itself will be instantiated in this file.
-import firebase from 'firebase';
-import 'firebase/auth/dist/index.cjs';
-import 'firebase/firestore/dist/index.cjs';
+import firebase from 'firebase/app';
+import 'firebase/storage'
+import 'firebase/functions'
+import 'firebase/auth'
+import 'firebase/firestore/dist/index.cjs'
 
 const config = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -19,14 +21,18 @@ if (!firebase.apps.length) {
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
+const Timestamp = firebase.firestore.Timestamp;
 const settings = {/* your settings... */ /*timestampsInSnapshots: true*/};
 firestore.settings(settings);
 const storage = firebase.storage();
+const functions = firebase.functions();
 
 
 export {
   auth,
   firebase,
   firestore,
-  storage
+  storage,
+  functions,
+  Timestamp
 };

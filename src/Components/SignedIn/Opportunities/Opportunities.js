@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import OSM from './OSM'
+
 import { firestore } from '../../../Utils/Firebase';
 
-import Maps from './Maps';
-import SearchFilter from './SearchFilters';
+import SearchFilter from '../../../Shared/SearchFilters';
 
 import Detail from './Detail';
 import List from './List';
@@ -27,6 +28,7 @@ class Opportunities extends Component {
 			let res = {};
 			snapshot.forEach(doc => {
 				res[doc.id] = doc.data();
+				res[doc.id]["id"] = doc.id;
 			});
 			this.setState(() => ({ opportunities: res }))
 			this.setState(() => ({ initialOpportunities: res }))
@@ -49,6 +51,7 @@ class Opportunities extends Component {
 			let res = {};
 			snapshot.forEach(doc => {
 				res[doc.id] = doc.data();
+				res[doc.id]['id'] = doc.id;
 			});
 			this.setState(() => ({ issuers: res }))
 		})
@@ -58,29 +61,51 @@ class Opportunities extends Component {
 	}
 	filterOpportunities(event){
 		event.preventDefault();
-		let initialList = this.state.initialOpportunities;
-		let filteredArray = Object.keys(initialList).map(function(key) {
-			return [key, initialList[key]];
-		  });
-		// console.log(filteredArray);
-		filteredArray = filteredArray.filter(function(item){
-			let content = "";
-			// eslint-disable-next-line
-			Object.keys(item[1]).map(function(key) {
-				// console.log(key);
-				content += item[1][key];
-			});
-			// console.log(content);
-			return content.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
+
+		let filterInput = event.target.value;
+
+		if(filterInput.toString().length === 0) {
+			this.setState({opportunities: this.state.initialOpportunities});
+			return;
+		}
+
+		let initialArray = this.state.initialOpportunities;
+		let filtered = Object.values(initialArray).filter(opp => {
+			let title = opp.title.toLowerCase();
+			return title.search(filterInput.toLowerCase()) !== -1;
 		});
-		// console.log(filteredArray);
-		let updatedList = {};
-		filteredArray.forEach((item, index)=>{
-			let key = item[0];
-			updatedList[key] = item[1];
-		});
-		// console.log(updatedList);
-		this.setState({opportunities: updatedList});
+
+		this.setState({opportunities: filtered});
+
+		// let filtered = initialArray.filter(function(opp) {
+			
+		// })
+
+
+
+		// let initialList = this.state.initialOpportunities;
+		// let filteredArray = Object.keys(initialList).map(function(key) {
+		// 	return [key, initialList[key]];
+		//   });
+		// // console.log(filteredArray);
+		// filteredArray = filteredArray.filter(function(item){
+		// 	let content = "";
+		// 	// eslint-disable-next-line
+		// 	Object.keys(item[1]).map(function(key) {
+		// 		// console.log(key);
+		// 		content += item[1][key];
+		// 	});
+		// 	// console.log(content);
+		// 	return content.toLowerCase().search(event.target.value.toLowerCase()) !== -1;
+		// });
+		// // console.log(filteredArray);
+		// let updatedList = {};
+		// filteredArray.forEach((item, index)=>{
+		// 	let key = item[0];
+		// 	updatedList[key] = item[1];
+		// });
+		// // console.log(updatedList);
+		// this.setState({opportunities: updatedList});
 	  }
 	render() {
 		const { opportunities, addresses, issuers } = this.state;
@@ -91,14 +116,14 @@ class Opportunities extends Component {
 				<Route path={'/opportunities'} render={() => 
 					<div className="opportunities-content">
 						<div className="content">
-							<SearchFilter filterFunction={this.filterOpportunities} />
+							<SearchFilter filterFunction={this.filterOpportunities} title="Leerkansen"/>
 							<div id="opportunities">
 								<div className="content-left">
 									<List opportunities={opportunities} />
 								</div>
 								<div className="content-right">
 									<div className="content map-container" id="stickybox">
-										{!!opportunities && !!addresses && !!issuers && <Maps opportunities={opportunities} addresses={addresses} issuers={issuers}/>}
+										{!!opportunities && !!addresses && !!issuers && <OSM opportunities={opportunities} addresses={addresses} issuers={issuers}/>}
 									</div>
 								</div>
 							</div>

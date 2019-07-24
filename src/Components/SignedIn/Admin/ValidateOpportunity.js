@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { firestore } from '../../../Utils/Firebase';
+import { firestore, functions } from '../../../Utils/Firebase';
 import Spinner from '../../../Shared/Spinner';
-import { Field, reduxForm } from 'redux-form';
 import BadgrContext from '../../../Shared/BadgrContext';
-import { renderSelect, validate } from '../../../Shared/Utils';
-import axios from 'axios';
 
+/**
+ * Converts an image to a BASE64 string
+ * @param {String} url url to the image
+ * @param {Function} callback callback function wich has the BASE64 representation of the image as argument
+ */
 function toDataUrl(url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -21,24 +23,32 @@ function toDataUrl(url, callback) {
     xhr.send();
 }
 
-
+/**
+ * Root component of the validate opportunity page
+ * Also renders a list of the validated opportunities
+ */
 class ValidateOpportunity extends Component {
-    constructor() {
-        super();
-        // this.submit = this.submit.bind(this);
+    constructor(props) {
+        super(props);
         this.state = {
             issuers: null,
             opportunities: null,
             beacons: null
         };
+
         this.getOpportunities = this.getOpportunities.bind(this);
-    };
+        this.getIssuers = this.getIssuers.bind(this);
+    }
+
     componentDidMount() {
         this.getIssuers();
         this.getOpportunities();
-        this.getBeacons();
         window.scrollTo(0, 0);
     }
+
+    /**
+     * Fetch the issuers from Firebase
+     */
     getIssuers() {
         firestore.onceGetValidatedIssuers().then(snapshot => {
             let res = {};
@@ -51,6 +61,10 @@ class ValidateOpportunity extends Component {
                 console.log('Error getting documents', err);
             });
     }
+
+    /**
+     * Fetch validated opportunities from Firebase
+     */
     getOpportunities() {
         firestore.onceGetNonValidatedOpportunities().then(snapshot => {
             let res = {};
@@ -63,35 +77,19 @@ class ValidateOpportunity extends Component {
                 console.log('Error getting documents', err);
             });
     }
-    getBeacons() {
-        firestore.onceGetBeacons().then(snapshot => {
-            let res = {};
-            snapshot.forEach(doc => {
-                // console.log("id:"+doc.data().beaconId);
-                if (doc.data().major !== undefined && doc.data().minor !== undefined && doc.data().name !== undefined) {
-                    res[doc.id] = doc.data();
-                }
-            });
-            res["MakeNewTrue"] = { name: "> Maak een nieuwe beacon" };
-            this.setState(() => ({ beacons: res }));
-        })
-            .catch(err => {
-                console.log('Error getting documents', err);
-            });
-    }
+
     render() {
-        const { opportunities, beacons, issuers } = this.state;
+        const { opportunities, issuers } = this.state;
 
         return (
             <BadgrContext.Consumer>
                 {badgrAuth => badgrAuth !== undefined
                     ? <React.Fragment>
-                        {!!opportunities && !!beacons &&
+                        {!!opportunities && 
                             <OpportunitiesList
                                 opportunities={opportunities}
                                 issuers={issuers}
                                 getOpportunities={this.getOpportunities}
-                                beacons={beacons}
                                 badgrAuth={badgrAuth}
                             />
                         }
@@ -105,58 +103,14 @@ class ValidateOpportunity extends Component {
     }
 }
 
+/**
+ * List of all opportunities in the validate opportunity page
+ * Also renders individual Opportunity components
+ */
 class OpportunitiesList extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {};
-
-        // this.handleClick = this.handleClick.bind(this);
-        // this.postNewBadge = this.postNewBadge.bind(this);
-    };
-
-    //   handleClick(event) {
-    //     event.preventDefault();
-    //     console.log(event.target.id);
-    //     firestore.validateOpportunity(event.target.id);
-    //     this.postNewBadge(event.target.id);
-    //     this.props.getOpportunities();
-    //   }
-
-    //   postNewBadge(opportunityId){
-    //     let opportunity = this.props.opportunities[opportunityId];
-    //     let badge = new Object();
-    //     let name = "";
-    //     let baseUrl = "https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Badges%2F";
-    //     let image = baseUrl;
-    //     switch(opportunity.category){
-    //         case 0: {name = "Digitale Geletterdheid"; image += "badge_digitale-geletterdheid";}
-    //         case 1: {name = "Duurzaamheid"; image += "badge_duurzaamheid";}
-    //         case 2: {name = "Ondernemingszin"; image += "badge_ondernemingszin";}
-    //         case 3: {name = "Onderzoekende houding"; image += "badge_onderzoekende-houding";}
-    //         case 4: {name = "Wereldburgerschap"; image += "badge_wereldburgerschap";}
-    //     }
-    //     switch(opportunity.difficulty){
-    //         case 0: image+= "_1.png?alt=media";
-    //         case 1: image+= "_2.png?alt=media";
-    //         case 2: image+= "_3.png?alt=media";
-    //     }
-    //     badge["type"]= "BadgeClass";
-    //     badge["name"]= name;
-    //     badge["description"]= opportunity.description;
-    //     badge["image"]= image;
-    //     badge["criteria"]= opportunity.shortDescription;
-    //     badge["issuerId"]= opportunity.issuerId;
-    //     firestore.createNewBadge(badge).then(function(docRef) {
-    //         console.log("Document written with ID: ", docRef.id);
-    //         firestore.linkBadgeToOpportunity(opportunityId, docRef.id);
-    //       }).catch(function(error) {
-    //         console.error("Error adding document: ", error);
-    //       });
-    // }
 
     render() {
-        const { opportunities, beacons, getOpportunities, badgrAuth, issuers } = this.props;
+        const { opportunities, getOpportunities, badgrAuth, issuers } = this.props;
 
         return (
             <React.Fragment>
@@ -172,7 +126,6 @@ class OpportunitiesList extends Component {
                                     key={key}
                                     id={key}
                                     getOpportunities={getOpportunities}
-                                    beacons={beacons}
                                     badgrAuth={badgrAuth}
                                 />
                             )}
@@ -184,74 +137,80 @@ class OpportunitiesList extends Component {
     }
 }
 
-const byPropKey = (propertyName, value) => () => ({
-    [propertyName]: value,
-});
 
+/**
+ * Component which renders an opportunity which can be validated.
+ * This component handles submission, change, creation of badge classes, firebase validation of opportunity
+ */
 class Opportunity extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { badge: null, beaconId: "", makeNew: false, issuer: null };
+        this.state = { badge: null, validating: false, issuer: null };
 
         this.onSubmit = this.onSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
         this.postNewBadge = this.postNewBadge.bind(this);
         this.validateOpportunity = this.validateOpportunity.bind(this);
-        this.postNewBeacon = this.postNewBeacon.bind(this);
     };
 
-    componentDidUpdate() {
-        if (this.state.badge !== null && this.state.badge.badgrId !== undefined) {
-            console.log("badgr badge created: ", this.state.badge);
+    componentDidUpdate(prevState) {
+        // If statement results true after onSubmit call
+        if (this.state.badge !== null && this.state.badge.badgrId !== undefined && prevState.badge !== this.state.badge) {
+            // console.log("badgr badge created: ", this.state.badge);
             this.validateOpportunity();
         }
     }
 
-    handleChange(event) {
-        // console.log(event.target.value);
-        this.setState({ [event.target.id]: event.target.value });
-        if (event.target.value === "MakeNewTrue") {
-            this.setState({ makeNew: true });
-        }
-        else {
-            this.setState({ makeNew: false });
-        }
-    }
-
+    /**
+     * Handles the submission of the button
+     * This function will create the badge class
+     * @param {Event} event 
+     */
     onSubmit(event) {
         event.preventDefault();
+        this.setState({validating: true});
         this.createBadge();
     }
 
+    /**
+     * Validates the opportunity
+     */
     validateOpportunity() {
-        let beaconId = this.state.beaconId;
         let opportunityId = this.props.id;
         console.log("validating opportunity");
         firestore.validateOpportunity(opportunityId).catch(function (error) {
             console.error("Error validating opportunity: ", error);
         });
-        console.log("linking beacon to opportunity", beaconId);
-        firestore.linkBeaconToOpportunity(opportunityId, beaconId).catch(function (error) {
-            console.error("Error linking beacon: ", error);
-        });
-        console.log("linking opportunity to beacon");
-        firestore.linkOpportunityToBeacon(beaconId, opportunityId).catch(function (error) {
-            console.error("Error linking opportunity: ", error);
-        });
         this.postNewBadge(opportunityId);
         this.props.getOpportunities();
     }
 
-    createBadge() {
+    /**
+     * Creates a badgeclass on badgr.
+     * This function tries this 3 times, if it fails, it throws a custom error
+     * @param {number} tries amount of times we tried this function
+     */
+    createBadge(tries = 0) {
+
+        // Creation of badgeclass is not possible somehow, throw error
+        if (tries >= 3) {
+            let error = {
+                name: "Failed to refresh access token",
+                message: "An internal error occurred, contact a system admin",
+                function: this.createBadge,
+                status: 500
+            }
+            throw error;
+        }
+
         let opportunity = this.props.opportunity;
         let name;
         let badge = {};
         let baseUrl = "https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Badges%2F";
         let image = baseUrl;
-        console.log(opportunity.category);
-        console.log(opportunity.difficulty);
-        switch (opportunity.category) {
+
+        // Create URL to the correct image
+        switch (parseInt(opportunity.category, 10)) {
             case 0: name = "Digitale Geletterdheid"; image += "badge_digital-literacy"; break;
             case 1: name = "Duurzaamheid"; image += "badge_sustainability"; break;
             case 2: name = "Ondernemingszin"; image += "badge_entre-spirit"; break;
@@ -259,12 +218,14 @@ class Opportunity extends Component {
             case 4: name = "Wereldburgerschap"; image += "badge_global-citizenship"; break;
             default: break;
         }
-        switch (opportunity.difficulty) {
+        switch (parseInt(opportunity.difficulty, 10)) {
             case 0: image += "_1.png?alt=media"; break;
-            case 1: image += "_2.png?alt=media"; break;
+            case 1: image += "_2.png?alt=media"; console.log("Entered!!"); break;
             case 2: image += "_3.png?alt=media"; break;
             default: break;
         }
+
+        // Fill in badgeclass object
         badge["type"] = "BadgeClass";
         badge["name"] = opportunity.title;
         badge["description"] = opportunity.longDescription;
@@ -272,13 +233,9 @@ class Opportunity extends Component {
         badge["criteria"] = opportunity.shortDescription + " - " + name;
         badge["issuerId"] = opportunity.issuerId;
 
-
-        console.log("Firebase Image: ", image);
-
         let self = this;
-        let accessToken = this.props.badgrAuth.accessToken;
-        let header = { headers: { Authorization: "Bearer " + accessToken } };
-        // TODO fill in fields
+
+        // Convert image to BASE64 string
         toDataUrl(image, function (myBase64) {
             let data = {
                 name: badge.name,
@@ -288,163 +245,66 @@ class Opportunity extends Component {
                 criteriaNarrative: badge.criteria
             }
 
-            console.log("BADGR DATA", data);
-
-            axios.post("https://api.badgr.io/v2/badgeclasses", data, header)
-                .then(res => {
-                    console.log("Created badgr badgeclass", res);
-                    // console.log(JSON.stringify(badge));
-                    badge["badgrId"] = res.data.result[0].entityId;
-                    self.setState({ badge: badge });
-                })
-                .catch(err => { console.error("ERROR"); console.error(err); console.log("data", data) });
+            // Call cloudfunction to create a badgeclass on badgr
+            functions.createBadgrBadgeClass({
+                badgeData: data,
+                issuerID: data.issuer
+            }
+            ).then(res => {
+                // Fill in badgrId, useful later on
+                badge["badgrId"] = res.data.createdBadgeClass.entityId;
+                // Update state to trigger componentDidUpdate
+                self.setState({ badge: badge });
+            }
+            )
+                .catch(err => {
+                    switch (err.status) {
+                        case "permission-denied":
+                            // permission-denied is thrown when an expired access token is used
+                            console.log("Access token expired, refreshing... (tried: [" + (tries + 1).toString() + "] time(s))");
+                            functions.refreshAccessToken().then(() => {     // also a cloud function
+                                this.createBadge(tries++);
+                            })
+                                .catch(err => {
+                                    throw err;
+                                });
+                            break;
+                        default:
+                            console.error("Error occurred while trying to validate opportunity", err);
+                    }
+                });
         });
     }
 
-    postNewBeacon(major, minor, name) {
-        let addressId = this.props.opportunity.addressId;
-        let beacon = {};
-        beacon["major"] = major;
-        beacon["minor"] = minor;
-        beacon["range"] = 0;
-        beacon["addressId"] = addressId;
-        beacon["opportunities"] = {};
-        beacon["name"] = name;
-        let self = this;
-        console.log("posting beacon to firebase: ", beacon);
-        firestore.createNewBeacon(beacon).then(function (docRef) {
-            console.log("Document written with ID: ", docRef.id);
-            self.validateOpportunity(docRef.id);
-        }).catch(function (error) {
-            console.log("Error adding document: ", error);
-        });
-    }
-
+    /**
+     * Add new badgeclass to firebase
+     * @param {Number} opportunityId 
+     */
     postNewBadge(opportunityId) {
-        console.log("posting badge to firebase: ", this.state.badge);
         firestore.createNewBadge(this.state.badge).then(function (docRef) {
-            console.log("Document written with ID: ", docRef.id);
             firestore.linkBadgeToOpportunity(opportunityId, docRef.id);
-        }).catch(function (error) {
-            console.log("Error adding document: ", error);
+        })
+        .then(() => this.setState({validating: false}))
+        .catch(function (error) {
+            console.error("Error adding document: ", error);
         });
     }
 
     render() {
-        const { opportunity, beacons } = this.props;
-        const { beaconId, makeNew, error } = this.state;
-        const isInvalid =
-            beaconId === ""
-            ;
+        const { opportunity } = this.props;
+        const { validating } = this.state;
+
 
         return (
             <div className={`card-item opportunity ${opportunity.category}`} key={opportunity.addressId}>
-                {/* <img src={opportunity.oppImageUrl ? `${opportunity.pinImageUrl}` : null} className="photo" alt={opportunity.title} /> */}
                 <div className="opportunity--info">
-                    {/* <img src={opportunity.oppImageUrl ? `${opportunity.oppImageUrl}` : null} className="badge" /> */}
                     <h2 className="title-opportunity-info">{opportunity.title}</h2>
                     <div className="meta-data">
                         <small>{opportunity.beginDate + ' - ' + opportunity.endDate}</small>
-                        {/* <small>{opportunity.street + ' ' + opportunity.house_number + ', ' + opportunity.postal_code + ' ' + opportunity.city}</small> */}
                     </div>
-                    <p className="text--opportunity-description">{opportunity.shortDescription}</p>
-                    <form onSubmit={this.onSubmit}>
-                        <div className="form-group">
-                            <Field
-                                id="beaconId"
-                                name="beaconId"
-                                label="Kies een beacon: "
-                                data={{
-                                    list: Object.keys(beacons).map(key => {
-                                        return {
-                                            value: key,
-                                            display: beacons[key].name
-                                        };
-                                    })
-                                }}
-                                component={renderSelect}
-                                onChange={this.handleChange}
-                            />
-                            {!makeNew && <small>(Of maak een nieuwe beacon door de optie "> Maak een nieuwe beacon" te selecteren)</small>}
-                        </div>
-                        {!makeNew && <button className="button--opportunity-accept" disabled={isInvalid} type="submit">
-                            Accepteren
-                        </button>}
-
-                        {error && <p>{error.message}</p>}
-                    </form>
-                    {!!makeNew && <AddBeacon postNewBeacon={this.postNewBeacon} />}
+                    <p className="text-opportunity-description">{opportunity.shortDescription}</p>
+                    <button className="button-opportunity-accept" onClick={this.onSubmit} disabled={validating}>Accepteren</button>
                 </div>
-            </div>
-        )
-    }
-}
-
-class AddBeacon extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = { major: "", minor: "", name: "" };
-
-        this.onSubmit = this.onSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        // this.postNewBeacon = this.postNewBeacon.bind(this);
-    }
-
-    handleChange(event) {
-        // console.log(event.target.value);
-        this.setState({ [event.target.id]: event.target.value });
-    }
-
-    onSubmit(event) {
-        event.preventDefault();
-        this.props.postNewBeacon(this.state.major, this.state.minor, this.state.name);
-    }
-
-    render() {
-        const { major, minor, name, error } = this.state;
-        const isInvalid =
-            major === "" ||
-            minor === "" ||
-            name === ""
-            ;
-
-        return (
-            <div>
-                <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        Major:
-                        <input
-                            value={major}
-                            onChange={event => this.setState(byPropKey('major', event.target.value))}
-                            type="text"
-                            placeholder="Major"
-                        />
-                    </div>
-                    <div className="form-group">
-                        Minor:
-                        <input
-                            value={minor}
-                            onChange={event => this.setState(byPropKey('minor', event.target.value))}
-                            type="text"
-                            placeholder="Minor"
-                        />
-                    </div>
-                    <div className="form-group">
-                        Beacon naam:
-                        <input
-                            value={name}
-                            onChange={event => this.setState(byPropKey('name', event.target.value))}
-                            type="text"
-                            placeholder="Beacon naam"
-                        />
-                    </div>
-                    <button disabled={isInvalid} type="submit">
-                        Voeg toe
-                    </button>
-
-                    {error && <p>{error.message}</p>}
-                </form>
             </div>
         )
     }
@@ -464,10 +324,10 @@ const Loading = () =>
         <Spinner />
     </div>
 
-Opportunity = reduxForm({
-    form: 'opportunity',
-    validate,
-    fields: ['beaconId']
-})(Opportunity);
+// Opportunity = reduxForm({
+//     form: 'opportunity',
+//     validate,
+//     fields: ['beaconId']
+// })(Opportunity);
 
 export default ValidateOpportunity;
