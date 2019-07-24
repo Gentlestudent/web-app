@@ -58,7 +58,7 @@ Gentlestudent is not finished yet. Open Summer of code 2019 comes to an end and 
 
 - Right now, users can get tokens for finishing quests. Those tokens don't really have any value at the moment. A possible improvement for the future might be a progress system. After reaching a certain amount of tokens, users can trade them for an Open Badge which contains a reference to all quests that user did. 
 
-- Right now, quests only have one icon. In the future it can be interesting if users can create their own quest icon, or at least be able to pick an icon from some presets. This can add a personal touch to the whole questing part.
+- In this stage of the project, quests only have one icon. In the future it can be interesting if users can create their own quest icon, or at least be able to pick an icon from some presets. This can add a personal touch to the whole questing part.
 
 ## Used Tools and Frameworks
 - [React](https://reactjs.org/) for the core of the web application.
