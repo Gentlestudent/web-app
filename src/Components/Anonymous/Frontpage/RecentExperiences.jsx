@@ -18,7 +18,6 @@ class RecentExperiences extends Component {
 				res[doc.id] = doc.data();
 			});
 			this.setState(() => ({ experiences: res }))
-			console.log(this.state.experiences);
 		})
 			.catch(err => {
 				console.log('Could not fetch opportunity data: ', err);

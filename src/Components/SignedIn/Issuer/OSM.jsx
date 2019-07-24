@@ -12,8 +12,11 @@ class OSM extends Component {
     }
 
     componentDidMount() {
+
+        const { center, isQuest } = this.props;
+
         let map = L.map("map-2", {
-            center: [51.0511164, 3.7114566],
+            center: !!center ? center : [51.0511164, 3.7114566],
             zoom: 13,
             layers: [
                 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
@@ -32,12 +35,19 @@ class OSM extends Component {
                 let pinIcon = L.icon({
                     iconUrl: this.props.pinImage,
                     iconSize: [60, 90],
-                    iconAnchor: [30, 45],
+                    iconAnchor: [30, 90],
                     popupAnchor: [0, -25]
                 });
+
+                if(isQuest) {
+                    pinIcon.options.iconSize = [30, 40];
+                    pinIcon.options.iconAnchor = [15, 40];
+                }
+
+                let title = isQuest? "Locatie van de quest" : "Locatie van de leerkans";
                 let marker = L.marker(ev.latlng, {
                     draggable: true,
-                    title: "Locatie van de leerkans"
+                    title 
                 });
                 if (this.props.pinImage !== "" && this.props.pinImage !== undefined && this.props.pinImage !== null) {
                     marker.setIcon(pinIcon);
@@ -59,16 +69,24 @@ class OSM extends Component {
 
     initializeMarker(map) {
 
+        const { isQuest } = this.props;
+
         let pinIcon = L.icon({
             iconUrl: this.props.pinImage,
             iconSize: [60, 90],
-            iconAnchor: [30, 45],
+            iconAnchor: [30, 90],
             popupAnchor: [0, -25]
         });
 
+        if(isQuest) {
+            pinIcon.options.iconSize = [30, 40];
+            pinIcon.options.iconAnchor = [15, 40];
+        }
+
+        let title = isQuest? "Locatie van de quest" : "Locatie van de leerkans";
         let marker = L.marker(this.props.location, {
             draggable: true,
-            title: "Locatie van de leerkans"
+            title
         }).addTo(map);
         if (this.props.pinImage !== "" && this.props.pinImage !== undefined && this.props.pinImage !== null) {
             marker.setIcon(pinIcon);
@@ -85,7 +103,7 @@ class OSM extends Component {
             if (this.state.marker === null || this.state.marker === undefined) {
                 this.initializeMarker(this.state.map);
             }
-            else{
+            else {
                 this.state.marker.setLatLng(this.props.location);
             }
         }

@@ -5,7 +5,7 @@ import List from "../Issuer/Participants";
 
 import Spinner from "../../../Shared/Spinner";
 
-import { auth, firestore } from "../../../Utils/Firebase";
+import { auth, firestore, functions } from "../../../Utils/Firebase";
 import NoMatch from "../../../Shared/NoMatch";
 
 import AuthUserContext from "../../../Shared/AuthUserContext";
@@ -62,6 +62,7 @@ class Detail extends Component {
 class OpportunityDetail extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       address: null,
       cat: "",
@@ -70,9 +71,95 @@ class OpportunityDetail extends Component {
       userHasRights: false,
       isAdmin: false,
       participations: 0,
-      participation: {}
+      participation: {},
+      participant: {},
+      badgrBadgeClassId: "",
+      assertion: null
     };
+
+    this.postBadgrBadge = this.postBadgrBadge.bind(this);
+    this.giveBadge = this.giveBadge.bind(this);
   }
+
+  componentDidUpdate(prevState) {
+
+    // giveBadge() should make this if statement true
+    if (this.state.badgrBadgeClassID !== ""
+        && this.state.assertion !== null
+        && prevState.badgrBadgeClassID !== this.state.badgrBadgeClassID
+        && prevState.assertion !== this.state.assertion) {
+
+        console.log("trying to post to badgr...");
+        this.postBadgrBadge();
+    }
+}
+
+postBadgrBadge(tries = 0) {
+
+    if (tries >= 3) {
+        let error = {
+            name: "Failed to refresh access token",
+            message: "An internal error occurred, contact a system admin",
+            function: this.createBadge,
+            status: 500
+        }
+        throw error;
+    }
+
+    // let accessToken = this.props.badgrAuth.accessToken;
+    // let header = { headers: { Authorization: "Bearer " + accessToken } };
+
+    let email = this.state.participant.email;
+    // console.log("Participant email: ", email);
+
+    let participationId = this.state.participation.id;
+    // console.log("Participation id", participationId);
+
+    let badgrId = this.state.badgrBadgeClassID;
+    // console.log("badgr id", badgrId);
+
+    let data = {
+        recipient: {
+            type: "email",
+            identity: email
+        }
+    }
+
+    functions.createBadgrAssertion({
+        badgeID: badgrId,
+        assertionData: data
+    })
+        .then(res => {
+            let assertion = this.state.assertion;
+            assertion["badgrId"] = res.data.createdAssertion.entityId;
+            console.log(this.state.participant);
+            firestore.createNewAssertion(assertion).catch(err => console.error(err));
+            firestore.completeParticipation(participationId)
+                .then(res => {
+                    console.log("Completed participation", res);
+                    this.setState({
+                        assertion: null,
+                        badgrBadgeClassID: ""
+                    })
+                });
+        })
+        .catch(err => {
+            switch (err.status) {
+                case "permission-denied":
+                    // permission-denied is thrown when an expired access token is used
+                    console.log("Access token expired, refreshing... (tried: [" + (tries + 1).toString() + "] time(s))");
+                    functions.refreshAccessToken().then(() => {
+                        this.postBadgrBadge(tries++);
+                    })
+                        .catch(err => {
+                            throw err;
+                        });
+                    break;
+                default:
+                    console.error("Error occurred while trying to validate opportunity", err);
+            }
+        });
+}
 
   handleRegister = event => {
     event.preventDefault();
@@ -88,17 +175,50 @@ class OpportunityDetail extends Component {
     console.log("geregistreerd voor leerkans");
   };
 
-  handleClaim = event => {
+  giveBadge(event) {
     event.preventDefault();
-    let data = {
-      badgeId: this.props.opportunity.badgeId,
-      issuedOn: "2000-01-01",
-      recipientId: auth.getUserId()
-    };
-    console.log(data, this.state.participation.id);
-    firestore.createNewAssertion(data).completeParticipation(this.state.participation.id);
-    console.log("badge geclaimed");
-  }
+
+    let participant = this.state.participant;
+    console.log("Particpant ", participant);
+    let badgeId = this.props.opportunity.badgeId;
+
+    // Create today date
+    let date = new Date();
+    let month = "" + (date.getMonth() + 1);
+    if (month.length === 1) {
+        month = "0" + month;
+    }
+    let day = "" + (date.getDate());
+    if (day.length === 1) {
+        day = "0" + day;
+    }
+    let today = date.getFullYear() + "-" + month + "-" + day;
+    console.log(today);
+
+    // Create assertion
+    console.log("EIOEI", participant);
+    let newAssertion = {};
+    newAssertion["badge"] = badgeId;
+    newAssertion["badgeId"] = badgeId;
+    newAssertion["id"] = "";
+    newAssertion["issuedOn"] = today;
+    newAssertion["recipient"] = participant.name;
+    newAssertion["recipientId"] = participant.id;
+    newAssertion["type"] = "Assertion";
+    newAssertion["verification"] = badgeId;
+    console.log("Created assertion", newAssertion);
+
+    // Fetch badge from the database
+    firestore.onceGetBadge(badgeId).then(res => {
+        // No badgr ID found? throw error, we need this
+        let badge = res.data();
+        if (badge.badgrId === undefined)
+            throw Error("Badge didnt have a badgr ID");
+        // Update state
+        this.setState({ badgrBadgeClassID: badge.badgrId, assertion: newAssertion });
+        console.log("Found badgr id", badge.badgrId);
+    });
+}
 
   componentDidMount() {
     let userId = auth.getUserId();
@@ -130,6 +250,7 @@ class OpportunityDetail extends Component {
           console.log("User is not an admin", err);
         });
     }
+
     switch (this.props.opportunity.category) {
       case 0:
         this.setState({ cat: "Digitale Geletterdheid" });
@@ -149,6 +270,7 @@ class OpportunityDetail extends Component {
       default:
         break;
     }
+
     switch (this.props.opportunity.difficulty) {
       case 0:
         this.setState({ diff: "Beginner" });
@@ -162,6 +284,7 @@ class OpportunityDetail extends Component {
       default:
         break;
     }
+
     firestore
       .onceGetAddress(this.props.opportunity.addressId)
       .then(snapshot => {
@@ -171,6 +294,7 @@ class OpportunityDetail extends Component {
       .catch(err => {
         console.log("Error getting documents", err);
       });
+
     firestore
       .onceGetIssuer(this.props.opportunity.issuerId)
       .then(snapshot => {
@@ -180,6 +304,7 @@ class OpportunityDetail extends Component {
       .catch(err => {
         console.log("Error getting documents", err);
       });
+
     firestore
       .onceGetParticipationFromOpportunity(this.props.id, userId)
       .then(snapshot => {
@@ -187,6 +312,21 @@ class OpportunityDetail extends Component {
           let participation = doc.data();
           participation.id = doc.id;
           this.setState(() => ({ participation }));
+          console.log(participation.participantId);
+
+          if (this.state.participation !== undefined) {
+            firestore
+            .onceGetParticipant(this.state.participation.participantId)
+            .then(doc => {
+              let participant = doc.data();
+              participant.id = doc.id;
+                this.setState(() => ({ participant }));
+                console.log(participant);
+            })
+            .catch(err => {
+              console.log("Error getting documents", err);
+            });
+          }
         });
       })
       .catch(err => {
@@ -194,17 +334,18 @@ class OpportunityDetail extends Component {
       });
   }
 
+
   render() {
     const { opportunity, id } = this.props;
+
     const {
       address,
       issuer,
       userHasRights,
       isAdmin,
       participations,
-      participation
+      participation,
     } = this.state;
-    console.log(participation.participantId, auth.getUserId());
 
     let longOpportunityWithLinks = ReactHtmlParser(Urlify(opportunity.longDescription));
     let shortOpportunityWithLinks = ReactHtmlParser(Urlify(opportunity.shortDescription));
@@ -352,12 +493,17 @@ class OpportunityDetail extends Component {
                 <AuthUserContext.Consumer>
                   {authUser =>
                     authUser ? (
-                      participation.opportunityId == this.props.id &&
-                      participation.participantId == auth.getUserId() ? (
-                        participation.status == 3 ? (
+                      participation.opportunityId === this.props.id &&
+                      participation.participantId === auth.getUserId() ? (
+                        participation.status === 3 ? (
                           <p>Je hebt deze leerkans al voltooid.</p>
-                        ) : this.props.opportunity.difficulty == 0 ? (
-                          <button className="button-prim" onClick={this.handleClaim}>Claim jouw badge</button>
+                        ) : this.props.opportunity.difficulty === 0 ? (
+                          <button
+                            className="button-prim"
+                            onClick={this.giveBadge}
+                          >
+                            Claim jouw badge
+                          </button>
                         ) : (
                           <p>Je hebt je al ingeschreven voor deze badge!</p>
                         )
