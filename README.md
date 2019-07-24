@@ -1,7 +1,7 @@
 # Gentlestudent
 Gentlestudent is an application that allows learners to engage in learning opportunities. Companies can issue a learning opportunities and learners can choose to participate. After completing a learning opportunity, the learner is rewarded with an open badge, which is a verifiable record of their learning. This way, Gentlestudent stimulates informal learning and teaches valuable lessons about community life and social engagement.
 
-Click [here](https://osoc19.github.io/gentlestudent-web) for Github page.
+Click [here](https://osoc19.github.io/gentlestudent-web) to navigate to the GitHub page.
 
 ## Contents
 - [Installation Guide](#installation-guide)
@@ -82,6 +82,6 @@ This project is MIT licensed. View [LICENSE](./LICENSE) for details.
 ## References
 - [Mobile application repository](https://github.com/oSoc19/gentlestudent-mobile)
 - [oSoc19 website](https://2019.summerofcode.be/2019/gentlestudent)
-- [Artevelde University College documentation](https://drive.google.com/drive/folders/1vkDLn_qmJT_vRxGx8hoCRRXEcHTxpjwi)
+- [Artevelde University of Applied Sciences documentation](https://drive.google.com/drive/folders/1vkDLn_qmJT_vRxGx8hoCRRXEcHTxpjwi)
 - [oSoc18 code repository](https://github.com/oSoc18/gentlestudent)
 - [Badgr API documentation](https://api.badgr.io/)
