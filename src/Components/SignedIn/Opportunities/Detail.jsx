@@ -79,6 +79,7 @@ class OpportunityDetail extends Component {
 
     this.postBadgrBadge = this.postBadgrBadge.bind(this);
     this.giveBadge = this.giveBadge.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
   }
 
   componentDidUpdate(prevState) {
@@ -161,7 +162,7 @@ postBadgrBadge(tries = 0) {
         });
 }
 
-  handleRegister = event => {
+  handleRegister = async event => {
     event.preventDefault();
     let data = {
       participantId: auth.getUserId(),
@@ -171,8 +172,9 @@ postBadgrBadge(tries = 0) {
       message: ""
     };
     console.log(data);
-    firestore.createNewParticipation(data);
+    await firestore.createNewParticipation(data);
     console.log("geregistreerd voor leerkans");
+    window.location.reload();
   };
 
   giveBadge(event) {
