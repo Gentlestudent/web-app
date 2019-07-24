@@ -8,7 +8,6 @@ import QuestList from "./QuestList";
 import QuestMap from "./QuestMap";
 import CreateQuest from "./Giver/CreateQuest";
 import SearchFilters from "../../Shared/SearchFilters";
-import { Link } from "react-router-dom";
 import * as routes from "../../routes/routes";
 
 import { firestore, auth } from "../../Utils/Firebase";

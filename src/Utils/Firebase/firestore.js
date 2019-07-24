@@ -186,6 +186,9 @@ export const updateAddress = (id, field, data) =>
 export const createNewParticipation = (data) => 
 firestore.collection("Participations").add(data)
 
+export const createNewQuestTakers = (data) =>
+firestore.collection('QuestTakers').add(data);
+
 export const onceGetParticipations = (participantId) =>
 firestore.collection("Participations").where('participantId', '==', participantId).get()
 export const updateParticipant = (id, value) =>
