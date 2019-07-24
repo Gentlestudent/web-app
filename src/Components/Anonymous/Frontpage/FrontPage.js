@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Opportunities from './Opportunities';
-import RecentExperiences from './RecentExperiences';
 import Download from './Download';
 
 import eyecather from '../../../assets/eyecatcher.jpg';
@@ -107,7 +106,6 @@ class FrontPage extends Component {
 						</div>
 					</div>
 				</div>
-				<RecentExperiences />
 				<Download />
 			</div>
 		);

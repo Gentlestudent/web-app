@@ -13,7 +13,6 @@ import store from './store';
 import FrontPage from './Components/Anonymous/Frontpage/FrontPage';
 import Opportunities from './Components/SignedIn/Opportunities/Opportunities';
 import BecomeIssuer from './Components/Anonymous/Become-issuer/BecomeIssuer';
-import Experiences from './Components/Anonymous/Experiences/Experiences';
 import News from './Components/Anonymous/News/News';
 import AboutUs from './Components/Anonymous/AboutUs';
 import Register from './Components/Anonymous/Auth/Register';
@@ -90,7 +89,6 @@ class App extends Component {
 									<Route path={routes.Opportunities} render={() => <Opportunities />} />
 									<Route path={routes.Quests} render={() => <Quests/>} />
 									<Route path={routes.BecomeIssuer} exact render={() => <BecomeIssuer />} />
-									<Route path={routes.Experiences} render={() => <Experiences />} />
 									<Route path={routes.News} render={() => <News />} />
 									<Route path={routes.AboutUs} exact render={() => <AboutUs />} />
 									<PrivateRoute path={routes.Register} component={Register} needAuth={false} /*render={() => <Register />}*/ />

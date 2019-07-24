@@ -10,7 +10,6 @@ const AuthFooter = () =>
         <li><a href={routes.BecomeIssuer}>Word Issuer</a></li>
         <li><a href={routes.AboutUs}>Over ons</a></li>
         <li><a href={routes.News}>Nieuws</a></li>
-        <li><a href={routes.Experiences}>Ervaringen</a></li>
         <li><a href={routes.Login} onClick={auth.doSignOut}>Log uit</a></li>
     </ul>
 
@@ -20,7 +19,6 @@ const NoAuthFooter = () =>
         <li><a href={routes.BecomeIssuer}>Word Issuer</a></li>
         <li><a href={routes.AboutUs}>Over ons</a></li>
         <li><a href={routes.News}>Nieuws</a></li>
-        <li><a href={routes.Experiences}>Ervaringen</a></li>
         <li><a href={routes.Login}>Inloggen</a></li>
         <li><a href={routes.Register}>Registreer</a></li>
     </ul>

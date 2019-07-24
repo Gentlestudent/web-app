@@ -1,7 +1,6 @@
 export const FrontPage = '/';
 export const Opportunities = '/opportunities';
 export const BecomeIssuer = '/become-issuer';
-export const Experiences = '/experiences';
 export const News = '/news';
 export const AboutUs = '/about';
 export const Register = '/Register';
