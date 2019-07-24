@@ -61,7 +61,8 @@ class SignUpForm extends Component {
 
     auth
       .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(authUser => {
+      .then(async authUser => {
+        await authUser.user.updateProfile({displayName: firstname + " " + lastname});
         console.log(auth.getUserId());
         authUser.user.sendEmailVerification();
         self.setState(() => ({ ...INITIAL_STATE }));
