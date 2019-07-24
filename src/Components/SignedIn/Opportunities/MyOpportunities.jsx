@@ -68,8 +68,7 @@ class MyOpportunities extends Component {
 
   render() {
     const { opportunityList, loading, participations } = this.state;
-    //console.log(opportunityList);
-    console.log(participations);
+    //console.log(participations);
     const opps = opportunityList.map((opp, key) => (
       <li key={opp.id} className="card-container opportunities">
         <a

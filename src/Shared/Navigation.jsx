@@ -185,6 +185,7 @@ class NavigationAuth extends Component {
 									<div className="dropdown-menu-list">
 										<NavLink to={routes.Profile}>Profiel</NavLink>
 										<NavLink to={routes.Backpack}>Backpack</NavLink>
+										<NavLink to={routes.MyOpportunities}>Mijn Leerkansen</NavLink>
 										{!!isIssuer &&
 											<div className="nav-dropdown-ext">
 												<NavigationIssuer />
