@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
-@import url("http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css");
+@import url("https://unpkg.com/leaflet@1.5.1/dist/leaflet.css");
 
 body {
   margin: 0;
