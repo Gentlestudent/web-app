@@ -234,14 +234,17 @@ class QuestDetail extends Component {
         const { id } = this.props.match.params;
         const authUserId = auth.getUserId();
 
-        firestore.onceGetParticipant(auth.getUserId())
-                 .then(doc => {
-                     this.setState(() => ({activeUser : doc.data()}))
-                 })
-                 .catch(err => {
-                     this.setState(() => ({activeUser : null}));
-                     console.log("Error getting active user : ", err);
-                 })
+        if (authUserId !== "") {
+            firestore.onceGetParticipant(auth.getUserId())
+            .then(doc => {
+                this.setState(() => ({activeUser : doc.data()}))
+            })
+            .catch(err => {
+                this.setState(() => ({activeUser : null}));
+                console.log("Error getting active user : ", err);
+            })
+            
+        }
 
         firestore.onceGetQuest(id)
             .then((doc) => {
@@ -293,7 +296,7 @@ class QuestDetail extends Component {
                             
                                     <Description> {questItem.description} </Description>
 
-                                    { !isAuthUserQuest && !activeParticipants.map(x => x.participantEmail).includes(activeUser.email) &&
+                                    { !isAuthUserQuest && activeUser && !activeParticipants.map(x => x.participantEmail).includes(activeUser.email) &&
                                         <ButtonRegister onClick={this.registerToQuest}> Registreer </ButtonRegister>
                                     }
 
