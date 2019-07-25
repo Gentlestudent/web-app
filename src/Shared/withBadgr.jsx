@@ -97,4 +97,4 @@ const withBadgr = (Component) =>
     }
 
 export default withBadgr;
-export let badgr_email = "freek.de.sagher21@gmail.com"; // TODO: change to gentle student account
+export let badgr_email = "gentlestudent@arteveldehs.be";

@@ -41,7 +41,7 @@ class QuestMap extends Component {
             center: !!center ? center : [51.0511164, 3.7114566],
             zoom: !!zoom ? zoom : 13,
             layers: [
-                L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+                L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
                     attribution:
                         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
                 })

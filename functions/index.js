@@ -291,7 +291,7 @@ exports.notifyIssuer = functions.https.onCall((data) => {
 
     let mailOptions = {
         from: "Gentlestudent <" + functions.config().mailer.email + ">",
-        to: "freek.de.sagher21@gmail.com", // TODO swap out
+        to: issuerEmail,
         subject: subject,
         text: "",
         html: html
@@ -326,7 +326,7 @@ exports.notifyQuestGiver = functions.https.onCall(data => {
 
     let mailOptions = {
         from: "Gentlestudent <" + functions.config().mailer.email + ">",
-        to: "freek.de.sagher21@gmail.com", // TODO swap out
+        to: giverEmail,
         subject: subject,
         text: "",
         html: html
@@ -365,7 +365,7 @@ exports.notifyQuestTaker = functions.https.onCall(data => {
 
     let mailOptions = {
         from: "Gentlestudent <" + functions.config().mailer.email + ">",
-        to: "freek.de.sagher21@gmail.com", // TODO swap out
+        to: takerEmail, 
         subject: subject,
         text: "",
         html: html
@@ -398,7 +398,7 @@ exports.notifyTokenReceived = functions.https.onCall(data => {
 
     let mailOptions = {
         from: "Gentlestudent <" + functions.config().mailer.email + ">",
-        to: "freek.de.sagher21@gmail.com", // TODO swap out
+        to: takerEmail, 
         subject: subject,
         text: "",
         html: html
