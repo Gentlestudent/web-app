@@ -258,19 +258,19 @@ class Opportunity extends Component {
             }
             )
                 .catch(err => {
-                    switch (err.status) {
-                        case "permission-denied":
-                            // permission-denied is thrown when an expired access token is used
-                            console.log("Access token expired, refreshing... (tried: [" + (tries + 1).toString() + "] time(s))");
-                            functions.refreshAccessToken().then(() => {     // also a cloud function
-                                this.createBadge(tries++);
+                    if (err.message.indexOf('Access token expired') !== -1 || err.status === 'PERMISSION_DENIED') {
+                        // permission-denied is thrown when an expired access token is used
+                        console.log("Access token expired, refreshing... (tried: [" + (tries + 1).toString() + "] time(s))");
+                        functions.refreshAccessToken()
+                            .then(() => {
+                                // also a cloud function
+                                self.createBadge(tries++);
                             })
-                                .catch(err => {
-                                    throw err;
-                                });
-                            break;
-                        default:
-                            console.error("Error occurred while trying to validate opportunity", err);
+                            .catch(err => {
+                                throw err;
+                            });
+                    } else {
+                        console.error("Error occurred while trying to validate opportunity", err);
                     }
                 });
         });
