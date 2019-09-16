@@ -271,7 +271,7 @@ let transporter = nodemailer.createTransport({
  *  2. participantName: name of the participant
  *  3. issuerEmail: email address of the issuer
  *  4. participantEmail: email address of the participant
- *  5. opprtunityId: id of the opportunity
+ *  5. opportunityId: id of the opportunity
  */
 exports.notifyIssuer = functions.https.onCall((data) => {
     const opportunityId = data.opportunityId;
@@ -286,7 +286,7 @@ exports.notifyIssuer = functions.https.onCall((data) => {
         '<p>De gegevens van deze persoon zijn: </p>' +
         '<p> - Naam: ' + participantName + '</p>' +
         '<p> - E-mailadres: ' + participantEmail + '</p>' +
-        `<p>Op <a href="https://gentlestudent.gent/opportunities/${opportunityId}">deze pagina</a> kan je jouw leerkans terugvinden, en indien je bent ingelogd de deelnemer accepteren. Zodra je de deelnemer accepteert, zal hij/zij een bevestigingsmail krijgen. Pas daarna kan de deelnemer met jou contact opnemen om verder af te stemmen.</p>` +
+        `<p>Op <a href="https://gentlestudent.gent/opportunities/${opportunityId}">deze pagina</a> kan je jouw leerkans terugvinden, en indien je bent ingelogd kan je er de deelnemer accepteren. Zodra je de deelnemer accepteert, zal hij/zij een bevestigingsmail krijgen. Pas daarna kan de deelnemer met jou contact opnemen om verder af te stemmen.</p>` +
         '<p>Met vriendelijke groet,</p>' +
         '<p>Team Gentlestudent</p>';
 
@@ -294,6 +294,38 @@ exports.notifyIssuer = functions.https.onCall((data) => {
     let mailOptions = {
         from: "Gentlestudent <" + functions.config().mailer.email + ">",
         to: issuerEmail,
+        subject: subject,
+        text: "",
+        html: html
+    }
+
+    return sendMyMail(mailOptions)
+});
+
+
+/**
+ * Sends email to participant when issuer has approved them
+ * @param {Object} data Input data for the email
+ * Data needs:
+ *  1. opportunityTitle: title of the opportunity
+ *  2. participantName: name of the participant
+ *  3. issuerEmail: email address of the issuer
+ *  4. issuerName: name of the issuing organisation
+ *  5. participantEmail: email of the participant (the email recipient)
+ */
+exports.notifyParticipant = functions.https.onCall((data) => {
+    const { opportunityTitle, participantName, issuerName, issuerEmail, participantEmail  } = data;
+
+    const subject = 'Geaccepteerd voor leerkans: ' + opportunityTitle;
+    const html = `<p>Dag ${participantName}</p>` +
+        `${issuerName} heeft je registratie voor de leerkans "${opportunityTitle}" geaccepteerd. Je kan nu contact opnemen met de organisatie via mail.` +
+        '<p> - E-mailadres: ' + issuerEmail + '</p>' +
+        `<p>Veel succes!</p>` +
+        '<p>Team Gentlestudent</p>';
+
+    const mailOptions = {
+        from: "Gentlestudent <" + functions.config().mailer.email + ">",
+        to: participantEmail,
         subject: subject,
         text: "",
         html: html

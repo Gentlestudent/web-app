@@ -82,6 +82,7 @@ class List extends Component {
                                                 opportunity={this.props.opportunity}
                                                 loadParticipants={this.loadParticipants}
                                                 badgrAuth={badgrAuth}
+                                                issuer={this.props.issuer}
                                             />
                                         )}
                                         </tbody>
@@ -263,7 +264,14 @@ class Participant extends Component {
         event.preventDefault();
         let self = this;
         firestore.acceptParticipation(event.target.id)
-            .then(res => {
+            .then(res => functions.notifyParticipant({
+                opportunityTitle: this.props.opportunity.title,
+                participantName: this.props.participant.name,
+                issuerName: this.props.issuer.institution,
+                issuerEmail: this.props.opportunity.contact,
+                participantEmail: this.props.participant.email
+            }))
+            .then(() => {
                 self.props.loadParticipants();
             })
             .catch(err => {
@@ -299,8 +307,6 @@ class Participant extends Component {
     render() {
 
         const { participant } = this.props;
-
-        console.log(participant);
 
         return (
 

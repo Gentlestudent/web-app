@@ -334,7 +334,6 @@ postBadgrBadge(tries = 0) {
               let participant = doc.data();
               participant.id = doc.id;
                 this.setState(() => ({ participant }));
-                console.log(participant);
             })
             .catch(err => {
               console.log("Error getting documents", err);
@@ -543,7 +542,7 @@ postBadgrBadge(tries = 0) {
               </div>
             </div>
           </div>
-          {!!userHasRights && <List opportunity={opportunity} id={id} />}
+          {!!userHasRights && !!issuer && <List issuer={issuer} opportunity={opportunity} id={id} />}
         </div>
         <br />
         <br />
