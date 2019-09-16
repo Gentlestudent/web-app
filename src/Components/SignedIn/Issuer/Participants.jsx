@@ -77,6 +77,7 @@ class List extends Component {
                                         <tbody>
                                         {Object.keys(participants).map(key =>
                                             <Participant
+                                                key={key}
                                                 participant={participants[key]}
                                                 opportunity={this.props.opportunity}
                                                 loadParticipants={this.loadParticipants}

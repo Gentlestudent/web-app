@@ -271,9 +271,10 @@ let transporter = nodemailer.createTransport({
  *  2. participantName: name of the participant
  *  3. issuerEmail: email address of the issuer
  *  4. participantEmail: email address of the participant
+ *  5. opprtunityId: id of the opportunity
  */
 exports.notifyIssuer = functions.https.onCall((data) => {
-
+    const opportunityId = data.opportunityId;
     let opportunityTitle = data.opportunityTitle;
     let participantName = data.participantName;
     let issuerEmail = data.issuerEmail;
@@ -285,6 +286,7 @@ exports.notifyIssuer = functions.https.onCall((data) => {
         '<p>De gegevens van deze persoon zijn: </p>' +
         '<p> - Naam: ' + participantName + '</p>' +
         '<p> - E-mailadres: ' + participantEmail + '</p>' +
+        `<p>Op <a href="https://gentlestudent.gent/opportunities/${opportunityId}">deze pagina</a> kan je jouw leerkans terugvinden, en indien je bent ingelogd de deelnemer accepteren. Zodra je de deelnemer accepteert, zal hij/zij een bevestigingsmail krijgen. Pas daarna kan de deelnemer met jou contact opnemen om verder af te stemmen.</p>` +
         '<p>Met vriendelijke groet,</p>' +
         '<p>Team Gentlestudent</p>';
 
