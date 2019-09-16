@@ -173,6 +173,16 @@ postBadgrBadge(tries = 0) {
     };
     console.log(data);
     await firestore.createNewParticipation(data);
+    try {
+      await functions.notifyIssuer({
+        opportunityTitle: this.props.opportunity.title,
+        participantName: auth.getUserName(),
+        issuerEmail: this.state.issuer.email,
+        participantEmail: auth.getUserEmail()
+      });
+    } catch(err) {
+      console.error(err);
+    }
     console.log("geregistreerd voor leerkans");
     window.location.reload();
   };
