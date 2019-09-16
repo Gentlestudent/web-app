@@ -318,11 +318,10 @@ exports.notifyParticipant = functions.https.onCall((data) => {
 
     const subject = 'Geaccepteerd voor leerkans: ' + opportunityTitle;
     const html = `<p>Dag ${participantName}</p>` +
-        `${issuerName} heeft je registratie voor de leerkans "${opportunityTitle}" geaccepteerd. Je kan nu contact opnemen met de organisatie via mail.`;
+        `${issuerName} heeft je registratie voor de leerkans "${opportunityTitle}" geaccepteerd. Je kan nu contact opnemen met de organisatie via mail.` +
         '<p> - E-mailadres: ' + issuerEmail + '</p>' +
         `<p>Veel succes!</p>` +
         '<p>Team Gentlestudent</p>';
-
 
     const mailOptions = {
         from: "Gentlestudent <" + functions.config().mailer.email + ">",
