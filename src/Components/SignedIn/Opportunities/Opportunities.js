@@ -69,13 +69,15 @@ class Opportunities extends Component {
 			return;
 		}
 
-		let initialArray = this.state.initialOpportunities;
-		let filtered = Object.values(initialArray).filter(opp => {
-			let title = opp.title.toLowerCase();
-			return title.search(filterInput.toLowerCase()) !== -1;
-		});
+		const { initialOpportunities } = this.state;
+		const filteredOpportunities = Object.keys(initialOpportunities).reduce((filtered, key) => {
+			const thisOpp = initialOpportunities[key];
+			const title = thisOpp.title.toLowerCase();
+			if (title.search(filterInput.toLowerCase()) !== -1) filtered[key] = thisOpp;
+			return filtered;
+		}, {});
 
-		this.setState({opportunities: filtered});
+		this.setState({opportunities: filteredOpportunities});
 
 		// let filtered = initialArray.filter(function(opp) {
 			
