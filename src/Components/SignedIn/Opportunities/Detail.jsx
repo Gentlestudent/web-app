@@ -175,6 +175,7 @@ postBadgrBadge(tries = 0) {
     await firestore.createNewParticipation(data);
     try {
       await functions.notifyIssuer({
+        opportunityId: this.props.id,
         opportunityTitle: this.props.opportunity.title,
         participantName: auth.getUserName(),
         issuerEmail: this.state.issuer.email,
