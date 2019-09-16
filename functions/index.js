@@ -286,7 +286,7 @@ exports.notifyIssuer = functions.https.onCall((data) => {
         '<p>De gegevens van deze persoon zijn: </p>' +
         '<p> - Naam: ' + participantName + '</p>' +
         '<p> - E-mailadres: ' + participantEmail + '</p>' +
-        `<p>Op <a href="https://gentlestudent.gent/opportunities/${opportunityId}">deze pagina</a> kan je jouw leerkans terugvinden, en indien je bent ingelogd de deelnemer accepteren. Zodra je de deelnemer accepteert, zal hij/zij een bevestigingsmail krijgen. Pas daarna kan de deelnemer met jou contact opnemen om verder af te stemmen.</p>` +
+        `<p>Op <a href="https://gentlestudent.gent/opportunities/${opportunityId}">deze pagina</a> kan je jouw leerkans terugvinden, en indien je bent ingelogd kan je er de deelnemer accepteren. Zodra je de deelnemer accepteert, zal hij/zij een bevestigingsmail krijgen. Pas daarna kan de deelnemer met jou contact opnemen om verder af te stemmen.</p>` +
         '<p>Met vriendelijke groet,</p>' +
         '<p>Team Gentlestudent</p>';
 
