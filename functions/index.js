@@ -168,13 +168,10 @@ exports.createBadgeClass = functions.https.onCall(async (data) => {
 
     return getHeader().then(async (res) => {
         let header = res.header;
-        console.log("Fetched header", header);
-        console.log("Posting", badgeData, "to", url);
         const res2 = await axios.post(url, badgeData, header);
 
         switch (res2.status) {
             case 201:
-                console.log("Created badgeclass\nAPI response:", res2);
                 return {
                     status: res2.status,
                     message: "Created badge class!!",
@@ -192,7 +189,7 @@ exports.createBadgeClass = functions.https.onCall(async (data) => {
             case 401:
                 throw new functions.https.HttpsError("permission-denied", "Access token expired, try refreshing it");
             default:
-                console.error("An error happened :'(", err);
+                console.error(err);
                 throw new functions.https.HttpsError("aborted", "an error occurred while trying to add new badgeclass...", err)
         }
     });
