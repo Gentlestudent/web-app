@@ -1622,7 +1622,7 @@ ul li.list:hover .delete {
 .register-form-content
 {
   background-color:#00AACC;
-  height: calc(100vh - 100px);
+  min-height: calc(100vh - 100px);
 }
 
 .register-form input
