@@ -14,8 +14,8 @@
     "no-unused-expressions": ["error", { "allowTernary": true }],
     "no-return-assign": [2, "except-parens"],
     "no-param-reassign": ["error", { "props": false }],
-    "react/jsx-one-expression-per-line": 0,
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": ["**/next.config.js"] }]
+    "react/react-in-jsx-scope": 0,
+    "react/jsx-one-expression-per-line": 0
   },
   "settings": {
     "react": {

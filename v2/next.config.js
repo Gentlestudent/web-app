@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 require('dotenv').config();
 
 const ENV = process.env.ENV || 'development';
