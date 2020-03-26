@@ -5,7 +5,7 @@ export default () => (
     {`
       @font-face {
         font-family: 'Open Sans';
-        src: url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+        font-weight: 400;
         font-display: swap;
       }
 
