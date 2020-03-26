@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import GlobalStyles from '@/styles/global';
 
 const Home = () => (
   <div className="container">
@@ -6,6 +7,7 @@ const Home = () => (
       <title>Gentlestudent</title>
     </Head>
     <main>Hello world</main>
+    <GlobalStyles />
   </div>
 );
 
