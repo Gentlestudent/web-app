@@ -4,7 +4,7 @@ import 'firebase/database';
 
 const config = process.env.FIREBASE;
 
-export const app = firebase.initializeApp(config);
+export const app = !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
 export const auth = firebase.auth();
 
 export const { RecaptchaVerifier } = firebase.auth;
