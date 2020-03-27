@@ -1,14 +1,17 @@
+import { useContext } from 'react';
 import Head from 'next/head';
-import GlobalStyles from '@/styles/global';
+import AuthContext from '@/context/auth';
 
-const Home = () => (
-  <div className="container">
-    <Head>
-      <title>Welkom | Gentlestudent</title>
-    </Head>
-    <main>Hello world</main>
-    <GlobalStyles />
-  </div>
-);
+const Home = () => {
+  const { isUserSignedIn, currentUser } = useContext(AuthContext);
+  return (
+    <>
+      <Head>
+        <title>Welkom | Gentlestudent</title>
+      </Head>
+      <main>{isUserSignedIn && currentUser}</main>
+    </>
+  );
+};
 
 export default Home;
