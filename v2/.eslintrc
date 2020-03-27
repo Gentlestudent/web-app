@@ -14,6 +14,12 @@
     "no-unused-expressions": ["error", { "allowTernary": true }],
     "no-return-assign": [2, "except-parens"],
     "no-param-reassign": ["error", { "props": false }],
+    "react/jsx-props-no-spreading": [
+      "error",
+      {
+        "html": "ignore"
+      }
+    ],
     "react/react-in-jsx-scope": 0,
     "react/jsx-one-expression-per-line": 0
   },
