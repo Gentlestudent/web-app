@@ -20,6 +20,7 @@
     "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "styled-jsx": "^3.2.5",
     "yarn": "^1.22.4"
   },
   "devDependencies": {
