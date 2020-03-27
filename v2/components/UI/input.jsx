@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { colors } from '@/styles/constants';
 import Icon from './icon';
 
-const Input = ({ icon, placeholder, type, ...rest }) => {
+const Input = ({ type, icon = null, placeholder = '', ...rest }) => {
   return (
     <>
       <div>
@@ -11,7 +11,7 @@ const Input = ({ icon, placeholder, type, ...rest }) => {
             <Icon name={icon} />
           </i>
         )}
-        <input id="email" type={type} placeholder={placeholder} {...rest} />
+        <input type={type} placeholder={placeholder} {...rest} />
       </div>
       <style jsx>
         {`
@@ -39,11 +39,6 @@ const Input = ({ icon, placeholder, type, ...rest }) => {
       </style>
     </>
   );
-};
-
-Input.defaultProps = {
-  placeholder: '',
-  icon: null
 };
 
 Input.propTypes = {
