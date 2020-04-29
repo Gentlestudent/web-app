@@ -4,21 +4,24 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "watch:client": "next src",
+    "clean": "rimraf dist",
+    "watch:client": "next -p 5000 src",
     "watch:server": "babel server --out-dir dist --source-maps --watch",
     "build:client": "next build src",
     "build:server": "babel server --out-dir dist --source-maps",
-    "build": "cross-env ENV=production yarn run build:client && ",
+    "build": "cross-env ENV=production yarn build:client && yarn build:server",
     "dev": "cross-env ENV=development concurrently \"yarn watch:client\" \"yarn watch:server\"",
-    "start": "next start",
-    "serve": "cross-env ENV=development firebase serve --only functions,hosting",
-    "deploy": "firebase deploy"
+    "serve": "cd dist && firebase serve -p 3000 --debug -o 0.0.0.0",
+    "deploy": "yarn build && cd dist && firebase deploy",
+    "logs": "firebase functions:log"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
     "@fortawesome/free-brands-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "firebase": "^7.14.2",
     "firebase-admin": "^8.11.0",
     "firebase-functions": "^3.6.1",
@@ -49,6 +52,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
-    "prettier": "^2.0.2"
+    "prettier": "^2.0.2",
+    "rimraf": "^3.0.2"
   }
 }

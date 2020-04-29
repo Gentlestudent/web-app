@@ -1,6 +1,9 @@
-const admin = require('firebase-admin');
-const functions = require('firebase-functions');
-const next = require('next');
+import admin from 'firebase-admin';
+import * as functions from 'firebase-functions';
+import next from 'next';
+import express from 'express';
+import cors from 'cors';
+import routes from './routes';
 
 const ENV = process.env.ENV || 'development';
 const config = require(`../environments`)(ENV);
@@ -11,22 +14,26 @@ admin.initializeApp({
 });
 
 const isDev = ENV !== 'production';
-const app = next({
-  dev: isDev,
-  conf: { distDir: 'dist/app' }
+const nextApp = next({ dev: isDev, conf: { distDir: 'dist/app' } });
+const handle = nextApp.getRequestHandler();
+
+const server = express();
+server.disable('x-powered-by');
+server.use(cors({ origin: true }));
+server.use('/api/v1', routes);
+server.set('trust proxy', 1);
+
+server.get('*', (req, res) => {
+  return handle(req, res);
 });
-const handle = app.getRequestHandler();
 
 // TODO: Optimize cold start times
-const api = functions.https.onRequest((request, response) => {
+const app = functions.https.onRequest(async (request, response) => {
   // log the page.js file or resource being requested
   console.log(`File: ${request.originalUrl}`);
-  return app.prepare().then(() => handle(request, response));
+  await nextApp.prepare();
+  return server(request, response);
 });
 
-const nextjs = {
-  api
-};
-
 // eslint-disable-next-line import/prefer-default-export
-module.exports = { nextjs };
+export { app };
