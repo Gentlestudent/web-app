@@ -4,12 +4,12 @@ require('dotenv').config();
 const path = require('path');
 
 const ENV = process.env.ENV || 'development';
-const publicENV = require(`./environments`)(ENV);
+const publicENV = require(`../environments`)(ENV);
 
 module.exports = {
   webpack: (config) => {
     // root import alias
-    config.resolve.alias['@'] = path.resolve(`${__dirname}/`);
+    config.resolve.alias['@'] = path.resolve(`${__dirname}/src`);
     return config;
   },
   env: {

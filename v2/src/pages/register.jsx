@@ -3,7 +3,7 @@ import Head from 'next/head';
 import AuthContext from '@/context/auth';
 import { useInput } from '@/hooks';
 import { Button, Input } from '@/components/UI';
-import { auth } from '@/api/auth';
+import { registerWithEmailPassword } from '@/api/auth';
 
 const Register = () => {
   const { isUserSignedIn } = useContext(AuthContext);
@@ -18,6 +18,18 @@ const Register = () => {
   const doRegister = (e) => {
     e.preventDefault();
     console.log(email, firstName, lastName, organisation, password, repeatPassword);
+    /*
+    registerWithEmailPassword(formFields.email, formFields.password)
+    .then(async authUser => {
+      await authUser.user.updateProfile({displayName: firstname + " " + lastname});
+      console.log(auth.getUserId());
+      authUser.user.sendEmailVerification();
+      self.setState(() => ({ ...INITIAL_STATE }));
+    })
+    .catch(error => {
+      // TODO handle error
+    });
+    */
   };
 
   return (
