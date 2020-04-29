@@ -9,7 +9,7 @@ node_modules
 /coverage
 
 # next.js
-/.next/
+.next
 /out/
 
 # production
@@ -17,14 +17,12 @@ node_modules
 
 # misc
 .DS_Store
-.env*
 
 # debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+*.log*
 
-.next
+dist
 
+.env*
 environments/env.*.js
 !environments/env.example.js

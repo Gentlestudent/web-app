@@ -9,7 +9,7 @@ const Home = () => {
       <Head>
         <title>Welkom | Gentlestudent</title>
       </Head>
-      <main>{isUserSignedIn && currentUser}</main>
+      <main>Hello</main>
     </>
   );
 };

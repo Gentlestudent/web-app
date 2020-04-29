@@ -19,5 +19,6 @@ module.exports = {
     token_uri: '',
     auth_provider_x509_cert_url: '',
     client_x509_cert_url: ''
-  }
+  },
+  DB_URL: ''
 };

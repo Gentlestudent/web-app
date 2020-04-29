@@ -2,19 +2,26 @@
   "name": "gentlestudent",
   "version": "2.0.0",
   "private": true,
+  "main": "dist/index.js",
   "scripts": {
-    "dev": "cross-env ENV=development next dev",
-    "build": "cross-env ENV=development next build",
-    "build:prod": "cross-env ENV=production next build",
-    "start": "next start"
+    "watch:client": "next src",
+    "watch:server": "babel server --out-dir dist --source-maps --watch",
+    "build:client": "next build src",
+    "build:server": "babel server --out-dir dist --source-maps",
+    "build": "cross-env ENV=production yarn run build:client && ",
+    "dev": "cross-env ENV=development concurrently \"yarn watch:client\" \"yarn watch:server\"",
+    "start": "next start",
+    "serve": "cross-env ENV=development firebase serve --only functions,hosting",
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
     "@fortawesome/free-brands-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
-    "add": "^2.0.6",
-    "firebase": "^7.12.0",
+    "firebase": "^7.14.2",
+    "firebase-admin": "^8.11.0",
+    "firebase-functions": "^3.6.1",
     "next": "9.3.1",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
@@ -23,8 +30,15 @@
     "styled-jsx": "^3.2.5",
     "yarn": "^1.22.4"
   },
+  "engines": {
+    "node": "10"
+  },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
     "babel-eslint": "^10.1.0",
+    "concurrently": "^5.2.0",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
