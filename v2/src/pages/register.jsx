@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import Head from 'next/head';
-import AuthContext from '@/context/auth';
-import { useInput } from '@/hooks';
-import { Button, Input } from '@/components/UI';
-import { registerWithEmailPassword } from '@/api/auth';
+import AuthContext from '../context/auth';
+import { useInput } from '../hooks';
+import { Button, Input } from '../components/UI';
+import { registerWithEmailPassword } from '../api/auth';
 
 const Register = () => {
   const { isUserSignedIn } = useContext(AuthContext);

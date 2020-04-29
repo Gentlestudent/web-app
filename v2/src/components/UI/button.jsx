@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { colors } from '@/styles/constants';
+import { colors } from '../../styles/constants';
 import Icon from './icon';
 
 const Button = ({

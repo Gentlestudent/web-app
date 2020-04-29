@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import Head from 'next/head';
-import AuthContext from '@/context/auth';
+import AuthContext from '../context/auth';
 
 const Home = () => {
   const { isUserSignedIn, currentUser } = useContext(AuthContext);

@@ -21,7 +21,7 @@ node_modules
 # debug
 *.log*
 
-dist
+server/app
 
 .env*
 environments/env.*.js

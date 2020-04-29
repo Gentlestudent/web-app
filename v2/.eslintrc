@@ -28,12 +28,6 @@
   "settings": {
     "react": {
       "version": "16.13"
-    },
-    "import/resolver": {
-      "alias": {
-        "map": [["@", "./src/"]],
-        "extensions": [".js", ".jsx", ".json", ""]
-      }
     }
   }
 }

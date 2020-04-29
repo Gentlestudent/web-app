@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import AuthContext from '@/context/auth';
-import { createAuthSubscription } from '@/api/auth';
+import AuthContext from '../context/auth';
+import { createAuthSubscription } from '../api/auth';
 
 const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState({
