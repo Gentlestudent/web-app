@@ -1,5 +1,5 @@
-const development = require('./development');
-const production = require('./production');
+const development = require('./env.dev');
+const production = require('./env.production');
 
 const environments = { development, production };
 
