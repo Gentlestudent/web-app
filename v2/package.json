@@ -18,15 +18,16 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "dotenv": "^8.2.0",
-    "normalize.css": "^8.0.1",
-    "prop-types": "^15.7.2",
     "firebase": "^7.14.2",
     "firebase-admin": "^8.11.0",
     "firebase-functions": "^3.6.1",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^9.3.5",
+    "normalize.css": "^8.0.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-firebase-hooks": "^2.1.1",
     "swr": "^0.2.0"
   },
   "engines": {
@@ -45,8 +46,8 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
-    "prettier": "^2.0.2",
     "firebase-functions-test": "^0.2.1",
+    "prettier": "^2.0.2",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4"
   }
