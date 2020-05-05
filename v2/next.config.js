@@ -1,16 +1,12 @@
-/* eslint-disable import/no-extraneous-dependencies */
-require('dotenv').config();
-
-const ENV = process.env.ENV || 'development';
-const allEnvVariables = require(`./environments`)(ENV);
+const env = require('./environments')(process.env.NODE_ENV || 'development');
 
 module.exports = {
-  distDir: 'server/app',
-  target: 'serverless',
-  poweredByHeader: false,
+  distDir: 'nextjs',
   env: {
-    FIREBASE: allEnvVariables.FIREBASE
-    // manually add keys from .env files as such
-    // VARIABLE: process.env.VARIABLE
+    FIREBASE_PROJECT_ID: 'gentlestudent-dev',
+    FIREBASE: env.public.FIREBASE
+  },
+  experimental: {
+    sprFlushToDisk: false
   }
 };

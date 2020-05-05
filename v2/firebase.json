@@ -1,15 +1,38 @@
 {
-  "hosting": {
-    "public": "public",
-    "rewrites": [
-      {
-        "source": "**/**",
-        "function": "app"
-      }
-    ]
+  "firestore": {
+    "rules": "firestore.rules"
   },
   "functions": {
     "source": ".",
-    "ignore": [".firebase/**", ".firebaserc", "firebase.json", "**/node_modules/**", "**/public/**"]
+    "ignore": [
+      "firebase.json",
+      "firbease-debug.log",
+      "**/.*",
+      "**/node_modules/**",
+      "components/**",
+      "helpers/**",
+      "out/**",
+      "pages/**",
+      "public/**",
+      "scripts/**",
+      "firestore.rules",
+      "readme.md"
+    ]
+  },
+  "hosting": {
+    "site": "gentlestudent-dev",
+    "public": "out",
+    "cleanUrls": true,
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "nextjs-server"
+      }
+    ]
+  },
+  "emulators": {
+    "hosting": {
+      "port": 4000
+    }
   }
 }
