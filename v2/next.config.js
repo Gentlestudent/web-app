@@ -1,6 +1,7 @@
+const withImages = require('next-images');
 const env = require('./environments')(process.env.NODE_ENV || 'development');
 
-module.exports = {
+module.exports = withImages({
   distDir: 'nextjs',
   env: {
     FIREBASE_PROJECT_ID: 'gentlestudent-dev',
@@ -9,4 +10,4 @@ module.exports = {
   experimental: {
     sprFlushToDisk: false
   }
-};
+});
