@@ -1,7 +1,8 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
+import Nav from '../components/header';
 import { auth } from '../api/firebase';
 
-import globalStyles from '../styles/global';
+import globalStyles from '../assets/styles/global';
 
 const App = ({ Component, pageProps }) => {
   const [user, loading, error] = useAuthState(auth);

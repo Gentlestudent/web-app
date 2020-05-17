@@ -7,3 +7,5 @@ export const registerWithEmailPassword = (email, password) =>
 
 export const signInWithEmailPassword = (email, password) =>
   auth.signInWithEmailAndPassword(email, password);
+
+export const signOut = () => auth.signOut();
