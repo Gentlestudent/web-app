@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import Head from 'next/head';
 import AuthContext from '../context/auth';
+import { Heading } from '../components/UI';
 
 const Home = () => {
   const { isUserSignedIn, currentUser } = useContext(AuthContext);
@@ -9,7 +10,8 @@ const Home = () => {
       <Head>
         <title>Welkom | Gentlestudent</title>
       </Head>
-      <main>Hello</main>
+      <Heading level={1} color="#000" title="Aan de slag met Gentlestudent" />
+      <Heading level={2} color="#000" title="“Verken je stad, help je buren.”" />
     </>
   );
 };
