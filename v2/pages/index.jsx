@@ -42,7 +42,6 @@ const Home = () => {
       <section id="three">{/* about app + footer */}</section>
       <style jsx>
         {`
-          /* TODO: add mandatory y scroll on html element */
           section {
             scroll-snap-align: start;
             min-height: 100vh;
