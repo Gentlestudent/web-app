@@ -16,4 +16,10 @@ const colors = {
   copy: '#707070'
 };
 
-export { fonts, colors };
+const breakpoints = {
+  small: '768px',
+  medium: '1280px',
+  large: '1440px'
+};
+
+export { fonts, colors, breakpoints };
