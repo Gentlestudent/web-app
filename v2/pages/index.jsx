@@ -1,9 +1,11 @@
 import { useContext } from 'react';
 import Head from 'next/head';
 import AuthContext from '../context/auth';
-import { Heading, Card } from '../components/UI';
+import { Heading, Card, Button } from '../components/UI';
 import IntroVideo from '../components/introVideo';
 import eyecatcher from '../assets/img/home/eyecatcher.jpg';
+import whatsNew from '../assets/img/home/wat-is-er-nieuw.png';
+import Download from '../components/download';
 import { colors, breakpoints } from '../assets/styles/constants';
 
 const MockCard = () => (
@@ -39,7 +41,21 @@ const Home = () => {
           <MockCard />
         </div>
       </section>
-      <section id="three">{/* about app + footer */}</section>
+      <section id="three">
+        <div className="whats-new">
+          <div className="content">
+            <Heading
+              level={2}
+              color={colors.white}
+              title="
+            Zie wat Gentlestudent heeft te bieden en wat je mag verwachten in de toekomst"
+            />
+            <a href="#">Wat is er nieuw?</a>
+          </div>
+        </div>
+        <div className="spacer" />
+        <Download />
+      </section>
       <style jsx>
         {`
           section {
@@ -64,8 +80,8 @@ const Home = () => {
           .card-group {
             display: flex;
             padding: 1rem;
-            margin: 10rem;
-            max-width: 120rem;
+            margin: 8rem;
+            max-width: 100rem;
           }
 
           @media (max-width: ${breakpoints.small}) {
@@ -77,6 +93,25 @@ const Home = () => {
 
           #three {
             background: ${colors.grayLight};
+            color: #fff;
+          }
+
+          .whats-new {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: url(${whatsNew});
+            background-size: cover;
+          }
+
+          .content {
+            max-width: 100rem;
+          }
+
+          .spacer {
+            height: 10rem;
           }
         `}
       </style>
