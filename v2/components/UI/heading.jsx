@@ -13,6 +13,35 @@ const Heading = ({ color, title, level }) => {
             font-weight: bold;
             font-family: ${fonts.titles};
           }
+          h1 {
+            font-size: 4.5rem;
+            margin: 0.45rem 0;
+          }
+
+          h2 {
+            font-size: 3rem;
+            margin: 0.3rem 0;
+          }
+
+          h3 {
+            font-size: 1.8rem;
+            margin: 0.18rem 0;
+          }
+
+          h4 {
+            font-size: 1.5rem;
+            margin: 0.15 0;
+          }
+
+          h5 {
+            font-size: 1.2rem;
+            margin: 0.12 0;
+          }
+
+          h6 {
+            font-size: 1rem;
+            margin: 0.1 0;
+          }
         `}
       </style>
     </H>
