@@ -18,6 +18,7 @@ const MockCard = () => (
             en op één infoavond de presentatie 
             omtrent de groepsaankoop hebt gegeven. 
             (Het presentatiemateriaal is reeds beschikbaar)."
+    alt="Gent Zonnestad presentatie"
   />
 );
 

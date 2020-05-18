@@ -6,7 +6,7 @@ import ios from '../assets/img/home/ios.png';
 
 const Download = () => (
   <div className="download">
-    <img src={mockup} alt="mockup" />
+    <img src={mockup} alt="Gentlestudent app being used on a smartphone" />
     <div className="body">
       <h1>Download de mobile app</h1>
       <p>
@@ -21,14 +21,14 @@ const Download = () => (
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src={ios} alt="download-button-ios" />
+          <img src={ios} alt="iOS download button" />
         </a>
         <a
           href="https://play.google.com/store/apps/details?id=gent.gentle.student"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src={android} alt="download-button-android" />
+          <img src={android} alt="Android download button" />
         </a>
       </div>
     </div>
@@ -40,18 +40,18 @@ const Download = () => (
             background ${colors.primary};
             border-radius: 2rem 2rem 0 0;
             max-width: 100rem;
-          }
+        }
 
-          .download > img {
-            position: relative;
-            margin: -8rem 4rem 0 4rem;
-            bottom: 0;
-          }
+        .download > img {
+          position: relative;
+          margin: -8rem 4rem 0 4rem;
+          bottom: 0;
+        }
 
-          .body {
-             margin-top: 4rem;
-          }
-      `}
+        .body {
+           margin-top: 4rem;
+        }
+     `}
     </style>
   </div>
 );

@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import { Heading } from '.';
 
-const Card = ({ image, title, date, description, onClick }) => (
+const Card = ({ image, title, date, description, onClick, alt }) => (
   <div className="card" onClick={onClick}>
-    <img src={image} />
+    <img src={image} alt={alt} />
     <div className="card-header">
       <Heading title={title} />
     </div>
@@ -18,7 +18,7 @@ const Card = ({ image, title, date, description, onClick }) => (
           flex-direction: column;
           border-radius: 1rem;
           margin: 1rem;
-          box-shadow: 0 0.5rem 1rem 2px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
           cursor: pointer;
           border-radius: 2rem;
         }
@@ -38,7 +38,7 @@ const Card = ({ image, title, date, description, onClick }) => (
         }
 
         .card-body > .date {
-          font-size: 80%;
+          font-size: 0.8rem;
         }
       `}
     </style>
@@ -46,9 +46,11 @@ const Card = ({ image, title, date, description, onClick }) => (
 );
 
 Card.propTypes = {
-  image: PropTypes.string,
-  title: PropTypes.string,
-  description: PropTypes.string
+  image: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+  date: PropTypes.string
 };
 
 export default Card;
