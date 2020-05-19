@@ -5,7 +5,7 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
   <div className="card" onClick={onClick}>
     <img src={image} alt={alt} />
     <div className="card-header">
-      <Heading title={title} />
+      <Heading title={title} level={3} />
     </div>
     <div className="card-body">
       <span className="date">{date}</span>
