@@ -11,6 +11,7 @@ export default css.global`
   html {
     box-sizing: border-box;
     font-size: 62.5%;
+    scroll-snap-type: y mandatory;
   }
 
   body {
