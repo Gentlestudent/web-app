@@ -83,6 +83,7 @@ const Home = () => {
             align-items: center;
             background-image: url(${whatsNew});
             background-size: cover;
+            background-color: #000;
           }
 
           .content {
