@@ -50,8 +50,12 @@ const Heading = ({ color, title, level }) => {
 
 Heading.propTypes = {
   color: PropTypes.string,
-  title: PropTypes.element,
+  title: PropTypes.string,
   level: PropTypes.number
+};
+
+Heading.defaultProps = {
+  level: 1
 };
 
 export default Heading;
