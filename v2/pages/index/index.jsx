@@ -76,7 +76,6 @@ const Home = () => {
           #three {
             background: ${colors.grayLight};
             color: #fff;
-            min-height: 100vh;
           }
 
           .whats-new {
@@ -88,6 +87,7 @@ const Home = () => {
             background-image: url(${whatsNew});
             background-size: cover;
             background-color: #000;
+            padding: 10vh 0;
           }
 
           .see-more {
