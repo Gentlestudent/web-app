@@ -17,19 +17,19 @@ const Home = () => {
       <Head>
         <title>Welkom | Gentlestudent</title>
       </Head>
-      <section id="one">
+      <section className="one">
         <Heading level={1} color={colors.white} title="Aan de slag met Gentlestudent" />
         <Heading level={2} color={colors.white} title="“Verken je stad, help je buren.”" />
         <IntroVideo />
       </section>
-      <section id="two">
+      <section className="two">
         <Heading level={2} color={colors.gray} title="Leerkansen" />
         <Cards />
         <Link href="/opportunities">
           <a className="see-more">Meer leerkansen</a>
         </Link>
       </section>
-      <section id="three">
+      <section three="three">
         <div className="whats-new">
           <div className="content">
             <Heading
@@ -52,7 +52,7 @@ const Home = () => {
             flex-direction: column;
           }
 
-          #one {
+          .one {
             background-image: url(${eyecatcher});
             background-size: cover;
             justify-content: center;
@@ -60,7 +60,7 @@ const Home = () => {
             min-height: 100vh;
           }
 
-          #two {
+          .two {
             justify-content: center;
             align-items: center;
             padding: 2rem;
@@ -73,7 +73,7 @@ const Home = () => {
             }
           }
 
-          #three {
+          .three {
             background: ${colors.grayLight};
             color: #fff;
           }
