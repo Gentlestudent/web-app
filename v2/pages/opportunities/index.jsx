@@ -1,15 +1,13 @@
 import Router from 'next/router';
-import Link from 'next/link';
 import { useCollectionOnce } from 'react-firebase-hooks/firestore';
 import { firestore } from '../../api/firebase';
 import { routes } from '../../constants';
 
-const Opportunities = () => {
-  const [value, loading, error] = useCollectionOnce(firestore.collection('Opportunities').limit(3));
+export default () => {
+  const [value, loading, error] = useCollectionOnce(firestore.collection('Opportunities'));
   return (
     <>
-      {!loading &&
-        value &&
+      {value &&
         value.docs.map((doc) => {
           const { title, description } = doc.data();
           const { id } = doc;
@@ -27,5 +25,3 @@ const Opportunities = () => {
     </>
   );
 };
-
-export default Opportunities;
