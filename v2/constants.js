@@ -6,22 +6,24 @@ export const routes = {
    */
 
   /* public */
-  opportunities: '/opportunities',
-  opportunity: '/opportunities/[id]',
+  OPPORTUNITIES: '/opportunities',
+  OPPORTUNITY: '/opportunities/[id]',
 
   /* user */
   user: {
-    opportunities: '/user/opportunities'
+    OPPORTUNITIES: '/user/opportunities'
   },
 
   /* issuer */
   issuer: {
-    opportunities: '/issuer/opportunities',
-    opportunity: '/issuer/opportunities/[id]',
-    createOpportunity: '/issuer/opportunities/create',
-    editOpportunity: '/issuer/opportunities/[id]/edit'
+    OPPORTUNITIES: '/issuer/opportunities',
+    OPPORTUNITY: '/issuer/opportunities/[id]',
+    CREATE_OPPORTUNITY: '/issuer/opportunities/create',
+    EDIT_OPPORTUNITY: '/issuer/opportunities/[id]/edit'
   },
 
   /* admin */
-  validateOpportunity: '/admin/validate-opportunity'
+  admin: {
+    VALIDATE_OPPORTUNITY: '/admin/opportunity/[id]/validate'
+  }
 };
