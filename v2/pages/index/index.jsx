@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import AuthContext from '../../context/auth';
 import { Heading } from '../../components/UI';
+import Layout from '../../components/layout';
 import IntroVideo from './introVideo';
 import eyecatcher from '../../assets/img/home/eyecatcher.jpg';
 import whatsNew from '../../assets/img/home/wat-is-er-nieuw.png';
@@ -13,37 +14,39 @@ import { colors, breakpoints } from '../../assets/styles/constants';
 const Home = () => {
   const { isUserSignedIn, currentUser } = useContext(AuthContext);
   return (
-    <div className="scroll-snap">
-      <Head>
-        <title>Welkom | Gentlestudent</title>
-      </Head>
-      <section id="one">
-        <Heading level={1} color={colors.white} title="Aan de slag met Gentlestudent" />
-        <Heading level={2} color={colors.white} title="“Verken je stad, help je buren.”" />
-        <IntroVideo />
-      </section>
-      <section id="two">
-        <Heading level={2} color={colors.gray} title="Leerkansen" />
-        <Cards />
-        <Link href="/opportunities">
-          <a className="see-more">Meer leerkansen</a>
-        </Link>
-      </section>
-      <section id="three">
-        <div className="whats-new">
-          <div className="content">
-            <Heading
-              level={2}
-              color={colors.white}
-              title="
+    <Layout>
+      <div className="scroll-snap">
+        <Head>
+          <title>Welkom | Gentlestudent</title>
+        </Head>
+        <section id="one">
+          <Heading level={1} color={colors.white} title="Aan de slag met Gentlestudent" />
+          <Heading level={2} color={colors.white} title="“Verken je stad, help je buren.”" />
+          <IntroVideo />
+        </section>
+        <section id="two">
+          <Heading level={2} color={colors.gray} title="Leerkansen" />
+          <Cards />
+          <Link href="/opportunities">
+            <a className="see-more">Meer leerkansen</a>
+          </Link>
+        </section>
+        <section id="three">
+          <div className="whats-new">
+            <div className="content">
+              <Heading
+                level={2}
+                color={colors.white}
+                title="
             Zie wat Gentlestudent heeft te bieden en wat je mag verwachten in de toekomst"
-            />
-            <a href="#">Wat is er nieuw?</a>
+              />
+              <a href="#">Wat is er nieuw?</a>
+            </div>
           </div>
-        </div>
-        <div className="spacer" />
-        <Download />
-      </section>
+          <div className="spacer" />
+          <Download />
+        </section>
+      </div>
       <style jsx>
         {`
           section {
@@ -107,7 +110,7 @@ const Home = () => {
           }
         `}
       </style>
-    </div>
+    </Layout>
   );
 };
 

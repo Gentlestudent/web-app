@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import Head from 'next/head';
 import AuthContext from '../context/auth';
 import { useInput } from '../hooks';
+import Layout from '../components/layout';
 import { Button, Input } from '../components/UI';
 import { registerWithEmailPassword } from '../api/auth';
 
@@ -33,7 +34,7 @@ const Register = () => {
   };
 
   return (
-    <>
+    <Layout>
       <Head>
         <title>Registreer | Gentlestudent</title>
       </Head>
@@ -112,7 +113,7 @@ const Register = () => {
           `}
         </style>
       </form>
-    </>
+    </Layout>
   );
 };
 
