@@ -88,6 +88,7 @@ const Home = () => {
             background-size: cover;
             background-color: #000;
             padding: 10vh 0;
+            margin-bottom: 10rem;
           }
 
           .see-more {
@@ -100,10 +101,6 @@ const Home = () => {
 
           .content {
             max-width: 100rem;
-          }
-
-          .spacer {
-            height: 10rem;
           }
         `}
       </style>
