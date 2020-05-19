@@ -12,7 +12,7 @@ export default () => {
   const [value, loading, error] = useCollectionOnce(firestore.collection('Opportunities'));
   return (
     <>
-      <Link href={routes.issuer.createOpportunity}>Create new opportunity</Link>
+      <Link href={routes.issuer.CREATE_OPPORTUNITY}>Create new opportunity</Link>
       {value &&
         value.docs.map((doc) => {
           const { title } = doc.data();
@@ -22,7 +22,7 @@ export default () => {
               <div
                 key={id}
                 onClick={() =>
-                  Router.push(routes.issuer.opportunity, `${routes.issuer.opportunities}/${id}`)
+                  Router.push(routes.issuer.OPPORTUNITY, `${routes.issuer.OPPORTUNITIES}/${id}`)
                 }
               >
                 {title}

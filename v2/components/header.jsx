@@ -12,15 +12,15 @@ import logo from '../assets/img/logo.svg';
 
 const NavigationIssuer = () => (
   <>
-    <Link href={routes.CreatedOpportunities}>Aangemaakte leerkansen</Link>
-    <Link href={routes.CreateOpportunity}>Maak leerkans</Link>
+    <Link href={routes.issuer.OPPORTUNITIES}>Aangemaakte leerkansen</Link>
+    <Link href={routes.issuer.CREATE_OPPORTUNITY}>Maak leerkans</Link>
   </>
 );
 
 const NavigationAdmin = () => (
   <>
     <Link href={routes.ValidateIssuer}>Valideer issuer</Link>
-    <Link href={routes.ValidateOpportunity}>Valideer leerkans</Link>
+    <Link href={routes.admin.VALIDATE_OPPORTUNITY}>Valideer leerkans</Link>
   </>
 );
 const NavLink = ({ href, children, isButton, ...rest }) => {
@@ -71,7 +71,7 @@ const Header = () => {
             <span className="navicon" />
           </label>
           <ul className="menu">
-            <NavLink href={routes.opportunities}>Leerkansen</NavLink>
+            <NavLink href={routes.OPPORTUNITIES}>Leerkansen</NavLink>
             {/* <NavLink href={routes.quests}>Quests</NavLink> */}
             <NavLink href={routes.news}>Nieuws</NavLink>
             <NavLink href={routes.aboutUs}>Over ons</NavLink>
@@ -109,7 +109,7 @@ const Header = () => {
                       <div className="dropdown-menu-list">
                         <Link href={routes.Profile}>Profiel</Link>
                         <Link href={routes.Backpack}>Backpack</Link>
-                        <Link href={routes.MyOpportunities}>Mijn Leerkansen</Link>
+                        <Link href={routes.user.OPPORTUNITIES}>Mijn Leerkansen</Link>
                         {!!isIssuer && (
                           <div className="nav-dropdown-ext">
                             <NavigationIssuer />
@@ -133,15 +133,17 @@ const Header = () => {
                     <Link href={routes.Backpack}>Backpack</Link>
                   </li>
                   {(isAdmin || isIssuer) && (
-                    <NavLink href={routes.createOpportunity}>Maak leerkans</NavLink>
+                    <NavLink href={routes.issuer.CREATE_OPPORTUNITY}>Maak leerkans</NavLink>
                   )}
                   {isIssuer && (
-                    <NavLink href={routes.createdOpportunities}>Aangemaakte Leerkansen</NavLink>
+                    <NavLink href={routes.issuer.CREATE_OPPORTUNITY}>
+                      Aangemaakte Leerkansen
+                    </NavLink>
                   )}
                   {isAdmin && (
                     <>
                       <NavLink href={routes.validateIssuer}>Valideer issuer</NavLink>
-                      <NavLink href={routes.validateOpportunity}>Valideer leerkans</NavLink>
+                      <NavLink href={routes.admin.VALIDATE_OPPORTUNITY}>Valideer leerkans</NavLink>
                     </>
                   )}
                 </div>

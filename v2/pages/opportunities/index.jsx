@@ -15,7 +15,7 @@ export default () => {
             !loading && (
               <div
                 key={id}
-                onClick={() => Router.push(routes.opportunity, `${routes.opportunities}/${id}`)}
+                onClick={() => Router.push(routes.OPPORTUNITY, `${routes.OPPORTUNITIES}/${id}`)}
               >
                 {title}
               </div>
