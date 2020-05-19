@@ -5,6 +5,7 @@ import android from '../../assets/img/home/android.png';
 import ios from '../../assets/img/home/ios.png';
 
 const Download = () => (
+  <div className="download-container">
   <div className="download">
     <img src={mockup} alt="Gentlestudent app being used on a smartphone" />
     <div className="body">
@@ -32,19 +33,25 @@ const Download = () => (
         </a>
       </div>
     </div>
+  </div>
     <style jsx>
       {`
+        .download-container {
+          background ${colors.primary};
+          display: flex;
+          justify-content: center;
+        }
+
         .download {
-            display: flex;
-            align-self: center;
-            background ${colors.primary};
-            border-radius: 2rem 2rem 0 0;
-            max-width: 100rem;
+          display: flex;
+          align-items: center;
+          border-radius: 2rem 2rem 0 0;
+          max-width: 100rem;
         }
 
         .download > img {
           position: relative;
-          margin: -8rem 4rem 0 4rem;
+          margin: -8rem 4rem 0 0;
           bottom: 0;
         }
 
