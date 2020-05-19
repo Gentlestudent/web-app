@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import Link from 'next/link';
 import Head from 'next/head';
 import AuthContext from '../../context/auth';
 import { Heading } from '../../components/UI';
@@ -24,6 +25,9 @@ const Home = () => {
       <section id="two">
         <Heading level={2} color={colors.gray} title="Leerkansen" />
         <Cards />
+        <Link href="/opportunities">
+          <a className="see-more">Meer leerkansen</a>
+        </Link>
       </section>
       <section id="three">
         <div className="whats-new">
@@ -84,6 +88,14 @@ const Home = () => {
             background-image: url(${whatsNew});
             background-size: cover;
             background-color: #000;
+          }
+
+          .see-more {
+            margin: 2rem auto;
+            border-bottom: 2px solid ${colors.primary};
+            color: ${colors.gray};
+            font-size: 2.1rem;
+            font-weight: bold;
           }
 
           .content {
