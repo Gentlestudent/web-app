@@ -1,8 +1,8 @@
-import { colors } from '../assets/styles/constants';
+import { colors } from '../../assets/styles/constants';
 
-import mockup from '../assets/img/home/download-mobile-app.png';
-import android from '../assets/img/home/android.png';
-import ios from '../assets/img/home/ios.png';
+import mockup from '../../assets/img/home/download-mobile-app.png';
+import android from '../../assets/img/home/android.png';
+import ios from '../../assets/img/home/ios.png';
 
 const Download = () => (
   <div className="download">

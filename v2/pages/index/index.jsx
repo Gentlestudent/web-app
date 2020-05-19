@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import Head from 'next/head';
-import AuthContext from '../context/auth';
-import { Heading, Card, Button } from '../components/UI';
-import IntroVideo from '../components/introVideo';
-import eyecatcher from '../assets/img/home/eyecatcher.jpg';
-import whatsNew from '../assets/img/home/wat-is-er-nieuw.png';
-import Download from '../components/download';
-import { colors, breakpoints } from '../assets/styles/constants';
+import AuthContext from '../../context/auth';
+import { Heading, Card } from '../../components/UI';
+import IntroVideo from './introVideo';
+import eyecatcher from '../../assets/img/home/eyecatcher.jpg';
+import whatsNew from '../../assets/img/home/wat-is-er-nieuw.png';
+import Download from './download';
+import { colors, breakpoints } from '../../assets/styles/constants';
 
 const MockCard = () => (
   <Card
