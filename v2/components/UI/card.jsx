@@ -38,7 +38,7 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
         }
 
         .card-body > .date {
-          font-size: 0.8rem;
+          font-size: 1.2rem;
         }
       `}
     </style>
