@@ -6,8 +6,7 @@ const Cards = () => {
   const [value, loading, error] = useCollectionOnce(firestore.collection('Opportunities').limit(3));
   return (
     <div className="card-group">
-      {!loading &&
-        value &&
+      {value &&
         value.docs.map((doc) => {
           const { title, description } = doc.data();
           return (
