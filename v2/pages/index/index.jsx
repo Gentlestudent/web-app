@@ -61,7 +61,6 @@ const Home = () => {
         {`
           section {
             scroll-snap-align: start;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
           }
@@ -71,17 +70,18 @@ const Home = () => {
             background-size: cover;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
           }
 
           #two {
             justify-content: center;
             align-items: center;
+            padding: 2rem;
           }
 
           .card-group {
             display: flex;
             padding: 1rem;
-            margin: 8rem;
             max-width: 100rem;
           }
 
@@ -95,6 +95,7 @@ const Home = () => {
           #three {
             background: ${colors.grayLight};
             color: #fff;
+            min-height: 100vh;
           }
 
           .whats-new {
