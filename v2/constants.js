@@ -10,13 +10,17 @@ export const routes = {
   opportunity: '/opportunities/[id]',
 
   /* user */
-  userOpportunities: '/user/opportunities',
+  user: {
+    opportunities: '/user/opportunities'
+  },
 
   /* issuer */
-  issuerCreateOpportunity: '/issuer/create-opportunity',
-  issuerOpportunities: '/issuer/opportunities',
-  // issuerOpportunity: '/issuer/opportunities/id',
-  // editOpportunity: '/issuer/opportunities/id/edit',
+  issuer: {
+    opportunities: '/issuer/opportunities',
+    opportunity: '/issuer/opportunities/[id]',
+    createOpportunity: '/issuer/opportunities/create',
+    editOpportunity: '/issuer/opportunities/[id]/edit'
+  },
 
   /* admin */
   validateOpportunity: '/admin/validate-opportunity'
