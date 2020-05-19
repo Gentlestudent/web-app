@@ -24,6 +24,6 @@ export const routes = {
 
   /* admin */
   admin: {
-    VALIDATE_OPPORTUNITY: '/admin/opportunity/[id]/validate'
+    VALIDATE_OPPORTUNITY: '/admin/opportunities/[id]/validate'
   }
 };
