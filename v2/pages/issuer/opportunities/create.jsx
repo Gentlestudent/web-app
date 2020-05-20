@@ -1,5 +1,6 @@
 import { useInput } from '../../../hooks';
 import { Heading, FormGroup, Button } from '../../../components/UI';
+import GoBack from '../../../components/goBack';
 
 export default () => {
   const { value: title, bind: bindTitle } = useInput('');
@@ -24,6 +25,7 @@ export default () => {
 
   return (
     <div>
+      <GoBack />
       <Heading title="Maak opportunity" />
       <FormGroup
         label="Titel"
