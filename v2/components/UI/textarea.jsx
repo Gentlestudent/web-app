@@ -3,10 +3,10 @@ import { colors } from '../../assets/styles/constants';
 
 const TextArea = ({ name, placeholder, rows, cols, required }) => (
   <>
-    <textarea name={name} placeholder={placeholder} required={required} />
+    <textarea name={name} placeholder={placeholder} required={required} rows={rows} cols={cols} />
     <style jsx>{`
       textarea {
-        padding: 2rem 2rem 0 2rem;
+        padding: 2rem;
         background: transparent;
         border: 1px solid ${colors.gray};
         width: 100%;
@@ -20,6 +20,10 @@ TextArea.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   required: PropTypes.bool
+};
+
+TextArea.defaultProps = {
+  rows: 3
 };
 
 export default TextArea;
