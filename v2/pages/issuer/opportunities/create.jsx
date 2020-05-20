@@ -1,10 +1,12 @@
 import { useInput } from '../../../hooks';
-import { Heading, FormGroup } from '../../../components/UI';
+import { Heading, FormGroup, Button } from '../../../components/UI';
 
 export default () => {
   const { value: title, bind: bindTitle } = useInput('');
   const { value: domain, bind: bindDomain } = useInput('');
   const { value: description, bind: bindDescription } = useInput('');
+  const { value: expectations, bind: bindExpectations } = useInput('');
+  const { value: level, bind: bindLevel } = useInput('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,7 +14,9 @@ export default () => {
     const opportunity = {
       title,
       domain,
-      description
+      description,
+      expectations,
+      level
     };
 
     console.log(opportunity);
@@ -31,7 +35,7 @@ export default () => {
         {...bindTitle}
       />
       <FormGroup
-        label="Titel"
+        label="Domein"
         info={
           <>
             Duid aan binnen welk domein je leerkans valt.
@@ -55,14 +59,44 @@ export default () => {
       />
       <FormGroup
         label="Beschrijving"
-        info="Schrijf hier een motiverende en uitdagende titel voor jouw leerkans"
+        info="Vul hier de algemene beschrijving in over de leerkans die je als organisatie wil aanbieden. Geef in deze omschrijving ook wat achtergrondinformatie over je instelling mee om zo de leerkans te kunnen kaderen binnen de algemene werking van je organisatie."
         type="textarea"
         name="description"
         placeholder="Volledige beschrijving van de leerkans"
         required
         {...bindDescription}
       />
-      <button onClick={handleSubmit}>Create</button>
+      <FormGroup
+        label="Verwachtingen"
+        info="In dit veld vul je in wat je verwacht dat de student voor jouw organisatie kan betekenen. Wat moet de student kennen, kunnen of doen om de leerkans tot een goed einde te brengen? Stem deze verwachtingen en criteria zeker goed af met het niveau (zie verder)."
+        type="textarea"
+        name="expectations"
+        placeholder="Korte beschrijving van wat er verwacht wordt"
+        required
+        {...bindExpectations}
+      />
+      <FormGroup
+        label="Niveau"
+        info={
+          <>
+            Duid aan binnen welke moeilijkheidsgraad de leerkans valt.{' '}
+            <a
+              href="https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Formopportunity%2Fpdf%2FNiveaus.pdf?alt=media"
+              target="_blank"
+            >
+              Hier
+            </a>{' '}
+            vind je een uitgebreide omschrijving van de verschillende moeilijkheidsgraden."
+          </>
+        }
+        type="dropdown"
+        name="level"
+        options={['01', '02', '03']}
+        placeholder="Selecteer niveau"
+        required
+        {...bindLevel}
+      />
+      <Button onClick={handleSubmit}>Maak leerkans</Button>
     </div>
   );
 };
