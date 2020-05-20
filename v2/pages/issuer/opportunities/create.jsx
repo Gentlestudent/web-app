@@ -1,4 +1,4 @@
-import { Heading, Input, Dropdown } from '../../../components/UI';
+import { Heading, Input, Dropdown, TextArea } from '../../../components/UI';
 
 export default () => (
   <div>
@@ -12,12 +12,12 @@ export default () => (
       required
     />
     <Dropdown
-      label="Domein"
       placeholder="Selecteer domein"
       label="Domein"
       options={['01', '02', '03']}
       name="domain"
       required
     />
+    <TextArea name="description" />
   </div>
 );
