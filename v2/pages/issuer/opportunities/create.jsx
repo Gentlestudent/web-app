@@ -96,6 +96,18 @@ export default () => {
         required
         {...bindLevel}
       />
+      <FormGroup
+        type="text"
+        label="Website"
+        info="Indien je binnen je organisatie een weblink naar meer informatie hebt over dit initiatief dan kan je die link hier toevoegen"
+        placeholder="Website url"
+      />
+      <FormGroup
+        type="email"
+        label="Email contactpersoon"
+        info="Emailadres van de contactpersoon binnen de organisatie"
+        placeholder="Emailadres contactpersoon"
+      />
       <Button onClick={handleSubmit}>Maak leerkans</Button>
     </div>
   );
