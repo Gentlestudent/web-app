@@ -1,9 +1,9 @@
-import { Heading, Input, Dropdown, TextArea } from '../../../components/UI';
+import { Heading, FormGroup } from '../../../components/UI';
 
 export default () => (
   <div>
     <Heading title="Maak opportunity" />
-    <Input
+    <FormGroup
       label="Titel"
       info="Schrijf hier een motiverende en uitdagende titel voor jouw leerkans"
       type="text"
@@ -11,13 +11,22 @@ export default () => (
       placeholder="Titel"
       required
     />
-    <Dropdown
-      placeholder="Selecteer domein"
-      label="Domein"
+    <FormGroup
+      label="Titel"
+      info="Schrijf hier een motiverende en uitdagende titel voor jouw leerkans"
+      type="dropdown"
+      name="title"
       options={['01', '02', '03']}
-      name="domain"
+      placeholder="Selecteer domein"
       required
     />
-    <TextArea name="description" />
+    <FormGroup
+      label="Beschrijving"
+      info="Schrijf hier een motiverende en uitdagende titel voor jouw leerkans"
+      type="textarea"
+      name="title"
+      placeholder="Beschrijving"
+      required
+    />
   </div>
 );
