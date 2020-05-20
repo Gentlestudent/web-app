@@ -15,7 +15,7 @@ const Dropdown = ({ name, placeholder, options }) => (
         border: 1px solid ${colors.gray};
         border-radius: 1rem;
         padding: 2rem;
-        background: ${colors.white};
+        background: transparent;
       }
     `}</style>
   </>

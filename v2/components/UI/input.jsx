@@ -37,13 +37,10 @@ const Input = ({ name, label, info, type, icon, placeholder, required, ...rest }
 
           input {
             width: 100%;
-            height: 100%;
-            color: ${colors.copy};
             background: transparent;
-            border: 0;
-            padding: 1rem;
-            box-shadow: 0 1px 1px ${colors.gray};
-            margin: 1rem 0;
+            padding: 2rem;
+            border: 1px solid ${colors.gray};
+            border-radius: 1rem;
           }
 
           small {
