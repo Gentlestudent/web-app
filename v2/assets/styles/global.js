@@ -55,7 +55,9 @@ export default css.global`
   }
 
   input,
+  label,
   textarea {
     font-family: ${fonts.copy};
+    font-size: inherit;
   }
 `;
