@@ -55,6 +55,7 @@ export default css.global`
   }
 
   input,
+  select,
   label,
   textarea {
     font-family: ${fonts.copy};
