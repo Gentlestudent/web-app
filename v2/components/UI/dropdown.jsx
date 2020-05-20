@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import { colors } from '../../assets/styles/constants';
 
-const Dropdown = ({ name, placeholder, options }) => (
+const Dropdown = ({ name, placeholder, options, ...rest }) => (
   <>
-    <select name={name}>
+    <select name={name} {...rest}>
       {placeholder && <option>{placeholder}</option>}
       {options.map((option, id) => (
-        <option>{option}</option>
+        <option key={id}>{option}</option>
       ))}
     </select>
     <style jsx>{`
