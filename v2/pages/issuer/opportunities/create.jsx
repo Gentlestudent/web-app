@@ -2,6 +2,16 @@ import { useInput } from '../../../hooks';
 import { Heading, FormGroup, Button } from '../../../components/UI';
 import GoBack from '../../../components/goBack';
 
+const DOMAINS = [
+  'Digitale geletterdheid',
+  'Duurzaamheid',
+  'Ondernemingszin',
+  'Onderzoek',
+  'Wereldburgerschap'
+];
+
+const LEVELS = ['Beginner', 'Gevorderd', 'Expert'];
+
 export default () => {
   const { value: title, bind: bindTitle } = useInput('');
   const { value: domain, bind: bindDomain } = useInput('');
@@ -54,7 +64,7 @@ export default () => {
         }
         type="dropdown"
         name="title"
-        options={['01', '02', '03']}
+        options={DOMAINS}
         placeholder="Selecteer domein"
         required
         {...bindDomain}
@@ -93,7 +103,7 @@ export default () => {
         }
         type="dropdown"
         name="level"
-        options={['01', '02', '03']}
+        options={LEVELS}
         placeholder="Selecteer niveau"
         required
         {...bindLevel}
