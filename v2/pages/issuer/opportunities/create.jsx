@@ -32,7 +32,20 @@ export default () => {
       />
       <FormGroup
         label="Titel"
-        info="Schrijf hier een motiverende en uitdagende titel voor jouw leerkans"
+        info={
+          <>
+            Duid aan binnen welk domein je leerkans valt.
+            {` `}
+            <a
+              href="https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Formopportunity%2Fpdf%2FDomeinen.pdf?alt=media"
+              target="_blank"
+            >
+              Hier
+            </a>
+            {` `}
+            vind je een uitgebreide omschrijving van de verschillende categorieën.
+          </>
+        }
         type="dropdown"
         name="title"
         options={['01', '02', '03']}
@@ -45,7 +58,7 @@ export default () => {
         info="Schrijf hier een motiverende en uitdagende titel voor jouw leerkans"
         type="textarea"
         name="description"
-        placeholder="Beschrijving"
+        placeholder="Volledige beschrijving van de leerkans"
         required
         {...bindDescription}
       />

@@ -10,7 +10,12 @@ const FormGroup = ({ type, name, info, required, label, icon, ...rest }) => {
   const [focus, setFocus] = useState(false);
 
   const getLabelText = () => `${label}${required ? '*' : ''}`;
-  const getInfoText = () => `${required ? '' : 'Optioneel: '}${info}`;
+  const getInfoText = () => (
+    <>
+      {required ? '' : 'Optioneel: '}
+      {info}
+    </>
+  );
 
   const getInputByType = () => {
     switch (type) {
