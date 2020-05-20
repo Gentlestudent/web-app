@@ -1,4 +1,4 @@
-import { Heading, Input } from '../../../components/UI';
+import { Heading, Input, Dropdown } from '../../../components/UI';
 
 export default () => (
   <div>
@@ -11,12 +11,12 @@ export default () => (
       placeholder="Titel"
       required
     />
-    <Input
+    <Dropdown
       label="Domein"
-      info="Duid aan binnen welk domein je leerkans valt. <a href='https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Formopportunity%2Fpdf%2FDomeinen.pdf?alt=media' target='_blank'>Hier</a> vind je een uitgebreide omschrijving van de verschillende categorieën."
-      type="dropdown"
-      name="title"
-      placeholder="Titel"
+      placeholder="Selecteer domein"
+      label="Domein"
+      options={['01', '02', '03']}
+      name="domain"
       required
     />
   </div>
