@@ -1,9 +1,16 @@
 import PropTypes from 'prop-types';
 import { colors } from '../../assets/styles/constants';
 
-const TextArea = ({ name, placeholder, rows, cols, required }) => (
+const TextArea = ({ name, placeholder, rows, cols, required, ...rest }) => (
   <>
-    <textarea name={name} placeholder={placeholder} required={required} rows={rows} cols={cols} />
+    <textarea
+      name={name}
+      placeholder={placeholder}
+      required={required}
+      rows={rows}
+      cols={cols}
+      {...rest}
+    />
     <style jsx>{`
       textarea {
         padding: 2rem;

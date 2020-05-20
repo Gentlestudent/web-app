@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { colors } from '../../assets/styles/constants';
 
-const Input = ({ type, name, placeholder, required }) => {
+const Input = ({ type, name, placeholder, required, ...rest }) => {
   return (
     <>
-      <input type={type} name={name} placeholder={placeholder} required={required} />
+      <input type={type} name={name} placeholder={placeholder} required={required} {...rest} />
       <style jsx>
         {`
           input {
