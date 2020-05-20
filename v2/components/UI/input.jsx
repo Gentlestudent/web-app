@@ -3,21 +3,11 @@ import PropTypes from 'prop-types';
 import { colors } from '../../assets/styles/constants';
 import Icon from './icon';
 
-const Dropdown = ({ name }) => (
-  <select name={name}>
-    <option value="01">01</option>
-    <option value="02">02</option>
-    <option value="03">03</option>
-  </select>
-);
-
 const Input = ({ name, label, info, type, icon, placeholder, required, ...rest }) => {
   const [focus, setFocus] = useState(false);
 
   const getLabelText = () => `${label}${required ? '*' : ''}`;
   const getInfoText = () => `${required ? '' : 'Optioneel: '}${info}`;
-
-  if (type === 'dropdown') return <Dropdown name={name} />;
 
   return (
     <div onMouseEnter={() => setFocus(true)} onMouseLeave={() => setFocus(false)}>
