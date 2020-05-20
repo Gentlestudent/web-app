@@ -15,11 +15,11 @@ const FormGroup = ({ type, name, info, required, label, icon, ...rest }) => {
   const getInputByType = () => {
     switch (type) {
       case 'text':
-        return <Input {...rest} />;
+        return <Input type={type} {...rest} />;
       case 'textarea':
-        return <TextArea {...rest} />;
+        return <TextArea name={name} {...rest} />;
       case 'dropdown':
-        return <Dropdown {...rest} />;
+        return <Dropdown name={name} {...rest} />;
     }
   };
 
