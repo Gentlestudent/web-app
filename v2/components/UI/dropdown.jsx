@@ -23,8 +23,8 @@ const Dropdown = ({ name, placeholder, options, ...rest }) => (
 
 Dropdown.propTypes = {
   name: PropTypes.string.isRequired,
-  options: PropTypes.array.isRequired,
-  required: PropTypes.bool
+  placeholder: PropTypes.string,
+  options: PropTypes.array.isRequired
 };
 
 export default Dropdown;
