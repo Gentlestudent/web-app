@@ -6,6 +6,14 @@ import GoBack from '../../../components/goBack';
 import { dropdownOptions } from '../../../constants';
 
 export default () => {
+  /*
+   * TODO: Convert to multi-step form
+   *
+   * 1. Current step number
+   * 2. Current step validation
+   * 3. Current step "save"
+   */
+
   const { value: title, bind: bindTitle } = useInput('');
   const { value: domain, bind: bindDomain } = useInput('');
   const { value: description, bind: bindDescription } = useInput('');
@@ -25,7 +33,10 @@ export default () => {
       level
     };
 
-    console.log(opportunity);
+    /*
+     * TODO:
+     * Add firebase "create opportunity" helper & pass in opportunity
+     */
   };
 
   return (
