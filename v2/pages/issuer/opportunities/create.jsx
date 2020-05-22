@@ -81,7 +81,8 @@ export default () => {
         />
         <FormGroup
           label="Beschrijving"
-          info="Vul hier de algemene beschrijving in over de leerkans die je als organisatie wil aanbieden. Geef in deze omschrijving ook wat achtergrondinformatie over je instelling mee om zo de leerkans te kunnen kaderen binnen de algemene werking van je organisatie."
+          info="Algemene beschrijving van de leerkans die je organisatie biedt. 
+          Geef ook achtergrondinformatie over je instelling om de leerkans binnen je algemene werking te kaderen."
           type="textarea"
           name="description"
           placeholder="Volledige beschrijving van de leerkans"
@@ -90,7 +91,8 @@ export default () => {
         />
         <FormGroup
           label="Verwachtingen"
-          info="In dit veld vul je in wat je verwacht dat de student voor jouw organisatie kan betekenen. Wat moet de student kennen, kunnen of doen om de leerkans tot een goed einde te brengen? Stem deze verwachtingen en criteria zeker goed af met het niveau (zie verder)."
+          info="Verwachtingen van student voor jouw organisatie. Kennen, kunnen of nodige acties van de student voor voltooiing van deze leerkans? 
+          Stem deze goed af met het niveau."
           type="textarea"
           name="expectations"
           placeholder="Korte beschrijving van wat er verwacht wordt"
@@ -101,14 +103,13 @@ export default () => {
           label="Niveau"
           info={
             <>
-              Duid aan binnen welke moeilijkheidsgraad de leerkans valt.{' '}
+              Selecteer moeilijkheidsgraad van de leerkans.{' '}
               <a
                 href="https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Formopportunity%2Fpdf%2FNiveaus.pdf?alt=media"
                 target="_blank"
               >
-                Hier
+                Zie verschillende moeilijkheidsgraden
               </a>{' '}
-              vind je een uitgebreide omschrijving van de verschillende moeilijkheidsgraden."
             </>
           }
           type="dropdown"
@@ -126,7 +127,7 @@ export default () => {
         <FormGroup
           type="text"
           label="Website"
-          info="Indien je binnen je organisatie een weblink naar meer informatie hebt over dit initiatief dan kan je die link hier toevoegen"
+          info="Weblink binnen de organisatie met info over dit initiatief"
           placeholder="Website url"
         />
         <FormGroup
