@@ -6,7 +6,7 @@ import { useInput } from '../../../hooks';
 import { colors } from '../../../assets/styles/constants';
 import { Heading, FormGroup, Button, Icon } from '../../../components/UI';
 
-import { dropdownOptions } from '../../../constants';
+import { OPPORTUNITY_FORM } from '../../../constants';
 
 const GoBack = () => (
   <div>
@@ -73,8 +73,6 @@ export default () => {
   const { value: expectations, bind: bindExpectations } = useInput('');
   const { value: level, bind: bindLevel } = useInput('');
 
-  const { DOMAINS, LEVELS } = dropdownOptions;
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -92,97 +90,41 @@ export default () => {
      */
   };
 
+  const {
+    TITLE_INPUT,
+    DOMAIN_INPUT,
+    DESCRIPTION_INPUT,
+    EXPECTATIONS_INPUT,
+    LEVELS_INPUT,
+    URL_INPUT,
+    EMAIL_INPUT
+  } = OPPORTUNITY_FORM;
+
   const steps = [
     <FormStep title="Algemeen">
+      <FormGroup {...TITLE_INPUT} type="text" name="title" required {...bindTitle} />
+      <FormGroup {...DOMAIN_INPUT} type="dropdown" name="domain" required {...bindDomain} />
       <FormGroup
-        label="Titel"
-        info="Schrijf hier een motiverende en uitdagende titel voor jouw leerkans"
-        type="text"
-        name="title"
-        placeholder="Titel"
-        required
-        {...bindTitle}
-      />
-      <FormGroup
-        label="Domein"
-        info={
-          <>
-            Duid aan binnen welk domein je leerkans valt.
-            {` `}
-            <a
-              href="https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Formopportunity%2Fpdf%2FDomeinen.pdf?alt=media"
-              target="_blank"
-            >
-              Hier
-            </a>
-            {` `}
-            vind je een uitgebreide omschrijving van de verschillende categorieën.
-          </>
-        }
-        type="dropdown"
-        name="title"
-        options={DOMAINS}
-        placeholder="Selecteer domein"
-        required
-        {...bindDomain}
-      />
-      <FormGroup
-        label="Beschrijving"
-        info="Algemene beschrijving van de leerkans die je organisatie biedt. 
-          Geef ook achtergrondinformatie over je instelling om de leerkans binnen je algemene werking te kaderen."
+        {...DESCRIPTION_INPUT}
         type="textarea"
         name="description"
-        placeholder="Volledige beschrijving van de leerkans"
         required
         {...bindDescription}
       />
     </FormStep>,
-
     <FormStep title="Verwachtingen & niveau">
       <FormGroup
-        label="Verwachtingen"
-        info="Verwachtingen van student voor jouw organisatie. Kennen, kunnen of nodige acties van de student voor voltooiing van deze leerkans? 
-          Stem deze goed af met het niveau."
+        {...EXPECTATIONS_INPUT}
         type="textarea"
         name="expectations"
-        placeholder="Korte beschrijving van wat er verwacht wordt"
         required
         {...bindExpectations}
       />
-      <FormGroup
-        label="Niveau"
-        info={
-          <>
-            Selecteer moeilijkheidsgraad van de leerkans.{' '}
-            <a
-              href="https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Formopportunity%2Fpdf%2FNiveaus.pdf?alt=media"
-              target="_blank"
-            >
-              Zie verschillende moeilijkheidsgraden
-            </a>{' '}
-          </>
-        }
-        type="dropdown"
-        name="level"
-        options={LEVELS}
-        placeholder="Selecteer niveau"
-        required
-        {...bindLevel}
-      />
+      <FormGroup {...LEVELS_INPUT} type="dropdown" name="level" required {...bindLevel} />
     </FormStep>,
     <FormStep title="Leerkans details">
-      <FormGroup
-        type="text"
-        label="Website"
-        info="Weblink binnen de organisatie met info over dit initiatief"
-        placeholder="Website url"
-      />
-      <FormGroup
-        type="email"
-        label="Email contactpersoon"
-        info="Emailadres van de contactpersoon binnen de organisatie"
-        placeholder="Emailadres contactpersoon"
-      />
+      <FormGroup {...URL_INPUT} type="text" />
+      <FormGroup {...EMAIL_INPUT} type="email" />
     </FormStep>
   ];
 
