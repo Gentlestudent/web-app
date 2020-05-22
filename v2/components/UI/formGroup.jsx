@@ -11,10 +11,30 @@ const FormGroup = ({ type, name, info, required, label, icon, ...rest }) => {
 
   const getLabelText = () => `${label}${required ? '*' : ''}`;
   const getInfoText = () => (
-    <>
-      {required ? '' : 'Optioneel: '}
-      {info}
-    </>
+    <div>
+      <p>
+        {required ? '' : 'Optioneel: '}
+        {info}
+      </p>
+      <style jsx>{`
+        div {
+          position: absolute;
+          top: 100%;
+          height: auto;
+          width: 100%;
+          z-index: 1000;
+          padding: 0.5rem 2rem;
+          background: ${colors.white};
+          border: 1px solid ${colors.gray};
+          border-top: 0;
+          border-radius: 0 0 1rem 1rem;
+          transform: ${focus ? 'scale(1)' : 'scale(0)'};
+          opacity: ${focus ? '1' : '0'};
+          transition: all 150ms ease;
+          box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
+        }
+      `}</style>
+    </div>
   );
 
   const getInputByType = () => {
@@ -39,12 +59,13 @@ const FormGroup = ({ type, name, info, required, label, icon, ...rest }) => {
         </i>
       )}
       {getInputByType()}
-      {info && <small>{getInfoText()}</small>}
+      {info && getInfoText()}
       <style jsx>
         {`
           label {
             text-transform: uppercase;
             font-weight: bold;
+            margin: 1rem 0;
           }
 
           div {
@@ -54,14 +75,7 @@ const FormGroup = ({ type, name, info, required, label, icon, ...rest }) => {
             flex-direction: column;
             background-color: ${colors.white};
             border-radius: 0.3rem;
-          }
-
-          small {
             margin: 2rem 0;
-            height: ${focus ? 'auto' : '0'};
-            transform: ${focus ? 'scale(1)' : 'scale(0)'};
-            opacity: ${focus ? '1' : '0'};
-            transition: all 150ms ease;
           }
 
           i {
