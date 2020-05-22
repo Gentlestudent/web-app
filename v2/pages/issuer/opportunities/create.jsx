@@ -1,9 +1,32 @@
+import Router from 'next/router';
+
 import { useInput } from '../../../hooks';
 import { colors } from '../../../assets/styles/constants';
-import { Heading, FormGroup, Button } from '../../../components/UI';
-import GoBack from '../../../components/goBack';
+import { Heading, FormGroup, Button, Icon } from '../../../components/UI';
 
 import { dropdownOptions } from '../../../constants';
+
+const GoBack = () => (
+  <div>
+    <Icon name="caret-left" />
+    <a onClick={() => Router.back()}>Terug</a>
+    <style jsx>
+      {`
+        div {
+          display: flex;
+          align-items: center;
+          min-height: 4rem;
+          cursor: pointer;
+        }
+
+        a {
+          margin-left: 1rem;
+          font-weight: bold;
+        }
+      `}
+    </style>
+  </div>
+);
 
 export default () => {
   /*
