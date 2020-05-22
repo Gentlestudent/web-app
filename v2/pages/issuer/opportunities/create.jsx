@@ -30,7 +30,7 @@ const GoBack = () => (
   </div>
 );
 
-const FormSection = ({ title, children }) => (
+const FormStep = ({ title, children }) => (
   <section>
     <div className="section-header">
       <Heading title={title} level={2} />
@@ -59,11 +59,12 @@ const FormSection = ({ title, children }) => (
 export default () => {
   const [step, setStep] = useState(0);
 
-  const validateStep = () => {
-    console.log(step);
-  };
+  /*
+   * TODO: Validate inputs for current step
+   */
+  const validateStep = () => typeof title === 'string';
 
-  const nextStep = () => step < steps.length - 1 && setStep(step + 1);
+  const nextStep = () => step < steps.length - 1 && validateStep() && setStep(step + 1);
   const previousStep = () => step > 0 && setStep(step - 1);
 
   const { value: title, bind: bindTitle } = useInput('');
@@ -92,7 +93,7 @@ export default () => {
   };
 
   const steps = [
-    <FormSection title="Algemeen">
+    <FormStep title="Algemeen">
       <FormGroup
         label="Titel"
         info="Schrijf hier een motiverende en uitdagende titel voor jouw leerkans"
@@ -135,9 +136,9 @@ export default () => {
         required
         {...bindDescription}
       />
-    </FormSection>,
+    </FormStep>,
 
-    <FormSection title="Verwachtingen & niveau">
+    <FormStep title="Verwachtingen & niveau">
       <FormGroup
         label="Verwachtingen"
         info="Verwachtingen van student voor jouw organisatie. Kennen, kunnen of nodige acties van de student voor voltooiing van deze leerkans? 
@@ -168,8 +169,8 @@ export default () => {
         required
         {...bindLevel}
       />
-    </FormSection>,
-    <FormSection title="Leerkans details">
+    </FormStep>,
+    <FormStep title="Leerkans details">
       <FormGroup
         type="text"
         label="Website"
@@ -182,13 +183,13 @@ export default () => {
         info="Emailadres van de contactpersoon binnen de organisatie"
         placeholder="Emailadres contactpersoon"
       />
-    </FormSection>
+    </FormStep>
   ];
 
   return (
     <div className="page">
       <GoBack />
-      <Heading title="Maak opportunity" />
+      <Heading title="Nieuwe leerkans" />
       {steps[step]}
       <div className="steps">
         {step > 0 && (
