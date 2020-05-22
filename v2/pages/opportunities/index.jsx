@@ -14,6 +14,7 @@ export default () => {
           return (
             !loading && (
               <div
+                class="button-container"
                 key={id}
                 onClick={() => Router.push(routes.OPPORTUNITY, `${routes.OPPORTUNITIES}/${id}`)}
               >

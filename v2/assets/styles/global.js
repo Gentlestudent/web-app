@@ -61,4 +61,15 @@ export default css.global`
     font-family: ${fonts.copy};
     font-size: inherit;
   }
+
+  .button-container {
+    color: inherit;
+    cursor: pointer;
+    background-color: inherit;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    text-transform: inherit;
+  }
 `;
