@@ -27,3 +27,18 @@ export const routes = {
     VALIDATE_OPPORTUNITY: '/admin/opportunities/[id]/validate'
   }
 };
+
+const DOMAINS = [
+  'Digitale geletterdheid',
+  'Duurzaamheid',
+  'Ondernemingszin',
+  'Onderzoek',
+  'Wereldburgerschap'
+];
+
+const LEVELS = ['Beginner', 'Gevorderd', 'Expert'];
+
+export const dropdownOptions = {
+  DOMAINS,
+  LEVELS
+};

@@ -3,15 +3,7 @@ import { colors } from '../../../assets/styles/constants';
 import { Heading, FormGroup, Button } from '../../../components/UI';
 import GoBack from '../../../components/goBack';
 
-const DOMAINS = [
-  'Digitale geletterdheid',
-  'Duurzaamheid',
-  'Ondernemingszin',
-  'Onderzoek',
-  'Wereldburgerschap'
-];
-
-const LEVELS = ['Beginner', 'Gevorderd', 'Expert'];
+import { dropdownOptions } from '../../../constants';
 
 export default () => {
   const { value: title, bind: bindTitle } = useInput('');
@@ -19,6 +11,8 @@ export default () => {
   const { value: description, bind: bindDescription } = useInput('');
   const { value: expectations, bind: bindExpectations } = useInput('');
   const { value: level, bind: bindLevel } = useInput('');
+
+  const { DOMAINS, LEVELS } = dropdownOptions;
 
   const handleSubmit = (e) => {
     e.preventDefault();
