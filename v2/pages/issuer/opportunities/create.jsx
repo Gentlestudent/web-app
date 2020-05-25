@@ -63,7 +63,9 @@ export default () => {
   /*
    * TODO: Validate inputs for current step
    */
-  const validateStep = () => email && validate.email(email);
+  const validateStep = () => {
+    console.log(steps[step].props.children.map((field) => console.log(field.props.name)));
+  };
 
   const nextStep = () => step < steps.length - 1 && validateStep() && setStep(step + 1);
   const previousStep = () => step > 0 && setStep(step - 1);
@@ -133,11 +135,14 @@ export default () => {
           </Button>
         )}
         {steps.map((s, i) => (
-          <div className="step button-container">
-            <a className={`step_number ${step === i ? 'active' : ''}`} onClick={() => setStep(i)}>
+          <div className={`step button-container ${step === i ? 'step--active' : ''}`}>
+            <a
+              className={`step_number ${step === i ? 'step_number--active' : ''}`}
+              onClick={() => setStep(i)}
+            >
               {i + 1}
             </a>
-            <span>Algemeen</span>
+            <span>{steps[i].props.title}</span>
           </div>
         ))}
         {step < steps.length - 1 ? (
@@ -179,7 +184,12 @@ export default () => {
           border: 1px solid ${colors.primary};
         }
 
-        .active {
+        .step--active {
+          color: ${colors.primary};
+          font-weight: bold;
+        }
+
+        .step_number--active {
           background: ${colors.primary};
           color: ${colors.white};
         }
