@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Router from 'next/router';
 
 import { useInput } from '../../../hooks';
+import { validate } from '../../../validate';
 import { colors } from '../../../assets/styles/constants';
 import { Heading, FormGroup, Button, Icon } from '../../../components/UI';
 
@@ -62,7 +63,7 @@ export default () => {
   /*
    * TODO: Validate inputs for current step
    */
-  const validateStep = () => typeof title === 'string';
+  const validateStep = () => email && validate.email(email);
 
   const nextStep = () => step < steps.length - 1 && validateStep() && setStep(step + 1);
   const previousStep = () => step > 0 && setStep(step - 1);
@@ -72,6 +73,8 @@ export default () => {
   const { value: description, bind: bindAbout } = useInput('');
   const { value: expectations, bind: bindExpected } = useInput('');
   const { value: level, bind: bindLevel } = useInput('');
+  const { value: infoUrl, bind: bindInfoUrl } = useInput('');
+  const { value: email, bind: bindEmail } = useInput('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -81,7 +84,9 @@ export default () => {
       domain,
       description,
       expectations,
-      level
+      level,
+      infoUrl,
+      email
     };
 
     /*
@@ -111,8 +116,8 @@ export default () => {
       <FormGroup {...LEVELS_INPUT} type="dropdown" name="level" required {...bindLevel} />
     </FormStep>,
     <FormStep title="Leerkans details">
-      <FormGroup {...URL_INPUT} type="text" />
-      <FormGroup {...EMAIL_INPUT} type="email" />
+      <FormGroup {...URL_INPUT} type="text" name="info-url" {...bindInfoUrl} />
+      <FormGroup {...EMAIL_INPUT} type="email" name="email" {...bindEmail} />
     </FormStep>
   ];
 
