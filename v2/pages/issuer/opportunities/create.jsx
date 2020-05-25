@@ -69,8 +69,8 @@ export default () => {
 
   const { value: title, bind: bindTitle } = useInput('');
   const { value: domain, bind: bindDomain } = useInput('');
-  const { value: description, bind: bindDescription } = useInput('');
-  const { value: expectations, bind: bindExpectations } = useInput('');
+  const { value: description, bind: bindAbout } = useInput('');
+  const { value: expectations, bind: bindExpected } = useInput('');
   const { value: level, bind: bindLevel } = useInput('');
 
   const handleSubmit = (e) => {
