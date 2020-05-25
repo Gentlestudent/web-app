@@ -93,8 +93,8 @@ export default () => {
   const {
     TITLE_INPUT,
     DOMAIN_INPUT,
-    DESCRIPTION_INPUT,
-    EXPECTATIONS_INPUT,
+    ABOUT_INPUT,
+    EXPECTED_INPUT,
     LEVELS_INPUT,
     URL_INPUT,
     EMAIL_INPUT
@@ -104,22 +104,10 @@ export default () => {
     <FormStep title="Algemeen">
       <FormGroup {...TITLE_INPUT} type="text" name="title" required {...bindTitle} />
       <FormGroup {...DOMAIN_INPUT} type="dropdown" name="domain" required {...bindDomain} />
-      <FormGroup
-        {...DESCRIPTION_INPUT}
-        type="textarea"
-        name="description"
-        required
-        {...bindDescription}
-      />
+      <FormGroup {...ABOUT_INPUT} type="textarea" name="about" required {...bindAbout} />
     </FormStep>,
     <FormStep title="Verwachtingen & niveau">
-      <FormGroup
-        {...EXPECTATIONS_INPUT}
-        type="textarea"
-        name="expectations"
-        required
-        {...bindExpectations}
-      />
+      <FormGroup {...EXPECTED_INPUT} type="textarea" name="expected" required {...bindExpected} />
       <FormGroup {...LEVELS_INPUT} type="dropdown" name="level" required {...bindLevel} />
     </FormStep>,
     <FormStep title="Leerkans details">

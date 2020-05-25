@@ -59,13 +59,13 @@ export const OPPORTUNITY_FORM = {
       'Wereldburgerschap'
     ]
   },
-  DESCRIPTION_INPUT: {
+  ABOUT_INPUT: {
     label: 'Beschrijving',
     info:
       'Algemene beschrijving van de leerkans die je organisatie biedt. Geef ook achtergrondinformatie over je instelling om de leerkans binnen je algemene werking te kaderen.',
     placeholder: 'Volledige beschrijving van de leerkans'
   },
-  EXPECTATIONS_INPUT: {
+  EXPECTED_INPUT: {
     label: 'Verwachtingen',
     info:
       'Verwachtingen van student voor jouw organisatie. Kennen, kunnen of nodige acties van de student voor voltooiing van deze leerkans? Stem deze goed af met het niveau.',
