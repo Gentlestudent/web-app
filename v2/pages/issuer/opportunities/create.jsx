@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import Router from 'next/router';
 
+import { addOpportunity } from '../../../api/opportunities';
+
 import { useInput } from '../../../hooks';
 import { validateEmail, validateUrl } from '../../../validate';
 import { colors } from '../../../assets/styles/constants';
@@ -61,7 +63,6 @@ const FormStep = ({ title, children, onChange }) => {
 
 export default () => {
   const [step, setStep] = useState(0);
-  const [errors, setErrors] = useState([]);
 
   /**
    * Go to next form step if not on last step
@@ -79,7 +80,6 @@ export default () => {
   const ValidateStep = () => {
     let errors = [...steps[step].props.children.map((field) => field.props.error)];
     errors = errors.filter((err) => err !== null);
-    setErrors(errors);
     return errors.length > 0 ? false : true;
   };
 
@@ -87,12 +87,12 @@ export default () => {
    * Form values state
    * Optional validation from useInput
    */
-  const { value: title, bind: bindTitle } = useInput('', (e) => validateUrl(e));
+  const { value: title, bind: bindTitle } = useInput('');
   const { value: domain, bind: bindDomain } = useInput('');
   const { value: description, bind: bindAbout } = useInput('');
   const { value: expectations, bind: bindExpected } = useInput('');
   const { value: level, bind: bindLevel } = useInput('');
-  const { value: infoUrl, bind: bindInfoUrl } = useInput('');
+  const { value: infoUrl, bind: bindInfoUrl } = useInput('', (e) => validateUrl(e));
   const { value: email, bind: bindEmail } = useInput('', (e) => validateEmail(e));
 
   const handleSubmit = (e) => {
@@ -109,9 +109,9 @@ export default () => {
     };
 
     /*
-     * TODO:
      * Add firebase "create opportunity" helper & pass in opportunity
      */
+    addOpportunity(opportunity);
   };
 
   const {
