@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Router from 'next/router';
 
 import { useInput } from '../../../hooks';
-import { validate } from '../../../validate';
+import { validateEmail } from '../../../validate';
 import { colors } from '../../../assets/styles/constants';
 import { Heading, FormGroup, Button, Icon } from '../../../components/UI';
 
@@ -31,52 +31,65 @@ const GoBack = () => (
   </div>
 );
 
-const FormStep = ({ title, children }) => (
-  <section>
-    <div className="section-header">
-      <Heading title={title} level={2} />
-    </div>
-    {children}
-    <style jsx>{`
-      section {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        margin: 2rem 0;
-        padding: 2rem;
-        border-radius: 2rem;
-        box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
-      }
+const FormStep = ({ title, children, onChange }) => {
+  return (
+    <section onChange={onChange}>
+      <div className="section-header">
+        <Heading title={title} level={2} />
+      </div>
+      {children}
+      <style jsx>{`
+        section {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          margin: 2rem 0;
+          padding: 2rem;
+          border-radius: 2rem;
+          box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
+        }
 
-      .section-header {
-        margin-bottom: 3rem;
-        padding: 1rem 0;
-        border-bottom: 1px solid ${colors.primary};
-      }
-    `}</style>
-  </section>
-);
+        .section-header {
+          margin-bottom: 3rem;
+          padding: 1rem 0;
+          border-bottom: 1px solid ${colors.primary};
+        }
+      `}</style>
+    </section>
+  );
+};
 
 export default () => {
   const [step, setStep] = useState(0);
 
-  /*
-   * TODO: Validate inputs for current step
+  /**
+   * Go to next form step if not on last step
    */
-  const validateStep = () => {
-    console.log(steps[step].props.children.map((field) => console.log(field.props.name)));
-  };
+  const nextStep = () => step < steps.length - 1 && ValidateStep() && setStep(step + 1);
 
-  const nextStep = () => step < steps.length - 1 && validateStep() && setStep(step + 1);
+  /*
+   * Go to previous for step if not on first step
+   */
   const previousStep = () => step > 0 && setStep(step - 1);
 
+  /*
+   * Checks if errors on all fields in form step
+   */
+  const ValidateStep = () => {
+    steps[step].props.children.map((field) => console.log(field.props.error));
+  };
+
+  /*
+   * Form values state
+   * Optional validation from useInput
+   */
   const { value: title, bind: bindTitle } = useInput('');
   const { value: domain, bind: bindDomain } = useInput('');
-  const { value: description, bind: bindAbout } = useInput('');
-  const { value: expectations, bind: bindExpected } = useInput('');
+  const { value: description, bind: bindAbout } = useInput('', (e) => console.log(e));
+  const { value: expectations, bind: bindExpected } = useInput('', (e) => console.log(e));
   const { value: level, bind: bindLevel } = useInput('');
-  const { value: infoUrl, bind: bindInfoUrl } = useInput('');
-  const { value: email, bind: bindEmail } = useInput('');
+  const { value: infoUrl, bind: bindInfoUrl } = useInput('', (e) => console.log(e));
+  const { value: email, bind: bindEmail } = useInput('', (e) => validateEmail(e));
 
   const handleSubmit = (e) => {
     e.preventDefault();
