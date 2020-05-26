@@ -1,16 +1,24 @@
 import { useState } from 'react';
 
-export default (initialValue) => {
+/*
+ * Form field hook
+ */
+export default (initialValue, validate) => {
   const [value, setValue] = useState(initialValue);
+  const [error, setError] = useState(false);
 
   return {
     value,
+    error,
     setValue,
     reset: () => setValue(''),
     bind: {
       value,
-      onChange: (event) => {
-        setValue(event.target.value);
+      error,
+      onChange: (e) => {
+        const { value } = e.target;
+        validate && setError(validate(value));
+        setValue(value);
       }
     }
   };
