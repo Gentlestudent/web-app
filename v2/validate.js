@@ -17,3 +17,4 @@ const validate = {
 };
 
 export const validateEmail = (email) => (validate.isEmail(email) ? null : 'Invalid email');
+export const validateUrl = (url) => (validate.isUrl(url) ? null : 'Invalid url');

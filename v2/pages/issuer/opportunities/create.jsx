@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Router from 'next/router';
 
 import { useInput } from '../../../hooks';
-import { validateEmail } from '../../../validate';
+import { validateEmail, validateUrl } from '../../../validate';
 import { colors } from '../../../assets/styles/constants';
 import { Heading, FormGroup, Button, Icon } from '../../../components/UI';
 
@@ -83,12 +83,12 @@ export default () => {
    * Form values state
    * Optional validation from useInput
    */
-  const { value: title, bind: bindTitle } = useInput('');
+  const { value: title, bind: bindTitle } = useInput('', (e) => validateUrl(e));
   const { value: domain, bind: bindDomain } = useInput('');
   const { value: description, bind: bindAbout } = useInput('', (e) => console.log(e));
   const { value: expectations, bind: bindExpected } = useInput('', (e) => console.log(e));
   const { value: level, bind: bindLevel } = useInput('');
-  const { value: infoUrl, bind: bindInfoUrl } = useInput('', (e) => console.log(e));
+  const { value: infoUrl, bind: bindInfoUrl } = useInput('', (e) => validateUrl(e));
   const { value: email, bind: bindEmail } = useInput('', (e) => validateEmail(e));
 
   const handleSubmit = (e) => {
