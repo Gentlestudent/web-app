@@ -89,10 +89,10 @@ export default () => {
    */
   const { value: title, bind: bindTitle } = useInput('', (e) => validateUrl(e));
   const { value: domain, bind: bindDomain } = useInput('');
-  const { value: description, bind: bindAbout } = useInput('', (e) => console.log(e));
-  const { value: expectations, bind: bindExpected } = useInput('', (e) => console.log(e));
+  const { value: description, bind: bindAbout } = useInput('');
+  const { value: expectations, bind: bindExpected } = useInput('');
   const { value: level, bind: bindLevel } = useInput('');
-  const { value: infoUrl, bind: bindInfoUrl } = useInput('', (e) => validateUrl(e));
+  const { value: infoUrl, bind: bindInfoUrl } = useInput('');
   const { value: email, bind: bindEmail } = useInput('', (e) => validateEmail(e));
 
   const handleSubmit = (e) => {
