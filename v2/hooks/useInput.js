@@ -5,7 +5,7 @@ import { useState } from 'react';
  */
 export default (initialValue, validate) => {
   const [value, setValue] = useState(initialValue);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
 
   return {
     value,

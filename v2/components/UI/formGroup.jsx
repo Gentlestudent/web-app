@@ -6,7 +6,7 @@ import { Input, TextArea, Dropdown } from '.';
 import { colors } from '../../assets/styles/constants';
 import Icon from './icon';
 
-const FormGroup = ({ type, name, info, required, label, icon, ...rest }) => {
+const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) => {
   const [focus, setFocus] = useState(false);
 
   const getLabelText = () => `${label}${required ? '*' : ''}`;
@@ -36,6 +36,16 @@ const FormGroup = ({ type, name, info, required, label, icon, ...rest }) => {
       `}</style>
     </div>
   );
+  const getErrorText = () => (
+    <div>
+      <p>{error}</p>
+      <style jsx>{`
+        div {
+          color: ${colors.orange};
+        }
+      `}</style>
+    </div>
+  );
 
   const getInputByType = () => {
     switch (type) {
@@ -53,6 +63,7 @@ const FormGroup = ({ type, name, info, required, label, icon, ...rest }) => {
   return (
     <div onMouseEnter={() => setFocus(true)} onMouseLeave={() => setFocus(false)}>
       {label && <label htmlFor={name}>{getLabelText()}</label>}
+      {error && getErrorText()}
       {icon && (
         <i>
           <Icon name={icon} />

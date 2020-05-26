@@ -61,6 +61,7 @@ const FormStep = ({ title, children, onChange }) => {
 
 export default () => {
   const [step, setStep] = useState(0);
+  const [errors, setErrors] = useState([]);
 
   /**
    * Go to next form step if not on last step
@@ -76,7 +77,10 @@ export default () => {
    * Checks if errors on all fields in form step
    */
   const ValidateStep = () => {
-    steps[step].props.children.map((field) => console.log(field.props.error));
+    let errors = [...steps[step].props.children.map((field) => field.props.error)];
+    errors = errors.filter((err) => err !== null);
+    setErrors(errors);
+    return errors.length > 0 ? false : true;
   };
 
   /*
