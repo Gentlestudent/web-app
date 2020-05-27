@@ -5,7 +5,7 @@ import Router from 'next/router';
 import { addOpportunity } from '../../../api/opportunities';
 
 import { useInput } from '../../../hooks';
-import { validateEmail, validateUrl } from '../../../validate';
+import { validate, validateEmail, validateUrl } from '../../../validate';
 import { colors } from '../../../assets/styles/constants';
 import { Heading, FormGroup, Button, Icon } from '../../../components/UI';
 
@@ -100,7 +100,7 @@ export default () => {
    * Form values state
    * Optional validation function
    */
-  const { value: title, bind: bindTitle } = useInput('');
+  const { value: title, bind: bindTitle } = useInput('', (e) => validate(e).isRequired());
   const { value: domain, bind: bindDomain } = useInput('');
   const { value: description, bind: bindAbout } = useInput('');
   const { value: expectations, bind: bindExpected } = useInput('');
