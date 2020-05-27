@@ -50,6 +50,3 @@ Validator.prototype.isEmail = function () {
 Validator.prototype.isUrl = function () {};
 
 export const validate = (value) => new Validator(value);
-
-export const validateEmail = (email) => validate(email).isRequired().isEmail();
-export const validateUrl = (url) => validate(url).isRequired().isUrl();
