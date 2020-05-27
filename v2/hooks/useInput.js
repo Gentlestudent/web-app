@@ -11,7 +11,10 @@ export default (initialValue, validate) => {
     value,
     error,
     setValue,
-    reset: () => setValue(''),
+    reset: () => {
+      setValue('');
+      setError('');
+    },
     bind: {
       value,
       error,
