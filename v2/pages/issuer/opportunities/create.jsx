@@ -9,7 +9,7 @@ import { validate, validateEmail, validateUrl } from '../../../validate';
 import { colors } from '../../../assets/styles/constants';
 import { Heading, FormGroup, Button, Icon } from '../../../components/UI';
 
-import { OPPORTUNITY_FORM } from '../../../constants';
+import { OPPORTUNITY_FORM } from './constants';
 
 const GoBack = () => (
   <div>
@@ -65,20 +65,6 @@ export default () => {
   const [step, setStep] = useState(0);
   const [errors, setErrors] = useState([]);
 
-  /**
-   * Go to next form step if not on last step and values are valid
-   */
-  const nextStep = () => step < steps.length - 1 && validateCurrentStep() && setStep(step + 1);
-
-  /*
-   * Go to previous for step if not on first step
-   */
-  const previousStep = () => step > 0 && setStep(step - 1);
-
-  /*
-   * Checks if errors on all fields in form step
-   */
-
   const validateCurrentStep = () => {
     let errors = [...steps[step].props.children.map((field) => field.props.error)];
     errors = errors.filter((err) => err !== null);
@@ -92,6 +78,20 @@ export default () => {
     ].filter((err) => err !== null);
     setErrors(errors);
   };
+
+  /**
+   * Go to next form step if not on last step and values are valid
+   */
+  const nextStep = () => step < steps.length - 1 && validateCurrentStep() && setStep(step + 1);
+
+  /*
+   * Go to previous for step if not on first step
+   */
+  const previousStep = () => step > 0 && setStep(step - 1);
+
+  /*
+   * Checks if errors on all fields in form step
+   */
 
   /*
    * Form values state
@@ -118,7 +118,9 @@ export default () => {
       email
     };
 
-    validateAllSteps() && addOpportunity(opportunity);
+    if (validateAllSteps()) {
+      addOpportunity(opportunity);
+    }
   };
 
   const {
