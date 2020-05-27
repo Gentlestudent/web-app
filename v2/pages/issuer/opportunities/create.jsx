@@ -13,25 +13,29 @@ import { Heading, FormGroup, Button, Icon } from '../../../components/UI';
 import { OPPORTUNITY_FORM } from './constants';
 
 const GoBack = () => (
-  <div>
+  <button type="button" onClick={() => Router.back()}>
     <Icon name="caret-left" />
-    <a onClick={() => Router.back()}>Terug</a>
+    <span>Terug</span>
     <style jsx>
       {`
-        div {
+        button {
           display: flex;
           align-items: center;
           min-height: 4rem;
-          cursor: pointer;
+          margin-left: 1rem;
+          background: none;
+          border: none;
+          font-weight: bold;
         }
 
-        a {
+        span {
           margin-left: 1rem;
-          font-weight: bold;
+          font-size: 1.8rem;
+          color: ${colors.gray};
         }
       `}
     </style>
-  </div>
+  </button>
 );
 
 const FormStep = ({ title, children }) => (
