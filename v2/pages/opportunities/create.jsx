@@ -2,9 +2,10 @@ import PropTypes from 'prop-types';
 import Router from 'next/router';
 
 import { useSteps } from '../../hooks';
-import OPPORTUNITY_STEPS from './steps';
 import { colors } from '../../assets/styles/constants';
-import { Heading, FormGroup, Icon } from '../../components/UI';
+import { Heading, FormGroup, Icon, Button } from '../../components/UI';
+
+import OPPORTUNITY_STEPS from './steps';
 
 const GoBack = () => (
   <button type="button" onClick={() => Router.back()}>
@@ -66,16 +67,36 @@ const Form = ({ title, fields, children }) => {
 export default () => {
   const { currentStep, nextStep, previousStep } = useSteps(OPPORTUNITY_STEPS);
   return (
-    <div>
+    <div className="page">
       <GoBack />
       <Heading title="Nieuwe leerkans" />
       <Form {...currentStep} />
-      <button type="button" onClick={previousStep}>
-        Terug
-      </button>
-      <button type="button" onClick={nextStep}>
-        Ga door
-      </button>
+      <div className="stepper">
+        <Button type="button" onClick={previousStep}>
+          Stap terug
+        </Button>
+        <Button type="button" onClick={nextStep}>
+          Ga door
+        </Button>
+      </div>
+      <style jsx>
+        {`
+          .page {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid red;
+          }
+
+          .stepper {
+            display: flex;
+            margin-top: auto;
+            justify-content: space-between;
+          }
+        `}
+      </style>
     </div>
   );
 };
