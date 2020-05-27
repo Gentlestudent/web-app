@@ -14,6 +14,7 @@ export const OPPORTUNITY_FORM = {
         <a
           href="https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Formopportunity%2Fpdf%2FDomeinen.pdf?alt=media"
           target="_blank"
+          rel="noopener noreferrer"
         >
           Hier
         </a>
@@ -52,6 +53,7 @@ export const OPPORTUNITY_FORM = {
         <a
           href="https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Formopportunity%2Fpdf%2FNiveaus.pdf?alt=media"
           target="_blank"
+          rel="noopener noreferrer"
         >
           Zie verschillende moeilijkheidsgraden
         </a>{' '}
