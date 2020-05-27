@@ -1,3 +1,6 @@
+/* eslint-disable func-names */
+/* eslint-disable no-control-regex */
+
 const Validator = function (value) {
   this.error = null;
   this.value = value;
