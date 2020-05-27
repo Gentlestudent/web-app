@@ -33,41 +33,40 @@ const GoBack = () => (
   </div>
 );
 
-const FormStep = ({ title, children, onChange }) => {
-  return (
-    <section onChange={onChange}>
-      <div className="section-header">
-        <Heading title={title} level={2} />
-      </div>
-      {children}
-      <style jsx>{`
-        section {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          margin: 2rem 0;
-          padding: 2rem;
-          border-radius: 2rem;
-          box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
-        }
+const FormStep = ({ title, children, onChange }) => (
+  <section onChange={onChange}>
+    <div className="section-header">
+      <Heading title={title} level={2} />
+    </div>
+    {children}
+    <style jsx>{`
+      section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        margin: 2rem 0;
+        padding: 2rem;
+        border-radius: 2rem;
+        box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
+      }
 
-        .section-header {
-          margin-bottom: 3rem;
-          padding: 1rem 0;
-          border-bottom: 1px solid ${colors.primary};
-        }
-      `}</style>
-    </section>
-  );
-};
+      .section-header {
+        margin-bottom: 3rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid ${colors.primary};
+      }
+    `}</style>
+  </section>
+);
 
 export default () => {
   const [step, setStep] = useState(0);
+  const [errors, setErrors] = useState([]);
 
   /**
    * Go to next form step if not on last step
    */
-  const nextStep = () => step < steps.length - 1 && ValidateStep() && setStep(step + 1);
+  const nextStep = () => step < steps.length - 1 && validateCurrentStep() && setStep(step + 1);
 
   /*
    * Go to previous for step if not on first step
@@ -77,15 +76,29 @@ export default () => {
   /*
    * Checks if errors on all fields in form step
    */
-  const ValidateStep = () => {
+
+  const validateCurrentStep = () => {
     let errors = [...steps[step].props.children.map((field) => field.props.error)];
     errors = errors.filter((err) => err !== null);
+    setErrors(errors);
     return errors.length > 0 ? false : true;
+  };
+
+  const validateAllSteps = () => {
+    let errors = [
+      ...steps.map((step) => step.props.children.map((field) => field.props.error))
+    ].filter((err) => err !== null);
+
+    let emptyRequiredFields = [
+      ...steps.map((step) => step.props.children.map((field) => field.props.required))
+    ];
+
+    setErrors(errors);
   };
 
   /*
    * Form values state
-   * Optional validation from useInput
+   * Optional validation function
    */
   const { value: title, bind: bindTitle } = useInput('');
   const { value: domain, bind: bindDomain } = useInput('');
@@ -108,10 +121,7 @@ export default () => {
       email
     };
 
-    /*
-     * Add firebase "create opportunity" helper & pass in opportunity
-     */
-    addOpportunity(opportunity);
+    validateAllSteps() && addOpportunity(opportunity);
   };
 
   const {
@@ -126,13 +136,13 @@ export default () => {
 
   const steps = [
     <FormStep title="Algemeen">
-      <FormGroup {...TITLE_INPUT} type="text" name="title" required {...bindTitle} />
-      <FormGroup {...DOMAIN_INPUT} type="dropdown" name="domain" required {...bindDomain} />
-      <FormGroup {...ABOUT_INPUT} type="textarea" name="about" required {...bindAbout} />
+      <FormGroup {...TITLE_INPUT} type="text" name="title" {...bindTitle} />
+      <FormGroup {...DOMAIN_INPUT} type="dropdown" name="domain" {...bindDomain} />
+      <FormGroup {...ABOUT_INPUT} type="textarea" name="about" {...bindAbout} />
     </FormStep>,
     <FormStep title="Verwachtingen & niveau">
-      <FormGroup {...EXPECTED_INPUT} type="textarea" name="expected" required {...bindExpected} />
-      <FormGroup {...LEVELS_INPUT} type="dropdown" name="level" required {...bindLevel} />
+      <FormGroup {...EXPECTED_INPUT} type="textarea" name="expected" {...bindExpected} />
+      <FormGroup {...LEVELS_INPUT} type="dropdown" name="level" {...bindLevel} />
     </FormStep>,
     <FormStep title="Leerkans details">
       <FormGroup {...URL_INPUT} type="text" name="info-url" {...bindInfoUrl} />
@@ -145,7 +155,7 @@ export default () => {
       <GoBack />
       <Heading title="Nieuwe leerkans" />
       {steps[step]}
-      <div className="steps">
+      <form className="steps">
         {step > 0 && (
           <Button onClick={previousStep} className="back">
             Terug
@@ -167,7 +177,7 @@ export default () => {
         ) : (
           <Button onClick={handleSubmit}>Bevestig</Button>
         )}
-      </div>
+      </form>
       <style jsx>{`
         .page {
           display: flex;

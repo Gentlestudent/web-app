@@ -32,7 +32,8 @@ export const OPPORTUNITY_FORM = {
   TITLE_INPUT: {
     label: 'Titel',
     info: 'Schrijf hier een motiverende en uitdagende titel voor jouw leerkans',
-    placeholder: 'Titel van de leerkans'
+    placeholder: 'Titel van de leerkans',
+    required: true
   },
   DOMAIN_INPUT: {
     label: 'Domein',
@@ -57,13 +58,15 @@ export const OPPORTUNITY_FORM = {
       'Ondernemingszin',
       'Onderzoek',
       'Wereldburgerschap'
-    ]
+    ],
+    required: true
   },
   ABOUT_INPUT: {
     label: 'Beschrijving',
     info:
       'Algemene beschrijving van de leerkans die je organisatie biedt. Geef ook achtergrondinformatie over je instelling om de leerkans binnen je algemene werking te kaderen.',
-    placeholder: 'Volledige beschrijving van de leerkans'
+    placeholder: 'Volledige beschrijving van de leerkans',
+    required: true
   },
   EXPECTED_INPUT: {
     label: 'Verwachtingen',

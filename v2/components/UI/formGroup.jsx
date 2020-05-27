@@ -50,13 +50,13 @@ const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) 
   const getInputByType = () => {
     switch (type) {
       case 'text':
-        return <Input type={type} {...rest} />;
+        return <Input type={type} name={name} required={required} {...rest} />;
       case 'email':
-        return <Input type={type} {...rest} autocomplete="email" />;
+        return <Input type={type} name={name} required={required} {...rest} autocomplete="email" />;
       case 'textarea':
-        return <TextArea name={name} {...rest} />;
+        return <TextArea name={name} required={required} {...rest} />;
       case 'dropdown':
-        return <Dropdown name={name} {...rest} />;
+        return <Dropdown name={name} required={required} {...rest} />;
     }
   };
 
