@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import Router from 'next/router';
 
 import { addOpportunity } from '../../../api/opportunities';
 
 import { useInput } from '../../../hooks';
-import { validate, validateEmail, validateUrl } from '../../../validate';
+import { validate } from '../../../validate';
 import { colors } from '../../../assets/styles/constants';
 import { Heading, FormGroup, Button, Icon } from '../../../components/UI';
 
@@ -225,3 +226,5 @@ export default () => {
     </div>
   );
 };
+
+FormStep.propTypes = { title: PropTypes.string, children: PropTypes.element };
