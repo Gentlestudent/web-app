@@ -21,9 +21,11 @@ const Input = ({ type, name, placeholder, required, ...rest }) => {
 };
 
 Input.propTypes = {
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  icon: PropTypes.string,
-  type: PropTypes.string.isRequired
+  required: PropTypes.bool,
+  icon: PropTypes.string
 };
 
 Input.defaultProps = {
