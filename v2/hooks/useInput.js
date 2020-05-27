@@ -19,13 +19,15 @@ export default (initialValue, validate) => {
       value,
       error,
       onChange: (e) => {
-        const { value } = e.target;
-        setValue(value);
-        if (error) validate && setError(validate(value).error);
+        setValue(e.target.value);
+        if (error && validate) {
+          setError(validate(value).error);
+        }
       },
       onBlur: (e) => {
-        const { value } = e.target;
-        validate && setError(validate(value).error);
+        if (validate) {
+          setError(validate(e.target.value).error);
+        }
       }
     }
   };
