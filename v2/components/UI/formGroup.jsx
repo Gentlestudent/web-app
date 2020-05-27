@@ -93,7 +93,7 @@ FormGroup.propTypes = {
   icon: PropTypes.string,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  info: PropTypes.string,
+  info: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   required: PropTypes.bool,
   label: PropTypes.string,
   error: PropTypes.string
