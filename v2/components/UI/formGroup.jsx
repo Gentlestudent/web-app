@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Input, TextArea, Dropdown } from '.';
@@ -7,8 +6,6 @@ import { colors } from '../../assets/styles/constants';
 import Icon from './icon';
 
 const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) => {
-  const [focus, setFocus] = useState(false);
-
   const getLabelText = () => `${label}${required ? '*' : ''}`;
   const getInfoText = () => (
     <div>
@@ -16,71 +13,65 @@ const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) 
         {required ? '' : 'Optioneel: '}
         {info}
       </p>
-      <style jsx>{`
-        div {
-          position: absolute;
-          top: 100%;
-          height: auto;
-          width: 100%;
-          z-index: 1000;
-          padding: 0.5rem 2rem;
-          background: ${colors.white};
-          border: 1px solid ${colors.gray};
-          border-top: 0;
-          border-radius: 0 0 1rem 1rem;
-          transform: ${focus ? 'scale(1)' : 'scale(0)'};
-          opacity: ${focus ? '1' : '0'};
-          transition: all 150ms ease;
-          box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
-        }
-      `}</style>
+      <style jsx>
+        {`
+          div {
+            padding: 0.5rem 2rem;
+            background: ${colors.grayLight};
+            border: 1px solid ${colors.gray};
+            border-bottom: 0;
+            border-radius: 1rem 1rem 0 0;
+          }
+        `}
+      </style>
     </div>
   );
   const getErrorText = () => (
-    <div>
-      <p>{error}</p>
-      <style jsx>{`
-        div {
-          color: ${colors.orange};
-        }
-      `}</style>
-    </div>
+    <p>
+      {error}
+      <style jsx>
+        {`
+          p {
+            padding: 0 2rem;
+            color: ${colors.orange};
+          }
+        `}
+      </style>
+    </p>
   );
 
   const getInputByType = () => {
+    const style = info && { borderRadius: '0 0 1rem 1rem' };
     switch (type) {
-      case 'text':
-        return <Input type={type} name={name} required={required} {...rest} />;
-      case 'email':
-        return <Input type={type} name={name} required={required} {...rest} autocomplete="email" />;
       case 'textarea':
-        return <TextArea name={name} required={required} {...rest} />;
+        return <TextArea name={name} required={required} {...rest} style={style} />;
       case 'dropdown':
-        return <Dropdown name={name} required={required} {...rest} />;
+        return <Dropdown name={name} required={required} {...rest} style={style} />;
+      default:
+        return <Input type={type} name={name} required={required} {...rest} style={style} />;
     }
   };
 
   return (
-    <div onMouseEnter={() => setFocus(true)} onMouseLeave={() => setFocus(false)}>
+    <div>
       {label && <label htmlFor={name}>{getLabelText()}</label>}
-      {error && getErrorText()}
+      {info && getInfoText()}
       {icon && (
         <i>
           <Icon name={icon} />
         </i>
       )}
       {getInputByType()}
-      {info && getInfoText()}
+      {error && getErrorText()}
       <style jsx>
         {`
           label {
             text-transform: uppercase;
             font-weight: bold;
-            margin: 1rem 0;
+            margin: 2rem;
           }
 
           div {
-            width: 100%;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -100,7 +91,12 @@ const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) 
 
 FormGroup.propTypes = {
   icon: PropTypes.string,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  info: PropTypes.string,
+  required: PropTypes.bool,
+  label: PropTypes.string,
+  error: PropTypes.string
 };
 
 FormGroup.defaultProps = {
