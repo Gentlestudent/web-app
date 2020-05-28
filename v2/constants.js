@@ -27,3 +27,11 @@ export const routes = {
     VALIDATE_OPPORTUNITY: '/admin/opportunities/[id]/validate'
   }
 };
+
+export const inputTypes = {
+  TEXT: 'text',
+  DROPDOWN: 'dropdown',
+  TEXTAREA: 'textarea',
+  EMAIL: 'email',
+  URL: 'url'
+};

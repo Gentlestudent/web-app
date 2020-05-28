@@ -1,3 +1,7 @@
+import { inputTypes } from '../../constants';
+
+const { TEXT, TEXTAREA, DROPDOWN, EMAIL, URL } = inputTypes;
+
 export default [
   {
     title: 'Algemeen',
@@ -5,7 +9,7 @@ export default [
       {
         label: 'Titel',
         name: 'title',
-        type: 'text',
+        type: TEXT,
         info: 'Schrijf hier een motiverende en uitdagende titel voor jouw leerkans',
         placeholder: 'Titel van de leerkans',
         required: true
@@ -13,7 +17,7 @@ export default [
       {
         label: 'Domein',
         name: 'domain',
-        type: 'dropdown',
+        type: DROPDOWN,
         info: (
           <>
             Duid aan binnen welk domein je leerkans valt.
@@ -42,7 +46,7 @@ export default [
       {
         label: 'Beschrijving',
         name: 'description',
-        type: 'textarea',
+        type: TEXTAREA,
         info:
           'Algemene beschrijving van de leerkans die je organisatie biedt. Geef ook achtergrondinformatie over je instelling om de leerkans binnen je algemene werking te kaderen.',
         placeholder: 'Volledige beschrijving van de leerkans',
@@ -56,7 +60,7 @@ export default [
       {
         label: 'Verwachtingen',
         name: 'expectations',
-        type: 'textarea',
+        type: TEXTAREA,
         info:
           'Verwachtingen van student voor jouw organisatie. Kennen, kunnen of nodige acties van de student voor voltooiing van deze leerkans? Stem deze goed af met het niveau.',
         placeholder: 'Korte beschrijving van wat er verwacht wordt'
@@ -64,7 +68,7 @@ export default [
       {
         label: 'Niveau',
         name: 'level',
-        type: 'dropdown',
+        type: DROPDOWN,
         info: (
           <>
             Selecteer moeilijkheidsgraad van de leerkans.{' '}
@@ -88,14 +92,14 @@ export default [
       {
         label: 'Website',
         name: 'website',
-        type: 'url',
+        type: URL,
         info: 'Weblink binnen de organisatie met info over dit initiatief',
         placeholder: 'Website url'
       },
       {
         label: 'Email contactpersoon',
         name: 'email',
-        type: 'email',
+        type: EMAIL,
         info: 'Emailadres van de contactpersoon binnen de organisatie',
         placeholder: 'Emailadres contactpersoon'
       }
