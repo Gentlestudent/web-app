@@ -40,8 +40,8 @@ const Form = ({ title, fields, children }) => {
       <div className="section-header">
         <Heading level={2} title={title} />
       </div>
-      {children}
       {fields && fields.map((field) => <FormGroup {...field} />)}
+      {children}
       <style jsx>
         {`
           form {
@@ -72,15 +72,16 @@ export default () => {
         <div className="page-header">
           <Heading title="Nieuwe leerkans" />
         </div>
-        <Form {...currentStep} next={nextStep} />
-        <div className="stepper">
-          <Button type="button" onClick={previousStep}>
-            Stap terug
-          </Button>
-          <Button type="button" onClick={nextStep}>
-            Ga door
-          </Button>
-        </div>
+        <Form {...currentStep}>
+          <div className="stepper">
+            <Button type="button" onClick={previousStep}>
+              Stap terug
+            </Button>
+            <Button type="button" onClick={nextStep}>
+              Ga door
+            </Button>
+          </div>
+        </Form>
       </div>
       <style jsx>
         {`
