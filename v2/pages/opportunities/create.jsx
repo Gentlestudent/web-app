@@ -86,8 +86,7 @@ export default () => {
             flex: 1;
             display: flex;
             flex-direction: column;
-            max-width: 120rem;
-            margin: 0 20vw;
+            margin: 0 15vw;
           }
 
           .stepper {
