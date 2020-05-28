@@ -2,8 +2,9 @@ import PropTypes from 'prop-types';
 import Router from 'next/router';
 
 import { useSteps } from '../../hooks';
-import { colors } from '../../assets/styles/constants';
+import { colors, breakpoints } from '../../assets/styles/constants';
 import { Heading, FormGroup, Icon, Button } from '../../components/UI';
+import Layout from '../../components/layout';
 
 import OPPORTUNITY_STEPS from './steps';
 
@@ -51,7 +52,6 @@ const Form = ({ title, fields, children }) => {
             padding: 2rem;
             border-radius: 2rem;
             box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
-            max-width: 90rem;
           }
 
           .section-header {
@@ -67,17 +67,19 @@ const Form = ({ title, fields, children }) => {
 export default () => {
   const { currentStep, nextStep, previousStep } = useSteps(OPPORTUNITY_STEPS);
   return (
-    <div className="page">
+    <Layout>
       <GoBack />
-      <Heading title="Nieuwe leerkans" />
-      <Form {...currentStep} />
-      <div className="stepper">
-        <Button type="button" onClick={previousStep}>
-          Stap terug
-        </Button>
-        <Button type="button" onClick={nextStep}>
-          Ga door
-        </Button>
+      <div className="page">
+        <Heading title="Nieuwe leerkans" />
+        <Form {...currentStep} next={nextStep} />
+        <div className="stepper">
+          <Button type="button" onClick={previousStep}>
+            Stap terug
+          </Button>
+          <Button type="button" onClick={nextStep}>
+            Ga door
+          </Button>
+        </div>
       </div>
       <style jsx>
         {`
@@ -85,19 +87,31 @@ export default () => {
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid red;
+            max-width: 120rem;
+            align-self: center;
           }
 
           .stepper {
+            position: relative;
+            padding: 2rem;
             display: flex;
             margin-top: auto;
             justify-content: space-between;
           }
+
+          @media (max-width: ${breakpoints.small}) {
+            .stepper {
+              position: fixed;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background: ${colors.white};
+              box-shadow: 0 0.5rem 1rem 0.5rem rgba(0, 0, 0, 0.2);
+            }
+          }
         `}
       </style>
-    </div>
+    </Layout>
   );
 };
 
