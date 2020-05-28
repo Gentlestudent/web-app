@@ -11,26 +11,26 @@ const TextArea = ({ name, placeholder, rows, cols, required, ...rest }) => (
       cols={cols}
       {...rest}
     />
-    <style jsx>{`
-      textarea {
-        padding: 2rem;
-        background: transparent;
-        border: 1px solid ${colors.gray};
-        width: 100%;
-        border-radius: 1rem;
-      }
-    `}</style>
+    <style jsx>
+      {`
+        textarea {
+          width: 100%;
+          padding: 2rem;
+          background: transparent;
+          border: 1px solid ${colors.gray};
+          border-radius: 1rem;
+        }
+      `}
+    </style>
   </>
 );
 
 TextArea.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  required: PropTypes.bool
-};
-
-TextArea.defaultProps = {
-  rows: 3
+  required: PropTypes.bool,
+  rows: PropTypes.number,
+  cols: PropTypes.number
 };
 
 export default TextArea;
