@@ -21,8 +21,9 @@ const Button = ({ icon, type, isLoading, href, primary, children, ...rest }) => 
           background-color: ${colors.orange};
           border: 0;
           cursor: pointer;
-          padding: 0.8rem 3rem;
+          padding: 2rem 4rem;
           color: ${colors.white};
+          font-size: 1.6rem;
           font-weight: bold;
           border-radius: 0.3rem;
         }
