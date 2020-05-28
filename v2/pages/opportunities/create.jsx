@@ -69,7 +69,9 @@ export default () => {
     <Layout>
       <GoBack />
       <div className="page">
-        <Heading title="Nieuwe leerkans" />
+        <div className="page-header">
+          <Heading title="Nieuwe leerkans" />
+        </div>
         <Form {...currentStep} next={nextStep} />
         <div className="stepper">
           <Button type="button" onClick={previousStep}>
@@ -87,6 +89,10 @@ export default () => {
             display: flex;
             flex-direction: column;
             margin: 0 15vw;
+          }
+
+          .page-header {
+            padding: 3.2rem;
           }
 
           .stepper {
