@@ -56,7 +56,7 @@ export default [
       {
         label: 'Verwachtingen',
         name: 'expectations',
-        type: 'text',
+        type: 'textarea',
         info:
           'Verwachtingen van student voor jouw organisatie. Kennen, kunnen of nodige acties van de student voor voltooiing van deze leerkans? Stem deze goed af met het niveau.',
         placeholder: 'Korte beschrijving van wat er verwacht wordt'
@@ -95,7 +95,7 @@ export default [
       {
         label: 'Email contactpersoon',
         name: 'email',
-        type: 'url',
+        type: 'email',
         info: 'Emailadres van de contactpersoon binnen de organisatie',
         placeholder: 'Emailadres contactpersoon'
       }
