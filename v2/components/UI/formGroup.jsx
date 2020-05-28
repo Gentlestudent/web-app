@@ -7,25 +7,7 @@ import Icon from './icon';
 
 const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) => {
   const getLabelText = () => `${label}${required ? '*' : ''}`;
-  const getInfoText = () => (
-    <div>
-      <p>
-        {required ? '' : 'Optioneel: '}
-        {info}
-      </p>
-      <style jsx>
-        {`
-          div {
-            padding: 0.5rem 2rem;
-            background: ${colors.grayLight};
-            border: 1px solid ${colors.gray};
-            border-bottom: 0;
-            border-radius: 1rem 1rem 0 0;
-          }
-        `}
-      </style>
-    </div>
-  );
+
   const getErrorText = () => (
     <p>
       {error}
@@ -53,9 +35,16 @@ const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) 
   };
 
   return (
-    <div>
-      {label && <label htmlFor={name}>{getLabelText()}</label>}
-      {info && getInfoText()}
+    <div className="form-field">
+      <div className="field-header">
+        {label && <label htmlFor={name}>{getLabelText()}</label>}
+        {info && (
+          <p>
+            {!required && 'Optioneel: '}
+            {info}
+          </p>
+        )}
+      </div>
       {icon && (
         <i>
           <Icon name={icon} />
@@ -65,18 +54,22 @@ const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) 
       {error && getErrorText()}
       <style jsx>
         {`
+          .field-header {
+            padding: 2rem;
+            background: ${colors.grayLight};
+            border: 1px solid ${colors.gray};
+            border-bottom: 0;
+            border-radius: 1rem 1rem 0 0;
+          }
+
           label {
             text-transform: uppercase;
             font-weight: bold;
-            margin: 2rem;
           }
 
-          div {
-            position: relative;
+          .form-field {
             display: flex;
             flex-direction: column;
-            background-color: ${colors.white};
-            border-radius: 0.3rem;
             margin: 2rem 0;
           }
 
