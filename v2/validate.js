@@ -26,7 +26,7 @@ Validator.prototype.isString = function () {
 };
 
 Validator.prototype.minLength = function (min) {
-  if (this.value.length <= min) {
+  if (this.value.length < min) {
     this.error = `${min - this.value.length} more characters needed`;
   }
   return this;
@@ -52,4 +52,10 @@ Validator.prototype.isEmail = function () {
 
 Validator.prototype.isUrl = function () {};
 
-export const validate = (value) => new Validator(value);
+const validate = (value) => new Validator(value);
+
+export const validator = {
+  title: (title) => validate(title).minLength(3).isRequired(),
+  domain: (domain) => validate(domain).isRequired(),
+  description: (description) => validate(description).isRequired()
+};

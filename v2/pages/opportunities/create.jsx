@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Router from 'next/router';
 
-import { useSteps } from '../../hooks';
+import { useSteps, useForm } from '../../hooks';
 import { colors, breakpoints } from '../../assets/styles/constants';
 import { Heading, FormGroup, Icon, Button } from '../../components/UI';
 import Layout from '../../components/layout';
@@ -35,12 +35,17 @@ const GoBack = () => (
 );
 
 const Form = ({ title, fields, children }) => {
+  const { values, setValues, errors, handleChange, handleSubmit } = useForm(fields);
   return (
-    <form>
+    <form onSubmit={handleSubmit} onChange={handleChange}>
       <div className="section-header">
         <Heading level={2} title={title} />
       </div>
-      {fields && fields.map((field) => <FormGroup {...field} />)}
+      {fields &&
+        fields.map((field) => {
+          const { name } = field;
+          return <FormGroup key={name} {...field} />;
+        })}
       {children}
       <style jsx>
         {`
@@ -77,7 +82,7 @@ export default () => {
             <Button type="button" onClick={previousStep}>
               Stap terug
             </Button>
-            <Button type="button" onClick={nextStep}>
+            <Button type="submit" onSubmit={(e) => nextStep(e)}>
               Ga door
             </Button>
           </div>
