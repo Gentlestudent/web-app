@@ -8,7 +8,10 @@ export default (initialValue) => {
     steps,
     setSteps,
     currentStep: steps[currentStep],
-    nextStep: () => currentStep < steps.length - 1 && setCurrentStep(currentStep + 1),
+    nextStep: (e) => {
+      e.preventDefault();
+      if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
+    },
     previousStep: () => currentStep > 0 && setCurrentStep(currentStep - 1)
   };
 };
