@@ -26,7 +26,7 @@ const Dropdown = ({ name, placeholder, options, ...rest }) => (
 Dropdown.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  options: PropTypes.arrayOf(PropTypes.object).isRequired
+  options: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default Dropdown;
