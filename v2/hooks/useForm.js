@@ -4,7 +4,6 @@ import { validator } from '../validate';
 export default (fields) => {
   const [values, setValues] = useState();
   const [errors, setErrors] = useState([]);
-  const [submitting, setSubmitting] = useState(false);
 
   const isValid = errors.length === 0;
 
@@ -21,20 +20,19 @@ export default (fields) => {
   }, [values]);
 
   return {
-    values,
-    setValues,
     errors,
-    handleChange: (e) => {
-      const { name, value } = e.target;
-      setValues({
-        ...values,
-        [name]: value
-      });
-    },
-
-    handleSubmit: (e) => {
-      e.preventDefault();
-      if (isValid) setSubmitting(true);
+    props: {
+      onChange: (e) => {
+        const { name, value } = e.target;
+        setValues({
+          ...values,
+          [name]: value
+        });
+      },
+      onSubmit: (e) => {
+        e.preventDefault();
+        if (isValid) setIsSubmitting(true);
+      }
     }
   };
 };

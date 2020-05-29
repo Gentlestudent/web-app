@@ -35,9 +35,9 @@ const GoBack = () => (
 );
 
 const Form = ({ title, fields, children }) => {
-  const { values, setValues, errors, handleChange, handleSubmit } = useForm(fields);
+  const { props } = useForm(fields);
   return (
-    <form onSubmit={handleSubmit} onChange={handleChange}>
+    <form {...props}>
       <div className="section-header">
         <Heading level={2} title={title} />
       </div>
