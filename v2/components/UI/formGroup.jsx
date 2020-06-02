@@ -5,19 +5,42 @@ import { colors } from '../../assets/styles/constants';
 import { Input, TextArea, Dropdown } from '.';
 import Icon from './icon';
 
-const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) => {
+const FormGroup = ({ type, name, info, required, label, icon, error, setField, ...rest }) => {
   const { TEXTAREA, DROPDOWN } = inputTypes;
-  const { bind } = useInput('');
+  const { value, bind } = useInput('');
 
   const getLabelText = () => `${label}${required ? '*' : ''}`;
+
+  const handleChange = (value) => {
+    setField(value.target);
+    bind.onChange(value);
+  };
 
   const getInputByType = () => {
     const infoStyle = info && { borderRadius: '0 0 1rem 1rem' };
     switch (type) {
       case TEXTAREA:
-        return <TextArea name={name} required={required} {...rest} style={infoStyle} {...bind} />;
+        return (
+          <TextArea
+            name={name}
+            required={required}
+            {...rest}
+            style={infoStyle}
+            {...bind}
+            onChange={handleChange}
+          />
+        );
       case DROPDOWN:
-        return <Dropdown name={name} required={required} {...rest} style={infoStyle} {...bind} />;
+        return (
+          <Dropdown
+            name={name}
+            required={required}
+            {...rest}
+            style={infoStyle}
+            {...bind}
+            onChange={handleChange}
+          />
+        );
       default:
         return (
           <Input
@@ -27,6 +50,7 @@ const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) 
             {...rest}
             style={infoStyle}
             {...bind}
+            onChange={handleChange}
           />
         );
     }
