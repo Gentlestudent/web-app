@@ -11,35 +11,26 @@ const { TEXTAREA, DROPDOWN } = inputTypes;
 const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) => {
   const getLabelText = () => `${label}${required ? '*' : ''}`;
 
-  const getErrorText = () => (
-    <p>
-      {error}
-      <style jsx>
-        {`
-          p {
-            padding: 0 2rem;
-            color: ${colors.orange};
-          }
-        `}
-      </style>
-    </p>
-  );
-
   const getInputByType = () => {
-    const style = info && { borderRadius: '0 0 1rem 1rem' };
+    const infoStyle = info && { borderRadius: '0 0 1rem 1rem' };
     switch (type) {
       case TEXTAREA:
-        return <TextArea name={name} required={required} {...rest} style={style} />;
+        return <TextArea name={name} required={required} {...rest} style={infoStyle} />;
       case DROPDOWN:
-        return <Dropdown name={name} required={required} {...rest} style={style} />;
+        return <Dropdown name={name} required={required} {...rest} style={infoStyle} />;
       default:
-        return <Input type={type} name={name} required={required} {...rest} style={style} />;
+        return <Input type={type} name={name} required={required} {...rest} style={infoStyle} />;
     }
   };
 
   return (
     <div className="form-field">
       <div className="field-header">
+        <div className="error-badge">
+          <i className="error-icon">
+            <Icon name="exclamation" />
+          </i>
+        </div>
         {label && <label htmlFor={name}>{getLabelText()}</label>}
         {info && (
           <p>
@@ -49,16 +40,16 @@ const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) 
         )}
       </div>
       {icon && (
-        <i>
+        <i className="fieldIcon">
           <Icon name={icon} />
         </i>
       )}
       {getInputByType()}
-      {error && getErrorText()}
+      {<p className="error">{error}</p>}
       <style jsx>
         {`
           .field-header {
-            padding: 2rem;
+            padding: 0 4rem 1rem 2rem;
             background: ${colors.grayLight};
             border: 1px solid ${colors.gray};
             border-bottom: 0;
@@ -73,11 +64,37 @@ const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) 
           .form-field {
             display: flex;
             flex-direction: column;
-            margin: 2rem 0;
           }
 
-          i {
+          .field-icon {
             color: ${colors.copy};
+          }
+
+          .error-badge {
+            position: relative;
+            display: flex;
+            width: 3rem;
+            height: 3rem;
+            background: red;
+            top: -1.5rem;
+            left: -0.5rem;
+            border-radius: 50%;
+            background: ${colors.orange};
+            border: 1px solid ${colors.gray};
+            opacity: ${error ? 1 : 0};
+            transform: scale(${error ? 1 : 0});
+            transition: 150ms ease;
+          }
+
+          .error-icon {
+            color: ${colors.white};
+            margin: auto;
+          }
+
+          .error {
+            min-height: 4rem;
+            padding: 0 2rem;
+            color: ${colors.orange};
           }
         `}
       </style>
