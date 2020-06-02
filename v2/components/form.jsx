@@ -2,8 +2,6 @@ import PropTypes from 'prop-types';
 import { Heading, FormGroup, Button } from './UI';
 
 const Form = ({ title = null, fields, onSubmit }) => {
-  const error = (name) => errors.find((error) => Object.keys(error)[0] === name);
-
   const doSubmit = (e) => {
     e.preventDefault();
     onSubmit(fields);
@@ -17,7 +15,7 @@ const Form = ({ title = null, fields, onSubmit }) => {
       {fields &&
         fields.map((field, i) => {
           const { name } = field;
-          return <FormGroup key={name} error={errors[i]} {...field} />;
+          return <FormGroup key={name} {...field} />;
         })}
       <Button>Submit</Button>
       <style jsx>

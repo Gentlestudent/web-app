@@ -73,9 +73,3 @@ export default () => {
     </Layout>
   );
 };
-
-Form.propTypes = {
-  title: PropTypes.string,
-  fields: PropTypes.arrayOf(PropTypes.object),
-  children: PropTypes.element
-};

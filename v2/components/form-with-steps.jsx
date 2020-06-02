@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { useSteps } from '../hooks';
 import { colors, breakpoints } from '../assets/styles/constants';
 import { Button } from './UI';
+import Form from './form';
 
 const FormWithSteps = ({ steps, onCompleteAll }) => {
-  const { currentStep, doNext, doPrevious } = useSteps(allSteps.length);
+  const { currentStep, doNext, doPrevious } = useSteps(steps.length);
 
   const flattenedFields = steps.reduce((all, step) => {
     return all.concat(step.fields);
   }, []);
+
   const [allFields, setFields] = useState(flattenedFields);
 
   const submitStep = (formFields) => {
@@ -24,13 +26,13 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
 
   return (
     <div>
+      {$forms}
       <Button type="button" onClick={doPrevious}>
         Stap terug
       </Button>
-      <Button type="submit" onClick={(e) => doNext(e)}>
+      <Button type="submit" onClick={doNext}>
         Ga door
       </Button>
-      {$forms}
       <style jsx>
         {`
           .stepper {
