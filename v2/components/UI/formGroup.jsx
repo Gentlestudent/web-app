@@ -1,25 +1,34 @@
 import PropTypes from 'prop-types';
+import { useInput } from '../../hooks';
 import { inputTypes } from '../../constants';
-
-import { Input, TextArea, Dropdown } from '.';
-
 import { colors } from '../../assets/styles/constants';
+import { Input, TextArea, Dropdown } from '.';
 import Icon from './icon';
 
-const { TEXTAREA, DROPDOWN } = inputTypes;
-
 const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) => {
+  const { TEXTAREA, DROPDOWN } = inputTypes;
+  const { bind } = useInput('');
+
   const getLabelText = () => `${label}${required ? '*' : ''}`;
 
   const getInputByType = () => {
     const infoStyle = info && { borderRadius: '0 0 1rem 1rem' };
     switch (type) {
       case TEXTAREA:
-        return <TextArea name={name} required={required} {...rest} style={infoStyle} />;
+        return <TextArea name={name} required={required} {...rest} style={infoStyle} {...bind} />;
       case DROPDOWN:
-        return <Dropdown name={name} required={required} {...rest} style={infoStyle} />;
+        return <Dropdown name={name} required={required} {...rest} style={infoStyle} {...bind} />;
       default:
-        return <Input type={type} name={name} required={required} {...rest} style={infoStyle} />;
+        return (
+          <Input
+            type={type}
+            name={name}
+            required={required}
+            {...rest}
+            style={infoStyle}
+            {...bind}
+          />
+        );
     }
   };
 
