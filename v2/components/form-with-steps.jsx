@@ -13,11 +13,14 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
   const [allValues, setAllValues] = useState({});
 
   const submitStep = (values) => {
+    /* TODO: validate values */
+    console.log(values);
     setAllValues({ ...allValues, ...values });
+    // stepForward();
   };
 
   const submitAll = () => {
-    console.log(allValues);
+    /* Post all values to firstore */
     onCompleteAll(allValues);
   };
 
@@ -25,9 +28,14 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
     <Form key={s.name} onSubmit={submitStep} title={s.title} fields={s.fields} />
   ));
 
+  const getCurrentStep = () => {
+    const { title, fields } = steps[currentStep];
+    return <Form onSubmit={submitStep} title={title} fields={fields} />;
+  };
+
   return (
     <div>
-      {$forms}
+      {getCurrentStep()}
       <div className="stepper">
         <Button type="button" onClick={stepBack}>
           Stap terug
@@ -38,7 +46,7 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
           </Button>
         ))}
         {!isFinalStep ? (
-          <Button type="submit" onClick={stepForward}>
+          <Button type="submit" onClick={submitStep}>
             Ga door
           </Button>
         ) : (
