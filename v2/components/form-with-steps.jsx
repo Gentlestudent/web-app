@@ -10,32 +10,51 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
   const flattenedFields = steps.reduce((all, step) => all.concat(step.fields), []);
   const stepTitles = steps.reduce((all, step) => all.concat(step.title), []);
 
-  const [allValues, setAllValues] = useState({});
+  /*
+   * Opportunity is result of all form values
+   */
+  const [opportunity, setOpportunity] = useState({});
 
+  /*
+   * Validate
+   * Save & continue if valid, else show errors
+   */
   const submitStep = (values) => {
-    /* TODO: validate values */
-    console.log(values);
-    setAllValues({ ...allValues, ...values });
-    // stepForward();
+    /*
+     * TODO: Validate - return errors if errors
+     */
+    //
+
+    /*
+     * TODO: save form state client side
+     */
+    //
+
+    /*
+     * Add current step values to multi step form result
+     */
+    setOpportunity({ ...opportunity, ...values });
+
+    /*
+     * Continue
+     */
+    stepForward();
   };
 
-  const submitAll = () => {
-    /* Post all values to firstore */
-    onCompleteAll(allValues);
+  /*
+   * Add opportunity to firestore
+   */
+  const handleSubmit = () => {
+    onCompleteAll(opportunity);
   };
 
-  const $forms = steps.map((s) => (
-    <Form key={s.name} onSubmit={submitStep} title={s.title} fields={s.fields} />
-  ));
-
-  const getCurrentStep = () => {
-    const { title, fields } = steps[currentStep];
-    return <Form onSubmit={submitStep} title={title} fields={fields} />;
-  };
+  /*
+   * Current step props
+   */
+  const { title, fields } = steps[currentStep];
 
   return (
-    <div>
-      {getCurrentStep()}
+    <Form onSubmit={submitStep} title={title} fields={fields}>
       <div className="stepper">
         <Button type="button" onClick={stepBack}>
           Stap terug
@@ -46,11 +65,11 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
           </Button>
         ))}
         {!isFinalStep ? (
-          <Button type="submit" onClick={submitStep}>
+          <Button type="submit" onSubmit={submitStep}>
             Ga door
           </Button>
         ) : (
-          <Button type="submit" onClick={submitAll}>
+          <Button type="submit" onClick={handleSubmit}>
             Bevestig
           </Button>
         )}
@@ -77,7 +96,7 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
           }
         `}
       </style>
-    </div>
+    </Form>
   );
 };
 
