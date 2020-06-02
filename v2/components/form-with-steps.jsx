@@ -6,7 +6,7 @@ import { Button } from './UI';
 import Form from './form';
 
 const FormWithSteps = ({ steps, onCompleteAll }) => {
-  const { currentStep, doNext, doPrevious } = useSteps(steps.length);
+  const { currentStep, isFinalStep, doNext, doPrevious } = useSteps(steps.length);
 
   const flattenedFields = steps.reduce((all, step) => {
     return all.concat(step.fields);
@@ -27,12 +27,20 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
   return (
     <div>
       {$forms}
-      <Button type="button" onClick={doPrevious}>
-        Stap terug
-      </Button>
-      <Button type="submit" onClick={doNext}>
-        Ga door
-      </Button>
+      <div className="stepper">
+        <Button type="button" onClick={doPrevious}>
+          Stap terug
+        </Button>
+        {!isFinalStep ? (
+          <Button type="submit" onClick={doNext}>
+            Ga door
+          </Button>
+        ) : (
+          <Button type="submit" onClick={submitAll}>
+            Bevestig
+          </Button>
+        )}
+      </div>
       <style jsx>
         {`
           .stepper {
