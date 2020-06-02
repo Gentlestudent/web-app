@@ -6,15 +6,15 @@ import { Button } from './UI';
 import Form from './form';
 
 const FormWithSteps = ({ steps, onCompleteAll }) => {
-  const { currentStep, isFinalStep, doNext, doPrevious } = useSteps(steps.length);
+  const { currentStep, isFinalStep, stepForward, stepBack, stepTo } = useSteps(steps.length);
 
-  const flattenedFields = steps.reduce((all, step) => {
-    return all.concat(step.fields);
-  }, []);
+  const flattenedFields = steps.reduce((all, step) => all.concat(step.fields), []);
+  const stepTitles = steps.reduce((all, step) => all.concat(step.title), []);
 
   const [allFields, setFields] = useState(flattenedFields);
 
   const submitStep = (formFields) => {
+    console.log(allFields);
     setFields([...allFields, ...formFields]);
   };
 
@@ -28,11 +28,16 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
     <div>
       {$forms}
       <div className="stepper">
-        <Button type="button" onClick={doPrevious}>
+        <Button type="button" onClick={stepBack}>
           Stap terug
         </Button>
+        {stepTitles.map((title, index) => (
+          <Button key={index} onClick={() => stepTo(index)}>
+            {`${index}. ${title}`}
+          </Button>
+        ))}
         {!isFinalStep ? (
-          <Button type="submit" onClick={doNext}>
+          <Button type="submit" onClick={stepForward}>
             Ga door
           </Button>
         ) : (
