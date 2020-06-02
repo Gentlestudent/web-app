@@ -24,9 +24,11 @@ export default (fields) => {
     ]);
   };
 
+  /*
   useEffect(() => {
-    if (values) validate();
+    if (values.length > 0) validate();
   }, [values]);
+  */
 
   return {
     isValid,

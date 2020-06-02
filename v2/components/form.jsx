@@ -1,23 +1,32 @@
 import PropTypes from 'prop-types';
+import { useForm } from '../hooks';
 import { Heading, FormGroup, Button } from './UI';
 
-const Form = ({ title = null, fields, onSubmit }) => {
-  const doSubmit = (e) => {
+const Form = ({ title, fields, onSubmit }) => {
+  const { values, setValues } = useForm(fields);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(fields);
+    onSubmit(values);
+  };
+
+  const setField = ({ name, value }) => {
+    setValues({ ...values, [name]: value });
   };
 
   return (
-    <form onSubmit={doSubmit}>
-      <div className="section-header">
-        <Heading level={2} title={title} />
-      </div>
+    <form onSubmit={handleSubmit}>
+      {title && (
+        <div className="section-header">
+          <Heading level={2} title={title} />
+        </div>
+      )}
       {fields &&
         fields.map((field, i) => {
           const { name } = field;
-          return <FormGroup key={name} {...field} />;
+          return <FormGroup key={name} {...field} setField={setField} />;
         })}
-      <Button>Submit</Button>
+      <Button type="submit">Submit</Button>
       <style jsx>
         {`
           form {

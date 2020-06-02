@@ -7,19 +7,18 @@ import Form from './form';
 
 const FormWithSteps = ({ steps, onCompleteAll }) => {
   const { currentStep, isFinalStep, stepForward, stepBack, stepTo } = useSteps(steps.length);
-
   const flattenedFields = steps.reduce((all, step) => all.concat(step.fields), []);
   const stepTitles = steps.reduce((all, step) => all.concat(step.title), []);
 
-  const [allFields, setFields] = useState(flattenedFields);
+  const [allValues, setAllValues] = useState({});
 
-  const submitStep = (formFields) => {
-    console.log(formFields);
-    setFields([...allFields, ...formFields]);
+  const submitStep = (values) => {
+    setAllValues({ ...allValues, ...values });
   };
 
   const submitAll = () => {
-    onCompleteAll(allFields);
+    console.log(allValues);
+    onCompleteAll(allValues);
   };
 
   const $forms = steps.map((s) => (
@@ -35,7 +34,7 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
         </Button>
         {stepTitles.map((title, index) => (
           <Button key={index} onClick={() => stepTo(index)}>
-            {`${index}. ${title}`}
+            {`${index + 1}. ${title}`}
           </Button>
         ))}
         {!isFinalStep ? (
@@ -75,7 +74,10 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
 };
 
 FormWithSteps.propTypes = {
-  steps: PropTypes.shape({}),
+  steps: PropTypes.shape({
+    title: PropTypes.string,
+    field: PropTypes.arrayOf(PropTypes.object)
+  }),
   onCompleteAll: PropTypes.func
 };
 
