@@ -8,10 +8,11 @@ import {
   faBuilding,
   faLock,
   faCaretDown,
-  faCaretLeft
+  faCaretLeft,
+  faExclamation
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faEnvelope, faUser, faBuilding, faLock, faCaretDown, faCaretLeft);
+library.add(faEnvelope, faUser, faBuilding, faLock, faCaretDown, faCaretLeft, faExclamation);
 
 const Icon = ({ name }) => <FontAwesomeIcon icon={name} />;
 
