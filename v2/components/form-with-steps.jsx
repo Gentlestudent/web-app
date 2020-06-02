@@ -14,7 +14,7 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
   const [allFields, setFields] = useState(flattenedFields);
 
   const submitStep = (formFields) => {
-    console.log(allFields);
+    console.log(formFields);
     setFields([...allFields, ...formFields]);
   };
 
@@ -22,7 +22,9 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
     onCompleteAll(allFields);
   };
 
-  const $forms = steps.map((s) => <Form onSubmit={submitStep} title={s.title} fields={s.fields} />);
+  const $forms = steps.map((s) => (
+    <Form key={s.name} onSubmit={submitStep} title={s.title} fields={s.fields} />
+  ));
 
   return (
     <div>
