@@ -26,12 +26,12 @@ export default (fields) => {
 
   useEffect(() => {
     if (values) validate();
-    console.log(values);
   }, [values]);
 
   return {
     isValid,
     values,
+    setValues,
     formProps: {
       errors,
       onChange: (e) => {

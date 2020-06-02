@@ -1,9 +1,6 @@
 import { useState } from 'react';
 
-/*
- * Form field hook
- */
-export default (initialValue, validate) => {
+export default (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState(null);
 
@@ -20,13 +17,13 @@ export default (initialValue, validate) => {
       error,
       onChange: (e) => {
         setValue(e.target.value);
-        if (error && validate) {
-          setError(validate(value).error);
+        if (error && validator) {
+          setError(validator(value).error);
         }
       },
       onBlur: (e) => {
-        if (validate) {
-          setError(validate(e.target.value).error);
+        if (validator) {
+          setError(validator(e.target.value).error);
         }
       }
     }
