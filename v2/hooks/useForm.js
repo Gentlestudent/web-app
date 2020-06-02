@@ -4,24 +4,36 @@ import { validator } from '../validate';
 export default (fields) => {
   const [values, setValues] = useState();
   const [errors, setErrors] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState([]);
 
   const isValid = errors.length === 0;
 
   const validate = () => {
     setErrors([
       ...fields
-        .map(({ name }) => validator[name](values[name]).error)
+        .map(({ name }) => {
+          let error;
+          if (validator[name] !== undefined) {
+            error = validator[name](values[name]).error;
+          } else {
+            error = null;
+          }
+          return error;
+        })
         .filter((field) => field !== null)
     ]);
   };
 
   useEffect(() => {
     if (values) validate();
+    console.log(values);
   }, [values]);
 
   return {
-    errors,
-    props: {
+    isValid,
+    values,
+    formProps: {
+      errors,
       onChange: (e) => {
         const { name, value } = e.target;
         setValues({
