@@ -11,9 +11,8 @@ export default (amount) => {
   return {
     currentStep,
     isFinalStep,
-    doNext: () => {
-      if (currentStep < amount - 1) setCurrentStep(currentStep + 1);
-    },
-    doPrevious: () => currentStep > 0 && setCurrentStep(currentStep - 1)
+    stepTo: (stepNumber) => setCurrentStep(stepNumber),
+    stepForward: () => currentStep < amount - 1 && setCurrentStep(currentStep + 1),
+    stepBack: () => currentStep > 0 && setCurrentStep(currentStep - 1)
   };
 };
