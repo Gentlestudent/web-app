@@ -1,17 +1,30 @@
 import PropTypes from 'prop-types';
 import { useForm } from '../hooks';
-import { Heading, FormGroup, Button } from './UI';
+import { Heading, FormGroup } from './UI';
 
-const Form = ({ title, fields, onSubmit }) => {
+const Form = ({ title, fields, children, onSubmit }) => {
   const { values, setValues } = useForm(fields);
 
+  /*
+   * Render fields from fields prop
+   */
+  const renderFields = () =>
+    fields.map((field, i) => <FormGroup key={field.name} {...field} setField={setField} />);
+
+  /*
+   * Add field-value pairs to form state
+   * FIXME: What to pass exactly
+   */
+  const setField = ({ name, value }) => {
+    setValues({ ...values, [name]: value });
+  };
+
+  /*
+   * Pass form values to parent's onSubmit
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(values);
-  };
-
-  const setField = ({ name, value }) => {
-    setValues({ ...values, [name]: value });
   };
 
   return (
@@ -21,12 +34,8 @@ const Form = ({ title, fields, onSubmit }) => {
           <Heading level={2} title={title} />
         </div>
       )}
-      {fields &&
-        fields.map((field, i) => {
-          const { name } = field;
-          return <FormGroup key={name} {...field} setField={setField} />;
-        })}
-      <Button type="submit">Submit</Button>
+      {fields && renderFields()}
+      {children}
       <style jsx>
         {`
           form {
