@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { colors } from '../../assets/styles/constants';
 
-const Input = ({ type, name, placeholder, required, ...rest }) => {
+const Input = ({ type, name, placeholder, required, error, ...rest }) => {
   return (
     <>
       <input type={type} name={name} placeholder={placeholder} required={required} {...rest} />
