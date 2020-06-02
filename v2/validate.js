@@ -57,5 +57,6 @@ const validate = (value) => new Validator(value);
 export const validator = {
   title: (title) => validate(title).minLength(3).isRequired(),
   domain: (domain) => validate(domain).isRequired(),
-  description: (description) => validate(description).isRequired()
+  description: (description) => validate(description).isRequired(),
+  expectations: (expectations) => validate(expectations).maxLength(500)
 };
