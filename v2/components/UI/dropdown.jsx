@@ -4,7 +4,11 @@ import { colors } from '../../assets/styles/constants';
 const Dropdown = ({ name, placeholder, options, ...rest }) => (
   <>
     <select name={name} {...rest}>
-      {placeholder && <option>{placeholder}</option>}
+      {placeholder && (
+        <option value={''} disabled={true} selected={true} hidden={true}>
+          {placeholder}
+        </option>
+      )}
       {options.map((option, id) => (
         <option key={id.toString()}>{option}</option>
       ))}
