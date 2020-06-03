@@ -37,9 +37,7 @@ const GoBack = () => (
 );
 
 export default () => {
-  const createOpportunity = (values) => {
-    // push opportunity to firestore
-  };
+  const createOpportunity = (opportunity) => console.log(opportunity);
 
   return (
     <Layout>

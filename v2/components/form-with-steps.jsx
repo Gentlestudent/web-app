@@ -29,11 +29,6 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
   };
 
   /*
-   * Add result to firestore
-   */
-  const handleSubmit = () => onCompleteAll(result);
-
-  /*
    * Create array containing step titles
    */
   const stepTitles = steps.reduce((all, step) => all.concat(step.title), []);
@@ -64,7 +59,7 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
             Ga door
           </Button>
         ) : (
-          <Button type="submit" onSubmit={handleSubmit}>
+          <Button type="submit" onClick={onCompleteAll(result)}>
             Bevestig
           </Button>
         )}
@@ -118,10 +113,12 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
 };
 
 FormWithSteps.propTypes = {
-  steps: PropTypes.shape({
-    title: PropTypes.string,
-    field: PropTypes.arrayOf(PropTypes.object)
-  }),
+  steps: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      field: PropTypes.arrayOf(PropTypes.object)
+    })
+  ),
   onCompleteAll: PropTypes.func
 };
 
