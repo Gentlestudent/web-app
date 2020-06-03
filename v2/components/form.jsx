@@ -5,7 +5,7 @@ import { Heading, FormGroup } from './UI';
 
 const Form = ({ title, fields, children, onSubmit }) => {
   const [submitting, setSubmitting] = useState(false);
-  const { onChange, values, setValues, isValid } = useForm(fields);
+  const { onChange, values, isValid } = useForm(fields);
 
   /*
    * Render fields from fields prop
