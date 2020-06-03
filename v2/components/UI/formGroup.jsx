@@ -7,7 +7,7 @@ import Icon from './icon';
 
 const FormGroup = ({ type, name, info, required, label, icon, error, setField, ...rest }) => {
   const { TEXTAREA, DROPDOWN } = inputTypes;
-  const { value, bind } = useInput('');
+  const { showError, bind } = useInput('');
 
   const getLabelText = () => `${label}${required ? '*' : ''}`;
 
@@ -78,7 +78,7 @@ const FormGroup = ({ type, name, info, required, label, icon, error, setField, .
         </i>
       )}
       {getInputByType()}
-      {<p className="error">{error}</p>}
+      {<p className="error">{showError && error}</p>}
       <style jsx>
         {`
           .field-header {
@@ -113,8 +113,8 @@ const FormGroup = ({ type, name, info, required, label, icon, error, setField, .
             border-radius: 50%;
             background: ${colors.orange};
             border: 1px solid ${colors.gray};
-            opacity: ${error ? 1 : 0};
-            transform: scale(${error ? 1 : 0});
+            opacity: ${showError && error ? 1 : 0};
+            transform: scale(${showError && error ? 1 : 0});
             transition: 150ms ease;
           }
 

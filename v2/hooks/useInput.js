@@ -1,30 +1,22 @@
 import { useState } from 'react';
 
-export default (initialValue, validator) => {
+export default (initialValue) => {
   const [value, setValue] = useState(initialValue);
-  const [error, setError] = useState(null);
+  const [showError, setShowError] = useState(false);
 
   return {
-    value,
-    error,
-    setValue,
     reset: () => {
       setValue('');
-      setError('');
     },
+    showError,
     bind: {
       value,
-      error,
       onChange: (e) => {
         setValue(e.target.value);
-        if (error && validator) {
-          setError(validator(value).error);
-        }
+        setShowError(true);
       },
       onBlur: (e) => {
-        if (validator) {
-          setError(validator(e.target.value).error);
-        }
+        setShowError(true);
       }
     }
   };
