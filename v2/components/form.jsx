@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useForm } from '../hooks';
-import { Heading, FormGroup } from './UI';
+import { Heading, FormField } from './UI';
 
 const Form = ({ title, fields, children, onSubmit }) => {
   const [submitting, setSubmitting] = useState(false);
@@ -12,7 +12,7 @@ const Form = ({ title, fields, children, onSubmit }) => {
    */
   const renderFields = () =>
     fields.map((field) => (
-      <FormGroup key={field.name} {...field} setField={onChange} submitting={submitting} />
+      <FormField key={field.name} {...field} setField={onChange} submitting={submitting} />
     ));
 
   /*

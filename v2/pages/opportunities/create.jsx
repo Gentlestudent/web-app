@@ -5,7 +5,7 @@ import Router from 'next/router';
 import { useSteps, useForm } from '../../hooks';
 import { colors, breakpoints } from '../../assets/styles/constants';
 import FormWithSteps from '../../components/form-with-steps';
-import { Heading, FormGroup, Icon, Button } from '../../components/UI';
+import { Heading, FormField, Icon, Button } from '../../components/UI';
 import Layout from '../../components/layout';
 
 import OPPORTUNITY_STEPS from './steps';

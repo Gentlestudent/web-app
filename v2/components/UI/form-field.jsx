@@ -6,7 +6,7 @@ import { colors } from '../../assets/styles/constants';
 import { Input, TextArea, Dropdown } from '.';
 import Icon from './icon';
 
-const FormGroup = ({
+const FormField = ({
   type,
   name,
   info,
@@ -150,7 +150,7 @@ const FormGroup = ({
   );
 };
 
-FormGroup.propTypes = {
+FormField.propTypes = {
   icon: PropTypes.string,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -160,8 +160,8 @@ FormGroup.propTypes = {
   error: PropTypes.string
 };
 
-FormGroup.defaultProps = {
+FormField.defaultProps = {
   icon: null
 };
 
-export default FormGroup;
+export default FormField;
