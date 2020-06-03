@@ -6,24 +6,25 @@ export default (fields) => {
   const [errors, setErrors] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState([]);
 
-  const isValid = errors.length === 0;
+  const isValid = errors.every((error) => error === null);
 
   const validate = () => {
-    fields
-      .map(({ name }, i) => {
+    setErrors([
+      ...fields.map(({ name }, i) => {
         let error;
         if (validator[name] !== undefined) {
           error = validator[name](values[name]).error;
-          fields[i].error = error;
         } else {
           error = null;
         }
+        fields[i].error = error;
+        return error;
       })
-      .filter((field) => field !== null);
+    ]);
   };
 
   useEffect(() => {
-    if (Object.keys(values).length) validate();
+    validate();
   }, [values]);
 
   return {

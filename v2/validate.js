@@ -3,7 +3,7 @@
 
 const Validator = function (value) {
   this.error = null;
-  this.value = value;
+  this.value = value || '';
 };
 
 Validator.prototype.setError = function (error) {

@@ -3,7 +3,7 @@ import { useForm } from '../hooks';
 import { Heading, FormGroup } from './UI';
 
 const Form = ({ title, fields, children, onSubmit }) => {
-  const { values, setValues } = useForm(fields);
+  const { values, setValues, isValid } = useForm(fields);
 
   /*
    * Render fields from fields prop
@@ -24,7 +24,7 @@ const Form = ({ title, fields, children, onSubmit }) => {
    */
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(values);
+    if (isValid) onSubmit(values);
   };
 
   return (
