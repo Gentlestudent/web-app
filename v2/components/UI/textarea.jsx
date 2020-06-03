@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { colors } from '../../assets/styles/constants';
+import { colors } from '../../assets/styles';
 
 const TextArea = ({ name, placeholder, rows, cols, required, ...rest }) => (
   <>

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../api/firebase';
 import { routes } from '../constants';
-import { colors } from '../assets/styles/constants';
+import { colors } from '../assets/styles';
 import { Button, Icon } from './UI';
 
 import logo from '../assets/img/logo.svg';

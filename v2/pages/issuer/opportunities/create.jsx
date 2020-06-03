@@ -7,7 +7,7 @@ import { addOpportunity } from '../../../api/opportunities';
 
 import { useInput } from '../../../hooks';
 import { validate } from '../../../validate';
-import { colors } from '../../../assets/styles/constants';
+import { colors } from '../../../assets/styles';
 import { Heading, FormField, Button, Icon } from '../../../components/UI';
 
 import { OPPORTUNITY_FORM } from './constants';

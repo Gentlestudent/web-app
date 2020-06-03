@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { fonts, colors } from '../../assets/styles/constants';
+import { fonts, colors } from '../../assets/styles';
 
 const Heading = ({ color, title, level }) => {
   const H = `h${level}`;

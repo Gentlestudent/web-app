@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSteps } from '../hooks';
-import { colors, breakpoints } from '../assets/styles/constants';
+import { colors, breakpoints } from '../assets/styles';
 import { Button } from './UI';
 import Form from './form';
 
