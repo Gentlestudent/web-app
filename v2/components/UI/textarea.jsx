@@ -16,9 +16,10 @@ const TextArea = ({ name, placeholder, rows, cols, required, ...rest }) => (
         textarea {
           width: 100%;
           padding: 2rem;
-          background: transparent;
+          background: ${colors.grayLight};
           border: 1px solid ${colors.gray};
           border-radius: 1rem;
+          box-shadow: inset 0 0 0.8rem rgba(0, 0, 0, 0.2);
         }
       `}
     </style>

@@ -9,9 +9,10 @@ const Input = ({ type, name, placeholder, required, error, ...rest }) => {
         {`
           input {
             width: 100%;
-            background: transparent;
+            background: ${colors.grayLight};
             padding: 2rem;
             border: 1px solid ${colors.gray};
+            box-shadow: inset 0 0 0.8rem rgba(0, 0, 0, 0.2);
             border-radius: 1rem;
           }
         `}

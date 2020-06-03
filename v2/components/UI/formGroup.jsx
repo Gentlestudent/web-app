@@ -83,7 +83,6 @@ const FormGroup = ({ type, name, info, required, label, icon, error, setField, .
         {`
           .field-header {
             padding: 0 4rem 1rem 2rem;
-            background: ${colors.grayLight};
             border: 1px solid ${colors.gray};
             border-bottom: 0;
             border-radius: 1rem 1rem 0 0;
