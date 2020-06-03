@@ -19,10 +19,10 @@ const FormField = ({
   ...rest
 }) => {
   const { TEXTAREA, DROPDOWN } = inputTypes;
-  const { showError, setShowError, bind } = useInput('');
+  const { showFeedback, setShowFeedback, bind } = useInput('');
 
   useEffect(() => {
-    if (submitting) setShowError(true);
+    if (submitting) setShowFeedback(true);
   }, [submitting]);
 
   const getLabelText = () => `${label}${required ? '*' : ''}`;
@@ -77,7 +77,7 @@ const FormField = ({
       <div className="field-header">
         <div className="error-badge">
           <i className="error-icon">
-            <Icon name="exclamation" />
+            {error ? <Icon name="exclamation" /> : <Icon name="check" />}
           </i>
         </div>
         {label && <label htmlFor={name}>{getLabelText()}</label>}
@@ -94,7 +94,7 @@ const FormField = ({
         </i>
       )}
       {getInputByType()}
-      {<p className="error">{showError && error}</p>}
+      {<p className="error">{showFeedback && error}</p>}
       <style jsx>
         {`
           .field-header {
@@ -127,10 +127,10 @@ const FormField = ({
             top: -1.5rem;
             left: -0.5rem;
             border-radius: 50%;
-            background: ${colors.orange};
+            background: ${error ? colors.orange : colors.green};
             border: 1px solid ${colors.gray};
-            opacity: ${showError && error ? 1 : 0};
-            transform: scale(${showError && error ? 1 : 0});
+            opacity: ${showFeedback ? 1 : 0};
+            transform: scale(${showFeedback ? 1 : 0});
             transition: 150ms ease;
           }
 

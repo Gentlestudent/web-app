@@ -2,19 +2,19 @@ import { useState } from 'react';
 
 export default (initialValue) => {
   const [value, setValue] = useState(initialValue);
-  const [showError, setShowError] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   return {
-    showError,
-    setShowError,
+    showFeedback,
+    setShowFeedback,
     bind: {
       value,
       onChange: (e) => {
         setValue(e.target.value);
-        setShowError(true);
+        setShowFeedback(true);
       },
       onBlur: (e) => {
-        setShowError(true);
+        setShowFeedback(true);
       }
     }
   };
