@@ -5,10 +5,8 @@ export default (initialValue) => {
   const [showError, setShowError] = useState(false);
 
   return {
-    reset: () => {
-      setValue('');
-    },
     showError,
+    setShowError,
     bind: {
       value,
       onChange: (e) => {

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useInput } from '../../hooks';
 import { inputTypes } from '../../constants';
@@ -5,9 +6,24 @@ import { colors } from '../../assets/styles/constants';
 import { Input, TextArea, Dropdown } from '.';
 import Icon from './icon';
 
-const FormGroup = ({ type, name, info, required, label, icon, error, setField, ...rest }) => {
+const FormGroup = ({
+  type,
+  name,
+  info,
+  required,
+  label,
+  icon,
+  error,
+  setField,
+  submitting,
+  ...rest
+}) => {
   const { TEXTAREA, DROPDOWN } = inputTypes;
-  const { showError, bind } = useInput('');
+  const { showError, setShowError, bind } = useInput('');
+
+  useEffect(() => {
+    if (submitting) setShowError(true);
+  }, [submitting]);
 
   const getLabelText = () => `${label}${required ? '*' : ''}`;
 

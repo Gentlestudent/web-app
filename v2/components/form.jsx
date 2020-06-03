@@ -1,34 +1,34 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { useForm } from '../hooks';
 import { Heading, FormGroup } from './UI';
 
 const Form = ({ title, fields, children, onSubmit }) => {
-  const { values, setValues, isValid } = useForm(fields);
+  const [submitting, setSubmitting] = useState(false);
+  const { onChange, values, setValues, isValid } = useForm(fields);
 
   /*
    * Render fields from fields prop
    */
   const renderFields = () =>
-    fields.map((field, i) => <FormGroup key={field.name} {...field} setField={setField} />);
-
-  /*
-   * Add field-value pairs to form state
-   * FIXME: What to pass exactly
-   */
-  const setField = ({ name, value }) => {
-    setValues({ ...values, [name]: value });
-  };
+    fields.map((field) => (
+      <FormGroup key={field.name} {...field} setField={onChange} submitting={submitting} />
+    ));
 
   /*
    * Pass form values to parent's onSubmit
    */
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isValid) onSubmit(values);
+    if (isValid) {
+      onSubmit(values);
+    } else {
+      setSubmitting(true);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} noValidate>
       {title && (
         <div className="section-header">
           <Heading level={2} title={title} />

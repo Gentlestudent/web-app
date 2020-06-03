@@ -4,7 +4,6 @@ import { validator } from '../validate';
 export default (fields) => {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState([]);
-  const [isSubmitting, setIsSubmitting] = useState([]);
 
   const isValid = errors.every((error) => error === null);
 
@@ -31,19 +30,13 @@ export default (fields) => {
     isValid,
     values,
     setValues,
-    formProps: {
-      errors,
-      onChange: (e) => {
-        const { name, value } = e.target;
-        setValues({
-          ...values,
-          [name]: value
-        });
-      },
-      onSubmit: (e) => {
-        e.preventDefault();
-        if (isValid) setIsSubmitting(true);
-      }
+    errors,
+    onChange: (field) => {
+      const { name, value } = field;
+      setValues({
+        ...values,
+        [name]: value
+      });
     }
   };
 };
