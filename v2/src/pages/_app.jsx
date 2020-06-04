@@ -1,5 +1,7 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
+import AuthContext from '../context/auth';
 import Nav from '../components/header';
+import User from '../models/User';
 import { auth } from '../api/firebase';
 
 import globalStyles from '../assets/styles/global';
@@ -7,13 +9,20 @@ import globalStyles from '../assets/styles/global';
 const App = ({ Component, pageProps }) => {
   const [user, loading, error] = useAuthState(auth);
 
+  const authState = {
+    authStatusReported: !loading,
+    isUserSignedIn: !!user,
+    currentUser: user ? new User(user) : null
+  };
+
   return (
     <>
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <Component {...pageProps} />
-      <style jsx global>
-        {globalStyles}
-      </style>
+      <AuthContext.Provider value={authState}>
+        <Component {...pageProps} />
+        <style jsx global>
+          {globalStyles}
+        </style>
+      </AuthContext.Provider>
     </>
   );
 };
