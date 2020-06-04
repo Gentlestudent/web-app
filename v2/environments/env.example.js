@@ -1,24 +1,15 @@
 module.exports = {
-  FIREBASE: {
-    apiKey: 'AIzaSyANHCWG7WCUz9XDVfjCJuAvth-CuJMiB6g',
-    authDomain: 'gentlestudent-dev.firebaseapp.com',
-    databaseURL: 'https://gentlestudent-dev.firebaseio.com',
-    projectId: 'gentlestudent-dev',
-    storageBucket: 'gentlestudent-dev.appspot.com',
-    messagingSenderId: '820040663722',
-    appId: '1:820040663722:web:c87b69c80e3819883f06d3'
+  public: {
+    FIREBASE: {
+      apiKey: 'AIzaSyANHCWG7WCUz9XDVfjCJuAvth-CuJMiB6g',
+      authDomain: 'gentlestudent-dev.firebaseapp.com',
+      databaseURL: 'https://gentlestudent-dev.firebaseio.com',
+      projectId: 'gentlestudent-dev',
+      storageBucket: 'gentlestudent-dev.appspot.com',
+      messagingSenderId: '820040663722',
+      appId: '1:820040663722:web:c87b69c80e3819883f06d3'
+    },
+    DB_URL: 'https://gentlestudent-dev.firebaseio.com'
   },
-  FIREBASE_ADMIN: {
-    type: '',
-    project_id: '',
-    private_key_id: '',
-    private_key: '',
-    client_email: '',
-    client_id: '',
-    auth_uri: '',
-    token_uri: '',
-    auth_provider_x509_cert_url: '',
-    client_x509_cert_url: ''
-  },
-  DB_URL: ''
+  FRONTEND_URL: 'localhost:5000'
 };
