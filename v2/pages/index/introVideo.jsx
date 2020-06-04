@@ -1,4 +1,4 @@
-import { breakpoints } from '../../assets/styles';
+import { breakpoints } from '../../assets/styles/constants';
 
 const IntroVideo = () => (
   <div className="intro-video">

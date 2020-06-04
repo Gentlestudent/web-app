@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { colors } from '../../assets/styles';
+import { colors } from '../../assets/styles/constants';
 
 const Input = ({ type, name, placeholder, required, error, ...rest }) => {
   return (
@@ -9,10 +9,9 @@ const Input = ({ type, name, placeholder, required, error, ...rest }) => {
         {`
           input {
             width: 100%;
-            background: ${colors.grayLight};
+            background: transparent;
             padding: 2rem;
             border: 1px solid ${colors.gray};
-            box-shadow: inset 0 0 0.8rem rgba(0, 0, 0, 0.2);
             border-radius: 1rem;
           }
         `}

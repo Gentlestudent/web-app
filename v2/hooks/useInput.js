@@ -1,20 +1,33 @@
 import { useState } from 'react';
 
-export default (initialValue) => {
+/*
+ * Form field hook
+ */
+export default (initialValue, validate) => {
   const [value, setValue] = useState(initialValue);
-  const [showFeedback, setShowFeedback] = useState(false);
+  const [error, setError] = useState(null);
 
   return {
-    showFeedback,
-    setShowFeedback,
+    value,
+    error,
+    setValue,
+    reset: () => {
+      setValue('');
+      setError('');
+    },
     bind: {
       value,
+      error,
       onChange: (e) => {
         setValue(e.target.value);
-        setShowFeedback(true);
+        if (error && validate) {
+          setError(validate(value).error);
+        }
       },
       onBlur: (e) => {
-        setShowFeedback(true);
+        if (validate) {
+          setError(validate(e.target.value).error);
+        }
       }
     }
   };

@@ -1,18 +1,26 @@
 import { useState, useEffect } from 'react';
 
-export default (amount) => {
+export default (initialValue) => {
+  const [values, setValues] = useState([]);
+  const [steps, setSteps] = useState(initialValue);
   const [currentStep, setCurrentStep] = useState(0);
-  const [isFinalStep, setIsFinalStep] = useState(false);
+  const [currentStepValues, setCurrentStepValues] = useState([]);
 
   useEffect(() => {
-    setIsFinalStep(currentStep === amount - 1);
-  }, [currentStep]);
+    setValues([...currentStepValues]);
+  }, currentStepValues);
 
   return {
-    currentStep,
-    isFinalStep,
-    stepTo: (stepNumber) => setCurrentStep(stepNumber),
-    stepForward: () => currentStep < amount - 1 && setCurrentStep(currentStep + 1),
-    stepBack: () => currentStep > 0 && setCurrentStep(currentStep - 1)
+    steps,
+    setSteps,
+    currentStepValues,
+    setCurrentStepValues,
+    values,
+    currentStep: steps[currentStep],
+    nextStep: (e) => {
+      e.preventDefault();
+      if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
+    },
+    previousStep: () => currentStep > 0 && setCurrentStep(currentStep - 1)
   };
 };

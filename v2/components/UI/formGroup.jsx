@@ -1,74 +1,25 @@
-import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useInput } from '../../hooks';
 import { inputTypes } from '../../constants';
-import { colors } from '../../assets/styles';
+
 import { Input, TextArea, Dropdown } from '.';
+
+import { colors } from '../../assets/styles/constants';
 import Icon from './icon';
 
-const FormField = ({
-  type,
-  name,
-  info,
-  required,
-  label,
-  icon,
-  error,
-  setField,
-  submitting,
-  ...rest
-}) => {
-  const { TEXTAREA, DROPDOWN } = inputTypes;
-  const { showFeedback, setShowFeedback, bind } = useInput('');
+const { TEXTAREA, DROPDOWN } = inputTypes;
 
-  useEffect(() => {
-    if (submitting) setShowFeedback(true);
-  }, [submitting]);
-
+const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) => {
   const getLabelText = () => `${label}${required ? '*' : ''}`;
-
-  const handleChange = (value) => {
-    setField(value.target);
-    bind.onChange(value);
-  };
 
   const getInputByType = () => {
     const infoStyle = info && { borderRadius: '0 0 1rem 1rem' };
     switch (type) {
       case TEXTAREA:
-        return (
-          <TextArea
-            name={name}
-            required={required}
-            {...rest}
-            style={infoStyle}
-            {...bind}
-            onChange={handleChange}
-          />
-        );
+        return <TextArea name={name} required={required} {...rest} style={infoStyle} />;
       case DROPDOWN:
-        return (
-          <Dropdown
-            name={name}
-            required={required}
-            {...rest}
-            style={infoStyle}
-            {...bind}
-            onChange={handleChange}
-          />
-        );
+        return <Dropdown name={name} required={required} {...rest} style={infoStyle} />;
       default:
-        return (
-          <Input
-            type={type}
-            name={name}
-            required={required}
-            {...rest}
-            style={infoStyle}
-            {...bind}
-            onChange={handleChange}
-          />
-        );
+        return <Input type={type} name={name} required={required} {...rest} style={infoStyle} />;
     }
   };
 
@@ -77,7 +28,7 @@ const FormField = ({
       <div className="field-header">
         <div className="error-badge">
           <i className="error-icon">
-            {error ? <Icon name="exclamation" /> : <Icon name="check" />}
+            <Icon name="exclamation" />
           </i>
         </div>
         {label && <label htmlFor={name}>{getLabelText()}</label>}
@@ -94,11 +45,12 @@ const FormField = ({
         </i>
       )}
       {getInputByType()}
-      {<p className="error">{showFeedback && error}</p>}
+      {<p className="error">{error}</p>}
       <style jsx>
         {`
           .field-header {
             padding: 0 4rem 1rem 2rem;
+            background: ${colors.grayLight};
             border: 1px solid ${colors.gray};
             border-bottom: 0;
             border-radius: 1rem 1rem 0 0;
@@ -127,10 +79,10 @@ const FormField = ({
             top: -1.5rem;
             left: -0.5rem;
             border-radius: 50%;
-            background: ${error ? colors.orange : colors.green};
+            background: ${colors.orange};
             border: 1px solid ${colors.gray};
-            opacity: ${showFeedback ? 1 : 0};
-            transform: scale(${showFeedback ? 1 : 0});
+            opacity: ${error ? 1 : 0};
+            transform: scale(${error ? 1 : 0});
             transition: 150ms ease;
           }
 
@@ -150,7 +102,7 @@ const FormField = ({
   );
 };
 
-FormField.propTypes = {
+FormGroup.propTypes = {
   icon: PropTypes.string,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -160,8 +112,8 @@ FormField.propTypes = {
   error: PropTypes.string
 };
 
-FormField.defaultProps = {
+FormGroup.defaultProps = {
   icon: null
 };
 
-export default FormField;
+export default FormGroup;

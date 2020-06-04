@@ -63,8 +63,7 @@ export default [
         type: TEXTAREA,
         info:
           'Verwachtingen van student voor jouw organisatie. Kennen, kunnen of nodige acties van de student voor voltooiing van deze leerkans? Stem deze goed af met het niveau.',
-        placeholder: 'Korte beschrijving van wat er verwacht wordt',
-        required: true
+        placeholder: 'Korte beschrijving van wat er verwacht wordt'
       },
       {
         label: 'Niveau',
@@ -83,8 +82,7 @@ export default [
           </>
         ),
         placeholder: 'Selecteer niveau',
-        options: ['Beginner', 'Gevorderd', 'Expert'],
-        required: true
+        options: ['Beginner', 'Gevorderd', 'Expert']
       }
     ]
   },
