@@ -17,8 +17,10 @@ const Register = () => {
     e.preventDefault();
     console.log(email, firstName, lastName, organisation, password, repeatPassword);
 
-    registerWithEmailPassword(email, password)
-      .then(async (authUser) => {})
+    registerWithEmailPassword(email, password, firstName, lastName)
+      .then(async (user) => {
+        console.log(user);
+      })
       .catch((error) => {
         // TODO handle error
       });

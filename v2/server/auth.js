@@ -3,14 +3,14 @@ const emails = require('./emails');
 
 const env = { global };
 
-export const createUser = async (user) => {
-  const { email } = user;
-  const link = await admin.auth().generateEmailVerificationLink(email, {
+exports.createUser = async ({ firstName, lastName }, context) => {
+  console.log(context);
+  /* const link = await admin.auth().generateEmailVerificationLink(email, {
     url: env.FRONTEND_URL
   });
-  emails.sendEmailVerification(email, link);
+  emails.sendEmailVerification(email, link);*/
 };
 
-export const resetPassword = async () => {};
+exports.resetPassword = async () => {};
 
-export const changeEmail = async () => {};
+exports.changeEmail = async () => {};
