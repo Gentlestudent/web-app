@@ -9,7 +9,7 @@ import eyecatcher from '../../assets/img/home/eyecatcher.jpg';
 import whatsNew from '../../assets/img/home/wat-is-er-nieuw.png';
 import Download from './download';
 import Cards from './cards';
-import { colors, breakpoints } from '../../assets/styles/constants';
+import { colors, breakpoints } from '../../assets/styles';
 
 const Home = () => {
   const { isUserSignedIn, currentUser } = useContext(AuthContext);

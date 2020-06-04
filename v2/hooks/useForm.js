@@ -2,49 +2,41 @@ import { useState, useEffect } from 'react';
 import { validator } from '../validate';
 
 export default (fields) => {
-  const [values, setValues] = useState();
+  const [values, setValues] = useState({});
   const [errors, setErrors] = useState([]);
-  const [isSubmitting, setIsSubmitting] = useState([]);
 
-  const isValid = errors.length === 0;
+  const isValid = errors.every((error) => error === null);
 
   const validate = () => {
     setErrors([
-      ...fields
-        .map(({ name }) => {
-          let error;
-          if (validator[name] !== undefined) {
-            error = validator[name](values[name]).error;
-          } else {
-            error = null;
-          }
-          return error;
-        })
-        .filter((field) => field !== null)
+      ...fields.map(({ name }, i) => {
+        let error;
+        if (validator[name] !== undefined) {
+          error = validator[name](values[name]).error;
+        } else {
+          error = null;
+        }
+        fields[i].error = error;
+        return error;
+      })
     ]);
   };
 
   useEffect(() => {
-    if (values) validate();
-    console.log(values);
+    validate();
   }, [values]);
 
   return {
     isValid,
     values,
-    formProps: {
-      errors,
-      onChange: (e) => {
-        const { name, value } = e.target;
-        setValues({
-          ...values,
-          [name]: value
-        });
-      },
-      onSubmit: (e) => {
-        e.preventDefault();
-        if (isValid) setIsSubmitting(true);
-      }
+    setValues,
+    errors,
+    onChange: (field) => {
+      const { name, value } = field;
+      setValues({
+        ...values,
+        [name]: value
+      });
     }
   };
 };
