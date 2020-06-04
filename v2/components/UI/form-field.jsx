@@ -1,25 +1,74 @@
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useInput } from '../../hooks';
 import { inputTypes } from '../../constants';
-
+import { colors } from '../../assets/styles';
 import { Input, TextArea, Dropdown } from '.';
-
-import { colors } from '../../assets/styles/constants';
 import Icon from './icon';
 
-const { TEXTAREA, DROPDOWN } = inputTypes;
+const FormField = ({
+  type,
+  name,
+  info,
+  required,
+  label,
+  icon,
+  error,
+  setField,
+  submitting,
+  ...rest
+}) => {
+  const { TEXTAREA, DROPDOWN } = inputTypes;
+  const { showFeedback, setShowFeedback, bind } = useInput('');
 
-const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) => {
+  useEffect(() => {
+    if (submitting) setShowFeedback(true);
+  }, [submitting]);
+
   const getLabelText = () => `${label}${required ? '*' : ''}`;
+
+  const handleChange = (value) => {
+    setField(value.target);
+    bind.onChange(value);
+  };
 
   const getInputByType = () => {
     const infoStyle = info && { borderRadius: '0 0 1rem 1rem' };
     switch (type) {
       case TEXTAREA:
-        return <TextArea name={name} required={required} {...rest} style={infoStyle} />;
+        return (
+          <TextArea
+            name={name}
+            required={required}
+            {...rest}
+            style={infoStyle}
+            {...bind}
+            onChange={handleChange}
+          />
+        );
       case DROPDOWN:
-        return <Dropdown name={name} required={required} {...rest} style={infoStyle} />;
+        return (
+          <Dropdown
+            name={name}
+            required={required}
+            {...rest}
+            style={infoStyle}
+            {...bind}
+            onChange={handleChange}
+          />
+        );
       default:
-        return <Input type={type} name={name} required={required} {...rest} style={infoStyle} />;
+        return (
+          <Input
+            type={type}
+            name={name}
+            required={required}
+            {...rest}
+            style={infoStyle}
+            {...bind}
+            onChange={handleChange}
+          />
+        );
     }
   };
 
@@ -28,7 +77,7 @@ const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) 
       <div className="field-header">
         <div className="error-badge">
           <i className="error-icon">
-            <Icon name="exclamation" />
+            {error ? <Icon name="exclamation" /> : <Icon name="check" />}
           </i>
         </div>
         {label && <label htmlFor={name}>{getLabelText()}</label>}
@@ -45,12 +94,11 @@ const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) 
         </i>
       )}
       {getInputByType()}
-      {<p className="error">{error}</p>}
+      {<p className="error">{showFeedback && error}</p>}
       <style jsx>
         {`
           .field-header {
             padding: 0 4rem 1rem 2rem;
-            background: ${colors.grayLight};
             border: 1px solid ${colors.gray};
             border-bottom: 0;
             border-radius: 1rem 1rem 0 0;
@@ -79,10 +127,10 @@ const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) 
             top: -1.5rem;
             left: -0.5rem;
             border-radius: 50%;
-            background: ${colors.orange};
+            background: ${error ? colors.orange : colors.green};
             border: 1px solid ${colors.gray};
-            opacity: ${error ? 1 : 0};
-            transform: scale(${error ? 1 : 0});
+            opacity: ${showFeedback ? 1 : 0};
+            transform: scale(${showFeedback ? 1 : 0});
             transition: 150ms ease;
           }
 
@@ -102,7 +150,7 @@ const FormGroup = ({ type, name, info, required, label, icon, error, ...rest }) 
   );
 };
 
-FormGroup.propTypes = {
+FormField.propTypes = {
   icon: PropTypes.string,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -112,8 +160,8 @@ FormGroup.propTypes = {
   error: PropTypes.string
 };
 
-FormGroup.defaultProps = {
+FormField.defaultProps = {
   icon: null
 };
 
-export default FormGroup;
+export default FormField;

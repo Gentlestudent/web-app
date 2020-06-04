@@ -7,8 +7,8 @@ import { addOpportunity } from '../../../api/opportunities';
 
 import { useInput } from '../../../hooks';
 import { validate } from '../../../validate';
-import { colors } from '../../../assets/styles/constants';
-import { Heading, FormGroup, Button, Icon } from '../../../components/UI';
+import { colors } from '../../../assets/styles';
+import { Heading, FormField, Button, Icon } from '../../../components/UI';
 
 import { OPPORTUNITY_FORM } from './constants';
 
@@ -140,17 +140,17 @@ export default () => {
 
   const steps = [
     <FormStep title="Algemeen">
-      <FormGroup {...TITLE_INPUT} type="text" name="title" {...bindTitle} />
-      <FormGroup {...DOMAIN_INPUT} type="dropdown" name="domain" {...bindDomain} />
-      <FormGroup {...ABOUT_INPUT} type="textarea" name="about" {...bindAbout} />
+      <FormField {...TITLE_INPUT} type="text" name="title" {...bindTitle} />
+      <FormField {...DOMAIN_INPUT} type="dropdown" name="domain" {...bindDomain} />
+      <FormField {...ABOUT_INPUT} type="textarea" name="about" {...bindAbout} />
     </FormStep>,
     <FormStep title="Verwachtingen & niveau">
-      <FormGroup {...EXPECTED_INPUT} type="textarea" name="expected" {...bindExpected} />
-      <FormGroup {...LEVELS_INPUT} type="dropdown" name="level" {...bindLevel} />
+      <FormField {...EXPECTED_INPUT} type="textarea" name="expected" {...bindExpected} />
+      <FormField {...LEVELS_INPUT} type="dropdown" name="level" {...bindLevel} />
     </FormStep>,
     <FormStep title="Leerkans details">
-      <FormGroup {...URL_INPUT} type="text" name="info-url" {...bindInfoUrl} />
-      <FormGroup {...EMAIL_INPUT} type="email" name="email" {...bindEmail} />
+      <FormField {...URL_INPUT} type="text" name="info-url" {...bindInfoUrl} />
+      <FormField {...EMAIL_INPUT} type="email" name="email" {...bindEmail} />
     </FormStep>
   ];
 

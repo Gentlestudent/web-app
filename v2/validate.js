@@ -3,7 +3,7 @@
 
 const Validator = function (value) {
   this.error = null;
-  this.value = value;
+  this.value = value || '';
 };
 
 Validator.prototype.setError = function (error) {
@@ -13,28 +13,28 @@ Validator.prototype.setError = function (error) {
 
 Validator.prototype.isRequired = function () {
   if (this.value === '' || this.value === null || this.value === undefined) {
-    this.error = 'Required';
+    this.error = 'Verplicht veld';
   }
   return this;
 };
 
 Validator.prototype.isString = function () {
   if (typeof this.value !== 'string') {
-    this.error = 'Not a string';
+    this.error = 'Ongeldige tekens';
   }
   return this;
 };
 
 Validator.prototype.minLength = function (min) {
   if (this.value.length < min) {
-    this.error = `${min - this.value.length} more characters needed`;
+    this.error = `Nog ${min - this.value.length} tekens nodig`;
   }
   return this;
 };
 
 Validator.prototype.maxLength = function (max) {
   if (this.value.length >= max) {
-    this.error = `${this.value.length - max} characters too much`;
+    this.error = `${this.value.length - max} tekens te veel`;
   }
   return this;
 };
@@ -45,18 +45,29 @@ Validator.prototype.isEmail = function () {
       this.value
     ) === false
   ) {
-    this.error = 'Invalid email';
+    this.error = 'Voer een geldig emailadres in';
   }
   return this;
 };
 
-Validator.prototype.isUrl = function () {};
+Validator.prototype.isUrl = function () {
+  if (
+    /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/.test(
+      this.value
+    ) === false
+  ) {
+    this.error = 'Voer een geldige link in';
+  }
+  return this;
+};
 
 const validate = (value) => new Validator(value);
 
 export const validator = {
   title: (title) => validate(title).minLength(3).isRequired(),
   domain: (domain) => validate(domain).isRequired(),
-  description: (description) => validate(description).isRequired(),
-  expectations: (expectations) => validate(expectations).maxLength(500)
+  description: (description) => validate(description).minLength(50).maxLength(500).isRequired(),
+  expectations: (expectations) => validate(expectations).minLength(50).maxLength(500),
+  website: (website) => validate(website).isUrl().minLength(5).maxLength(500),
+  email: (email) => validate(email).maxLength(100).isEmail()
 };
