@@ -172,7 +172,9 @@ FormField.propTypes = {
   info: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   required: PropTypes.bool,
   label: PropTypes.string,
-  error: PropTypes.string
+  error: PropTypes.string,
+  setField: PropTypes.func,
+  submitting: PropTypes.bool
 };
 
 FormField.defaultProps = {

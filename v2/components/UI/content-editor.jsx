@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { colors } from '../../assets/styles';
 import { EditorState } from 'draft-js';
+import { colors } from '../../assets/styles';
 
 const Editor = dynamic(() => import('react-draft-wysiwyg').then((mod) => mod.Editor), {
   ssr: false
@@ -50,6 +51,12 @@ const ContentEditor = ({ placeholder, required, onChange }) => {
       </style>
     </>
   );
+};
+
+ContentEditor.propTypes = {
+  placeholder: PropTypes.string,
+  required: PropTypes.bool,
+  onChange: PropTypes.func
 };
 
 export default ContentEditor;
