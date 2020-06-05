@@ -27,16 +27,30 @@ const FormField = ({
 
   const getLabelText = () => `${label}${required ? '*' : ''}`;
 
-  const handleChange = (value) => {
-    setField(value.target);
-    bind.onChange(value);
+  const handleChange = (e) => {
+    setField(e.target);
+    bind.onChange(e);
+  };
+
+  const handleContentEditorChange = (content) => {
+    setField(content);
+    bind.setValue(content);
+    setShowFeedback(true);
   };
 
   const getInputByType = () => {
     const infoStyle = info && { borderRadius: '0 0 1rem 1rem' };
     switch (type) {
       case CONTENT:
-        return <ContentEditor />;
+        return (
+          <ContentEditor
+            name={name}
+            required={required}
+            {...rest}
+            {...bind}
+            onChange={handleContentEditorChange}
+          />
+        );
       case TEXTAREA:
         return (
           <TextArea

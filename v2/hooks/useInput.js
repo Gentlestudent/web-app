@@ -9,6 +9,7 @@ export default (initialValue) => {
     setShowFeedback,
     bind: {
       value,
+      setValue,
       onChange: (e) => {
         setValue(e.target.value);
         setShowFeedback(true);
