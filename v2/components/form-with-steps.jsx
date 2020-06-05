@@ -43,14 +43,18 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
   return (
     <Form onSubmit={submitStep} title={title} fields={fields}>
       <div className="stepper">
-        <Button type="button" onClick={stepBack}>
-          Stap terug
-        </Button>
-        {stepTitles.map((title, i) => (
-          <p key={i} className={i === currentStep && 'active'}>
-            {title}
-          </p>
-        ))}
+        {currentStep > 0 && (
+          <Button type="button" onClick={stepBack}>
+            Stap terug
+          </Button>
+        )}
+        <div className="step-titles">
+          {stepTitles.map((title, i) => (
+            <p key={i} className={i === currentStep && 'active'}>
+              {title}
+            </p>
+          ))}
+        </div>
         {!isFinalStep ? (
           <Button type="submit" onSubmit={submitStep}>
             <div className="step-indicator">
@@ -77,6 +81,13 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
             background: ${colors.white};
             box-shadow: 0 0.5rem 1rem 0.5rem rgba(0, 0, 0, 0.2);
             margin: 0 calc(15vw - 4.5rem);
+          }
+
+          .step-titles {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            margin: 0 4vw;
           }
 
           .active {
