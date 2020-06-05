@@ -33,7 +33,7 @@ const FormField = ({
   };
 
   const handleContentEditorChange = (content) => {
-    setField(content);
+    setField({ name, value: content });
     bind.setValue(content);
     setShowFeedback(true);
   };
@@ -46,7 +46,6 @@ const FormField = ({
           <ContentEditor
             name={name}
             required={required}
-            {...rest}
             {...bind}
             onChange={handleContentEditorChange}
           />

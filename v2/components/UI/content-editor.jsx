@@ -7,7 +7,7 @@ const Editor = dynamic(() => import('react-draft-wysiwyg').then((mod) => mod.Edi
   ssr: false
 });
 
-const ContentEditor = ({ name, placeholder, required, onChange }) => {
+const ContentEditor = ({ placeholder, required, onChange }) => {
   const [content, setContent] = useState(EditorState.createEmpty());
 
   const handleEditorStateChange = (values) => setContent(values);
@@ -15,7 +15,6 @@ const ContentEditor = ({ name, placeholder, required, onChange }) => {
   return (
     <>
       <Editor
-        name={name}
         placeholder={placeholder}
         required={required}
         editorState={content}
@@ -23,7 +22,7 @@ const ContentEditor = ({ name, placeholder, required, onChange }) => {
         toolbarClassName="content-editor_toolbar"
         editorClassName="content-editor_editor"
         onEditorStateChange={handleEditorStateChange}
-        onChange={() => onChange(content)}
+        onChange={onChange}
       />
       <style global>
         {`
