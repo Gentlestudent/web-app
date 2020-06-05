@@ -15,15 +15,15 @@ const FormField = ({
   icon,
   error,
   setField,
-  submitting,
+  showFeedback: showSubmitFeedback,
   ...rest
 }) => {
   const { TEXTAREA, DROPDOWN } = inputTypes;
   const { showFeedback, setShowFeedback, bind } = useInput('');
 
   useEffect(() => {
-    if (submitting) setShowFeedback(true);
-  }, [submitting]);
+    if (showSubmitFeedback) setShowFeedback(true);
+  }, [showSubmitFeedback]);
 
   const getLabelText = () => `${label}${required ? '*' : ''}`;
 
@@ -157,7 +157,9 @@ FormField.propTypes = {
   info: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   required: PropTypes.bool,
   label: PropTypes.string,
-  error: PropTypes.string
+  error: PropTypes.string,
+  setField: PropTypes.string,
+  showFeedback: PropTypes.string
 };
 
 FormField.defaultProps = {

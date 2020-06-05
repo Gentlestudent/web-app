@@ -4,7 +4,7 @@ import { useForm } from '../hooks';
 import { Heading, FormField } from './UI';
 
 const Form = ({ title, fields, children, onSubmit }) => {
-  const [submitting, setSubmitting] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
   const { onChange, values, isValid } = useForm(fields);
 
   /*
@@ -12,7 +12,7 @@ const Form = ({ title, fields, children, onSubmit }) => {
    */
   const renderFields = () =>
     fields.map((field) => (
-      <FormField key={field.name} {...field} setField={onChange} submitting={submitting} />
+      <FormField key={field.name} {...field} setField={onChange} showFeedback={showFeedback} />
     ));
 
   /*
@@ -22,8 +22,9 @@ const Form = ({ title, fields, children, onSubmit }) => {
     e.preventDefault();
     if (isValid) {
       onSubmit(values);
+      setShowFeedback(false);
     } else {
-      setSubmitting(true);
+      setShowFeedback(true);
     }
   };
 
