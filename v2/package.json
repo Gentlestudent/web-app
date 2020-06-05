@@ -2,7 +2,6 @@
   "name": "gentlestudent",
   "version": "2.0.0",
   "private": true,
-  "main": "server.js",
   "scripts": {
     "clean": "rimraf src/next/ out/",
     "dev": "cross-env NODE_ENV=development next dev src",
