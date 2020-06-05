@@ -7,7 +7,6 @@
     "dev": "cross-env NODE_ENV=development next dev src",
     "build": "cross-env NODE_ENV=production next build src",
     "start": "next start",
-    "local": "cross-env NODE_ENV=development firebase emulators:start",
     "predeploy": "npm run clean && next build && node ./scripts/export.js",
     "deploy": "firebase deploy"
   },
