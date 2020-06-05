@@ -18,6 +18,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "dotenv": "^8.2.0",
+    "draft-js": "^0.11.6",
     "firebase": "^7.14.2",
     "firebase-admin": "^8.11.0",
     "firebase-functions": "^3.6.1",
@@ -27,6 +28,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-draft-wysiwyg": "^1.14.5",
     "react-firebase-hooks": "^2.1.1",
     "styled-jsx": "^3.2.5",
     "swr": "^0.2.0"

@@ -1,6 +1,7 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Nav from '../components/header';
 import { auth } from '../api/firebase';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import globalStyles from '../assets/styles/global';
 

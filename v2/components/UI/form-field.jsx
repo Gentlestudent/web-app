@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useInput } from '../../hooks';
 import { inputTypes } from '../../constants';
 import { colors } from '../../assets/styles';
-import { Input, TextArea, Dropdown } from '.';
+import { Input, TextArea, Dropdown, ContentEditor } from '.';
 import Icon from './icon';
 
 const FormField = ({
@@ -18,7 +18,7 @@ const FormField = ({
   submitting,
   ...rest
 }) => {
-  const { TEXTAREA, DROPDOWN } = inputTypes;
+  const { CONTENT, TEXTAREA, DROPDOWN } = inputTypes;
   const { showFeedback, setShowFeedback, bind } = useInput('');
 
   useEffect(() => {
@@ -35,6 +35,8 @@ const FormField = ({
   const getInputByType = () => {
     const infoStyle = info && { borderRadius: '0 0 1rem 1rem' };
     switch (type) {
+      case CONTENT:
+        return <ContentEditor />;
       case TEXTAREA:
         return (
           <TextArea

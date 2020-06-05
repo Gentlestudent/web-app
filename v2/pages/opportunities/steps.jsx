@@ -1,11 +1,19 @@
 import { inputTypes } from '../../constants';
 
-const { TEXT, TEXTAREA, DROPDOWN, EMAIL, URL } = inputTypes;
+const { TEXT, CONTENT, TEXTAREA, DROPDOWN, EMAIL, URL } = inputTypes;
 
 export default [
   {
     title: 'Algemeen',
     fields: [
+      {
+        label: 'Wysiwyg',
+        name: 'wysiwyg',
+        type: CONTENT,
+        info: 'Wysiwyg test',
+        placeholder: 'Wysiwyg test',
+        required: true
+      },
       {
         label: 'Titel',
         name: 'title',

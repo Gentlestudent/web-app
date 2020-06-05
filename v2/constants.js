@@ -32,6 +32,7 @@ export const inputTypes = {
   TEXT: 'text',
   DROPDOWN: 'dropdown',
   TEXTAREA: 'textarea',
+  CONTENT: 'content',
   EMAIL: 'email',
   URL: 'url'
 };
