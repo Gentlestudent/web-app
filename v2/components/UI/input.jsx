@@ -1,10 +1,17 @@
 import PropTypes from 'prop-types';
 import { colors } from '../../assets/styles';
 
-const Input = ({ type, name, placeholder, required, error, ...rest }) => {
+const Input = ({ type, name, placeholder, required, error, value, ...rest }) => {
   return (
     <>
-      <input type={type} name={name} placeholder={placeholder} required={required} {...rest} />
+      <input
+        type={type}
+        name={name}
+        placeholder={placeholder}
+        required={required}
+        value={value}
+        {...rest}
+      />
       <style jsx>
         {`
           input {
@@ -26,6 +33,8 @@ Input.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   required: PropTypes.bool,
+  error: PropTypes.string,
+  value: PropTypes.string,
   icon: PropTypes.string
 };
 

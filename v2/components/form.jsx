@@ -12,7 +12,13 @@ const Form = ({ title, fields, children, onSubmit }) => {
    */
   const renderFields = () =>
     fields.map((field) => (
-      <FormField key={field.name} {...field} setField={onChange} showFeedback={showFeedback} />
+      <FormField
+        key={field.name}
+        {...field}
+        setField={onChange}
+        showFeedback={showFeedback}
+        value={values[field.name]}
+      />
     ));
 
   /*
@@ -60,8 +66,9 @@ const Form = ({ title, fields, children, onSubmit }) => {
 
 Form.propTypes = {
   title: PropTypes.string,
-  fields: PropTypes.shape({}).isRequired,
-  onSubmit: PropTypes.func.isRequired
+  fields: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  children: PropTypes.element
 };
 
 export default Form;

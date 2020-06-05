@@ -7,6 +7,7 @@ export default (initialValue) => {
   return {
     showFeedback,
     setShowFeedback,
+    setValue,
     bind: {
       value,
       onChange: (e) => {

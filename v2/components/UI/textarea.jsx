@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import { colors } from '../../assets/styles';
 
-const TextArea = ({ name, placeholder, rows, cols, required, ...rest }) => (
+const TextArea = ({ name, value, placeholder, rows, cols, required, ...rest }) => (
   <>
     <textarea
       name={name}
+      value={value}
       placeholder={placeholder}
       required={required}
       rows={rows}
@@ -28,6 +29,7 @@ const TextArea = ({ name, placeholder, rows, cols, required, ...rest }) => (
 
 TextArea.propTypes = {
   name: PropTypes.string.isRequired,
+  value: PropTypes.string,
   placeholder: PropTypes.string,
   required: PropTypes.bool,
   rows: PropTypes.number,

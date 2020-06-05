@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import { colors } from '../../assets/styles';
 
-const Dropdown = ({ name, placeholder, options, ...rest }) => (
+const Dropdown = ({ name, placeholder, options, value, ...rest }) => (
   <>
-    <select name={name} {...rest}>
+    <select name={name} {...rest} value={value}>
       {placeholder && (
-        <option value={''} disabled={true} selected={true} hidden={true}>
+        <option value="" disabled selected hidden>
           {placeholder}
         </option>
       )}
@@ -32,7 +32,8 @@ const Dropdown = ({ name, placeholder, options, ...rest }) => (
 Dropdown.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  options: PropTypes.arrayOf(PropTypes.string)
+  options: PropTypes.arrayOf(PropTypes.string),
+  value: PropTypes.string
 };
 
 export default Dropdown;

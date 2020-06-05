@@ -15,21 +15,23 @@ const FormField = ({
   icon,
   error,
   setField,
+  value,
   showFeedback: showSubmitFeedback,
   ...rest
 }) => {
   const { TEXTAREA, DROPDOWN } = inputTypes;
-  const { showFeedback, setShowFeedback, bind } = useInput('');
+  const { showFeedback, setShowFeedback, setValue, bind } = useInput('');
 
   useEffect(() => {
+    if (value) setValue(value);
     if (showSubmitFeedback) setShowFeedback(true);
   }, [showSubmitFeedback]);
 
   const getLabelText = () => `${label}${required ? '*' : ''}`;
 
-  const handleChange = (value) => {
-    setField(value.target);
-    bind.onChange(value);
+  const handleChange = (e) => {
+    setField(e.target);
+    bind.onChange(e);
   };
 
   const getInputByType = () => {
@@ -39,6 +41,7 @@ const FormField = ({
         return (
           <TextArea
             name={name}
+            value={value}
             required={required}
             {...rest}
             style={infoStyle}
@@ -50,6 +53,7 @@ const FormField = ({
         return (
           <Dropdown
             name={name}
+            value={value}
             required={required}
             {...rest}
             style={infoStyle}
@@ -62,6 +66,7 @@ const FormField = ({
           <Input
             type={type}
             name={name}
+            value={value}
             required={required}
             {...rest}
             style={infoStyle}
@@ -154,6 +159,7 @@ FormField.propTypes = {
   icon: PropTypes.string,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  value: PropTypes.string,
   info: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   required: PropTypes.bool,
   label: PropTypes.string,
