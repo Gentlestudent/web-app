@@ -2,27 +2,6 @@
   "firestore": {
     "rules": "firestore.rules"
   },
-  "functions": {
-    "source": ".",
-    "ignore": [
-      "firebase.json",
-      "firebase-debug.log",
-      "**/.*",
-      "**/node_modules/**",
-      "components/**",
-      "helpers/**",
-      "out/**",
-      "pages/**",
-      "public/**",
-      "scripts/**",
-      "firestore.rules",
-      "readme.md"
-    ],
-    "predeploy": [
-      "npm --prefix \"$RESOURCE_DIR\" run lint",
-      "npm --prefix \"$RESOURCE_DIR\" run build"
-    ]
-  },
   "hosting": {
     "site": "gentlestudent-dev",
     "public": "out",
@@ -33,10 +12,5 @@
         "function": "nextjs-server"
       }
     ]
-  },
-  "emulators": {
-    "hosting": {
-      "port": 4000
-    }
   }
 }

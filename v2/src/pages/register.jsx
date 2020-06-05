@@ -15,7 +15,6 @@ const Register = () => {
 
   const doRegister = (e) => {
     e.preventDefault();
-    console.log(email, firstName, lastName, organisation, password, repeatPassword);
 
     registerWithEmailPassword(email, password, firstName, lastName)
       .then(async (user) => {
