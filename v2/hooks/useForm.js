@@ -5,7 +5,7 @@ export default (fields) => {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState([]);
 
-  const isValid = errors.every((error) => error === null);
+  const isValid = fields.every((field) => field.error === null);
 
   const validate = () => {
     setErrors([
