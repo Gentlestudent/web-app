@@ -164,8 +164,8 @@ FormField.propTypes = {
   required: PropTypes.bool,
   label: PropTypes.string,
   error: PropTypes.string,
-  setField: PropTypes.string,
-  showFeedback: PropTypes.string
+  setField: PropTypes.func,
+  showFeedback: PropTypes.bool
 };
 
 FormField.defaultProps = {
