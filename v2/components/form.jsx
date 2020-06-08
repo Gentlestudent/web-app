@@ -68,7 +68,7 @@ Form.propTypes = {
   title: PropTypes.string,
   fields: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSubmit: PropTypes.func.isRequired,
-  children: PropTypes.element
+  children: PropTypes.arrayOf(PropTypes.element)
 };
 
 export default Form;
