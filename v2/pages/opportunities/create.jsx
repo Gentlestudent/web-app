@@ -1,11 +1,8 @@
-import { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Router from 'next/router';
 
-import { useSteps, useForm } from '../../hooks';
 import { colors, breakpoints } from '../../assets/styles';
 import FormWithSteps from '../../components/form-with-steps';
-import { Heading, FormField, Icon, Button } from '../../components/UI';
+import { Heading, Icon } from '../../components/UI';
 import Layout from '../../components/layout';
 
 import OPPORTUNITY_STEPS from './steps';
