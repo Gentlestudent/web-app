@@ -3,9 +3,9 @@ import { colors } from '../../assets/styles';
 
 const Dropdown = ({ name, placeholder, options, value, ...rest }) => (
   <>
-    <select name={name} {...rest} value={value}>
+    <select name={name} {...rest} defaultValue="">
       {placeholder && (
-        <option value="" disabled selected hidden>
+        <option value="" disabled hidden>
           {placeholder}
         </option>
       )}
