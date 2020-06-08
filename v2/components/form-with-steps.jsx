@@ -6,7 +6,7 @@ import { Button } from './UI';
 import Form from './form';
 
 const FormWithSteps = ({ steps, onCompleteAll }) => {
-  const { currentStep, isFinalStep, stepForward, stepBack, stepTo } = useSteps(steps.length);
+  const { currentStep, isFinalStep, stepForward, stepBack } = useSteps(steps.length);
 
   /*
    * Result contains values of all form steps
