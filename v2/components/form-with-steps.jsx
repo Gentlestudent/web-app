@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSteps } from '../hooks';
 import { colors, breakpoints } from '../assets/styles';
@@ -7,6 +7,10 @@ import Form from './form';
 
 const FormWithSteps = ({ steps, onCompleteAll }) => {
   const { currentStep, isFinalStep, stepForward, stepBack, steppedBack } = useSteps(steps.length);
+
+  useEffect(() => {
+    document.title = `Nieuwe leerkans | ${currentStep + 1}. ${steps[currentStep].title}`;
+  }, [currentStep]);
 
   /*
    * Result contains values of all form steps
