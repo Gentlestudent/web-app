@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useForm } from '../hooks';
 import { Heading, FormField } from './UI';
 
-const Form = ({ title, fields, children, onSubmit }) => {
-  const [showFeedback, setShowFeedback] = useState(false);
+const Form = ({ title, fields, children, onSubmit, isPreviousStep }) => {
+  const [showFeedback, setShowFeedback] = useState(isPreviousStep);
   const { onChange, values, isValid } = useForm(fields);
 
   /*
@@ -16,7 +16,7 @@ const Form = ({ title, fields, children, onSubmit }) => {
         key={field.name}
         {...field}
         setField={onChange}
-        showFeedback={showFeedback}
+        showFeedback={isPreviousStep || showFeedback}
         value={values[field.name]}
       />
     ));
@@ -28,7 +28,6 @@ const Form = ({ title, fields, children, onSubmit }) => {
     e.preventDefault();
     if (isValid) {
       onSubmit(values);
-      setShowFeedback(false);
     } else {
       setShowFeedback(true);
     }

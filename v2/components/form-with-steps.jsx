@@ -6,7 +6,7 @@ import { Button } from './UI';
 import Form from './form';
 
 const FormWithSteps = ({ steps, onCompleteAll }) => {
-  const { currentStep, isFinalStep, stepForward, stepBack } = useSteps(steps.length);
+  const { currentStep, isFinalStep, stepForward, stepBack, steppedBack } = useSteps(steps.length);
 
   /*
    * Result contains values of all form steps
@@ -23,9 +23,16 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
     setResult({ ...result, ...values });
 
     /*
-     * Continue
+     * Continue one step
      */
     stepForward();
+  };
+
+  const handleStepBack = () => {
+    /*
+     * Go back one step
+     */
+    stepBack();
   };
 
   /*
@@ -41,10 +48,10 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
   const stepsLeft = steps.length - currentStep - 1;
 
   return (
-    <Form onSubmit={submitStep} title={title} fields={fields}>
+    <Form onSubmit={submitStep} title={title} fields={fields} isPreviousStep={steppedBack}>
       <div className="stepper">
         {currentStep > 0 && (
-          <Button type="button" onClick={stepBack}>
+          <Button type="button" onClick={handleStepBack}>
             Stap terug
           </Button>
         )}
