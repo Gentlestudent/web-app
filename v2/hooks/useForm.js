@@ -9,13 +9,14 @@ export default (fields) => {
 
   const validate = () => {
     setErrors([
-      ...fields.map(({ name }, i) => {
+      ...fields.map(({ name, required }, i) => {
         let error;
         if (validator[name] !== undefined) {
           error = validator[name](values[name]).error;
         } else {
           error = null;
         }
+        if (!required && values[name] === '') error = null;
         fields[i].error = error;
         return error;
       })
