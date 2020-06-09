@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import { colors } from '../../assets/styles';
 
-const Dropdown = ({ name, placeholder, options, value, ...rest }) => (
+const Dropdown = ({ name, placeholder, options, value, required, ...rest }) => (
   <>
     <select name={name} {...rest} defaultValue="" value={value}>
       {placeholder && (
-        <option value="" disabled hidden>
+        <option value="" disabled={required} hidden={required}>
           {placeholder}
         </option>
       )}
