@@ -5,12 +5,14 @@ import { colors, breakpoints } from '../assets/styles';
 import { Button } from './UI';
 import Form from './form';
 
-const FormWithSteps = ({ steps, onCompleteAll }) => {
+const FormWithSteps = ({ title, steps, onCompleteAll }) => {
   const { currentStep, isFinalStep, stepForward, stepBack, steppedBack } = useSteps(steps.length);
 
-  useEffect(() => {
-    document.title = `Nieuwe leerkans | ${currentStep + 1}. ${steps[currentStep].title}`;
-  }, [currentStep]);
+  if (title) {
+    useEffect(() => {
+      document.title = `${title} | ${currentStep + 1}. ${steps[currentStep].title}`;
+    }, [currentStep]);
+  }
 
   /*
    * Result contains values of all form steps
@@ -47,12 +49,12 @@ const FormWithSteps = ({ steps, onCompleteAll }) => {
   /*
    * Current step props
    */
-  const { title, fields } = steps[currentStep];
+  const { stepTitle, fields } = steps[currentStep];
 
   const stepsLeft = steps.length - currentStep - 1;
 
   return (
-    <Form onSubmit={submitStep} title={title} fields={fields} isPreviousStep={steppedBack}>
+    <Form onSubmit={submitStep} title={stepTitle} fields={fields} isPreviousStep={steppedBack}>
       <div className="stepper">
         {currentStep > 0 && (
           <Button type="button" onClick={handleStepBack}>

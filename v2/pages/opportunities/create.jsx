@@ -42,7 +42,11 @@ export default () => {
       <div className="page">
         <div className="page-header">
           <Heading title="Nieuwe leerkans" />
-          <FormWithSteps steps={OPPORTUNITY_STEPS} onCompleteAll={createOpportunity} />
+          <FormWithSteps
+            title="Nieuwe leerkans"
+            steps={OPPORTUNITY_STEPS}
+            onCompleteAll={createOpportunity}
+          />
         </div>
       </div>
       <style jsx>
