@@ -64,10 +64,11 @@ Validator.prototype.isUrl = function () {
 const validate = (value) => new Validator(value);
 
 export const validator = {
-  title: (title) => validate(title).minLength(3).isRequired(),
+  title: (title) => validate(title).minLength(3).maxLength(100).isRequired(),
   domain: (domain) => validate(domain).isRequired(),
   description: (description) => validate(description).minLength(50).maxLength(500).isRequired(),
-  expectations: (expectations) => validate(expectations).minLength(50).maxLength(500),
+  expectations: (expectations) => validate(expectations).minLength(50).maxLength(500).isRequired(),
+  level: (level) => validate(level).isRequired(),
   website: (website) => validate(website).isUrl().minLength(5).maxLength(500),
   email: (email) => validate(email).maxLength(100).isEmail()
 };
