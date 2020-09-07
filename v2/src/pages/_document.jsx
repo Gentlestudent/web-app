@@ -1,5 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { colors } from '../assets/styles/constants';
+import { colors } from '../assets/styles';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {

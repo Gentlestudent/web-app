@@ -1,46 +1,46 @@
 import PropTypes from 'prop-types';
-import { colors } from '../../assets/styles/constants';
-import Icon from './icon';
+import { colors } from '../../assets/styles';
 
-const Input = ({ type, icon = null, placeholder = '', ...rest }) => (
-  <div>
-    {icon && (
-      <i>
-        <Icon name={icon} />
-      </i>
-    )}
-    <input type={type} placeholder={placeholder} {...rest} />
-    <style jsx>
-      {`
-        div {
-          width: 100%;
-          position: relative;
-          display: flex;
-          align-items: center;
-          background-color: ${colors.white};
-          box-shadow: 0 1px 1px ${colors.gray};
-          border-radius: 0.3rem;
-        }
-        input {
-          width: 100%;
-          height: 100%;
-          color: ${colors.copy};
-          background: transparent;
-          border: 0;
-          padding: 1rem;
-        }
-        i {
-          color: ${colors.copy};
-        }
-      `}
-    </style>
-  </div>
-);
+const Input = ({ type, name, placeholder, required, error, value, ...rest }) => {
+  return (
+    <>
+      <input
+        type={type}
+        name={name}
+        placeholder={placeholder}
+        required={required}
+        value={value}
+        {...rest}
+      />
+      <style jsx>
+        {`
+          input {
+            width: 100%;
+            background: ${colors.grayLight};
+            padding: 2rem;
+            border: 1px solid ${colors.gray};
+            box-shadow: inset 0 0 0.8rem rgba(0, 0, 0, 0.2);
+            border-radius: 1rem;
+          }
+        `}
+      </style>
+    </>
+  );
+};
 
 Input.propTypes = {
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  icon: PropTypes.string,
-  type: PropTypes.string.isRequired
+  required: PropTypes.bool,
+  error: PropTypes.string,
+  value: PropTypes.string,
+  icon: PropTypes.string
+};
+
+Input.defaultProps = {
+  icon: null,
+  placeholder: ''
 };
 
 export default Input;
