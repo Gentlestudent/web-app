@@ -13,6 +13,7 @@ const Heading = ({ color, title, level }) => {
             font-weight: bold;
             font-family: ${fonts.titles};
           }
+
           h1 {
             // font-size: 4.5rem;
             font-size: 5.6rem;

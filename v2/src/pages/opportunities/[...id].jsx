@@ -26,21 +26,46 @@ export default () => {
                   Leg zonnepanelen op je dak draag zo je steentje bij aan een klimaatneutrale stad!
                 </p>
 
-                <Heading title="Wat wordt er verwacht?" level={2} />
+                <Heading className="test" title="Wat wordt er verwacht?" level={2} />
                 <p>
                   Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent,
                   en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het
                   presentatiemateriaal is reeds beschikbaar).
                 </p>
 
-                <Heading title="Meer weten?" level={2} />
+                <Heading className="test" title="Meer weten?" level={2} />
                 <p>Klik hier om meer te weten.</p>
+                <p>button komt hier</p>
               </div>
             </div>
           </div>
 
-          <div className="detail-image">
-            <img src="https://via.placeholder.com/500" alt="" />
+          <div className="detail-side">
+            <div>
+              <Heading title="Info" level={2} />
+              <div className="detail-info">
+                <div>
+                  <p className="info-label">Organisatie</p>
+                  <p>Hoger Technisch Instituut Sint-Antonius</p>
+                </div>
+                <div>
+                  <p className="info-label">Website</p>
+                  <p>https://www.htisa.be</p>
+                </div>
+                <div>
+                  <p className="info-label">Contact</p>
+                  <p>roselien.vervaet@htisa.be</p>
+                </div>
+                <div>
+                  <p className="info-label">Locatie</p>
+                  <p>Holstraat 66, 9000 Gent</p>
+                </div>
+                <div>
+                  <p className="info-label">Periode</p>
+                  <p>2019-12-02 tot en met 2025-06-30</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -65,7 +90,7 @@ export default () => {
           }
 
           .detail-description div {
-            padding: ${spacers.large} ${spacers.large} 0 ${spacers.large};
+            padding: ${spacers.large} 8rem ${spacers.large} 0;
             margin-top: ${spacers.large};
           }
 
@@ -73,12 +98,47 @@ export default () => {
             background: ${colors.blueLight};
             content: '';
             position: absolute;
-            height: 60rem; // variabel maken!!
+            height: 64rem; // variabel maken!!
             width: calc(50% + 10rem);
             z-index: -1;
             left: 0;
+          }
 
-            display: block;
+          .detail-side > div {
+            margin-top: 60rem;
+            padding-left: 18rem;
+          }
+
+          .detail-side::before {
+            background: url('https://blog.top5gent.com/hs-fs/hubfs/Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg?width=1000&name=Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            content: '';
+            position: absolute;
+            height: 54rem;
+            width: 50%;
+            right: 0;
+          }
+
+          .detail-info div {
+            display: flex;
+          }
+
+          .detail-info {
+            margin-top: 2rem;
+          }
+
+          .info-label {
+            width: 10rem;
+            font-weight: bold;
+          }
+
+          .detail-info p {
+            margin: 0.5rem;
+          }
+
+          .test {
+            margin-top: 4rem !important;
           }
         `}
       </style>
