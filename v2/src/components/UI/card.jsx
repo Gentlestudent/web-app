@@ -8,7 +8,7 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
   <div className="card" onClick={onClick}>
     <img src={image} alt={alt} />
     <div className="card-header">
-      <Heading title={title} level={3} color={hover ? colors.orange : colors.primary} />
+      <Heading title={title} level={2} color={hover ? colors.orange : colors.primary} />
     </div>
     <div className="card-body">
       <span className="date">{date}</span>

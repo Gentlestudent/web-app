@@ -19,8 +19,11 @@ const Heading = ({ color, title, level }) => {
           }
 
           h2 {
-            font-size: 3rem;
-            margin: 0.3rem 0;
+            // font-size: 3rem;
+            font-size: 2rem;
+            // margin: 0.3rem 0;
+            margin: 0 0 0.1rem;
+            line-height: 27px;
           }
 
           h3 {
