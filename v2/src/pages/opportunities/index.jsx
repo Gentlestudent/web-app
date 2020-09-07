@@ -51,7 +51,6 @@ export default () => {
           );
         })}
 
-      {/* Card test */}
       <article className="cards">
         {/* Heading for accessibility & semantic, to do: hidden */}
         {/* <Heading title="Overview oppertunities" level={2} /> */}
