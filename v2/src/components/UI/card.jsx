@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import Heading from './heading';
+import { colors } from '../../assets/styles/constants';
 
 const Card = ({ image, title, date, description, onClick, alt }) => (
   <div className="card" onClick={onClick}>
@@ -16,12 +17,12 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
         .card {
           display: flex;
           flex-direction: column;
-          // border-radius: 1rem;
           margin: 1rem;
-          // box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
           cursor: pointer;
+          background: ${colors.blueLight};
+          // border-radius: 1rem;
+          // box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
           // border-radius: 2rem;
-          background: #eff6fa;
         }
 
         .card > img {
@@ -30,8 +31,8 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
 
         .card-header {
           font-size: 2.1rem;
-          // padding: 2rem;
           padding: 3rem;
+          // padding: 2rem;
         }
 
         .card-body {
