@@ -14,6 +14,12 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
       <span className="date">{date}</span>
       <p>{description}</p>
     </div>
+    <a
+      className="card-button"
+      href="https://www.arteveldehogeschool.be/inschrijven/inschrijven-voor-een-bachelor-graduaat-bachelor-na-bachelor"
+    >
+      tekst
+    </a>
     <style jsx>
       {`
         .card {
@@ -25,6 +31,8 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
           // border-radius: 1rem;
           // box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
           // border-radius: 2rem;
+
+          position: relative;
         }
 
         .card > img {
@@ -47,6 +55,21 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
 
         .card-body > .date {
           font-size: 1.4rem;
+        }
+
+        .card-button {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          width: 40px;
+          height: 40px;
+          background: #f58732
+            url(/sites/all/themes/epsenkaas_theme/images/icons/application/dots--white--2.svg)
+            no-repeat 50% 50%;
+          display: inline-block;
+          text-indent: -9999px;
+          font-size: 0;
+          overflow: hidden;
         }
       `}
     </style>

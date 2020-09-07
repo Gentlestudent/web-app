@@ -63,7 +63,8 @@ export default () => {
               <div
                 key={id}
                 onClick={() =>
-                  Router.push(routes.issuer.OPPORTUNITY, `${routes.issuer.OPPORTUNITIES}/${id}`)}
+                  Router.push(routes.issuer.OPPORTUNITY, `${routes.issuer.OPPORTUNITIES}/${id}`)
+                }
               >
                 {title}
               </div>

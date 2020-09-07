@@ -9,7 +9,7 @@ export default css.global`
   }
 
   html {
-    box-sizing: border-box;
+    box-sizing: inherit;
     font-size: 62.5%;
   }
 
@@ -25,7 +25,7 @@ export default css.global`
   *,
   *:before,
   *:after {
-    box-sizing: inherit;
+    box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
   }
 
