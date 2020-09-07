@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../api/firebase';
+import { useAuth } from '../hooks';
 import { routes } from '../constants';
 import { colors } from '../assets/styles';
 import { Button, Icon } from './UI';
@@ -47,9 +46,9 @@ NavLink.propTypes = {
 };
 
 const Header = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const { authStatusReported, user } = useAuth();
 
-  if (loading) return <></>;
+  if (!authStatusReported) return <></>;
 
   // TODO: if user is logged in && they're an issuer
   const isIssuer = false;

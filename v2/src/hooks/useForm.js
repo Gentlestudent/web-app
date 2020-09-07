@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { validator } from '../validate';
+import { validator } from '../../validate';
 
 export default (fields) => {
   const [values, setValues] = useState({});
