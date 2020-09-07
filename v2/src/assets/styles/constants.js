@@ -14,7 +14,7 @@ const colors = {
   grayDark: '#252525',
   grayLight: '#f2f0ed',
   blueLight: '#eff6fa',
-  copy: '#707070'
+  copy: '#000000'
 };
 
 const breakpoints = {

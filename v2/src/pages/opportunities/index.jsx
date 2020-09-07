@@ -71,30 +71,37 @@ export default () => {
           );
         })}
 
-      <article className="cards">
-        {/* Heading for accessibility & semantic, to do: hidden */}
-        {/* <Heading title="Overview oppertunities" level={2} /> */}
-        {OPPORTUNITIES.map((OPPORTUNITY) => (
-          <Card
-            image="https://picsum.photos/200/300"
-            title={OPPORTUNITY.title}
-            description={OPPORTUNITY.description}
-            date={OPPORTUNITY.date}
-            alt={OPPORTUNITY.alt ? OPPORTUNITY.alt : OPPORTUNITY.title}
-          />
-        ))}
-      </article>
+      <div className="container">
+        <Heading title="Leerkansen" level={1} />
+        <article className="cards">
+          {/* Heading for accessibility & semantic, to do: hidden */}
+          {/* <Heading title="Overview oppertunities" level={2} /> */}
+          {OPPORTUNITIES.map((OPPORTUNITY) => (
+            <Card
+              image="https://picsum.photos/200/300"
+              title={OPPORTUNITY.title}
+              description={OPPORTUNITY.description}
+              date={OPPORTUNITY.date}
+              alt={OPPORTUNITY.alt ? OPPORTUNITY.alt : OPPORTUNITY.title}
+            />
+          ))}
+        </article>
+      </div>
 
       <style jsx>
         {`
+          .container {
+            max-width: 1400px;
+            padding: 0 50px;
+            margin: 0 auto;
+          }
+
           .cards {
             display: grid;
             grid-template: 1fr 1fr / repeat(3, 1fr);
             grid-gap: ${spacers.medium};
 
-            max-width: 1400px;
-            padding: 0 50px;
-            margin: 0 auto;
+            margin: 40px 0 60px;
           }
         `}
       </style>

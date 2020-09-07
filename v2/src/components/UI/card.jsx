@@ -35,18 +35,18 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
 
         .card-header {
           font-size: 2.1rem;
-          padding: ${spacers.medium} ${spacers.medium} 0;
+          padding: ${spacers.medium} ${spacers.medium} ${spacers.small};
           // padding: 2rem;
         }
 
         .card-body {
-          padding: ${spacers.medium};
+          padding: 0 ${spacers.medium} ${spacers.medium};
           // padding: 0 2rem;
           // padding-bottom: 2rem;
         }
 
         .card-body > .date {
-          font-size: 1.2rem;
+          font-size: 1.4rem;
         }
       `}
     </style>
