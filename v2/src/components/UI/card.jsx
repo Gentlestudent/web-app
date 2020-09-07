@@ -2,11 +2,13 @@ import PropTypes from 'prop-types';
 import Heading from './heading';
 import { colors, spacers } from '../../assets/styles/constants';
 
+const hover = false;
+
 const Card = ({ image, title, date, description, onClick, alt }) => (
   <div className="card" onClick={onClick}>
     <img src={image} alt={alt} />
     <div className="card-header">
-      <Heading title={title} level={3} />
+      <Heading title={title} level={3} color={hover ? colors.orange : colors.primary} />
     </div>
     <div className="card-body">
       <span className="date">{date}</span>

@@ -27,6 +27,27 @@ export default () => {
         'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
       image: 'https://picsum.photos/200/300',
       date: '	2018-12-21 tot en met 2019-12-21'
+    },
+    {
+      title: 'Nog een titel',
+      description:
+        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
+      image: 'https://picsum.photos/200/300',
+      date: '	2018-12-21 tot en met 2019-12-21'
+    },
+    {
+      title: 'Nog een titel',
+      description:
+        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
+      image: 'https://picsum.photos/200/300',
+      date: '	2018-12-21 tot en met 2019-12-21'
+    },
+    {
+      title: 'Nog een titel',
+      description:
+        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
+      image: 'https://picsum.photos/200/300',
+      date: '	2018-12-21 tot en met 2019-12-21'
     }
   ];
 
