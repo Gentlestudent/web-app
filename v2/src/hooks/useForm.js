@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { validator } from '../../validate';
 
-export default (fields) => {
+export default function useForm(fields) {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState([]);
 
@@ -40,4 +40,4 @@ export default (fields) => {
       });
     }
   };
-};
+}

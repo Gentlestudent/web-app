@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default (amount) => {
+export default function useSteps(amount) {
   const [currentStep, setCurrentStep] = useState(0);
   const [isFinalStep, setIsFinalStep] = useState(false);
   const [steppedBack, setSteppedBack] = useState(false);
@@ -21,4 +21,4 @@ export default (amount) => {
       }
     }
   };
-};
+}

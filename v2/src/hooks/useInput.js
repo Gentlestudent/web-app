@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default (initialValue) => {
+export default function useInput(initialValue) {
   const [value, setValue] = useState(initialValue);
   const [showFeedback, setShowFeedback] = useState(false);
 
@@ -23,4 +23,4 @@ export default (initialValue) => {
       onBlur
     }
   };
-};
+}
