@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import Heading from './heading';
 import { colors, spacers } from '../../assets/styles/constants';
+import arrow from '../../assets/img/icons/arrow-white.svg';
 
 const hover = false;
 
@@ -63,9 +64,7 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
           bottom: 0;
           width: 40px;
           height: 40px;
-          background: #f58732
-            url(/sites/all/themes/epsenkaas_theme/images/icons/application/dots--white--2.svg)
-            no-repeat 50% 50%;
+          background: #f58732 url(${arrow}) no-repeat 50% 50%;
           display: inline-block;
           text-indent: -9999px;
           font-size: 0;
