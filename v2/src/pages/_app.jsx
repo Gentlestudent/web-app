@@ -1,3 +1,4 @@
+import { Head } from 'next/document';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import AuthContext from '../context/auth';
 import Nav from '../components/header';
@@ -19,6 +20,11 @@ const App = ({ Component, pageProps }) => {
 
   return (
     <>
+      <Head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content={colors.primary} />
+      </Head>
       <AuthContext.Provider value={authState}>
         <Component {...pageProps} />
         <style jsx global>
