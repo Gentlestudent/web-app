@@ -27,6 +27,7 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
 
         .card > img {
           object-fit: cover;
+          height: 20rem;
           // border-radius: 2rem 2rem 0 0;
         }
 

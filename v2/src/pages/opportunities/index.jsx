@@ -42,8 +42,7 @@ export default () => {
               <div
                 key={id}
                 onClick={() =>
-                  Router.push(routes.issuer.OPPORTUNITY, `${routes.issuer.OPPORTUNITIES}/${id}`)
-                }
+                  Router.push(routes.issuer.OPPORTUNITY, `${routes.issuer.OPPORTUNITIES}/${id}`)}
               >
                 {title}
               </div>
@@ -71,6 +70,10 @@ export default () => {
             display: grid;
             grid-template: 1fr 1fr / repeat(3, 1fr);
             grid-gap: ${spacers.medium};
+
+            max-width: 1400px;
+            padding: 0 50px;
+            margin: 0 auto;
           }
         `}
       </style>
