@@ -16,20 +16,22 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
         .card {
           display: flex;
           flex-direction: column;
-          border-radius: 1rem;
+          // border-radius: 1rem;
           margin: 1rem;
-          box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
+          // box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
           cursor: pointer;
-          border-radius: 2rem;
+          // border-radius: 2rem;
+          background: #eff6fa;
         }
 
         .card > img {
-          border-radius: 2rem 2rem 0 0;
+          // border-radius: 2rem 2rem 0 0;
         }
 
         .card-header {
           font-size: 2.1rem;
-          padding: 2rem;
+          // padding: 2rem;
+          padding: 3rem;
         }
 
         .card-body {
