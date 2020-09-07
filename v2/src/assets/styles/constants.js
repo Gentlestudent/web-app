@@ -23,4 +23,10 @@ const breakpoints = {
   large: '1440px'
 };
 
-export { fonts, colors, breakpoints };
+const spacers = {
+  small: '20px',
+  medium: '30px',
+  large: '46px'
+};
+
+export { fonts, colors, breakpoints, spacers };
