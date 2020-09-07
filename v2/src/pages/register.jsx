@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { useInput, useAuth } from '../hooks';
-import AuthContext from '../context/auth';
 import Layout from '../components/layout';
 import { Button, Input } from '../components/UI';
 import { registerWithEmailPassword } from '../api/auth';

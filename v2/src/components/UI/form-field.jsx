@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { useInput } from '../../hooks';
 import { inputTypes } from '../../constants';
 import { colors } from '../../assets/styles';
-import { Input, TextArea, Dropdown } from '.';
+import Input from './input';
+import TextArea from './textarea';
+import Dropdown from './dropdown';
 import Icon from './icon';
 
 const FormField = ({

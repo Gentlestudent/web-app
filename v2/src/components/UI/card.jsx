@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Heading } from '.';
+import Heading from './heading';
 
 const Card = ({ image, title, date, description, onClick, alt }) => (
   <div className="card" onClick={onClick}>

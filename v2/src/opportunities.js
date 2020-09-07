@@ -1,4 +1,4 @@
-import { firestore } from './firebase';
+import { firestore } from './api/firebase';
 
 export const addOpportunity = async (opportunity) => {
   try {
