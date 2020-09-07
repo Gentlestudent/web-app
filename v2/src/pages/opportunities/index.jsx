@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useCollectionOnce } from 'react-firebase-hooks/firestore';
 import { firestore } from '../../api/firebase';
 import { routes } from '../../constants';
+import { Card, Heading } from '../../components/UI';
 
 export default () => {
   /*
@@ -10,6 +11,24 @@ export default () => {
    */
 
   const [value, loading, error] = useCollectionOnce(firestore.collection('Opportunities'));
+
+  const OPPORTUNITIES = [
+    {
+      title: 'Gent Zonnestad: presenteer op een infoavond',
+      description:
+        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
+      image: 'https://picsum.photos/200/300',
+      date: '	2018-12-21 tot en met 2019-12-21'
+    },
+    {
+      title: 'Nog een titel',
+      description:
+        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
+      image: 'https://picsum.photos/200/300',
+      date: '	2018-12-21 tot en met 2019-12-21'
+    }
+  ];
+
   return (
     <>
       <Link href={routes.issuer.CREATE_OPPORTUNITY}>Create new opportunity</Link>
@@ -22,14 +41,28 @@ export default () => {
               <div
                 key={id}
                 onClick={() =>
-                  Router.push(routes.issuer.OPPORTUNITY, `${routes.issuer.OPPORTUNITIES}/${id}`)
-                }
+                  Router.push(routes.issuer.OPPORTUNITY, `${routes.issuer.OPPORTUNITIES}/${id}`)}
               >
                 {title}
               </div>
             )
           );
         })}
+
+      {/* Card test */}
+      <article>
+        {/* Heading for accessibility & semantic, to do: hidden */}
+        <Heading title="Overview oppertunities" level={2} />
+        {OPPORTUNITIES.map((OPPORTUNITY) => (
+          <Card
+            image="https://picsum.photos/200/300"
+            title={OPPORTUNITY.title}
+            description={OPPORTUNITY.description}
+            date={OPPORTUNITY.date}
+            alt={OPPORTUNITY.alt ? OPPORTUNITY.alt : OPPORTUNITY.title}
+          />
+        ))}
+      </article>
     </>
   );
 };
