@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import Heading from './heading';
-import { colors } from '../../assets/styles/constants';
+import { colors, spacers } from '../../assets/styles/constants';
 
 const Card = ({ image, title, date, description, onClick, alt }) => (
   <div className="card" onClick={onClick}>
@@ -17,9 +17,9 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
         .card {
           display: flex;
           flex-direction: column;
-          margin: 1rem;
           cursor: pointer;
           background: ${colors.blueLight};
+          // margin: 1rem;
           // border-radius: 1rem;
           // box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
           // border-radius: 2rem;
@@ -31,13 +31,14 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
 
         .card-header {
           font-size: 2.1rem;
-          padding: 3rem;
+          padding: ${spacers.medium} ${spacers.medium} 0;
           // padding: 2rem;
         }
 
         .card-body {
-          padding: 0 2rem;
-          padding-bottom: 2rem;
+          padding: ${spacers.medium};
+          // padding: 0 2rem;
+          // padding-bottom: 2rem;
         }
 
         .card-body > .date {

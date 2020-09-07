@@ -4,6 +4,7 @@ import { useCollectionOnce } from 'react-firebase-hooks/firestore';
 import { firestore } from '../../api/firebase';
 import { routes } from '../../constants';
 import { Card, Heading } from '../../components/UI';
+import { spacers } from '../../assets/styles/constants';
 
 export default () => {
   /*
@@ -41,7 +42,8 @@ export default () => {
               <div
                 key={id}
                 onClick={() =>
-                  Router.push(routes.issuer.OPPORTUNITY, `${routes.issuer.OPPORTUNITIES}/${id}`)}
+                  Router.push(routes.issuer.OPPORTUNITY, `${routes.issuer.OPPORTUNITIES}/${id}`)
+                }
               >
                 {title}
               </div>
@@ -50,9 +52,9 @@ export default () => {
         })}
 
       {/* Card test */}
-      <article>
+      <article className="cards">
         {/* Heading for accessibility & semantic, to do: hidden */}
-        <Heading title="Overview oppertunities" level={2} />
+        {/* <Heading title="Overview oppertunities" level={2} /> */}
         {OPPORTUNITIES.map((OPPORTUNITY) => (
           <Card
             image="https://picsum.photos/200/300"
@@ -63,6 +65,16 @@ export default () => {
           />
         ))}
       </article>
+
+      <style jsx>
+        {`
+          .cards {
+            display: grid;
+            grid-template: 1fr 1fr / repeat(3, 1fr);
+            grid-gap: ${spacers.medium};
+          }
+        `}
+      </style>
     </>
   );
 };
