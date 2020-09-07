@@ -13,6 +13,7 @@ const colors = {
   gray: '#707070',
   grayDark: '#252525',
   grayLight: '#f2f0ed',
+  blueLight: '#eff6fa',
   copy: '#707070'
 };
 
