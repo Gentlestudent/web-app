@@ -15,7 +15,7 @@ const Cards = () => {
                 key={doc.id}
                 title={title}
                 description={description}
-                image="https://i.picsum.photos/id/757/300/200.jpg"
+                image="https://picsum.photos/seed/picsum/200/300"
               />
             )
           );

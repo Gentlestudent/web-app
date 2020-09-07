@@ -1,9 +1,10 @@
-import { Head } from 'next/document';
+import Head from 'next/head';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import AuthContext from '../context/auth';
 import Nav from '../components/header';
 import User from '../models/User';
 import { auth } from '../api/firebase';
+import { colors } from '../assets/styles';
 
 import globalStyles from '../assets/styles/global';
 

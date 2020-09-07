@@ -11,7 +11,6 @@ const Layout = ({ /*withHeader,*/ children }) => (
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            scroll-snap-type: y mandatory;
         }
     `}
     </style>

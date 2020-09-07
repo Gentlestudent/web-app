@@ -1,21 +1,21 @@
 import { useContext } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
-import AuthContext from '../../context/auth';
-import { Heading } from '../../components/UI';
-import Layout from '../../components/layout';
-import IntroVideo from './introVideo';
-import eyecatcher from '../../assets/img/home/eyecatcher.jpg';
-import whatsNew from '../../assets/img/home/wat-is-er-nieuw.png';
-import Download from './download';
-import Cards from './cards';
-import { colors, breakpoints } from '../../assets/styles';
+import AuthContext from '../context/auth';
+import { Heading } from '../components/UI';
+import Layout from '../components/layout';
+import IntroVideo from './index/introVideo';
+import eyecatcher from '../assets/img/home/eyecatcher.jpg';
+import whatsNew from '../assets/img/home/wat-is-er-nieuw.png';
+import Download from './index/download';
+import Cards from './index/cards';
+import { colors, breakpoints } from '../assets/styles';
 
 const Home = () => {
   const { isUserSignedIn, currentUser } = useContext(AuthContext);
   return (
     <Layout>
-      <div className="scroll-snap">
+      <div>
         <Head>
           <title>Welkom | Gentlestudent</title>
         </Head>
@@ -50,7 +50,6 @@ const Home = () => {
       <style jsx>
         {`
           section {
-            scroll-snap-align: start;
             display: flex;
             flex-direction: column;
           }
