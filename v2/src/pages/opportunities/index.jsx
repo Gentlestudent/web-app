@@ -1,8 +1,8 @@
 import Router from 'next/router';
 import Link from 'next/link';
 import { useCollectionOnce } from 'react-firebase-hooks/firestore';
-import { firestore } from '../../../api/firebase';
-import { routes } from '../../../constants';
+import { firestore } from '../../api/firebase';
+import { routes } from '../../constants';
 
 export default () => {
   /*
