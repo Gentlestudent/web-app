@@ -15,10 +15,7 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
       <span className="date">{date}</span>
       <p>{description}</p>
     </div>
-    <a
-      className="card-button"
-      href="https://www.arteveldehogeschool.be/inschrijven/inschrijven-voor-een-bachelor-graduaat-bachelor-na-bachelor"
-    >
+    <a className="card-button" href="/id">
       tekst
     </a>
     <style jsx>

@@ -75,10 +75,9 @@ export default () => {
       <div className="container">
         <Heading title="Leerkansen" level={1} />
         <article className="cards">
-          {/* Heading for accessibility & semantic, to do: hidden */}
-          {/* <Heading title="Overview oppertunities" level={2} /> */}
           {OPPORTUNITIES.map((OPPORTUNITY) => (
             <Card
+              key={OPPORTUNITY}
               image="https://picsum.photos/200/300"
               title={OPPORTUNITY.title}
               description={OPPORTUNITY.description}
