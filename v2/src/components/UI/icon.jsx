@@ -10,7 +10,8 @@ import {
   faCaretDown,
   faCaretLeft,
   faExclamation,
-  faCheck
+  faCheck,
+  faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -21,7 +22,8 @@ library.add(
   faCaretDown,
   faCaretLeft,
   faExclamation,
-  faCheck
+  faCheck,
+  faArrowRight
 );
 
 const Icon = ({ name }) => <FontAwesomeIcon icon={name} />;

@@ -54,23 +54,25 @@ export default () => {
   return (
     <>
       <Link href={routes.issuer.CREATE_OPPORTUNITY}>Create new opportunity</Link>
-      {value &&
+      {/* value &&
         value.docs.map((doc) => {
           const { title } = doc.data();
           const { id } = doc;
           return (
             !loading && (
-              <div
+              <button
+                className="button-container"
+                type="button"
                 key={id}
                 onClick={() =>
                   Router.push(routes.issuer.OPPORTUNITY, `${routes.issuer.OPPORTUNITIES}/${id}`)
                 }
               >
                 {title}
-              </div>
+              </button>
             )
           );
-        })}
+        }) */}
 
       <div className="container">
         <Heading title="Leerkansen" level={1} />

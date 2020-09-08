@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Heading } from '../../components/UI';
+import { Heading, Button } from '../../components/UI';
 import { colors, spacers } from '../../assets/styles/constants';
 
 export default () => {
@@ -11,7 +11,7 @@ export default () => {
       <div className="container">
         <div className="grid">
           <div>
-            <p>Knopje terug of breadcrumb</p>
+            <p>Terug naar overzicht</p>
             <Heading title="Titel komt hier" level={1} />
             <div className="detail-description">
               <div>
@@ -25,17 +25,15 @@ export default () => {
                   gemiddeld 8% financieel rendement oplevert... Dat is beter dan een spaarrekening!
                   Leg zonnepanelen op je dak draag zo je steentje bij aan een klimaatneutrale stad!
                 </p>
-
                 <Heading className="test" title="Wat wordt er verwacht?" level={2} />
                 <p>
                   Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent,
                   en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het
                   presentatiemateriaal is reeds beschikbaar).
                 </p>
-
                 <Heading className="test" title="Meer weten?" level={2} />
                 <p>Klik hier om meer te weten.</p>
-                <p>button komt hier</p>
+                <Button icon="arrow-right" text="Tekst" type="button" primary />
               </div>
             </div>
           </div>
@@ -94,14 +92,18 @@ export default () => {
             margin-top: ${spacers.large};
           }
 
+          .detail-description {
+            position: relative;
+          }
+
           .detail-description::before {
             background: ${colors.blueLight};
             content: '';
             position: absolute;
-            height: 64rem; // variabel maken!!
-            width: calc(50% + 10rem);
+            height: 100%;
+            width: calc(50vw + 10rem);
             z-index: -1;
-            left: 0;
+            left: calc((100vw - 1300px) / -2);
           }
 
           .detail-side > div {
