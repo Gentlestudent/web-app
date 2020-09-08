@@ -11,7 +11,7 @@ export default () => {
       <div className="container">
         <div className="grid">
           <div>
-            <p>Knopje terug</p>
+            <p>Knopje terug of breadcrumb</p>
             <Heading title="Titel komt hier" level={1} />
             <div className="detail-description">
               <div>

@@ -6,7 +6,7 @@ import arrow from '../../assets/img/icons/arrow-white.svg';
 const hover = false;
 
 const Card = ({ image, title, date, description, onClick, alt }) => (
-  <div className="card" onClick={onClick}>
+  <button type="button" className="card button-container" onClick={onClick}>
     <img src={image} alt={alt} />
     <div className="card-header">
       <Heading title={title} level={2} color={hover ? colors.orange : colors.primary} />
@@ -36,6 +36,7 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
         .card > img {
           object-fit: cover;
           height: 20rem;
+          width: 100%;
           // border-radius: 2rem 2rem 0 0;
         }
 
@@ -69,7 +70,7 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
         }
       `}
     </style>
-  </div>
+  </button>
 );
 
 Card.propTypes = {

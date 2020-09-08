@@ -62,13 +62,25 @@ export default css.global`
   }
 
   .button-container {
-    color: inherit;
     cursor: pointer;
     background-color: inherit;
     border: none;
-    outline: none;
     padding: 0;
     margin: 0;
-    text-transform: inherit;
+    text-align: inherit;
+    outline: 0;
+    width: 100%;
+    height: 100%;
+    text-align: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    border-radius: inherit;
+  }
+
+  .button-container:focus,
+  .button-container:active,
+  .button-container::-moz-focus-inner {
+    outline: 0;
+    border: 0;
   }
 `;

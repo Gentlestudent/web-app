@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { fonts, colors } from '../../assets/styles';
 
-const Heading = ({ color, title, level }) => {
+const Heading = ({ color, title, level, classNames }) => {
   const H = `h${level}`;
   return (
-    <H className="title">
+    <H className={`title ${classNames}`}>
       {title}
       <style jsx>
         {`
@@ -56,6 +56,7 @@ const Heading = ({ color, title, level }) => {
 Heading.propTypes = {
   color: PropTypes.string,
   title: PropTypes.string,
+  classNames: PropTypes.string,
   level: PropTypes.number
 };
 
