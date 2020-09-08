@@ -11,14 +11,17 @@ export default () => {
     <>
       <div className="container">
         <div className="grid">
-          <div>
+          <div className="detail-overview">
             <Button
               onClick={() => Router.back()}
               text="Terug naar overzicht"
               icon="arrow-left"
               back
             />
-            <Heading title="Titel komt hier" level={1} />
+            <Heading
+              title="Titel komt hier Titel a a a komt hier Titel komt hier Titel komt hier"
+              level={1}
+            />
             <div className="detail-description">
               <div>
                 <Heading title="Beschrijving" level={2} />
@@ -95,8 +98,12 @@ export default () => {
             margin-top: 2rem;
           }
 
+          .detail-overview {
+            padding-right: ${spacers.small};
+          }
+
           .detail-description > div {
-            padding: ${spacers.large} 8rem ${spacers.large} 0;
+            padding: ${spacers.large} ${spacers.medium} ${spacers.large} 0;
             margin-top: ${spacers.large};
           }
 
