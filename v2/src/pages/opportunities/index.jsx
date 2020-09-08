@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { useCollectionOnce } from 'react-firebase-hooks/firestore';
 import { firestore } from '../../api/firebase';
 import { routes } from '../../constants';
-import { Card, Heading } from '../../components/UI';
-import { spacers } from '../../assets/styles/constants';
+import { Card, Heading, Search } from '../../components/UI';
+import { spacers, colors } from '../../assets/styles/constants';
 
 export default () => {
   /*
@@ -86,6 +86,9 @@ export default () => {
 
       <div className="container">
         <Heading title="Leerkansen" level={1} />
+        <div className="panel">
+          <Search placeholder="Zoeken" type="search" />
+        </div>
         <article className="cards">
           {OPPORTUNITIES.map((OPPORTUNITY) => (
             <Card
@@ -105,7 +108,7 @@ export default () => {
         {`
           .container {
             max-width: 1400px;
-            padding: 0 50px;
+            padding: 0 5rem;
             margin: 0 auto;
           }
 
@@ -114,7 +117,12 @@ export default () => {
             grid-template: 1fr 1fr / repeat(3, 1fr);
             grid-gap: ${spacers.medium};
 
-            margin: 40px 0 60px;
+            margin: ${spacers.medium} 0 6rem;
+          }
+
+          .panel {
+            background: ${colors.blueLight};
+            padding: 3rem;
           }
         `}
       </style>

@@ -12,7 +12,8 @@ import {
   faExclamation,
   faCheck,
   faArrowRight,
-  faArrowLeft
+  faArrowLeft,
+  faSearch
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -25,7 +26,8 @@ library.add(
   faExclamation,
   faCheck,
   faArrowRight,
-  faArrowLeft
+  faArrowLeft,
+  faSearch
 );
 
 const Icon = ({ name }) => <FontAwesomeIcon icon={name} />;
