@@ -1,4 +1,5 @@
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
+import { routes } from '../../constants';
 import { Heading, Button } from '../../components/UI';
 import { colors, spacers } from '../../assets/styles/constants';
 
@@ -11,11 +12,16 @@ export default () => {
       <div className="container">
         <div className="grid">
           <div>
-            <p>Terug naar overzicht</p>
+            <Button
+              onClick={() => Router.back()}
+              text="Terug naar overzicht"
+              icon="arrow-left"
+              back
+            />
             <Heading title="Titel komt hier" level={1} />
             <div className="detail-description">
               <div>
-                <Heading className="test" title="Beschrijving" level={2} />
+                <Heading title="Beschrijving" level={2} />
                 <p>
                   De Gentse burgercoöperatie Energent organiseert met steun van Het Gents
                   Milieufront (GMF), Natuurpunt Gent en Beweging.net een groepsaankoop van
@@ -25,15 +31,17 @@ export default () => {
                   gemiddeld 8% financieel rendement oplevert... Dat is beter dan een spaarrekening!
                   Leg zonnepanelen op je dak draag zo je steentje bij aan een klimaatneutrale stad!
                 </p>
-                <Heading className="test" title="Wat wordt er verwacht?" level={2} />
+                <Heading title="Wat wordt er verwacht?" level={2} />
                 <p>
                   Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent,
                   en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het
                   presentatiemateriaal is reeds beschikbaar).
                 </p>
-                <Heading className="test" title="Meer weten?" level={2} />
+                <Heading title="Meer weten?" level={2} />
                 <Button text="Bekijk meer" icon="arrow-right" />
-                <Button icon="arrow-right" text="Tekst" type="button" primary />
+                <div>
+                  <Button icon="arrow-right" text="Schrijf je in" type="button" primary />
+                </div>
               </div>
             </div>
           </div>
@@ -87,7 +95,7 @@ export default () => {
             margin-top: 2rem;
           }
 
-          .detail-description div {
+          .detail-description > div {
             padding: ${spacers.large} 8rem ${spacers.large} 0;
             margin-top: ${spacers.large};
           }
