@@ -6,7 +6,7 @@ const Button = ({ icon, type, isLoading, href, primary, children, text, ...rest 
   <>
     {/* see https://github.com/yannickcr/eslint-plugin-react/issues/1555 */}
     {/* eslint-disable-next-line react/button-has-type */}
-    <button className={primary ? 'primary' : ''} type={type} {...rest}>
+    <button className={primary ? 'primary' : 'secondary'} type={type} {...rest}>
       {text ? <span className="button-text">{text}</span> : ''}
       {icon && (
         <i>
@@ -19,11 +19,8 @@ const Button = ({ icon, type, isLoading, href, primary, children, text, ...rest 
       {`
         button {
           display: flex;
-          background-color: ${colors.orange};
           border: 0;
           cursor: pointer;
-          padding: 2rem 4rem;
-          color: ${colors.white};
           font-size: 1.6rem;
           font-weight: bold;
         }
@@ -40,15 +37,18 @@ const Button = ({ icon, type, isLoading, href, primary, children, text, ...rest 
           margin: 1rem 0;
           padding: 1.3rem 1.6rem 1.3rem 2.2rem;
           vertical-align: middle;
-          font-weight: 700;
           line-height: 1.1;
-          color: #fff;
+          color: ${colors.white};
         }
 
         button.primary:hover {
           cursor: pointer;
           transition: all 0.25s ease;
           background-color: ${colors.orange};
+        }
+
+        button.secondary {
+          background-color: transparent;
         }
 
         i {

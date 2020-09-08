@@ -32,7 +32,7 @@ export default () => {
                   presentatiemateriaal is reeds beschikbaar).
                 </p>
                 <Heading className="test" title="Meer weten?" level={2} />
-                <p>Klik hier om meer te weten.</p>
+                <Button text="testje" />
                 <Button icon="arrow-right" text="Tekst" type="button" primary />
               </div>
             </div>
