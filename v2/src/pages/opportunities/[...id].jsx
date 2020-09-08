@@ -18,10 +18,7 @@ export default () => {
               icon="arrow-left"
               back
             />
-            <Heading
-              title="Titel komt hier Titel a a a komt hier Titel komt hier Titel komt hier"
-              level={1}
-            />
+            <Heading title="Titel komt hier lange titel lsdkfj sdfl" level={1} />
             <div className="detail-description">
               <div>
                 <Heading title="Beschrijving" level={2} />
@@ -127,9 +124,11 @@ export default () => {
           }
 
           .detail-side::before {
-            background: url('https://blog.top5gent.com/hs-fs/hubfs/Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg?width=1000&name=Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg');
+            background: url('https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'),
+              url('https://blog.top5gent.com/hs-fs/hubfs/Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg?width=1000&name=Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg');
             background-repeat: no-repeat;
-            background-size: cover;
+            background-size: 12rem, cover;
+            background-position: 2rem 0, center;
             content: '';
             position: absolute;
             height: 54rem;
