@@ -49,6 +49,7 @@ const Button = ({ icon, type, isLoading, href, primary, children, text, ...rest 
 
         button.secondary {
           background-color: transparent;
+          padding: 0;
         }
 
         i {

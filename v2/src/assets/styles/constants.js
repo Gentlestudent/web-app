@@ -11,7 +11,7 @@ const colors = {
   green: '#bbcc00',
   white: '#ffffff',
   gray: '#707070',
-  grayDark: '#252525',
+  grayDark: '#555555',
   grayLight: '#f2f0ed',
   blueLight: '#eff6fa',
   copy: '#000000'
