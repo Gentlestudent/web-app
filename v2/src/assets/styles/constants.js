@@ -9,13 +9,14 @@ const colors = {
   sub: '#cc0077',
   orange: '#ee9900',
   green: '#bbcc00',
-  blue: '#bad2df',
+  blue: '#009ad4',
   white: '#ffffff',
   gray: '#707070',
   grayDark: '#555555',
   grayLight: '#f2f0ed',
   blueLight: '#eff6fa',
-  copy: '#000000'
+  copy: '#000000',
+  border: '#bad2df'
 };
 
 const breakpoints = {

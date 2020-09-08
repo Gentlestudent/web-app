@@ -33,6 +33,10 @@ const Button = ({ icon, isLoading, href, primary, children, text, back, ...rest 
           transition: all 0.25s ease;
         }
 
+        .button:focus {
+          outline: none;
+        }
+
         .button-text {
           margin-right: 1.2rem;
         }

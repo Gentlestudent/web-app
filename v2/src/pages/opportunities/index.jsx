@@ -89,6 +89,7 @@ export default () => {
         <div className="panel">
           <Search placeholder="Zoeken" type="search" />
         </div>
+        <div className="map" />
         <article className="cards">
           {OPPORTUNITIES.map((OPPORTUNITY) => (
             <Card
@@ -123,6 +124,12 @@ export default () => {
           .panel {
             background: ${colors.blueLight};
             padding: 3rem;
+          }
+
+          .map {
+            background: ${colors.blueLight};
+            opacity: 0.7;
+            height: 50rem;
           }
         `}
       </style>
