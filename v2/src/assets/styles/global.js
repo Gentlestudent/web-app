@@ -37,6 +37,16 @@ export default css.global`
   h6 {
     font-family: ${fonts.titles};
     font-weight: normal;
+    margin: 0;
+  }
+
+  p + h1,
+  p + h2,
+  p + h3,
+  p + h4,
+  p + h5,
+  p + h6 {
+    margin-top: 3rem;
   }
 
   p,
