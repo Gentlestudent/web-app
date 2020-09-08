@@ -23,6 +23,7 @@ const Button = ({ icon, type, isLoading, href, primary, children, text, ...rest 
           cursor: pointer;
           font-size: 1.6rem;
           font-weight: bold;
+          transition: all 0.25s ease;
         }
 
         .button-text {
@@ -43,13 +44,17 @@ const Button = ({ icon, type, isLoading, href, primary, children, text, ...rest 
 
         button.primary:hover {
           cursor: pointer;
-          transition: all 0.25s ease;
           background-color: ${colors.orange};
         }
 
         button.secondary {
+          color: ${colors.grayDark};
           background-color: transparent;
           padding: 0;
+        }
+
+        button.secondary:hover {
+          color: ${colors.orange};
         }
 
         i {
