@@ -5,9 +5,12 @@ import arrow from '../../assets/img/icons/arrow-white.svg';
 
 const hover = false;
 
-const Card = ({ image, title, date, description, onClick, alt }) => (
+const Card = ({ image, title, date, description, onClick, badge, alt }) => (
   <button type="button" className="card button-container" onClick={onClick}>
     <img src={image} alt={alt} />
+    <div className="card-badge">
+      <img src={badge} alt={alt} />
+    </div>
     <div className="card-header">
       <Heading title={title} level={2} color={hover ? colors.orange : colors.primary} />
     </div>
@@ -25,11 +28,6 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
           flex-direction: column;
           cursor: pointer;
           background: ${colors.blueLight};
-          // margin: 1rem;
-          // border-radius: 1rem;
-          // box-shadow: 0 0.5rem 1rem 0.2rem rgba(0, 0, 0, 0.1);
-          // border-radius: 2rem;
-
           position: relative;
         }
 
@@ -37,19 +35,25 @@ const Card = ({ image, title, date, description, onClick, alt }) => (
           object-fit: cover;
           height: 20rem;
           width: 100%;
-          // border-radius: 2rem 2rem 0 0;
         }
 
         .card-header {
           font-size: 2.1rem;
-          padding: ${spacers.medium} ${spacers.medium} ${spacers.small};
-          // padding: 2rem;
+          padding: ${spacers.medium} 10rem ${spacers.small} ${spacers.medium};
+        }
+
+        .card-badge {
+          position: absolute;
+          right: 1rem;
+          top: 11rem;
+        }
+
+        .card-badge img {
+          height: 13rem;
         }
 
         .card-body {
           padding: 0 ${spacers.medium} ${spacers.medium};
-          // padding: 0 2rem;
-          // padding-bottom: 2rem;
         }
 
         .card-body > .date {

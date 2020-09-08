@@ -19,35 +19,45 @@ export default () => {
       description:
         'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
       image: 'https://picsum.photos/200/300',
-      date: '	2018-12-21 tot en met 2019-12-21'
+      date: '	2018-12-21 tot en met 2019-12-21',
+      badge:
+        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
     },
     {
       title: 'Nog een titel',
       description:
         'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
       image: 'https://picsum.photos/200/300',
-      date: '	2018-12-21 tot en met 2019-12-21'
+      date: '	2018-12-21 tot en met 2019-12-21',
+      badge:
+        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
     },
     {
       title: 'Nog een titel',
       description:
         'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
       image: 'https://picsum.photos/200/300',
-      date: '	2018-12-21 tot en met 2019-12-21'
+      date: '	2018-12-21 tot en met 2019-12-21',
+      badge:
+        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
     },
     {
       title: 'Nog een titel',
       description:
         'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
       image: 'https://picsum.photos/200/300',
-      date: '	2018-12-21 tot en met 2019-12-21'
+      date: '	2018-12-21 tot en met 2019-12-21',
+      badge:
+        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
     },
     {
       title: 'Nog een titel',
       description:
         'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
       image: 'https://picsum.photos/200/300',
-      date: '	2018-12-21 tot en met 2019-12-21'
+      date: '	2018-12-21 tot en met 2019-12-21',
+      badge:
+        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
     }
   ];
 
@@ -80,6 +90,7 @@ export default () => {
           {OPPORTUNITIES.map((OPPORTUNITY) => (
             <Card
               key={OPPORTUNITY}
+              badge={OPPORTUNITY.badge}
               image="https://picsum.photos/200/300"
               title={OPPORTUNITY.title}
               description={OPPORTUNITY.description}
