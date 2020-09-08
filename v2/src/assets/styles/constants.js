@@ -9,6 +9,7 @@ const colors = {
   sub: '#cc0077',
   orange: '#ee9900',
   green: '#bbcc00',
+  blue: '#bad2df',
   white: '#ffffff',
   gray: '#707070',
   grayDark: '#555555',
