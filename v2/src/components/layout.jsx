@@ -2,20 +2,21 @@ import PropTypes from 'prop-types';
 import Header from './header';
 
 const Layout = ({ /* withHeader, */ children }) => (
-  <div className="page-container">
+  <>
     {/* withHeader && <Header /> */}
     <Header />
-    {children}
-    <style>
+    <div className="page-container">{children}</div>
+    <style jsx>
       {`
         .page-container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+          margin-top: 2rem;
         }
-    `}
+      `}
     </style>
-  </div>
+  </>
 );
 
 Layout.propTypes = {
