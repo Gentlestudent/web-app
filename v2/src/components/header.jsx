@@ -27,8 +27,8 @@ const NavLink = ({ href, children, isButton, ...rest }) => {
   const router = useRouter();
   return (
     <>
-      <li className="link">
-        <Link href="www.google.be" passHref>
+      <li className={`link ${router.pathname === href ? 'link-active' : ''} `}>
+        <Link href={href || '/'} passHref>
           {/* rule is safe to disable here as Next passes the href to the anchor tag */}
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a className={`${isButton ? 'primary' : ''}`} {...rest}>
@@ -50,7 +50,7 @@ const NavLink = ({ href, children, isButton, ...rest }) => {
             color: ${colors.orange};
           }
 
-          .active {
+          .link-active {
             border-bottom: 0.1rem solid ${colors.copy};
           }
         `}
@@ -110,6 +110,10 @@ const Header = () => {
             height: 11.5rem;
             border-bottom: 0.1rem solid ${colors.border};
             z-index: 999;
+          }
+
+          .logo:hover {
+            cursor: pointer;
           }
 
           .nav-wrapper {

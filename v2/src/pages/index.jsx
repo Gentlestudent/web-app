@@ -14,7 +14,7 @@ import { colors, breakpoints } from '../assets/styles';
 const Home = () => {
   const { isUserSignedIn, currentUser } = useContext(AuthContext);
   return (
-    <Layout>
+    <>
       <div>
         <Head>
           <title>Welkom | Gentlestudent</title>
@@ -47,6 +47,7 @@ const Home = () => {
           <Download />
         </section>
       </div>
+
       <style jsx>
         {`
           section {
@@ -106,7 +107,7 @@ const Home = () => {
           }
         `}
       </style>
-    </Layout>
+    </>
   );
 };
 
