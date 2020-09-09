@@ -60,7 +60,8 @@ const SearchBackup = ({ type, name, placeholder, required, error, value, ...rest
           }
 
           .form-title {
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 1.8rem;
             text-transform: uppercase;
           }
 
@@ -119,6 +120,11 @@ const SearchBackup = ({ type, name, placeholder, required, error, value, ...rest
             position: relative;
             padding-left: 1rem;
             margin-right: 2rem;
+            font-size: 1.7rem;
+          }
+
+          .filter-label:hover {
+            cursor: pointer;
           }
 
           .filter-input {
