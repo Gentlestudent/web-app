@@ -3,8 +3,9 @@ import Link from 'next/link';
 import { useCollectionOnce } from 'react-firebase-hooks/firestore';
 import { firestore } from '../../api/firebase';
 import { routes } from '../../constants';
+import Container from '../../components/container';
 import { Card, Heading, Search, SearchBackup } from '../../components/UI';
-import { spacers, colors } from '../../assets/styles/constants';
+import { spacers, colors, breakpoints } from '../../assets/styles/constants';
 
 export default () => {
   /*
@@ -63,8 +64,9 @@ export default () => {
 
   return (
     <>
-      <Link href={routes.issuer.CREATE_OPPORTUNITY}>Create new opportunity</Link>
-      {/* value &&
+      <Container>
+        <Link href={routes.issuer.CREATE_OPPORTUNITY}>Create new opportunity</Link>
+        {/* value &&
         value.docs.map((doc) => {
           const { title } = doc.data();
           const { id } = doc;
@@ -84,7 +86,6 @@ export default () => {
           );
         }) */}
 
-      <div className="container">
         <Heading title="Leerkansen" level={1} />
         <div className="panel">
           <SearchBackup placeholder="Zoeken" type="search" />
@@ -103,21 +104,14 @@ export default () => {
             />
           ))}
         </article>
-      </div>
+      </Container>
 
       <style jsx>
         {`
-          .container {
-            max-width: 1400px;
-            padding: 0 5rem;
-            margin: 0 auto;
-          }
-
           .cards {
             display: grid;
             grid-template: 1fr 1fr / repeat(3, 1fr);
             grid-gap: ${spacers.medium};
-
             margin: ${spacers.medium} 0 6rem;
           }
 
@@ -130,6 +124,24 @@ export default () => {
             background: ${colors.blueLight};
             opacity: 0.7;
             height: 50rem;
+          }
+
+          @media (max-width: ${breakpoints.medium}) {
+            .cards {
+              grid-template: 1fr 1fr / repeat(2, 1fr);
+            }
+          }
+
+          @media (max-width: ${breakpoints.small}) {
+            .cards {
+              grid-gap: ${spacers.small};
+            }
+          }
+
+          @media (max-width: ${breakpoints.extraSmall}) {
+            .cards {
+              grid-template: 1fr 1fr / repeat(1, 1fr);
+            }
           }
         `}
       </style>

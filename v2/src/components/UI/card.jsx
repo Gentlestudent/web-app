@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import Heading from './heading';
-import { colors, spacers } from '../../assets/styles/constants';
+import { colors, spacers, breakpoints } from '../../assets/styles/constants';
 import arrow from '../../assets/img/icons/arrow-white.svg';
 
 const hover = false;
@@ -71,6 +71,16 @@ const Card = ({ image, title, date, description, onClick, badge, alt }) => (
           text-indent: -9999px;
           font-size: 0;
           overflow: hidden;
+        }
+
+        @media (max-width: ${breakpoints.extraSmall}) {
+          .card-header {
+            padding: ${spacers.small};
+          }
+
+          .card-body {
+            padding: 0 ${spacers.small} ${spacers.small};
+          }
         }
       `}
     </style>
