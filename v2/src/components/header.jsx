@@ -44,8 +44,9 @@ const NavLink = ({ href, children, isButton, ...rest }) => {
         {`
           .link {
             margin-left: 2.5rem;
-            font-weight: bold;
+            font-weight: 600;
             transition: 0.2s;
+            font-size: 1.8rem;
           }
 
           .link:hover {
