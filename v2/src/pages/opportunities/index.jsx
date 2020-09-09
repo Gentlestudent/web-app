@@ -4,6 +4,7 @@ import { useCollectionOnce } from 'react-firebase-hooks/firestore';
 import { firestore } from '../../api/firebase';
 import { routes } from '../../constants';
 import Container from '../../components/container';
+import Layout from '../../components/layout';
 import { Card, Heading, Search, SearchBackup } from '../../components/UI';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
 
@@ -64,9 +65,10 @@ export default () => {
 
   return (
     <>
-      <Container>
-        <Link href={routes.issuer.CREATE_OPPORTUNITY}>Create new opportunity</Link>
-        {/* value &&
+      <Layout>
+        <Container>
+          <Link href={routes.issuer.CREATE_OPPORTUNITY}>Create new opportunity</Link>
+          {/* value &&
         value.docs.map((doc) => {
           const { title } = doc.data();
           const { id } = doc;
@@ -86,26 +88,26 @@ export default () => {
           );
         }) */}
 
-        <Heading title="Leerkansen" level={1} />
-        <div className="panel">
-          <SearchBackup placeholder="Zoeken" type="search" />
-        </div>
-        <div className="map" />
-        <article className="cards">
-          {OPPORTUNITIES.map((OPPORTUNITY) => (
-            <Card
-              key={OPPORTUNITY}
-              badge={OPPORTUNITY.badge}
-              image="https://picsum.photos/200/300"
-              title={OPPORTUNITY.title}
-              description={OPPORTUNITY.description}
-              date={OPPORTUNITY.date}
-              alt={OPPORTUNITY.alt ? OPPORTUNITY.alt : OPPORTUNITY.title}
-            />
-          ))}
-        </article>
-      </Container>
-
+          <Heading title="Leerkansen" level={1} />
+          <div className="panel">
+            <SearchBackup placeholder="Zoeken" type="search" />
+          </div>
+          <div className="map" />
+          <article className="cards">
+            {OPPORTUNITIES.map((OPPORTUNITY) => (
+              <Card
+                key={OPPORTUNITY}
+                badge={OPPORTUNITY.badge}
+                image="https://picsum.photos/200/300"
+                title={OPPORTUNITY.title}
+                description={OPPORTUNITY.description}
+                date={OPPORTUNITY.date}
+                alt={OPPORTUNITY.alt ? OPPORTUNITY.alt : OPPORTUNITY.title}
+              />
+            ))}
+          </article>
+        </Container>
+      </Layout>
       <style jsx>
         {`
           .cards {

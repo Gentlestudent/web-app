@@ -10,6 +10,7 @@ const Container = ({ children }) => (
           max-width: 1400px;
           padding: 0 5rem;
           margin: 0 auto;
+          height: 100%;
         }
 
         @media (max-width: 900px) {

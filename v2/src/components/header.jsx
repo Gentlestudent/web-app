@@ -26,18 +26,38 @@ const NavigationAdmin = () => (
 const NavLink = ({ href, children, isButton, ...rest }) => {
   const router = useRouter();
   return (
-    <li>
-      <Link href="www.google.be" passHref>
-        {/* rule is safe to disable here as Next passes the href to the anchor tag */}
-        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a
-          className={`${router.pathname === '/' ? 'active' : ''} ${isButton ? 'primary' : ''}`}
-          {...rest}
-        >
-          {children}
-        </a>
-      </Link>
-    </li>
+    <>
+      <li className="link">
+        <Link href="www.google.be" passHref>
+          {/* rule is safe to disable here as Next passes the href to the anchor tag */}
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <a
+            className={`${router.pathname === '/' ? 'active' : ''} ${isButton ? 'primary' : ''}`}
+            {...rest}
+          >
+            {children}
+          </a>
+        </Link>
+      </li>
+
+      <style jsx>
+        {`
+          .link {
+            margin-left: 2.5rem;
+            font-weight: bold;
+            transition: 0.2s;
+          }
+
+          .link:hover {
+            color: ${colors.orange};
+          }
+
+          .active {
+            border-bottom: 0.1rem solid ${colors.copy};
+          }
+        `}
+      </style>
+    </>
   );
 };
 
@@ -68,8 +88,8 @@ const Header = () => {
               </Link>
             </div>
 
-            <div className="links">
-              <ul className="menu">
+            <div className="menu">
+              <ul className="links">
                 <NavLink href={routes.OPPORTUNITIES}>Leerkansen</NavLink>
                 <NavLink href={routes.news}>Nieuws</NavLink>
                 <NavLink href={routes.aboutUs}>Over ons</NavLink>
@@ -90,29 +110,29 @@ const Header = () => {
         {`
           .nav {
             height: 11.5rem;
+            border-bottom: 0.1rem solid ${colors.border};
+            z-index: 999;
           }
+
           .nav-wrapper {
             // position: fixed;
             width: 100%;
             display: flex;
             flex-direction: row;
-
-            background-color: pink;
             z-index: 999;
             justify-content: space-between;
-          }
-          .logo {
             height: 100%;
-            width: 2.7rem;
-            padding-left: 3rem;
+            align-items: center;
           }
+
           .logo img {
-            height: 3rem;
+            height: 5rem;
             // padding: 3.5rem 0;
           }
-          .links {
-            width: 100%;
 
+          .links {
+            display: flex;
+          }
         `}
       </style>
     </>
