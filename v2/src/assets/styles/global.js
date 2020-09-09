@@ -22,6 +22,17 @@ export default css.global`
     font-family: ${fonts.copy};
   }
 
+  ol,
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+  }
+
   *,
   *:before,
   *:after {
