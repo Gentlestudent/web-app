@@ -92,6 +92,7 @@ export default () => {
           }
 
           .detail-overview {
+            margin-top: 2rem;
             padding-right: ${spacers.small};
           }
 

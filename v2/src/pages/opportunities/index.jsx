@@ -67,7 +67,7 @@ export default () => {
     <>
       <Layout>
         <Container>
-          <Link href={routes.issuer.CREATE_OPPORTUNITY}>Create new opportunity</Link>
+          {/* <Link href={routes.issuer.CREATE_OPPORTUNITY}>Create new opportunity</Link> */}
           {/* value &&
         value.docs.map((doc) => {
           const { title } = doc.data();
@@ -87,9 +87,8 @@ export default () => {
             )
           );
         }) */}
-
-          <Heading title="Leerkansen" level={1} />
-          <div className="panel">
+          <div className="heading">
+            <Heading title="Leerkansen" level={1} />
             <SearchBackup placeholder="Zoeken" type="search" />
           </div>
           <div className="map" />
@@ -117,14 +116,19 @@ export default () => {
             margin: ${spacers.medium} 0 6rem;
           }
 
-          .panel {
-            background: ${colors.blueLight};
-            padding: 3rem;
+          // .panel {
+          //   background: ${colors.blueLight};
+          //   padding: 3rem;
+          // }
+
+          .heading {
+            display: flex;
+            justify-content: space-between;
+            margin: 3rem 0 0;
           }
 
           .map {
             background: ${colors.blueLight};
-            opacity: 0.7;
             height: 50rem;
           }
 

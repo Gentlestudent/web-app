@@ -1,6 +1,6 @@
 const fonts = {
-  copy: `'Open Sans', Arial, 'Helvetica Neue', sans-serif`,
-  titles: `'Open Sans', Arial, 'Helvetica Neue', sans-serif`
+  copy: `'Source Sans Pro', Arial, 'Helvetica Neue', sans-serif`,
+  titles: `'Source Sans Pro', Arial, 'Helvetica Neue', sans-serif`
 };
 
 const colors = {

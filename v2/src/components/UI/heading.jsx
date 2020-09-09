@@ -10,19 +10,18 @@ const Heading = ({ color, title, level, classNames }) => {
         {`
           .title {
             color: ${color || colors.primary};
-            font-weight: bold;
             font-family: ${fonts.titles};
           }
 
           h1 {
-            // font-size: 4.5rem;
             font-size: 5.6rem;
+            margin: 1.5rem 0 2rem 0;
+            font-weight: 600;
           }
 
           h2 {
-            // font-size: 3rem;
             font-size: 2rem;
-            line-height: 27px;
+            line-height: 2.7rem;
           }
 
           h3 {
