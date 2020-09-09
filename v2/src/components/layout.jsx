@@ -1,9 +1,10 @@
-// import Header from './header';
 import PropTypes from 'prop-types';
+import Header from './header';
 
-const Layout = ({ /*withHeader,*/ children }) => (
+const Layout = ({ /* withHeader, */ children }) => (
   <div className="page-container">
     {/* withHeader && <Header /> */}
+    <Header />
     {children}
     <style>
       {`
