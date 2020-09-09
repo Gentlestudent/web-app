@@ -31,10 +31,7 @@ const NavLink = ({ href, children, isButton, ...rest }) => {
         <Link href="www.google.be" passHref>
           {/* rule is safe to disable here as Next passes the href to the anchor tag */}
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a
-            className={`${router.pathname === '/' ? 'active' : ''} ${isButton ? 'primary' : ''}`}
-            {...rest}
-          >
+          <a className={`${isButton ? 'primary' : ''}`} {...rest}>
             {children}
           </a>
         </Link>
@@ -116,7 +113,6 @@ const Header = () => {
           }
 
           .nav-wrapper {
-            // position: fixed;
             width: 100%;
             display: flex;
             flex-direction: row;
@@ -128,7 +124,6 @@ const Header = () => {
 
           .logo img {
             height: 5rem;
-            // padding: 3.5rem 0;
           }
 
           .links {

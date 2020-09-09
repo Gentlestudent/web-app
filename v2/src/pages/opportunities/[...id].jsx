@@ -2,7 +2,6 @@ import Router, { useRouter } from 'next/router';
 import { Heading, Button } from '../../components/UI';
 import { colors, spacers } from '../../assets/styles/constants';
 import Container from '../../components/container';
-import Layout from '../../components/layout';
 
 export default () => {
   const router = useRouter();
@@ -10,7 +9,6 @@ export default () => {
 
   return (
     <>
-      <Layout>
         <Container>
           <div className="grid">
             <div className="detail-overview">
@@ -78,7 +76,6 @@ export default () => {
             </div>
           </div>
         </Container>
-      </Layout>
 
       <style jsx>
         {`

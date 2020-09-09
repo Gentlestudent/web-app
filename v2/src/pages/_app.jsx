@@ -1,11 +1,10 @@
 import Head from 'next/head';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import AuthContext from '../context/auth';
-import Nav from '../components/header';
 import User from '../models/User';
 import { auth } from '../api/firebase';
 import { colors } from '../assets/styles';
-
+import Layout from '../components/layout';
 import globalStyles from '../assets/styles/global';
 
 const App = ({ Component, pageProps }) => {
@@ -27,7 +26,9 @@ const App = ({ Component, pageProps }) => {
         <meta name="theme-color" content={colors.primary} />
       </Head>
       <AuthContext.Provider value={authState}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
         <style jsx global>
           {globalStyles}
         </style>
