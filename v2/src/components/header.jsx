@@ -46,7 +46,7 @@ const NavLink = ({ href, children, isButton, ...rest }) => {
             font-size: 1.8rem;
           }
 
-          .link:hover {
+          .link:not(.link-active):hover {
             color: ${colors.orange};
           }
 
