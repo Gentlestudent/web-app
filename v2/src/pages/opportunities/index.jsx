@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useCollectionOnce } from 'react-firebase-hooks/firestore';
 import { firestore } from '../../api/firebase';
 import { routes } from '../../constants';
-import { Card, Heading, Search } from '../../components/UI';
+import { Card, Heading, Search, SearchBackup } from '../../components/UI';
 import { spacers, colors } from '../../assets/styles/constants';
 
 export default () => {
@@ -87,7 +87,7 @@ export default () => {
       <div className="container">
         <Heading title="Leerkansen" level={1} />
         <div className="panel">
-          <Search placeholder="Zoeken" type="search" />
+          <SearchBackup placeholder="Zoeken" type="search" />
         </div>
         <div className="map" />
         <article className="cards">

@@ -65,34 +65,43 @@ const FormField = ({
         );
       default:
         return (
-          <>
-            <Input
-              className={`input-${type}`}
-              type={type}
-              name={name}
-              value={value}
-              required={required}
-              // {...rest}
-              // style={infoStyle}
-              // {...bind}
-              // onChange={handleChange}
-            />
-            {type === 'checkbox' ? <span className="checkbox" /> : ''}
-          </>
+          <Input
+            type={type}
+            name={name}
+            value={value}
+            required={required}
+            {...rest}
+            style={infoStyle}
+            {...bind}
+            onChange={handleChange}
+          />
         );
     }
   };
 
   return (
-    <div className={`form-field form-field-${type}`}>
-      {label && <label htmlFor={name}>{getLabelText()}</label>}
-
+    <div className="form-field">
+      <div className="field-header">
+        <div className="error-badge">
+          <i className="error-icon">
+            {error ? <Icon name="exclamation" /> : <Icon name="check" />}
+          </i>
+        </div>
+        {label && <label htmlFor={name}>{getLabelText()}</label>}
+        {info && (
+          <p>
+            {!required && 'Optioneel: '}
+            {info}
+          </p>
+        )}
+      </div>
       {icon && (
-        <i className="field-icon">
+        <i className="fieldIcon">
           <Icon name={icon} />
         </i>
       )}
       {getInputByType()}
+      {<p className="error">{showFeedback && error}</p>}
       <style jsx>
         {`
           .field-header {
@@ -110,61 +119,37 @@ const FormField = ({
           .form-field {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            width: 100%;
           }
 
           .field-icon {
-            color: ${colors.blue};
-            position: absolute;
-            margin-left: 1.5rem;
-            z-index: 2;
+            color: ${colors.copy};
           }
 
-          .form-field-checkbox {
-            display: flex;
-            flex-direction: row-reverse;
-          }
-
-          .input-checkbox {
-            position: absolute;
-            opacity: 0 !important;
-            cursor: pointer;
-          }
-
-          .checkbox {
-            width: 2.3rem;
-            height: 2.3rem;
-            display: inline-block;
+          .error-badge {
             position: relative;
-            margin-right: 1rem;
-            background-color: white;
-            border: 0.1rem solid ${colors.border};
+            display: flex;
+            width: 3rem;
+            height: 3rem;
+            background: red;
+            top: -1.5rem;
+            left: -0.5rem;
+            border-radius: 50%;
+            background: ${error ? colors.orange : colors.green};
+            border: 1px solid ${colors.gray};
+            opacity: ${showFeedback ? 1 : 0};
+            transform: scale(${showFeedback ? 1 : 0});
+            transition: 150ms ease;
           }
 
-          input[type='checkbox']:checked + span {
-            background-color: ${colors.orange};
-            border: 0.1rem solid ${colors.orange};
+          .error-icon {
+            color: ${colors.white};
+            margin: auto;
           }
 
-          input[type='checkbox']:checked + span::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            top: -0.2rem;
-            left: -0.3rem;
-            border-bottom: 2px solid transparent;
-            border-left: 2px solid transparent;
-            -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-            -webkit-transform-origin: 18px -1px;
-            transform-origin: 18px -1px;
-            width: 13px;
-            height: 8px;
-            border-color: white;
-            -webkit-transition: height 0.08s ease-out, width 0.08s ease-out 0.1s;
-            transition: height 0.08s ease-out, width 0.08s ease-out 0.1s;
+          .error {
+            min-height: 4rem;
+            padding: 0 2rem;
+            color: ${colors.orange};
           }
         `}
       </style>

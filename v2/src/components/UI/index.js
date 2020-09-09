@@ -7,3 +7,4 @@ export { default as Dropdown } from './dropdown';
 export { default as TextArea } from './textarea';
 export { default as FormField } from './form-field';
 export { default as Search } from './search';
+export { default as SearchBackup } from './search-backup';

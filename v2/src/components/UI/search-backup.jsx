@@ -12,7 +12,7 @@ import { Icon, FormField } from '.';
   setField,
   value,
   showFeedback:  */
-const Search = ({ type, name, placeholder, required, error, value, ...rest }) => {
+const SearchBackup = ({ type, name, placeholder, required, error, value, ...rest }) => {
   return (
     <>
       <form className="form form-search">
@@ -21,11 +21,11 @@ const Search = ({ type, name, placeholder, required, error, value, ...rest }) =>
             Zoeken
           </label>
           <div>
-            {/* <div className="search-icon">
+            <div className="search-icon">
               <Icon name="search" />
-            </div> */}
+            </div>
 
-            {/* <input
+            <input
               id="search"
               type={type}
               name={name}
@@ -33,17 +33,17 @@ const Search = ({ type, name, placeholder, required, error, value, ...rest }) =>
               value={value}
               className="search-input"
               {...rest}
-            /> */}
-
-            <FormField id="search" type="search" icon="search" name={name} />
+            />
           </div>
         </div>
 
         <div className="filter">
           <p className="form-title">Filter</p>
-          <FormField id="ghent" type="checkbox" name="city[]" label="hoi" />
-          {/* <input className="filter-input" type="checkbox" id="ghent" name="city[]" /> */}
-          {/* <span className="checkbox" /> */}
+          <label className="filter-label" htmlFor="ghent">
+            <input className="filter-input" type="checkbox" id="ghent" name="city[]" />
+            <span className="checkbox" />
+            Gent
+          </label>
           <label className="filter-label" htmlFor="antwerp">
             <input className="filter-input" type="checkbox" id="antwerp" name="city[]" />
             <span className="checkbox" />
@@ -167,7 +167,7 @@ const Search = ({ type, name, placeholder, required, error, value, ...rest }) =>
   );
 };
 
-Search.propTypes = {
+SearchBackup.propTypes = {
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
@@ -177,9 +177,9 @@ Search.propTypes = {
   icon: PropTypes.string
 };
 
-Search.defaultProps = {
+SearchBackup.defaultProps = {
   icon: null,
   placeholder: ''
 };
 
-export default Search;
+export default SearchBackup;
