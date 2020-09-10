@@ -1,10 +1,12 @@
 import Router from 'next/router';
 import Link from 'next/link';
 import { useCollectionOnce } from 'react-firebase-hooks/firestore';
+
 import { firestore } from '../../api/firebase';
 import { routes } from '../../constants';
 import Container from '../../components/container';
 import { Card, Heading, Search, SearchBackup } from '../../components/UI';
+import Map from '../../components/map/map';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
 
 export default () => {
@@ -89,7 +91,9 @@ export default () => {
           <Heading title="Leerkansen" level={1} />
           <SearchBackup placeholder="Zoeken" type="search" />
         </div>
-        <div className="map" />
+        <div className="map-wrapper">
+          <Map />
+        </div>
         <article className="cards">
           {OPPORTUNITIES.map((OPPORTUNITY) => (
             <Card
@@ -119,7 +123,7 @@ export default () => {
             margin: 3rem 0 0;
           }
 
-          .map {
+          .map-wrapper {
             background: ${colors.blueLight};
             height: 50rem;
           }
