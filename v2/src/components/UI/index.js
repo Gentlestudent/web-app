@@ -6,5 +6,5 @@ export { default as Card } from './card';
 export { default as Dropdown } from './dropdown';
 export { default as TextArea } from './textarea';
 export { default as FormField } from './form-field';
-export { default as Search } from './search';
-export { default as SearchBackup } from './search-backup';
+export { default as Search } from './search'; /* expects FormField! */
+export { default as SearchBackup } from './search-backup'; /* expects FormField! */

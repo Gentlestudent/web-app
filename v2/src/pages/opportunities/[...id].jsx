@@ -9,73 +9,72 @@ export default () => {
 
   return (
     <>
-        <Container>
-          <div className="grid">
-            <div className="detail-overview">
-              <Button
-                onClick={() => Router.back()}
-                text="Terug naar overzicht"
-                icon="arrow-left"
-                back
-              />
-              <Heading title="Titel komt hier lange titel lsdkfj sdfl" level={1} />
-              <div className="detail-description">
-                <div>
-                  <Heading title="Beschrijving" level={2} />
-                  <p>
-                    De Gentse burgercoöperatie Energent organiseert met steun van Het Gents
-                    Milieufront (GMF), Natuurpunt Gent en Beweging.net een groepsaankoop van
-                    zonnepanelen: Gent Zonnestad. Zonnepanelen zijn vandaag een rendabele
-                    investering, ook nu er geen subsidies meer zijn. Voor ongeveer 4.000 euro heb je
-                    een installatie op je dak die je volledige jaarverbruik opwekt en die bovendien
-                    tot gemiddeld 8% financieel rendement oplevert... Dat is beter dan een
-                    spaarrekening! Leg zonnepanelen op je dak draag zo je steentje bij aan een
-                    klimaatneutrale stad!
-                  </p>
-                  <Heading title="Wat wordt er verwacht?" level={2} />
-                  <p>
-                    Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig
-                    bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven.
-                    (Het presentatiemateriaal is reeds beschikbaar).
-                  </p>
-                  <Heading title="Meer weten?" level={2} />
-                  <Button text="Bekijk meer" icon="arrow-right" />
-                  <div>
-                    <Button icon="arrow-right" text="Schrijf je in" type="button" primary />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="detail-side">
+      <Container>
+        <div className="grid">
+          <div className="detail-overview">
+            <Button
+              onClick={() => Router.back()}
+              text="Terug naar overzicht"
+              icon="arrow-left"
+              back
+            />
+            <Heading title="Titel komt hier lange titel lsdkfj sdfl" level={1} />
+            <div className="detail-description">
               <div>
-                <Heading title="Info" level={2} />
-                <div className="detail-info">
-                  <div>
-                    <p className="info-label">Organisatie</p>
-                    <p>Hoger Technisch Instituut Sint-Antonius</p>
-                  </div>
-                  <div>
-                    <p className="info-label">Website</p>
-                    <p>https://www.htisa.be</p>
-                  </div>
-                  <div>
-                    <p className="info-label">Contact</p>
-                    <p>roselien.vervaet@htisa.be</p>
-                  </div>
-                  <div>
-                    <p className="info-label">Locatie</p>
-                    <p>Holstraat 66, 9000 Gent</p>
-                  </div>
-                  <div>
-                    <p className="info-label">Periode</p>
-                    <p>2019-12-02 tot en met 2025-06-30</p>
-                  </div>
+                <Heading title="Beschrijving" level={2} />
+                <p>
+                  De Gentse burgercoöperatie Energent organiseert met steun van Het Gents
+                  Milieufront (GMF), Natuurpunt Gent en Beweging.net een groepsaankoop van
+                  zonnepanelen: Gent Zonnestad. Zonnepanelen zijn vandaag een rendabele investering,
+                  ook nu er geen subsidies meer zijn. Voor ongeveer 4.000 euro heb je een
+                  installatie op je dak die je volledige jaarverbruik opwekt en die bovendien tot
+                  gemiddeld 8% financieel rendement oplevert... Dat is beter dan een spaarrekening!
+                  Leg zonnepanelen op je dak draag zo je steentje bij aan een klimaatneutrale stad!
+                </p>
+                <Heading title="Wat wordt er verwacht?" level={2} />
+                <p>
+                  Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent,
+                  en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het
+                  presentatiemateriaal is reeds beschikbaar).
+                </p>
+                <Heading title="Meer weten?" level={2} />
+                <Button text="Bekijk meer" icon="arrow-right" />
+                <div>
+                  <Button icon="arrow-right" text="Schrijf je in" type="button" primary />
                 </div>
               </div>
             </div>
           </div>
-        </Container>
+
+          <div className="detail-side">
+            <div>
+              <Heading title="Info" level={2} />
+              <div className="detail-info">
+                <div>
+                  <p className="info-label">Organisatie</p>
+                  <p>Hoger Technisch Instituut Sint-Antonius</p>
+                </div>
+                <div>
+                  <p className="info-label">Website</p>
+                  <p>https://www.htisa.be</p>
+                </div>
+                <div>
+                  <p className="info-label">Contact</p>
+                  <p>roselien.vervaet@htisa.be</p>
+                </div>
+                <div>
+                  <p className="info-label">Locatie</p>
+                  <p>Holstraat 66, 9000 Gent</p>
+                </div>
+                <div>
+                  <p className="info-label">Periode</p>
+                  <p>2019-12-02 tot en met 2025-06-30</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Container>
 
       <style jsx>
         {`

@@ -113,11 +113,6 @@ export default () => {
             margin: ${spacers.medium} 0 6rem;
           }
 
-          // .panel {
-          //   background: ${colors.blueLight};
-          //   padding: 3rem;
-          // }
-
           .heading {
             display: flex;
             justify-content: space-between;
