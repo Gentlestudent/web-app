@@ -23,7 +23,8 @@ const breakpoints = {
   extraSmall: '550px',
   small: '768px',
   medium: '1280px',
-  large: '1440px'
+  large: '1440px',
+  nav: '930px'
 };
 
 const spacers = {

@@ -7,7 +7,7 @@ import { routes } from '../constants';
 import { colors } from '../assets/styles';
 import { Button, Icon } from './UI';
 
-import logo from '../assets/img/logo.svg';
+import logo from '../../assets/img/logo.svg';
 
 const NavigationIssuer = () => (
   <>

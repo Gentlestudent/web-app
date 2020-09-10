@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import Header from './header';
+import Header from './nav/nav';
+import { breakpoints } from '../assets/styles/constants';
 
 const Layout = ({ /* withHeader, */ children }) => (
   <>
@@ -12,6 +13,12 @@ const Layout = ({ /* withHeader, */ children }) => (
           display: flex;
           flex-direction: column;
           min-height: 100vh;
+        }
+
+        @media (max-width: ${breakpoints.nav}) {
+          .page-container {
+            margin-top: 8rem;
+          }
         }
       `}
     </style>
