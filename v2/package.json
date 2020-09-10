@@ -26,6 +26,7 @@
     "react-dom": "^16.13.1",
     "react-firebase-hooks": "^2.1.1",
     "react-hamburger-menu": "^1.2.1",
+    "react-leaflet": "^2.7.0",
     "styled-jsx": "^3.2.5",
     "swr": "^0.2.0"
   },
