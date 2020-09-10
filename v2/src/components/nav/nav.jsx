@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import HamburgerMenu from 'react-hamburger-menu';
 import { useAuth } from '../../hooks';
 import { routes } from '../../constants';
 import { colors, breakpoints } from '../../assets/styles';
@@ -16,15 +17,23 @@ const Header = () => {
     <>
       <nav className="nav">
         <Container>
-          <div className="nav-wrapper">
+          <div className={`nav-wrapper ${menu ? 'nav-wrapper-open' : ''}`}>
             <div className="nav-top">
               <Link href="/">
                 <img src={logo} alt="logo" />
               </Link>
               <div className="nav-toggle">
-                <button type="button" onClick={() => setMenu(!menu)}>
-                  <p>Menu</p>
-                </button>
+                <HamburgerMenu
+                  isOpen={menu}
+                  menuClicked={() => setMenu(!menu)}
+                  width={18}
+                  height={15}
+                  strokeWidth={2}
+                  rotate={0}
+                  color={colors.blue}
+                  borderRadius={0}
+                  animationDuration={0.5}
+                />
               </div>
             </div>
 
@@ -93,22 +102,28 @@ const Header = () => {
               height: 100%;
             }
 
+            .nav-top img {
+              height: 4rem;
+            }
+
             .menu {
               width: 100%;
+              transition: 0.2s;
             }
 
             .nav-wrapper {
-              height: 100%;
-              width: 100%;
+              height: auto;
               position: fixed;
               overflow: scroll;
               top: 0;
               right: 0;
-              z-index: 800;
-              display: flex;
               flex-direction: column;
               justify-content: flex-start;
               align-items: flex-start;
+            }
+
+            .nav-wrapper-open {
+              height: 100%;
             }
 
             .menu {
