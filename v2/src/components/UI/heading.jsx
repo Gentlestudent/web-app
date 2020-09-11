@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { fonts, colors } from '../../assets/styles';
 
-const Heading = ({ color, title, level, classNames }) => {
+const Heading = ({ color, title, level, classNames, marginTop }) => {
   const H = `h${level}`;
   return (
-    <H className={`title ${classNames}`}>
+    <H className={`title ${classNames || ''} ${marginTop ? 'title-margin' : ''}`}>
       {title}
       <style jsx>
         {`
@@ -12,6 +12,10 @@ const Heading = ({ color, title, level, classNames }) => {
             color: ${color || colors.primary};
             font-family: ${fonts.titles};
             font-weight: 600;
+          }
+
+          .title-margin {
+            margin-top: 4.5rem;
           }
 
           h1 {

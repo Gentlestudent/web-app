@@ -4,87 +4,62 @@ import Heading from './heading';
 import { colors, spacers, breakpoints } from '../../assets/styles/constants';
 import arrow from '../../assets/img/icons/arrow-white.svg';
 
-const Card = ({ image, title, date, description, onClick, badge, alt, row }) => {
+const NewsItem = ({ image, title, date, description, onClick, alt }) => {
   const [hover, setHover] = useState(false);
 
   return (
     <>
       <button
         type="button"
-        className={`card button-container ${row ? 'card-row' : ''}`}
+        className="news button-container"
         onClick={onClick}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        <div className="img-wrapper">
-          <img src={image} alt={alt} />
-        </div>
-        {badge ? (
-          <div className="card-badge">
-            <img src={badge} alt={alt} />
-          </div>
-        ) : (
-          ''
-        )}
-
-        <div className="card-text">
-          <div className="card-header">
+        <img className="news-image" src={image} alt={alt} />
+        <div className="news-text">
+          <div className="news-header">
             <Heading title={title} level={2} color={hover ? colors.orange : colors.primary} />
           </div>
-          <div className="card-body">
+          <div className="news-body">
             <span className="date">{date}</span>
             <p>{description}</p>
           </div>
+          <a className="news-button" href="/id">
+            Bekijk
+          </a>
         </div>
-
-        <a className="card-button" href="/id">
-          Meer info
-        </a>
       </button>
       <style jsx>
         {`
-          .card {
+          .news {
             display: flex;
-            flex-direction: column;
             cursor: pointer;
             background: ${colors.blueLight};
             position: relative;
+            margin-bottom: ${spacers.medium};
           }
 
-          .img-wrapper {
-            width: 100%;
-          }
-
-          .img-wrapper > img {
+          .news-image {
             object-fit: cover;
             height: 20rem;
-            width: 100%;
+            width: 50rem;
           }
 
-          .card-header {
+          .news-header {
             font-size: 2.1rem;
             padding: ${spacers.medium} 10rem ${spacers.small} ${spacers.medium};
           }
 
-          .card-badge {
-            position: absolute;
-            right: 1rem;
-            top: 11rem;
-          }
-
-          .card-badge img {
-            height: 13rem;
-          }
-
-          .card-body {
+          .news-body {
             padding: 0 ${spacers.medium} ${spacers.medium};
           }
 
-          .card-body > .date {
+          .news-body > .date {
             font-size: 1.4rem;
           }
 
-          .card-button {
+          .news-button {
             position: absolute;
             right: 0;
             bottom: 0;
@@ -97,41 +72,12 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row }) => 
             overflow: hidden;
           }
 
-          .card-row {
-            flex-direction: row;
-            margin-bottom: ${spacers.medium};
-          }
-
-          .card-row .img-wrapper {
-            width: 100%;
-            height: 100%;
-          }
-
-          .card-row > img {
-             {
-              /* object-fit: cover;
-            height: 20rem;
-            width: 100%; */
-            }
-
-            height: auto;
-            width: 50rem;
-          }
-
-          .card-row .card-text > .card-header {
-            padding: ${spacers.medium} 15rem ${spacers.small} ${spacers.medium};
-          }
-
-          .card-row .card-text > .card-body {
-            padding: 0 20rem 0 ${spacers.medium};
-          }
-
           @media (max-width: ${breakpoints.extraSmall}) {
-            .card-header {
+            .news-header {
               padding: ${spacers.small};
             }
 
-            .card-body {
+            .news-body {
               padding: 0 ${spacers.small} ${spacers.small};
             }
           }
@@ -141,15 +87,13 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row }) => 
   );
 };
 
-Card.propTypes = {
+NewsItem.propTypes = {
   image: PropTypes.string.isRequired,
-  badge: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   date: PropTypes.string,
-  alt: PropTypes.string,
-  row: PropTypes.bool
+  alt: PropTypes.string
 };
 
-export default Card;
+export default NewsItem;
