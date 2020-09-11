@@ -8,6 +8,7 @@ export const routes = {
   /* public */
   OPPORTUNITIES: '/opportunities',
   OPPORTUNITY: '/opportunities/[id]',
+  NEWS: '/news',
 
   /* user */
   user: {

@@ -42,7 +42,7 @@ const Header = () => {
                 <NavLink onClick={() => setMenu(false)} href={routes.OPPORTUNITIES}>
                   Leerkansen
                 </NavLink>
-                <NavLink onClick={() => setMenu(false)} href={routes.news}>
+                <NavLink onClick={() => setMenu(false)} href={routes.NEWS}>
                   Nieuws
                 </NavLink>
                 <NavLink onClick={() => setMenu(false)} href={routes.aboutUs}>
