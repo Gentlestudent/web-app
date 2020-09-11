@@ -62,9 +62,13 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row }) => 
             width: 100%;
           }
 
+          .card-text {
+            padding: ${spacers.medium};
+          }
+
           .card-header {
             font-size: 2.1rem;
-            padding: ${spacers.medium} 10rem ${spacers.small} ${spacers.medium};
+            margin-bottom: 1.5rem;
           }
 
           .card-badge {
@@ -75,10 +79,6 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row }) => 
 
           .card-badge img {
             height: 13rem;
-          }
-
-          .card-body {
-            padding: 0 ${spacers.medium} ${spacers.medium};
           }
 
           .card-body > .date {
@@ -114,21 +114,24 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row }) => 
             width: 100%;
           }
 
-          .card-row .card-text > .card-header {
-            padding: ${spacers.medium} 15rem ${spacers.small} ${spacers.medium};
+          .card-row .card-text {
+            padding: ${spacers.medium} 15rem ${spacers.medium} ${spacers.medium};
           }
 
-          .card-row .card-text > .card-body {
-            padding: 0 20rem 0 ${spacers.medium};
+          @media (max-width: ${breakpoints.small}) {
+            .card-row {
+              flex-direction: column;
+            }
+
+            .card-row .img-wrapper {
+              width: 100%;
+              height: 20rem;
+            }
           }
 
           @media (max-width: ${breakpoints.extraSmall}) {
             .card-header {
               padding: ${spacers.small};
-            }
-
-            .card-body {
-              padding: 0 ${spacers.small} ${spacers.small};
             }
           }
         `}
