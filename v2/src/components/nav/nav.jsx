@@ -129,6 +129,7 @@ const Header = () => {
             .menu {
               opacity: 0;
               visibility: hidden;
+              display: none;
             }
 
             .menu-open {
@@ -136,6 +137,7 @@ const Header = () => {
               visibility: inherit;
               background: #eff6fa;
               height: 100%;
+              display: inherit;
             }
 
             .nav-toggle {
@@ -158,6 +160,7 @@ const Header = () => {
             .links {
               display: flex;
               flex-direction: column;
+              width: 100%;
             }
           }
         `}

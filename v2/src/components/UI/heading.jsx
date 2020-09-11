@@ -39,6 +39,18 @@ const Heading = ({ color, title, level, classNames }) => {
           h6 {
             font-size: 1rem;
           }
+
+          @media (max-width: 900px) {
+            h1 {
+              font-size: 4rem;
+            }
+          }
+
+          @media (max-width: 550px) {
+            h1 {
+              font-size: 3rem;
+            }
+          }
         `}
       </style>
     </H>

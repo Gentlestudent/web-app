@@ -30,7 +30,7 @@ const breakpoints = {
 const spacers = {
   small: '20px',
   medium: '30px',
-  large: '46px'
+  large: '45px'
 };
 
 export { fonts, colors, breakpoints, spacers };

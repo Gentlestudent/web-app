@@ -90,7 +90,6 @@ export default () => {
               'description info';
           }
 
-          /* HEADING */
           .detail-heading {
             grid-area: heading;
             padding-right: ${spacers.large};
@@ -101,7 +100,6 @@ export default () => {
             margin-top: ${spacers.small};
           }
 
-          /* DESCRIPTION */
           .detail-description {
             grid-area: description;
             position: relative;
@@ -121,7 +119,6 @@ export default () => {
             left: calc((100vw - 1300px) / -2);
           }
 
-          /* CONTACT */
           .detail-contact > div {
             transform: translateY(60rem);
             padding-left: 18rem;
@@ -132,7 +129,7 @@ export default () => {
           }
 
           .detail-info {
-            margin-top: 2rem;
+            margin-top: ${spacers.small};
             grid-area: info;
           }
 
@@ -145,7 +142,6 @@ export default () => {
             margin: 0.5rem;
           }
 
-          /* IMAGE */
           .detail-heading::after {
             background: url('https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'),
               url('https://blog.top5gent.com/hs-fs/hubfs/Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg?width=1000&name=Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg');
@@ -173,7 +169,7 @@ export default () => {
 
             .detail-description::before {
               width: calc(60vw);
-              left: -8rem; // calc!!!
+              left: -8rem;
             }
 
             .detail-contact > div {
@@ -204,7 +200,7 @@ export default () => {
             }
 
             .detail-contact > div {
-              padding-left: 5rem;
+              padding-left: ${spacers.large};
             }
           }
 
@@ -222,7 +218,7 @@ export default () => {
             }
 
             .detail-heading::after {
-              width: calc(100% + 5rem);
+              width: calc(100% + ${spacers.large});
               position: inherit;
             }
 
@@ -232,8 +228,8 @@ export default () => {
             }
 
             .detail-description::before {
-              top: -4rem;
-              height: calc(100% + 4rem);
+              top: -${spacers.large};
+              height: calc(100% + ${spacers.large});
             }
 
             .detail-info p {
@@ -249,7 +245,7 @@ export default () => {
           @media (max-width: 900px) {
             .detail-heading::after {
               width: calc(100% + 6rem);
-              transform: translateX(-3rem);
+              transform: translateX(-${spacers.medium});
             }
           }
 
@@ -263,8 +259,8 @@ export default () => {
             }
 
             .detail-heading::after {
-              width: calc(100% + 4rem);
-              transform: translateX(-2rem);
+              width: calc(100% + (${spacers.small} * 2));
+              transform: translateX(-${spacers.small});
             }
 
             .detail-description > div {
@@ -272,8 +268,8 @@ export default () => {
             }
 
             .detail-description::before {
-              width: calc(100% + 4rem);
-              left: -2rem;
+              width: calc(100% + (${spacers.small} * 2));
+              left: -${spacers.small};
             }
 
             .detail-contact > div {
