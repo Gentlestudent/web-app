@@ -41,6 +41,7 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row }) => 
           Meer info
         </a>
       </button>
+
       <style jsx>
         {`
           .card {
@@ -103,19 +104,14 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row }) => 
           }
 
           .card-row .img-wrapper {
-            width: 100%;
+            width: 50rem;
             height: 100%;
           }
 
           .card-row > img {
-             {
-              /* object-fit: cover;
-            height: 20rem;
-            width: 100%; */
-            }
-
+            object-fit: cover;
             height: auto;
-            width: 50rem;
+            width: 100%;
           }
 
           .card-row .card-text > .card-header {

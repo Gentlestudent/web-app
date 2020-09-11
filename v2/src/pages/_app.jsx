@@ -5,6 +5,7 @@ import User from '../models/User';
 import { auth } from '../api/firebase';
 import { colors } from '../assets/styles';
 import Layout from '../components/layout';
+import 'normalize.css';
 import globalStyles from '../assets/styles/global';
 
 const App = ({ Component, pageProps }) => {
