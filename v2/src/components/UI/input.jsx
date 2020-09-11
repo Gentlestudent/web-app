@@ -16,15 +16,9 @@ const Input = ({ type, name, placeholder, required, error, value, ...rest }) => 
       <style jsx>
         {`
           input {
-            // width: 100%;
-            // background: ${colors.grayLight};
-            // padding: 2rem;
-            // border: 1px solid ${colors.gray};
-            // box-shadow: inset 0 0 0.8rem rgba(0, 0, 0, 0.2);
-            // border-radius: 1rem;
             border: 0.1rem solid ${colors.border};
-            border-radius: 30px;
-            padding: 10px 12px 10px 44px;
+            border-radius: 3rem;
+            padding: 1rem 1.2rem 1rem 4.4rem;
             position: relative;
           }
 

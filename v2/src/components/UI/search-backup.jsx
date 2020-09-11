@@ -2,16 +2,6 @@ import PropTypes from 'prop-types';
 import { colors } from '../../assets/styles';
 import { Icon, FormField } from '.';
 
-/*   type,
-  name,
-  info,
-  required,
-  label,
-  icon,
-  error,
-  setField,
-  value,
-  showFeedback:  */
 const SearchBackup = ({ type, name, placeholder, required, error, value, ...rest }) => {
   return (
     <>
@@ -21,11 +11,13 @@ const SearchBackup = ({ type, name, placeholder, required, error, value, ...rest
             Zoeken
           </label>
           <div>
-            <div className="search-icon">
+            {/* <div className="search-icon">
               <Icon name="search" />
-            </div>
+            </div> */}
 
-            <input
+            <FormField id="search" type="search" icon="search" name={name} />
+
+            {/* <input
               id="search"
               type={type}
               name={name}
@@ -33,17 +25,18 @@ const SearchBackup = ({ type, name, placeholder, required, error, value, ...rest
               value={value}
               className="search-input"
               {...rest}
-            />
+            /> */}
           </div>
         </div>
 
         <div className="filter">
           <p className="form-title">Filter</p>
-          <label className="filter-label" htmlFor="ghent">
+          <FormField id="ghent" type="checkbox" name="city[]" label="component" />
+          {/* <label className="filter-label" htmlFor="ghent">
             <input className="filter-input" type="checkbox" id="ghent" name="city[]" />
             <span className="checkbox" />
             Gent
-          </label>
+          </label> */}
           <label className="filter-label" htmlFor="antwerp">
             <input className="filter-input" type="checkbox" id="antwerp" name="city[]" />
             <span className="checkbox" />

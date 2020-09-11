@@ -1,6 +1,6 @@
 import Router, { useRouter } from 'next/router';
 import { Heading, Button } from '../../components/UI';
-import { colors, spacers } from '../../assets/styles/constants';
+import { colors, spacers, breakpoints } from '../../assets/styles/constants';
 import Container from '../../components/container';
 
 export default () => {
@@ -11,42 +11,45 @@ export default () => {
     <>
       <Container>
         <div className="grid">
-          <div className="detail-overview">
-            <Button
-              onClick={() => Router.back()}
-              text="Terug naar overzicht"
-              icon="arrow-left"
-              back
-            />
-            <Heading title="Titel komt hier lange titel lsdkfj sdfl" level={1} />
-            <div className="detail-description">
+          <div className="detail-heading">
+            <div>
+              <Button
+                onClick={() => Router.back()}
+                text="Terug naar overzicht"
+                icon="arrow-left"
+                back
+              />
+              <Heading title="Titel komt hier lange titel lsdkfj sdfl" level={1} />
+            </div>
+          </div>
+
+          <div className="detail-description">
+            <div>
+              <Heading title="Beschrijving" level={2} />
+              <p>
+                De Gentse burgercoöperatie Energent organiseert met steun van Het Gents Milieufront
+                (GMF), Natuurpunt Gent en Beweging.net een groepsaankoop van zonnepanelen: Gent
+                Zonnestad. Zonnepanelen zijn vandaag een rendabele investering, ook nu er geen
+                subsidies meer zijn. Voor ongeveer 4.000 euro heb je een installatie op je dak die
+                je volledige jaarverbruik opwekt en die bovendien tot gemiddeld 8% financieel
+                rendement oplevert... Dat is beter dan een spaarrekening! Leg zonnepanelen op je dak
+                draag zo je steentje bij aan een klimaatneutrale stad!
+              </p>
+              <Heading title="Wat wordt er verwacht?" level={2} />
+              <p>
+                Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent,
+                en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het
+                presentatiemateriaal is reeds beschikbaar).
+              </p>
+              <Heading title="Meer weten?" level={2} />
+              <Button text="Bekijk meer" icon="arrow-right" />
               <div>
-                <Heading title="Beschrijving" level={2} />
-                <p>
-                  De Gentse burgercoöperatie Energent organiseert met steun van Het Gents
-                  Milieufront (GMF), Natuurpunt Gent en Beweging.net een groepsaankoop van
-                  zonnepanelen: Gent Zonnestad. Zonnepanelen zijn vandaag een rendabele investering,
-                  ook nu er geen subsidies meer zijn. Voor ongeveer 4.000 euro heb je een
-                  installatie op je dak die je volledige jaarverbruik opwekt en die bovendien tot
-                  gemiddeld 8% financieel rendement oplevert... Dat is beter dan een spaarrekening!
-                  Leg zonnepanelen op je dak draag zo je steentje bij aan een klimaatneutrale stad!
-                </p>
-                <Heading title="Wat wordt er verwacht?" level={2} />
-                <p>
-                  Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent,
-                  en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het
-                  presentatiemateriaal is reeds beschikbaar).
-                </p>
-                <Heading title="Meer weten?" level={2} />
-                <Button text="Bekijk meer" icon="arrow-right" />
-                <div>
-                  <Button icon="arrow-right" text="Schrijf je in" type="button" primary />
-                </div>
+                <Button icon="arrow-right" text="Schrijf je in" type="button" primary />
               </div>
             </div>
           </div>
 
-          <div className="detail-side">
+          <div className="detail-contact">
             <div>
               <Heading title="Info" level={2} />
               <div className="detail-info">
@@ -80,25 +83,32 @@ export default () => {
         {`
           .grid {
             display: grid;
-            grid-template: 1fr / repeat(2, 1fr);
+            grid-template: 1fr auto / repeat(2, 1fr);
+
+            grid-template-areas:
+              'heading info'
+              'description info';
           }
 
-          .test {
-            margin-top: 2rem;
+          /* HEADING */
+          .detail-heading {
+            grid-area: heading;
+            padding-right: ${spacers.large};
+            display: flex;
           }
 
-          .detail-overview {
-            margin-top: 2rem;
-            padding-right: ${spacers.small};
+          .detail-heading > div {
+            margin-top: ${spacers.small};
+          }
+
+          /* DESCRIPTION */
+          .detail-description {
+            grid-area: description;
+            position: relative;
           }
 
           .detail-description > div {
-            padding: ${spacers.large} ${spacers.medium} ${spacers.large} 0;
-            margin-top: ${spacers.large};
-          }
-
-          .detail-description {
-            position: relative;
+            padding: ${spacers.large} ${spacers.large} ${spacers.large} 0;
           }
 
           .detail-description::before {
@@ -111,12 +121,32 @@ export default () => {
             left: calc((100vw - 1300px) / -2);
           }
 
-          .detail-side > div {
-            margin-top: 60rem;
+          /* CONTACT */
+          .detail-contact > div {
+            transform: translateY(60rem);
             padding-left: 18rem;
           }
 
-          .detail-side::before {
+          .detail-info div {
+            display: flex;
+          }
+
+          .detail-info {
+            margin-top: 2rem;
+            grid-area: info;
+          }
+
+          .info-label {
+            width: 10rem;
+            font-weight: bold;
+          }
+
+          .detail-info p {
+            margin: 0.5rem;
+          }
+
+          /* IMAGE */
+          .detail-heading::after {
             background: url('https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'),
               url('https://blog.top5gent.com/hs-fs/hubfs/Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg?width=1000&name=Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg');
             background-repeat: no-repeat;
@@ -129,25 +159,130 @@ export default () => {
             right: 0;
           }
 
-          .detail-info div {
-            display: flex;
+          @media (max-width: ${breakpoints.large}) {
+            .grid {
+              grid-template: 1fr auto / 5fr 4fr;
+              grid-template-areas:
+                'heading info'
+                'description info';
+            }
+
+            .detail-heading::after {
+              width: 45%;
+            }
+
+            .detail-description::before {
+              width: calc(60vw);
+              left: -8rem; // calc!!!
+            }
+
+            .detail-contact > div {
+              padding-left: 10rem;
+            }
           }
 
-          .detail-info {
-            margin-top: 2rem;
+          @media (max-width: 1400px) {
+            .detail-description::before {
+              left: -5rem;
+            }
           }
 
-          .info-label {
-            width: 10rem;
-            font-weight: bold;
+          @media (max-width: ${breakpoints.medium}) {
+            .grid {
+              grid-template: 1fr auto / 5fr 4fr;
+              grid-template-areas:
+                'heading info'
+                'description info';
+            }
+
+            .detail-description::before {
+              width: 57vw;
+            }
+
+            .detail-heading::after {
+              width: 46vw;
+            }
+
+            .detail-contact > div {
+              padding-left: 5rem;
+            }
           }
 
-          .detail-info p {
-            margin: 0.5rem;
+          @media (max-width: 1080px) {
+            .grid {
+              grid-template: 1fr auto / 5fr 4fr;
+              grid-template-areas:
+                'heading heading'
+                'description info';
+            }
+
+            .detail-heading {
+              flex-direction: column;
+              padding: 0;
+            }
+
+            .detail-heading::after {
+              width: calc(100% + 5rem);
+              position: inherit;
+            }
+
+            .detail-contact > div {
+              transform: translateY(0);
+              padding-top: ${spacers.large};
+            }
+
+            .detail-description::before {
+              top: -4rem;
+              height: calc(100% + 4rem);
+            }
+
+            .detail-info p {
+              margin: 0;
+            }
+
+            .detail-info > div {
+              flex-direction: column;
+              margin-bottom: 1rem;
+            }
           }
 
-          .test {
-            margin-top: 4rem !important;
+          @media (max-width: 900px) {
+            .detail-heading::after {
+              width: calc(100% + 6rem);
+              transform: translateX(-3rem);
+            }
+          }
+
+          @media (max-width: ${breakpoints.small}) {
+            .grid {
+              grid-template: 1fr auto / 1fr;
+              grid-template-areas:
+                'heading'
+                'description'
+                'info';
+            }
+
+            .detail-heading::after {
+              width: calc(100% + 4rem);
+              transform: translateX(-2rem);
+            }
+
+            .detail-description > div {
+              padding-right: 0;
+            }
+
+            .detail-description::before {
+              width: calc(100% + 4rem);
+              left: -2rem;
+            }
+
+            .detail-contact > div {
+              padding: ${spacers.large} 0 0;
+            }
+
+            .detail-info > div {
+              flex-direction: row;
+            }
           }
         `}
       </style>
