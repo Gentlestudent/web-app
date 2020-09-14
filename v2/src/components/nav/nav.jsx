@@ -45,16 +45,16 @@ const Header = () => {
                 <NavLink onClick={() => setMenu(false)} href={routes.NEWS}>
                   Nieuws
                 </NavLink>
-                <NavLink onClick={() => setMenu(false)} href={routes.aboutUs}>
+                <NavLink onClick={() => setMenu(false)} href={routes.ABOUT}>
                   Over ons
                 </NavLink>
-                <NavLink onClick={() => setMenu(false)} href={routes.becomeIssuer}>
+                <NavLink onClick={() => setMenu(false)} href={routes.BECOME_ISSUER}>
                   Word Issuer
                 </NavLink>
-                <NavLink onClick={() => setMenu(false)} href={routes.login} isButton>
+                <NavLink onClick={() => setMenu(false)} href={routes.LOGIN} isButton>
                   Login
                 </NavLink>
-                <NavLink onClick={() => setMenu(false)} href={routes.register} isButton>
+                <NavLink onClick={() => setMenu(false)} href={routes.REGISTER} isButton>
                   Registreer
                 </NavLink>
               </ul>

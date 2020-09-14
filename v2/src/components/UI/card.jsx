@@ -142,7 +142,7 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row }) => 
 
 Card.propTypes = {
   image: PropTypes.string.isRequired,
-  badge: PropTypes.string.isRequired,
+  badge: PropTypes.string,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   onClick: PropTypes.func,

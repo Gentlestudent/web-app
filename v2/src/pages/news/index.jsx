@@ -1,6 +1,6 @@
 import Container from '../../components/container';
-import { spacers, colors, breakpoints } from '../../assets/styles/constants';
-import { NewsItem, Card, Heading, Search, SearchBackup } from '../../components/UI';
+import { spacers } from '../../assets/styles/constants';
+import { Card, Heading } from '../../components/UI';
 
 export default () => {
   const NEWS = [

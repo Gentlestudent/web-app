@@ -1,2 +1,3 @@
-import { fonts, colors, breakpoints } from './constants';
-export { fonts, colors, breakpoints };
+import { fonts, colors, breakpoints, spacers } from './constants';
+
+export { fonts, colors, breakpoints, spacers };
