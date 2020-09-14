@@ -10,6 +10,8 @@ export const routes = {
   OPPORTUNITY: '/opportunities/[id]',
   NEWS: '/news',
   ABOUT: '/about',
+  CONDITIONS: '/conditions',
+  PRIVACY: '/privacy',
 
   /* user */
   user: {

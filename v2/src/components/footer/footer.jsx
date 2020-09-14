@@ -23,10 +23,10 @@ const Header = () => {
           <div className="footer-bottom">
             <img className="logo" src={logo} alt="" />
             <ul>
-              <FooterLink secondary href={routes.OPPORTUNITIES}>
+              <FooterLink secondary href={routes.CONDITIONS}>
                 Conditions
               </FooterLink>
-              <FooterLink secondary href={routes.OPPORTUNITIES}>
+              <FooterLink secondary href={routes.PRIVACY}>
                 Privacy
               </FooterLink>
             </ul>
