@@ -40,7 +40,7 @@ export default css.global`
     margin: 0;
     background-color: ${colors.white};
     color: ${colors.copy};
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     font-family: ${fonts.copy};
     height: 100%;
   }
