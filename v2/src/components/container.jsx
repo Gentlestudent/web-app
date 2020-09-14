@@ -24,6 +24,10 @@ const Container = ({ text, children }) => (
           .container {
             padding: 0 3rem;
           }
+
+          .container-text {
+            width: 100%;
+          }
         }
 
         @media (max-width: ${breakpoints.small}) {

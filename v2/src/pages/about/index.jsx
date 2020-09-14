@@ -1,6 +1,16 @@
 import Container from '../../components/container';
 import { spacers } from '../../assets/styles/constants';
 import { Heading, List } from '../../components/UI';
+import sticker from '../../assets/img/about/sticker.png';
+import leerresultaten from '../../assets/img/about/leerresultaten.png';
+import gentrepreneur from '../../assets/img/about/logo-gentrepreneur.jpg';
+import gentsmileu from '../../assets/img/about/logo-gentsmileu.jpg';
+import kompanjon from '../../assets/img/about/logo-kompanjon.jpg';
+import oxfam from '../../assets/img/about/logo-oxfam.jpg';
+import peerby from '../../assets/img/about/logo-peerby.jpg';
+import rodekruisvlaanderen from '../../assets/img/about/logo-rodekruisvlaanderen.jpg';
+import startersfabriek from '../../assets/img/about/logo-startersfabriek.jpg';
+import thebox from '../../assets/img/about/logo-thebox.jpg';
 
 export default () => {
   return (
@@ -55,16 +65,18 @@ export default () => {
             De student kan zich vervolgens via de Gentlestudent App aanmelden om aan dit initiatief
             te werken en zijn of haar kennis en talenten in te zetten.
           </li>
-          <li>
-            Plaatsen waar een beacon en bijgevolg leerkansen beschikbaar zijn, zijn te herkennen aan
-            dit icoon:
-          </li>
+
           <li>
             Wanneer een student een leerkans tot een goed einde heeft gebracht en voldaan heeft aan
             de verwachtingen van de persoon of organisatie die deze heeft geformuleerd, dan krijgt
             de student een Open Badge.
           </li>
+          <li>
+            Plaatsen waar een beacon en bijgevolg leerkansen beschikbaar zijn, zijn te herkennen aan
+            dit icoon:
+          </li>
         </List>
+        <img className="sticker" src={sticker} alt="Sticker" />
         <Heading title="Open Badges" level={2} />
         <p>
           Een Open Badge is een micro-credential in de vorm van een afbeelding waarin heel wat
@@ -99,6 +111,7 @@ export default () => {
           century skills. De leerkansen die via Gentlestudent terug te vinden zijn, zijn ingedeeld
           volgens de door Arteveldehogeschool geformuleerde Arteveldebrede leerresultaten:
         </p>
+        <img className="leerresultaten" src={leerresultaten} alt="Leerresultaten" />
         <List>
           <li>
             Digitale geletterdheid: ICT inzetten als professional, digitale toepassingen worden
@@ -140,6 +153,16 @@ export default () => {
           link.
         </p>
         <Heading title="Partners" level={2} />
+        <div className="partners">
+          <img src={gentrepreneur} alt="gentrepreneur" />
+          <img src={kompanjon} alt="kompanjon" />
+          <img src={oxfam} alt="oxfam" />
+          <img src={peerby} alt="peerby" />
+          <img src={rodekruisvlaanderen} alt="rode kruis vlaanderen" />
+          <img src={startersfabriek} alt="startersfabriek" />
+          <img src={thebox} alt="the box" />
+          <img src={gentsmileu} alt="gents mileu" />
+        </div>
         <Heading title="Meer weten?" level={2} />
         <p>
           Gentlestudent is een non-profit initiatief van Arteveldehogeschool. Bekijk hier alvast de
@@ -149,17 +172,23 @@ export default () => {
       </Container>
       <style jsx>
         {`
-          .heading {
-            display: flex;
-            justify-content: space-between;
-            margin: 3rem 0 0;
+          .sticker {
+            height: 15rem;
+            margin-bottom: 5rem;
           }
 
-          .news-items > * {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 2rem;
-            // margin: ${spacers.medium} 0 6rem;
+          .leerresultaten {
+            width: 100%;
+            margin: 2rem 0;
+          }
+
+          .partners {
+            padding: 4rem;
+          }
+
+          .partners img {
+            height: 15rem;
+            padding: 0 4rem 6rem 0;
           }
         `}
       </style>
