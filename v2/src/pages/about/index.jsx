@@ -41,6 +41,18 @@ export default () => {
           aanbieden om een creatieve oplossing of actie te realiseren. Ze krijgen voor hun
           gerealiseerde leerkans ook een Open Badge.
         </p>
+        <div className="video-wrapper">
+          <iframe
+            title="Gentlestudent"
+            width="100%"
+            height="500"
+            align="“center”"
+            src="https://www.youtube.com/embed/F9GbWQECcYw"
+            frameBorder="0"
+            allow="autoplay; encrypted-media"
+            allowFullScreen=""
+          />
+        </div>
         <Heading title="Hoe werkt Gentlestudent?" level={2} />
         <List>
           <li>
@@ -83,11 +95,14 @@ export default () => {
           Een Open Badge is een micro-credential in de vorm van een afbeelding waarin heel wat
           informatie over de leerkans en de verworven skills, organisator en student samen wordt
           gebracht tot een uniek en gepersonaliseerde credential. De verzamelde badges, die
-          gebruikmaken van open standaarden, kunnen vervolgens op diverse platformen worden gepost.
-          Badgr is een voorbeeld van een platform waarop dergelijke open badges kunnen verzameld
-          worden om zo een overzicht te bewaren van de verworven vaardigheden in diverse settings.
-          Ook de door Gentlestudent uitgereikte initiatieven kunnen aan een dergelijk platform
-          worden toegevoegd dankzij het gebruik van open standaarden.
+          gebruikmaken van open standaarden, kunnen vervolgens op diverse platformen worden gepost.{' '}
+          <a target="_blank" rel="noreferrer" href="https://badgr.io/">
+            Badgr
+          </a>{' '}
+          is een voorbeeld van een platform waarop dergelijke open badges kunnen verzameld worden om
+          zo een overzicht te bewaren van de verworven vaardigheden in diverse settings. Ook de door
+          Gentlestudent uitgereikte initiatieven kunnen aan een dergelijk platform worden toegevoegd
+          dankzij het gebruik van open standaarden.
         </p>
         <Heading title="Bied zelf een Gentle-meerwaarde" level={3} />
         <List>
@@ -148,11 +163,17 @@ export default () => {
         <p>
           Het grafische ontwerp van Gentlestudent werd ontwikkeld door laatstejaarsstudenten uit de
           opleiding Grafische en Digitale media van Arteveldehogeschool. Het technisch ontwerp werd
-          uitgevoerd via een door Open Knowledge Belgium jaarlijks georganiseerd initiatief: Open
-          Summer of Code waar een team van studenten onder begeleiding van een coach gedurende één
-          maand aan de slag zijn gegaan om het platform en de bijhorende app te ontwikkelen. Meer
-          informatie over de gebruikte technologie achter Gentlestudent is terug te vinden via deze
-          link.
+          uitgevoerd via een door{' '}
+          <a target="_blank" rel="noreferrer" href="https://okfn.org/network/belgium/">
+            Open Knowledge Belgium
+          </a>{' '}
+          jaarlijks georganiseerd initiatief:{' '}
+          <a target="_blank" rel="noreferrer" href="https://2018.summerofcode.be/">
+            Open Summer of Code
+          </a>{' '}
+          waar een team van studenten onder begeleiding van een coach gedurende één maand aan de
+          slag zijn gegaan om het platform en de bijhorende app te ontwikkelen. Meer informatie over
+          de gebruikte technologie achter Gentlestudent is terug te vinden via deze link.
         </p>
         <Heading title="Partners" level={2} />
         <div className="partners">
@@ -194,6 +215,10 @@ export default () => {
           .partners img {
             height: 15rem;
             padding: 0 4rem 6rem 0;
+          }
+
+          .video-wrapper {
+            margin: 5rem 0;
           }
         `}
       </style>

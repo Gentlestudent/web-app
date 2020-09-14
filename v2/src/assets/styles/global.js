@@ -95,11 +95,14 @@ export default css.global`
   ol li {
     line-height: 1.6;
   }
-
-  a,
-  a:visited,
-  a:active,
-  a:hover {
+  nav a,
+  nav a:visited,
+  nav a:active,
+  nav a:hover,
+  footer a,
+  footer a:visited,
+  footer a:active,
+  footer a:hover {
     color: inherit;
     text-decoration: none;
   }
