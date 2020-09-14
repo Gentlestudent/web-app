@@ -134,4 +134,8 @@ export default css.global`
     outline: 0;
     border: 0;
   }
+
+  ul.list > li:not(:last-of-type) {
+    margin-bottom: 1rem;
+  }
 `;
