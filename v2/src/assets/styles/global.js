@@ -32,6 +32,7 @@ export default css.global`
   html {
     box-sizing: inherit;
     font-size: 62.5%;
+    height: 100%;
   }
 
   body {
@@ -41,6 +42,14 @@ export default css.global`
     color: ${colors.copy};
     font-size: 1.6rem;
     font-family: ${fonts.copy};
+    height: 100%;
+  }
+
+  body > div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   ol,

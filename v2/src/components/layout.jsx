@@ -14,6 +14,7 @@ const Layout = ({ /* withHeader, */ children }) => (
         .page-container {
           display: flex;
           flex-direction: column;
+          height: 100%;
         }
 
         @media (max-width: ${breakpoints.nav}) {
