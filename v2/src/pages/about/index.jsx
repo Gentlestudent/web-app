@@ -1,11 +1,11 @@
 import Container from '../../components/container';
 import { spacers } from '../../assets/styles/constants';
-import { Heading } from '../../components/UI';
+import { Heading, List } from '../../components/UI';
 
 export default () => {
   return (
     <>
-      <Container>
+      <Container text>
         <Heading title="Over Ons" level={1} marginTop />
         <p>
           Studenten zijn onlosmakelijk verbonden met het leven in een stad. De stad is niet alleen
@@ -31,7 +31,7 @@ export default () => {
           gerealiseerde leerkans ook een Open Badge.
         </p>
         <Heading title="Hoe werkt Gentlestudent?" level={2} />
-        <ul>
+        <List>
           <li>
             Via dit platform verzamelen we de ideeën en noden waar inwoners en Gentse organisaties
             van de verschillende wijken in Gent mee geconfronteerd worden.
@@ -64,56 +64,70 @@ export default () => {
             de verwachtingen van de persoon of organisatie die deze heeft geformuleerd, dan krijgt
             de student een Open Badge.
           </li>
-          <Heading title="Open Badges" level={2} />
-          <p>
-            Een Open Badge is een micro-credential in de vorm van een afbeelding waarin heel wat
-            informatie over de leerkans en de verworven skills, organisator en student samen wordt
-            gebracht tot een uniek en gepersonaliseerde credential. De verzamelde badges, die
-            gebruikmaken van open standaarden, kunnen vervolgens op diverse platformen worden
-            gepost. Badgr is een voorbeeld van een platform waarop dergelijke open badges kunnen
-            verzameld worden om zo een overzicht te bewaren van de verworven vaardigheden in diverse
-            settings. Ook de door Gentlestudent uitgereikte initiatieven kunnen aan een dergelijk
-            platform worden toegevoegd dankzij het gebruik van open standaarden.
-          </p>
-          <Heading title="Wat leer je door Gentlestudent?" level={2} />
-          <p>
-            Via Gentlestudent leren bewoners en studenten uit de buurt elkaar beter kennen en
-            ontstaat een positieve dynamiek . Vanuit Arteveldehogeschool geloven we in de
-            groeikracht van onze studenten en weten we dat ze op veel manieren kunnen bijdragen aan
-            de toekomst van onze leefwereld. Daarom vinden we het belangrijk om bij al onze
-            studenten in te zetten op 21st century skills. De leerkansen die via Gentlestudent terug
-            te vinden zijn, zijn ingedeeld volgens de door Arteveldehogeschool geformuleerde
-            Arteveldebrede leerresultaten:
-          </p>
-          <ul>
-            <li>
-              Digitale geletterdheid: ICT inzetten als professional, digitale toepassingen worden
-              adequaat en efficiënt gehanteerd om te informeren en een opdracht efficiënt uit te
-              voeren
-            </li>
-            <li>
-              Duurzaamheid: bewuste keuzes maken voor een leefbare wereld, nu en in de toekomst,
-              hier en elders op de planeet
-            </li>
-            <li>
-              Wereldburgerschap: omgaan met diversiteit op psychosociaal, cultureel, economisch en
-              levensbeschouwelijk vlak, zowel lokaal, nationaal als internationaal
-            </li>
-            <li>
-              Ondernemingszin: verder ontwikkeling van een ondernemende houding waarmee zelfstanding
-              en zelfbewust kan gewerkt worden aan een eigen project
-            </li>
-            <li>
-              Onderzoeksvaardigheden: als (zelf-)kritische professional oplossings-en
-              praktijkgericht handelen vanuit een onderzoekende, zelfsturende en analytische houding
-            </li>
-          </ul>
-          <p>
-            Zo kunnen studenten op een innovatieve wijze via het online platform en de bijhorende
-            elementen hun sociaal engagement en hun realisaties zichtbaar maken naar de buurt, naar
-            hun opleiding en naar hun latere potentiële werkgevers toe.
-          </p>
-        </ul>
+        </List>
+        <Heading title="Open Badges" level={2} />
+        <p>
+          Een Open Badge is een micro-credential in de vorm van een afbeelding waarin heel wat
+          informatie over de leerkans en de verworven skills, organisator en student samen wordt
+          gebracht tot een uniek en gepersonaliseerde credential. De verzamelde badges, die
+          gebruikmaken van open standaarden, kunnen vervolgens op diverse platformen worden gepost.
+          Badgr is een voorbeeld van een platform waarop dergelijke open badges kunnen verzameld
+          worden om zo een overzicht te bewaren van de verworven vaardigheden in diverse settings.
+          Ook de door Gentlestudent uitgereikte initiatieven kunnen aan een dergelijk platform
+          worden toegevoegd dankzij het gebruik van open standaarden.
+        </p>
+        <Heading title="Bied zelf een Gentle-meerwaarde" level={3} />
+        <List>
+          <li>Versterk de sfeer en dynamiek in jouw wijk of buurt</li>
+          <li>Maak via het platform ideeën en inspiratie uit de wijk of buurt zichtbaar</li>
+          <li>Zoek zelf creatieve oplossingen bij de noden en behoeften van jouw wijk of buurt</li>
+          <li>
+            Zet je talenten en kennis in op een creatieve en sociale wijze en ontwikkel ze verder in
+            een informele setting
+          </li>
+          <li>
+            Zet in op talent van de toekomst: 21st century skills, denk duurzaam, ondernemend,
+            digitaal geletterd, onderzoekend of als wereldburger.
+          </li>
+        </List>
+        <Heading title="Wat leer je door Gentlestudent?" level={2} />
+        <p>
+          Via Gentlestudent leren bewoners en studenten uit de buurt elkaar beter kennen en ontstaat
+          een positieve dynamiek . Vanuit Arteveldehogeschool geloven we in de groeikracht van onze
+          studenten en weten we dat ze op veel manieren kunnen bijdragen aan de toekomst van onze
+          leefwereld. Daarom vinden we het belangrijk om bij al onze studenten in te zetten op 21st
+          century skills. De leerkansen die via Gentlestudent terug te vinden zijn, zijn ingedeeld
+          volgens de door Arteveldehogeschool geformuleerde Arteveldebrede leerresultaten:
+        </p>
+        <List>
+          <li>
+            Digitale geletterdheid: ICT inzetten als professional, digitale toepassingen worden
+            adequaat en efficiënt gehanteerd om te informeren en een opdracht efficiënt uit te
+            voeren
+          </li>
+          <li>
+            Duurzaamheid: bewuste keuzes maken voor een leefbare wereld, nu en in de toekomst, hier
+            en elders op de planeet
+          </li>
+          <li>
+            Wereldburgerschap: omgaan met diversiteit op psychosociaal, cultureel, economisch en
+            levensbeschouwelijk vlak, zowel lokaal, nationaal als internationaal
+          </li>
+          <li>
+            Ondernemingszin: verder ontwikkeling van een ondernemende houding waarmee zelfstanding
+            en zelfbewust kan gewerkt worden aan een eigen project
+          </li>
+          <li>
+            Onderzoeksvaardigheden: als (zelf-)kritische professional oplossings-en praktijkgericht
+            handelen vanuit een onderzoekende, zelfsturende en analytische houding
+          </li>
+        </List>
+        <p>
+          Zo kunnen studenten op een innovatieve wijze via het online platform en de bijhorende
+          elementen hun sociaal engagement en hun realisaties zichtbaar maken naar de buurt, naar
+          hun opleiding en naar hun latere potentiële werkgevers toe.
+        </p>
+
         <Heading title="Visuele voorstelling van Gentlestudent" level={2} />
         <Heading title="Technische informatie omtrent Gentlestudent" level={2} />
         <p>

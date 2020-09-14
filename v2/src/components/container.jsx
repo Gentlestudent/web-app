@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import { spacers, breakpoints } from '../assets/styles/constants';
 
-const Container = ({ children }) => (
-  <div className="container">
-    {children}
+const Container = ({ text, children }) => (
+  <>
+    <div className="container">
+      {text ? <div className="container-text">{children}</div> : children}
+    </div>
     <style jsx>
       {`
         .container {
@@ -12,6 +14,10 @@ const Container = ({ children }) => (
           margin: 0 auto;
           height: 100%;
           width: 100%;
+        }
+
+        .container-text {
+          width: 65%;
         }
 
         @media (max-width: 900px) {
@@ -31,12 +37,13 @@ const Container = ({ children }) => (
         }
       `}
     </style>
-  </div>
+  </>
 );
 
 Container.propTypes = {
   // children: PropTypes.arrayOf(PropTypes.element)
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
+  text: PropTypes.bool
 };
 
 export default Container;
