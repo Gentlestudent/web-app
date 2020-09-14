@@ -67,6 +67,21 @@ const Header = () => {
           .footer-bottom ul {
             display: flex;
           }
+
+          @media (max-width: ${breakpoints.small}) {
+            .menu,
+            .footer-bottom {
+              flex-direction: column;
+            }
+
+            .footer {
+              padding: 4rem 0;
+            }
+
+            .footer-bottom .logo {
+              margin-bottom: 2rem;
+            }
+          }
         `}
       </style>
     </>

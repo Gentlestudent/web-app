@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import { breakpoints } from '../../assets/styles/constants';
 
 const FooterLink = ({ href, children, secondary }) => {
   const router = useRouter();
@@ -18,7 +19,7 @@ const FooterLink = ({ href, children, secondary }) => {
         {`
           .link {
             font-size: 1.8rem;
-            margin-right: 2rem;
+            padding: 0.5rem 2rem 0.5rem 0;
             opacity: 0.85;
             transition: 0.4s;
           }
@@ -28,7 +29,17 @@ const FooterLink = ({ href, children, secondary }) => {
           }
 
           .link-secondary {
-            margin: 0 0 0 2rem;
+            padding: 0.5rem 0 0.5rem 2rem;
+          }
+
+          @media (max-width: ${breakpoints.small}) {
+            .link {
+              padding: 0.5 0;
+            }
+
+            .link-secondary {
+              padding: 0 2rem 0 0;
+            }
           }
         `}
       </style>
