@@ -1,5 +1,4 @@
 import Container from '../../components/container';
-import { spacers } from '../../assets/styles/constants';
 import { Heading, List } from '../../components/UI';
 import sticker from '../../assets/img/about/sticker.png';
 import leerresultaten from '../../assets/img/about/leerresultaten.png';

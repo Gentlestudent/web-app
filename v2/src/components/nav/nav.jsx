@@ -1,11 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import HamburgerMenu from 'react-hamburger-menu';
-import { useAuth } from '../../hooks';
 import { routes } from '../../constants';
 import { colors, breakpoints } from '../../assets/styles';
-import { Button, Icon } from '../UI';
 import Container from '../container';
 import NavLink from './nav-link';
 import logo from '../../assets/img/logo.svg';
