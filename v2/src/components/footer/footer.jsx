@@ -37,7 +37,7 @@ const Header = () => {
       <style jsx>
         {`
           .footer {
-            margin-top: ${spacers.large};
+            margin-top: 12rem;
             background-color: ${colors.primary};
             color: ${colors.white};
             padding: 8rem 0;

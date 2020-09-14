@@ -11,6 +11,7 @@ import peerby from '../../assets/img/about/logo-peerby.jpg';
 import rodekruisvlaanderen from '../../assets/img/about/logo-rodekruisvlaanderen.jpg';
 import startersfabriek from '../../assets/img/about/logo-startersfabriek.jpg';
 import thebox from '../../assets/img/about/logo-thebox.jpg';
+import banner from '../../assets/img/about/banner.jpg';
 
 export default () => {
   return (
@@ -142,6 +143,7 @@ export default () => {
         </p>
 
         <Heading title="Visuele voorstelling van Gentlestudent" level={2} />
+        <img src={banner} alt="banner" className="banner" />
         <Heading title="Technische informatie omtrent Gentlestudent" level={2} />
         <p>
           Het grafische ontwerp van Gentlestudent werd ontwikkeld door laatstejaarsstudenten uit de
@@ -172,12 +174,15 @@ export default () => {
       </Container>
       <style jsx>
         {`
-          .sticker {
+          img.banner {
+            width: 100%;
+          }
+          img.sticker {
             height: 15rem;
             margin-bottom: 5rem;
           }
 
-          .leerresultaten {
+          img.leerresultaten {
             width: 100%;
             margin: 2rem 0;
           }
