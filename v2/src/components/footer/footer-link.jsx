@@ -1,10 +1,8 @@
-import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { breakpoints } from '../../assets/styles/constants';
 
 const FooterLink = ({ href, children, secondary }) => {
-  const router = useRouter();
   return (
     <>
       <li className={`link ${secondary ? 'link-secondary' : ''}`}>
@@ -49,7 +47,8 @@ const FooterLink = ({ href, children, secondary }) => {
 
 FooterLink.propTypes = {
   href: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  secondary: PropTypes.bool
 };
 
 export default FooterLink;

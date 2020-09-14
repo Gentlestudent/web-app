@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import Link from 'next/link';
+import React from 'react';
 import FooterLink from './footer-link';
 import { colors, breakpoints, spacers } from '../../assets/styles/constants';
 import Container from '../container';
