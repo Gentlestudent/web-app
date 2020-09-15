@@ -2,6 +2,13 @@ import css from 'styled-jsx/css';
 import { colors, fonts } from './constants';
 
 export default css.global`
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+  }
+
   html {
     box-sizing: inherit;
     font-size: 62.5%;
@@ -34,13 +41,6 @@ export default css.global`
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
-  }
-
-  *,
-  *:before,
-  *:after {
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
   }
 
   h1,
