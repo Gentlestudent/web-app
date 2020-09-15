@@ -2,108 +2,169 @@ import { useContext } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import AuthContext from '../context/auth';
-import { Heading } from '../components/UI';
-import Layout from '../components/layout';
-import IntroVideo from './index/introVideo';
-import eyecatcher from '../assets/img/home/eyecatcher.jpg';
-import whatsNew from '../assets/img/home/wat-is-er-nieuw.png';
-import Download from './index/download';
-import Cards from './index/cards';
-import { colors, breakpoints } from '../assets/styles';
+import { Card, Heading, Button } from '../components/UI';
+import banner from '../assets/img/home/banner.jpg';
+import Container from '../components/container';
+import { colors, breakpoints, spacers } from '../assets/styles';
 
 const Home = () => {
   const { isUserSignedIn, currentUser } = useContext(AuthContext);
+  const OPPORTUNITIES = [
+    {
+      title: 'Gent Zonnestad: presenteer op een infoavond',
+      description:
+        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
+      image: 'https://picsum.photos/200/300',
+      date: '	2018-12-21 tot en met 2019-12-21',
+      badge:
+        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
+    },
+    {
+      title: 'Nog een titel',
+      description:
+        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
+      image: 'https://picsum.photos/200/300',
+      date: '	2018-12-21 tot en met 2019-12-21',
+      badge:
+        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
+    },
+    {
+      title: 'Nog een titel',
+      description:
+        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
+      image: 'https://picsum.photos/200/300',
+      date: '	2018-12-21 tot en met 2019-12-21',
+      badge:
+        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
+    }
+  ];
+
   return (
     <>
       <div>
         <Head>
           <title>Welkom | Gentlestudent</title>
         </Head>
-        <section className="one">
-          <Heading level={1} color={colors.white} title="Aan de slag met Gentlestudent" />
-          <Heading level={2} color={colors.white} title="“Verken je stad, help je buren.”" />
-          <IntroVideo />
-        </section>
-        <section className="two">
-          <Heading level={2} color={colors.gray} title="Leerkansen" />
-          <Cards />
-          <Link href="/opportunities">
-            <a className="see-more">Meer leerkansen</a>
-          </Link>
-        </section>
-        <section className="three">
-          <div className="whats-new">
-            <div className="content">
-              <Heading
-                level={2}
-                color={colors.white}
-                title="
-            Zie wat Gentlestudent heeft te bieden en wat je mag verwachten in de toekomst"
-              />
-              <a href="#">Wat is er nieuw?</a>
+        <Container>
+          <article className="heading">
+            <div className="heading-content">
+              <div className="heading-text">
+                <Heading level={1} title="Aan de slag met Gentlestudent" />
+                <p>“Verken je stad, help je buren.”</p>
+                <Button text="Bekijk meer" icon="arrow-right" primary />
+              </div>
+              <div className="heading-video">
+                <iframe
+                  title="Gentlestudent"
+                  width="100%"
+                  height="360"
+                  src="https://www.youtube.com/embed/F9GbWQECcYw"
+                  frameBorder="0"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen=""
+                />
+              </div>
             </div>
-          </div>
-          <div className="spacer" />
-          <Download />
-        </section>
+          </article>
+          <article className="oppertunities">
+            <section className="cards">
+              {OPPORTUNITIES.map((OPPORTUNITY) => (
+                <Card
+                  key={OPPORTUNITY}
+                  badge={OPPORTUNITY.badge}
+                  image="https://picsum.photos/200/300"
+                  title={OPPORTUNITY.title}
+                  description={OPPORTUNITY.description}
+                  date={OPPORTUNITY.date}
+                  alt={OPPORTUNITY.alt ? OPPORTUNITY.alt : OPPORTUNITY.title}
+                />
+              ))}
+            </section>
+            <Button text="Bekijk meer" icon="arrow-right" primary />
+          </article>
+          <article className="news">
+            <Heading level={2} title="Nieuws" />
+            <p>Zie wat Gentlestudent heeft te bieden en wat je mag verwachten in de toekomst</p>
+            <Button text="Wat is er nieuw?" icon="arrow-right" />
+          </article>
+        </Container>
+        <article>
+          <Container>
+            <Heading level={2} title="Download de mobile app" />
+            <p>
+              Om als student zicht te krijgen op waar de leerkansen zich in Gent situeren, kan je de
+              Gentlestudent app downloaden. Deze app zal je melden wanneer je in de buurt bent van
+              een leerkans. Via de app kan je ook het overzicht bewaren van de leerkansen waar je je
+              voor hebt ingeschreven.
+            </p>
+          </Container>
+        </article>
       </div>
 
       <style jsx>
         {`
-          section {
+          .heading {
+            position: relative;
+          }
+
+          .heading::before {
+            background: url(${banner});
+            background-repeat: no-repeat;
+            background-size: cover;
+            content: '';
+            position: absolute;
+            height: 60rem;
+            width: 100vw;
+            z-index: -1;
+            left: calc((100vw - 1300px) / -2);
+            top: -25rem; // negative heading-text marginTop
+          }
+
+          .heading > div {
+            position: relative;
+            height: 45rem;
+            margin-top: 25rem;
+          }
+
+          .heading > div::before {
+            content: '';
+            position: absolute;
+            height: 100%;
+            width: calc(100% + ((100vw - 1300px) / 2));
+            z-index: -1;
+            background: ${colors.blueLight};
+          }
+
+          .heading-text {
+            max-width: 80rem;
+            padding: 6rem 10rem 0 8rem;
+          }
+
+          .cards {
+            display: grid;
+            grid-template: 1fr / repeat(3, 1fr);
+            grid-gap: ${spacers.medium};
+            margin: ${spacers.medium} 0 6rem;
+          }
+
+          .heading-content {
+            display: flex;
+          }
+
+          .heading-video {
+            margin-top: 5rem;
+            width: 100%;
+          }
+
+          .oppertunities {
             display: flex;
             flex-direction: column;
-          }
-
-          .one {
-            background-image: url(${eyecatcher});
-            background-size: cover;
-            justify-content: center;
             align-items: center;
-            min-height: 100vh;
           }
 
-          .two {
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-          }
-
-          @media (max-width: ${breakpoints.small}) {
-            .card-group {
-              flex-direction: column;
-              margin: 0;
-            }
-          }
-
-          .three {
-            background: ${colors.grayLight};
-            color: #fff;
-          }
-
-          .whats-new {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-image: url(${whatsNew});
-            background-size: cover;
-            background-color: #000;
-            padding: 10vh 0;
-            margin-bottom: 10rem;
-          }
-
-          .see-more {
-            margin: 2rem auto;
-            border-bottom: 2px solid ${colors.primary};
-            color: ${colors.gray};
-            font-size: 2.1rem;
-            font-weight: bold;
-          }
-
-          .content {
-            max-width: 100rem;
+          .news {
+            margin-top: 10rem;
+            max-width: 45rem;
           }
         `}
       </style>

@@ -20,7 +20,7 @@ const Heading = ({ color, title, level, classNames, marginTop }) => {
 
           h1 {
             font-size: 5.6rem;
-            margin: 1.5rem 0 2rem 0;
+            padding: 1.5rem 0 2rem 0;
           }
 
           h2 {

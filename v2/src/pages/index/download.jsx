@@ -37,7 +37,7 @@ const Download = () => (
     <style jsx>
       {`
         .download-container {
-          background ${colors.primary};
+          background ${colors.blueLight};
           display: flex;
           justify-content: center;
         }
