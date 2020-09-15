@@ -2,33 +2,6 @@ import css from 'styled-jsx/css';
 import { colors, fonts } from './constants';
 
 export default css.global`
-  @font-face {
-    font-family: 'Source Sans Pro';
-    src: url(/assets/fonts/SourceSansPro-Regular.woff2) format('woff2'),
-      url(/assets/fonts/SourceSansPro-Regular.woff) format('woff');
-    font-weight: 400;
-    font-display: swap;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Source Sans Pro';
-    src: url(/assets/fonts/SourceSansPro-SemiBold.woff2) format('woff2'),
-      url(/assets/fonts/SourceSansPro-SemiBold.woff) format('woff');
-    font-weight: 600;
-    font-display: swap;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Source Sans Pro';
-    src: url(/assets/fonts/SourceSansPro-Bold.woff2) format('woff2'),
-      url(/assets/fonts/SourceSansPro-Bold.woff) format('woff');
-    font-weight: 700;
-    font-display: swap;
-    font-style: normal;
-  }
-
   html {
     box-sizing: inherit;
     font-size: 62.5%;
