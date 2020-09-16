@@ -96,7 +96,7 @@ export default css.global`
     text-align: inherit;
     outline: 0;
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     text-align: inherit;
     font-size: inherit;
     font-family: inherit;
