@@ -99,7 +99,7 @@ export default () => {
 
           .article {
             background: ${colors.blueLight};
-            padding: 4rem;
+            padding: ${spacers.large};
           }
 
           .article-info {
@@ -140,6 +140,40 @@ export default () => {
 
           .others .header {
             margin-bottom: 1.5rem;
+          }
+
+          @media (max-width: ${breakpoints.medium}) {
+            .news-content {
+              grid-template-columns: 2fr 1fr;
+            }
+          }
+
+          @media (max-width: 1080px) {
+            .others {
+              margin-top: 0;
+            }
+            .news-content {
+              grid-template-columns: 1fr;
+            }
+
+            .article {
+              padding: ${spacers.medium};
+            }
+          }
+
+          @media (max-width: ${breakpoints.extraSmall}) {
+            .news-wrapper::before {
+              height: 23rem;
+            }
+
+            .article {
+              background: none;
+              padding: 0;
+            }
+
+            .article-text {
+              margin-top: 1rem;
+            }
           }
         `}
       </style>
