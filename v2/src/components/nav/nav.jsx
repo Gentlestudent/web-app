@@ -143,7 +143,7 @@ const Header = () => {
 
             .nav-top {
               height: 8rem;
-              width: 100%;
+              width: 100vw;
               background: white;
               display: flex;
               align-items: center;

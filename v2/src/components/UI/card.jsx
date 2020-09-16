@@ -119,19 +119,21 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row }) => 
           }
 
           @media (max-width: ${breakpoints.small}) {
+            .card-header {
+              padding: 1rem 0 0 0;
+            }
+
             .card-row {
               flex-direction: column;
+            }
+
+            .card-row .card-text {
+              padding: ${spacers.small};
             }
 
             .card-row .img-wrapper {
               width: 100%;
               height: 20rem;
-            }
-          }
-
-          @media (max-width: ${breakpoints.extraSmall}) {
-            .card-header {
-              padding: ${spacers.small};
             }
           }
         `}
