@@ -45,9 +45,9 @@ const Home = () => {
       <Container>
         <Header />
         <Oppertunities OPPORTUNITIES={OPPORTUNITIES} />
-        {/* <News /> */}
+        <News />
       </Container>
-      {/* <Download /> */}
+      <Download />
     </>
   );
 };

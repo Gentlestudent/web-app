@@ -1,4 +1,4 @@
-import { colors } from '../../assets/styles/constants';
+import { colors, breakpoints } from '../../assets/styles/constants';
 import { Heading } from '../../components/UI';
 import Container from '../../components/container';
 import mockup from '../../assets/img/home/download-mobile-app.png';
@@ -60,13 +60,31 @@ const Download = () => {
 
           .download-mockup {
             position: relative;
-            margin: -8rem 4rem 0 0;
+            margin: -8rem 6rem 0 0;
             bottom: 0;
-            padding-right: 8rem;
           }
 
-          .download-text {
-            max-width: 60rem;
+          @media (max-width: ${breakpoints.medium}) {
+            .download-mockup {
+              position: relative;
+              margin: -8rem 3rem 0 0;
+              bottom: 0;
+            }
+          }
+
+          @media (max-width: ${breakpoints.small}) {
+            .download {
+              margin-top: 5rem;
+              padding: 4rem 0;
+            }
+
+            .download-content {
+              flex-direction: column;
+            }
+
+            .download-mockup {
+              display: none;
+            }
           }
         `}
       </style>
