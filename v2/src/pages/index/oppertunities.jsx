@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { breakpoints } from '../../assets/styles/constants';
 import { Button, Card } from '../../components/UI';
 import { spacers } from '../../assets/styles';
 
@@ -34,6 +35,18 @@ const Oppertunities = ({ OPPORTUNITIES }) => {
             display: flex;
             flex-direction: column;
             align-items: center;
+          }
+
+          @media (max-width: ${breakpoints.medium}) {
+            .cards {
+              grid-template-columns: repeat(2, 1fr);
+            }
+          }
+
+          @media (max-width: ${breakpoints.small}) {
+            .cards {
+              grid-template-columns: repeat(1, 1fr);
+            }
           }
         `}
       </style>
