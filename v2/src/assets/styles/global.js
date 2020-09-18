@@ -122,7 +122,7 @@ export default css.global`
     border-radius: 0.5rem;
     padding: 1rem 1.2rem 1rem 4.4rem;
     position: relative;
-    margin-top: 0.7rem;
+    width: 100%;
   }
 
   input:focus {

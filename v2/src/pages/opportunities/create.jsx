@@ -31,10 +31,15 @@ export default () => {
               alert(JSON.stringify(values, null, 2));
             }}
           >
-            <Form className="formik">
+            <Form>
               <label className="formik-label" htmlFor="firstName">
                 WYSIWYG
-                <Field id="firstName" name="firstName" placeholder="Jane" />
+                <div className="field-test">
+                  <i className="field-icon">
+                    <Icon name="arrow-right" />
+                  </i>
+                  <Field id="firstName" name="firstName" placeholder="Jane" />
+                </div>
               </label>
 
               <label className="formik-label" htmlFor="lastName">
@@ -74,6 +79,19 @@ export default () => {
             display: flex;
             flex-direction: column;
             margin-bottom: 3rem;
+          }
+
+          .field-test {
+            display: flex;
+            align-items: center;
+            margin-top: 0.7rem;
+          }
+
+          .field-icon {
+            margin-left: 1.5rem;
+            position: absolute;
+            z-index: 2;
+            color: ${colors.blue};
           }
         `}
       </style>
