@@ -46,8 +46,8 @@ const Home = () => {
   return (
     <>
       <Banner image={banner} />
+      <Header />
       <Container>
-        {/* <Header /> */}
         <Oppertunities OPPORTUNITIES={OPPORTUNITIES} />
         <News />
       </Container>

@@ -2,13 +2,14 @@ import { colors, breakpoints } from '../../assets/styles/constants';
 import banner from '../../assets/img/home/banner.jpg';
 import { Heading, Button } from '../../components/UI';
 import { spacers } from '../../assets/styles';
+import Container from '../../components/container';
 
 const Header = () => {
   return (
     <>
-      <article className="headingx">
-        <div className="heading-content">
-          <div>
+      <div className="heading">
+        <Container>
+          <div className="heading-content">
             <div className="heading-text">
               <Heading level={1} title="Aan de slag met Gentlestudent" />
               <p className="heading-slogan">Verken je stad, help je buren.</p>
@@ -26,39 +27,23 @@ const Header = () => {
               />
             </div>
           </div>
-        </div>
-      </article>
+        </Container>
+      </div>
 
       <style jsx>
         {`
           .heading {
             position: relative;
-          }
-
-          .heading::before {
-            background: url(${banner});
-            background-repeat: no-repeat;
-            background-size: cover;
-            content: '';
-            position: absolute;
-            height: 60rem;
-            width: 100vw;
-            z-index: -1;
-            left: calc((100vw - 1300px) / -2);
-            top: -25rem;
-          }
-
-          .heading-content {
-            position: relative;
             height: 45rem;
             margin-top: 25rem;
           }
 
-          .heading-content::before {
+          .heading::before {
             content: '';
             position: absolute;
             height: 100%;
-            width: calc(100% + ((100vw - 1300px) / 2));
+            width: calc(1300px + ((100% - 1300px) / 2));
+            right: 0;
             z-index: -1;
             background: ${colors.blueLight};
           }
@@ -68,7 +53,7 @@ const Header = () => {
             padding-right: 8rem;
           }
 
-          .heading-content > div {
+          .heading-content {
             display: flex;
             align-items: center;
             height: 100%;
@@ -87,27 +72,19 @@ const Header = () => {
 
           @media (max-width: 1400px) {
             .heading::before {
-              display: flex;
-              left: -5rem;
+              width: calc(100% - 10rem);
+              left: 5rem;
             }
 
-            .heading-content::before {
-              width: 100%;
-            }
-
-            .heading-content > div {
+            .heading-content {
               padding: ${spacers.medium};
             }
           }
 
           @media (max-width: 900px) {
             .heading::before {
-              height: 50rem;
-              left: -${spacers.medium};
-            }
-
-            .heading-content {
-              margin-top: 15rem;
+              width: calc(100% - 6rem);
+              left: 3rem;
             }
 
             .heading-text {
@@ -116,12 +93,13 @@ const Header = () => {
           }
 
           @media (max-width: ${breakpoints.small}) {
-            .heading-content {
+            .heading {
               height: 70rem;
             }
 
             .heading::before {
-              left: -${spacers.small};
+              width: calc(100% - 4rem);
+              left: 2rem;
             }
 
             .heading-text {
@@ -129,18 +107,18 @@ const Header = () => {
               margin-bottom: 5rem;
             }
 
-            .heading-content > div {
+            .heading-content {
               flex-direction: column;
               align-items: flex-start;
             }
           }
 
           @media (max-width: ${breakpoints.extraSmall}) {
-            .heading-content {
+            .heading {
               height: 50rem;
             }
 
-            .heading-content > div {
+            .heading-content {
               flex-direction: column;
               align-items: flex-start;
               padding: ${spacers.small};
