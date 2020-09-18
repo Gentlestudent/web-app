@@ -20,7 +20,7 @@ export default () => {
                 icon="arrow-left"
                 back
               />
-              <Heading title="Titel komt hier lange titel lsdkfj sdfl" level={1} />
+              <Heading title="Titel van artikel komt hier terecht" level={1} />
               <div className="article-info">
                 <p>2018-05-25 | Lore Demedts</p>
               </div>

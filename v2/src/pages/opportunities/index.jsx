@@ -97,6 +97,7 @@ export default () => {
         <article className="cards">
           {OPPORTUNITIES.map((OPPORTUNITY) => (
             <Card
+              onClick={() => Router.push(`${routes.OPPORTUNITIES}/id`)}
               key={OPPORTUNITY}
               badge={OPPORTUNITY.badge}
               image="https://picsum.photos/200/300"

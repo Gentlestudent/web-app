@@ -19,7 +19,7 @@ export default () => {
                 icon="arrow-left"
                 back
               />
-              <Heading title="Titel komt hier lange titel lsdkfj sdfl" level={1} />
+              <Heading title="Titel van oppertunity komt hier" level={1} />
             </div>
           </div>
 

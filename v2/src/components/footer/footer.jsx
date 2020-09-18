@@ -14,8 +14,8 @@ const Header = () => {
             <ul className="menu">
               <FooterLink href={routes.OPPORTUNITIES}>Leerkansen</FooterLink>
               <FooterLink href={routes.OPPORTUNITIES}>Word issuer</FooterLink>
-              <FooterLink href={routes.OPPORTUNITIES}>Over ons</FooterLink>
-              <FooterLink href={routes.OPPORTUNITIES}>Nieuws</FooterLink>
+              <FooterLink href={routes.ABOUT}>Over ons</FooterLink>
+              <FooterLink href={routes.NEWS}>Nieuws</FooterLink>
               <FooterLink href={routes.OPPORTUNITIES}>Inloggen</FooterLink>
               <FooterLink href={routes.OPPORTUNITIES}>Registreer</FooterLink>
             </ul>
