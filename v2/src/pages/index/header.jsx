@@ -42,7 +42,7 @@ const Header = () => {
             content: '';
             position: absolute;
             height: 100%;
-            width: calc(1300px + ((100% - 1300px) / 2));
+            width: calc(1300px + ((100% - 1400px) / 2));
             right: 0;
             z-index: -1;
             background: ${colors.blueLight};
@@ -70,7 +70,7 @@ const Header = () => {
             margin: 0 0 1.5rem 0;
           }
 
-          @media (max-width: 1400px) {
+          @media (max-width: 1300px) {
             .heading::before {
               width: calc(100% - 10rem);
               left: 5rem;
