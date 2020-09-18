@@ -13,7 +13,7 @@ const Header = () => {
           <nav className="footer-top">
             <ul className="menu">
               <FooterLink href={routes.OPPORTUNITIES}>Leerkansen</FooterLink>
-              <FooterLink href={routes.OPPORTUNITIES}>Word issuer</FooterLink>
+              <FooterLink href={routes.ISSUER}>Word issuer</FooterLink>
               <FooterLink href={routes.ABOUT}>Over ons</FooterLink>
               <FooterLink href={routes.NEWS}>Nieuws</FooterLink>
               <FooterLink href={routes.OPPORTUNITIES}>Inloggen</FooterLink>

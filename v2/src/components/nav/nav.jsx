@@ -45,7 +45,7 @@ const Header = () => {
                 <NavLink onClick={() => setMenu(false)} href={routes.ABOUT}>
                   Over ons
                 </NavLink>
-                <NavLink onClick={() => setMenu(false)} href={routes.BECOME_ISSUER}>
+                <NavLink onClick={() => setMenu(false)} href={routes.ISSUER}>
                   Word Issuer
                 </NavLink>
                 <NavLink onClick={() => setMenu(false)} href={routes.LOGIN} isButton>

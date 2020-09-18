@@ -12,6 +12,7 @@ export const routes = {
   ABOUT: '/about',
   CONDITIONS: '/conditions',
   PRIVACY: '/privacy',
+  ISSUER: '/issuer',
 
   /* user */
   user: {

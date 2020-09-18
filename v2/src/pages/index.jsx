@@ -7,6 +7,9 @@ import Oppertunities from './index/oppertunities';
 import News from './index/news';
 import AuthContext from '../context/auth';
 import Container from '../components/container';
+import { Banner } from '../components/UI';
+
+import banner from '../assets/img/home/banner.jpg';
 
 const Home = () => {
   const { isUserSignedIn, currentUser } = useContext(AuthContext);
@@ -42,12 +45,32 @@ const Home = () => {
 
   return (
     <>
+      <Banner image={banner} />
       <Container>
-        <Header />
+        {/* <Header /> */}
         <Oppertunities OPPORTUNITIES={OPPORTUNITIES} />
         <News />
       </Container>
       <Download />
+
+      <style jsx>
+        {`
+          .heading {
+            position: relative;
+          }
+
+          .heading::before {
+            background: url(${banner});
+            background-repeat: no-repeat;
+            background-size: cover;
+            content: '';
+            position: absolute;
+            height: 60rem;
+            width: 100%;
+            z-index: -1;
+          }
+        `}
+      </style>
     </>
   );
 };

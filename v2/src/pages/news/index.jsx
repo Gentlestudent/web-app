@@ -1,6 +1,8 @@
 import Container from '../../components/container';
 import { spacers } from '../../assets/styles/constants';
 import { Card, Heading } from '../../components/UI';
+import { routes } from '../../constants';
+import Router from 'next/router';
 
 export default () => {
   const NEWS = [
@@ -58,6 +60,7 @@ export default () => {
         <article className="news-items">
           {NEWS.map((ITEM) => (
             <Card
+              onClick={() => Router.push(`${routes.NEWS}/id`)}
               key={ITEM}
               image="https://picsum.photos/200/300"
               title={ITEM.title}

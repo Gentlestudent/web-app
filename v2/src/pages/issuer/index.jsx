@@ -2,32 +2,24 @@ import { colors, breakpoints } from '../../assets/styles/constants';
 import banner from '../../assets/img/home/banner.jpg';
 import { Heading, Button } from '../../components/UI';
 import { spacers } from '../../assets/styles';
+import Container from '../../components/container';
 
-const Header = () => {
+const Issuer = () => {
   return (
     <>
-      <article className="headingx">
-        <div className="heading-content">
-          <div>
-            <div className="heading-text">
-              <Heading level={1} title="Aan de slag met Gentlestudent" />
-              <p className="heading-slogan">Verken je stad, help je buren.</p>
-              <Button text="Bekijk meer" icon="arrow-right" primary />
-            </div>
-            <div className="heading-video">
-              <iframe
-                title="Gentlestudent"
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/F9GbWQECcYw"
-                frameBorder="0"
-                allow="autoplay; encrypted-media"
-                allowFullScreen=""
-              />
+      <Container>
+        <article className="heading">
+          <div className="heading-content">
+            <div>
+              <div className="heading-text">
+                <Heading level={1} title="Aan de slag met Gentlestudent" />
+                <p className="heading-slogan">Verken je stad, help je buren.</p>
+                <Button text="Bekijk meer" icon="arrow-right" primary />
+              </div>
             </div>
           </div>
-        </div>
-      </article>
+        </article>
+      </Container>
 
       <style jsx>
         {`
@@ -152,6 +144,6 @@ const Header = () => {
   );
 };
 
-Header.propTypes = {};
+Issuer.propTypes = {};
 
-export default Header;
+export default Issuer;
