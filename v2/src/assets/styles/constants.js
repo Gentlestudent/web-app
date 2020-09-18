@@ -7,7 +7,7 @@ const colors = {
   primary: '#000000',
   primaryDark: 'darken(#00aacc, 5%)',
   sub: '#cc0077',
-  orange: '#ee9900',
+  orange: '#f58732',
   green: '#bbcc00',
   blue: '#009ad4',
   white: '#ffffff',
