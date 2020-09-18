@@ -111,7 +111,6 @@ const Header = () => {
             .nav-wrapper {
               height: auto;
               position: fixed;
-              overflow: scroll;
               top: 0;
               right: 0;
               flex-direction: column;

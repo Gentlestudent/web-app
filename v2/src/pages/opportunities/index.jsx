@@ -132,6 +132,12 @@ export default () => {
             .cards {
               grid-template: 1fr 1fr / repeat(2, 1fr);
             }
+
+            .heading {
+              flex-direction: column;
+              margin-bottom: 2rem;
+              align-items: start;
+            }
           }
 
           @media (max-width: ${breakpoints.small}) {

@@ -218,7 +218,7 @@ export default () => {
             }
 
             .detail-heading::after {
-              width: calc(100% + ${spacers.large});
+              width: calc(100% + 5rem);
               position: inherit;
             }
 

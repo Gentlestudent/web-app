@@ -113,4 +113,24 @@ export default css.global`
   ul.list > li:not(:last-of-type) {
     margin-bottom: 1rem;
   }
+
+  /* FORMS */
+  input,
+  select,
+  textarea {
+    border: 0.1rem solid ${colors.border};
+    border-radius: 0.5rem;
+    padding: 1rem 1.2rem 1rem 4.4rem;
+    position: relative;
+    margin-top: 0.7rem;
+  }
+
+  input:focus {
+    border: 0.1rem solid ${colors.blue};
+    outline: none;
+  }
+
+  textarea {
+    padding: 1rem 1.2rem 1rem 1.2rem;
+  }
 `;

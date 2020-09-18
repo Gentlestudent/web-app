@@ -54,11 +54,12 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row }) => 
 
           .img-wrapper {
             width: 100%;
+            height: 20rem;
           }
 
           .img-wrapper > img {
             object-fit: cover;
-            height: 20rem;
+            height: 100%;
             width: 100%;
           }
 
@@ -89,8 +90,8 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row }) => 
             position: absolute;
             right: 0;
             bottom: 0;
-            width: 40px;
-            height: 40px;
+            width: 4rem;
+            height: 4rem;
             background: #f58732 url(${arrow}) no-repeat 50% 50%;
             display: inline-block;
             text-indent: -9999px;
@@ -99,23 +100,24 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row }) => 
           }
 
           .card-row {
-            flex-direction: row;
             margin-bottom: ${spacers.medium};
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
           }
 
           .card-row .img-wrapper {
-            width: 50rem;
-            height: 100%;
-          }
-
-          .card-row > img {
-            object-fit: cover;
-            height: auto;
-            width: 100%;
+            height: 28rem;
           }
 
           .card-row .card-text {
             padding: ${spacers.medium} 15rem ${spacers.medium} ${spacers.medium};
+          }
+
+          @media (max-width: 1080px) {
+            .card-row .img-wrapper {
+              height: 36rem;
+            }
           }
 
           @media (max-width: ${breakpoints.small}) {
@@ -124,6 +126,7 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row }) => 
             }
 
             .card-row {
+              display: flex;
               flex-direction: column;
             }
 

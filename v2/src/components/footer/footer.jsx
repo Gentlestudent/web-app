@@ -79,6 +79,10 @@ const Header = () => {
             .footer-bottom .logo {
               margin-bottom: 2rem;
             }
+
+            .footer {
+              margin-top: 4rem;
+            }
           }
         `}
       </style>

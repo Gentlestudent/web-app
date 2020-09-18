@@ -54,6 +54,10 @@ const Heading = ({ color, title, level, classNames, marginTop }) => {
             h1 {
               font-size: 3rem;
             }
+
+            .title-margin {
+              margin-top: 1rem;
+            }
           }
         `}
       </style>
