@@ -52,25 +52,6 @@ const Home = () => {
         <News />
       </Container>
       <Download />
-
-      <style jsx>
-        {`
-          .heading {
-            position: relative;
-          }
-
-          .heading::before {
-            background: url(${banner});
-            background-repeat: no-repeat;
-            background-size: cover;
-            content: '';
-            position: absolute;
-            height: 60rem;
-            width: 100%;
-            z-index: -1;
-          }
-        `}
-      </style>
     </>
   );
 };
