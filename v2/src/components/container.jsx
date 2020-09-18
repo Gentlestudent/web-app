@@ -31,10 +31,6 @@ const Container = ({ text, children }) => (
         }
 
         @media (max-width: ${breakpoints.small}) {
-          .cards {
-            grid-gap: ${spacers.small};
-          }
-
           .container {
             padding: 0 2rem;
           }
@@ -45,7 +41,6 @@ const Container = ({ text, children }) => (
 );
 
 Container.propTypes = {
-  // children: PropTypes.arrayOf(PropTypes.element)
   children: PropTypes.element.isRequired,
   text: PropTypes.bool
 };
