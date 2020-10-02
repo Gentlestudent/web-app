@@ -24,7 +24,8 @@ export default () => {
             initialValues={{
               firstName: '',
               lastName: '',
-              email: ''
+              email: '',
+              info: ''
             }}
             onSubmit={async (values) => {
               await new Promise((r) => setTimeout(r, 500));
@@ -32,13 +33,13 @@ export default () => {
             }}
           >
             <Form>
-              <label className="formik-label" htmlFor="firstName">
-                WYSIWYG
+              <label className="formik-label" htmlFor="title">
+                Title
                 <div className="field-test">
                   <i className="field-icon">
                     <Icon name="arrow-right" />
                   </i>
-                  <Field id="firstName" name="firstName" placeholder="Jane" />
+                  <Field id="title" name="title" placeholder="Jane" />
                 </div>
               </label>
 
@@ -56,12 +57,12 @@ export default () => {
                 </Field>
               </label>
 
-              <label className="formik-label" htmlFor="lastName">
+              <label className="formik-label" htmlFor="info">
                 Beschrijving
-                <Field id="lastName" name="lastName" placeholder="Doe" as="textarea" />
+                <Field id="info" name="info" placeholder="Doe" as="textarea" />
               </label>
 
-              <button type="submit">Submit</button>
+              <Button icon="arrow-right" text="Submit" type="submit" primary />
             </Form>
           </Formik>
         </div>
@@ -70,7 +71,7 @@ export default () => {
         {`
           .form-panel {
             background: ${colors.blueLight};
-            margin-top: 4rem;
+            margin: 4rem auto 0;
             padding: 4.5rem;
             max-width: 50%;
           }

@@ -120,9 +120,14 @@ export default css.global`
   textarea {
     border: 0.1rem solid ${colors.border};
     border-radius: 0.5rem;
-    padding: 1rem 1.2rem 1rem 4.4rem;
+    padding: 1rem 1.2rem 1rem 1.4rem;
     position: relative;
     width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  i + input {
+    padding-left: 4.4rem;
   }
 
   input:focus {
