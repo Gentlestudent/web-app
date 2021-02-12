@@ -31,6 +31,7 @@
     "react-leaflet": "^2.7.0",
     "react-map-gl": "^5.2.8",
     "react-mapbox-gl": "^4.8.6",
+    "sass": "^1.32.7",
     "styled-jsx": "^3.2.5",
     "swr": "^0.2.0"
   },
