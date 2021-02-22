@@ -130,3 +130,4 @@ temp/
 
 
 .vscode
+.DS_Store
