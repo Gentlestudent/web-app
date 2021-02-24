@@ -75,7 +75,7 @@ const Opportunities = ({ opportunities }) => {
                 badge={opp.badge}
                 image="https://picsum.photos/200/300"
                 title={opp.title}
-                description={opp.description}
+                description={opp.shortDescription}
                 date={opp.date}
                 alt={opp.alt ? opp.alt : opp.title}
               />
