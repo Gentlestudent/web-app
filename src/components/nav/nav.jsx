@@ -48,10 +48,10 @@ const Header = () => {
                 <NavLink onClick={() => setMenu(false)} href={routes.ISSUER}>
                   Word Issuer
                 </NavLink>
-                <NavLink onClick={() => setMenu(false)} href={routes.LOGIN} isButton>
+                <NavLink onClick={() => setMenu(false)} href={routes.HOME} isButton>
                   Login
                 </NavLink>
-                <NavLink onClick={() => setMenu(false)} href={routes.REGISTER} isButton>
+                <NavLink onClick={() => setMenu(false)} href={routes.HOME} isButton>
                   Registreer
                 </NavLink>
               </ul>

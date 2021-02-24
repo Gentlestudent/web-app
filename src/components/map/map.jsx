@@ -23,15 +23,15 @@ const Map = () => {
   return (
     <>
       <ReactMapGL
-        scrollZoom="true"
-        dragPan="true"
+        scrollZoom
+        dragPan
         mapStyle="mapbox://styles/sarahvandenberghe/ckewzjk7d006419plwblt3vyz"
         mapboxApiAccessToken="pk.eyJ1Ijoic2FyYWh2YW5kZW5iZXJnaGUiLCJhIjoiY2tld3djcHl5MDhsZzJ6bDgxN2x6ZTBzaCJ9.hZxIB8Z-nu7GkxhwboP6XQ"
         {...viewport}
         onViewportChange={(nextViewport) => setViewport(nextViewport)}
       >
-        {CITIES.map((city) => (
-          <Marker latitude={city.latitude} longitude={city.longitude}>
+        {CITIES.map((city, i) => (
+          <Marker key={i} latitude={city.latitude} longitude={city.longitude}>
             <svg
               height={SIZE}
               viewBox="0 0 24 24"

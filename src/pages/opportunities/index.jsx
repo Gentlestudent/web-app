@@ -1,20 +1,13 @@
 import Router from 'next/router';
-import Link from 'next/link';
-import { useCollectionOnce } from 'react-firebase-hooks/firestore';
-import { firestore } from '../../api/firebase';
+import { getReadableDate } from '../../api/firebase';
 import { routes } from '../../constants';
 import Container from '../../components/container';
-import { Card, Heading, Search, SearchBackup } from '../../components/UI';
+import { Card, Heading, SearchBackup } from '../../components/UI';
 import Map from '../../components/map/map';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
+import { getOpportunities } from '../../api/opportunities';
 
-export default () => {
-  /*
-   * TODO: Only fetch opportunities of specific issuer
-   */
-
-  const [value, loading, error] = useCollectionOnce(firestore.collection('Opportunities'));
-
+const Opportunities = ({ opportunities }) => {
   const OPPORTUNITIES = [
     {
       title: 'Gent Zonnestad: presenteer op een infoavond',
@@ -35,7 +28,7 @@ export default () => {
         'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
     },
     {
-      title: 'Nog een titel',
+      title: 'Nog een titel 2',
       description:
         'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
       image: 'https://picsum.photos/200/300',
@@ -66,8 +59,9 @@ export default () => {
   return (
     <>
       <Container>
-        {/* <Link href={routes.issuer.CREATE_OPPORTUNITY}>Create new opportunity</Link> */}
-        {/* value &&
+        <>
+          {/* <Link href={routes.issuer.CREATE_OPPORTUNITY}>Create new opportunity</Link> */}
+          {/* value &&
         value.docs.map((doc) => {
           const { title } = doc.data();
           const { id } = doc;
@@ -86,27 +80,28 @@ export default () => {
             )
           );
         }) */}
-        <div className="heading">
-          <Heading title="Leerkansen" level={1} />
-          <SearchBackup placeholder="Zoeken" type="search" />
-        </div>
-        <div className="map-wrapper">
-          <Map />
-        </div>
-        <article className="cards">
-          {OPPORTUNITIES.map((OPPORTUNITY) => (
-            <Card
-              onClick={() => Router.push(`${routes.OPPORTUNITIES}/id`)}
-              key={OPPORTUNITY}
-              badge={OPPORTUNITY.badge}
-              image="https://picsum.photos/200/300"
-              title={OPPORTUNITY.title}
-              description={OPPORTUNITY.description}
-              date={OPPORTUNITY.date}
-              alt={OPPORTUNITY.alt ? OPPORTUNITY.alt : OPPORTUNITY.title}
-            />
-          ))}
-        </article>
+          <div className="heading">
+            <Heading title="Leerkansen" level={1} />
+            <SearchBackup name="search" placeholder="Zoeken" type="search" />
+          </div>
+          <div className="map-wrapper">
+            <Map />
+          </div>
+          <article className="cards">
+            {OPPORTUNITIES.map((OPPORTUNITY, i) => (
+              <Card
+                onClick={() => Router.push(`${routes.OPPORTUNITIES}/id`)}
+                key={i}
+                badge={OPPORTUNITY.badge}
+                image="https://picsum.photos/200/300"
+                title={OPPORTUNITY.title}
+                description={OPPORTUNITY.description}
+                date={OPPORTUNITY.date}
+                alt={OPPORTUNITY.alt ? OPPORTUNITY.alt : OPPORTUNITY.title}
+              />
+            ))}
+          </article>
+        </>
       </Container>
       <style jsx>
         {`
@@ -156,3 +151,19 @@ export default () => {
     </>
   );
 };
+
+export const getStaticProps = async () => {
+  const opportunitiesFromDb = await getOpportunities();
+  const opportunities = opportunitiesFromDb.map((opp) => {
+    opp.beginDate = getReadableDate(opp.beginDate);
+    opp.endDate = getReadableDate(opp.endDate);
+    return opp;
+  });
+
+  return {
+    props: { opportunities }
+    // revalidate: 900
+  };
+};
+
+export default Opportunities;

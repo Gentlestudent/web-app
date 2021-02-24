@@ -10,27 +10,29 @@ const Header = () => {
     <>
       <footer className="footer">
         <Container>
-          <nav className="footer-top">
-            <ul className="menu">
-              <FooterLink href={routes.OPPORTUNITIES}>Leerkansen</FooterLink>
-              <FooterLink href={routes.ISSUER}>Word issuer</FooterLink>
-              <FooterLink href={routes.ABOUT}>Over ons</FooterLink>
-              <FooterLink href={routes.NEWS}>Nieuws</FooterLink>
-              <FooterLink href={routes.OPPORTUNITIES}>Inloggen</FooterLink>
-              <FooterLink href={routes.OPPORTUNITIES}>Registreer</FooterLink>
-            </ul>
-          </nav>
-          <div className="footer-bottom">
-            <img className="logo" src={logo} alt="" />
-            <ul>
-              <FooterLink secondary href={routes.CONDITIONS}>
-                Conditions
-              </FooterLink>
-              <FooterLink secondary href={routes.PRIVACY}>
-                Privacy
-              </FooterLink>
-            </ul>
-          </div>
+          <>
+            <nav className="footer-top">
+              <ul className="menu">
+                <FooterLink href={routes.OPPORTUNITIES}>Leerkansen</FooterLink>
+                <FooterLink href={routes.ISSUER}>Word issuer</FooterLink>
+                <FooterLink href={routes.ABOUT}>Over ons</FooterLink>
+                <FooterLink href={routes.NEWS}>Nieuws</FooterLink>
+                <FooterLink href={routes.OPPORTUNITIES}>Inloggen</FooterLink>
+                <FooterLink href={routes.OPPORTUNITIES}>Registreer</FooterLink>
+              </ul>
+            </nav>
+            <div className="footer-bottom">
+              <img className="logo" src={logo} alt="" />
+              <ul>
+                <FooterLink secondary href={routes.CONDITIONS}>
+                  Conditions
+                </FooterLink>
+                <FooterLink secondary href={routes.PRIVACY}>
+                  Privacy
+                </FooterLink>
+              </ul>
+            </div>
+          </>
         </Container>
       </footer>
 
