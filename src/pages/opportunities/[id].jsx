@@ -2,11 +2,10 @@ import Router, { useRouter } from 'next/router';
 import { Heading, Button } from '../../components/UI';
 import { colors, spacers, breakpoints } from '../../assets/styles/constants';
 import Container from '../../components/container';
+import { getOpportunities, getOpportunityById } from '../../api/opportunities';
+import { getReadableDate } from '../../api/firebase';
 
-export default () => {
-  const router = useRouter();
-  const { id } = router.query;
-
+const Opportunity = ({ opportunity }) => {
   return (
     <>
       <Container>
@@ -19,7 +18,7 @@ export default () => {
                 icon="arrow-left"
                 back
               />
-              <Heading title="Titel van oppertunity komt hier" level={1} />
+              <Heading title={opportunity.title} level={1} />
             </div>
           </div>
 
@@ -42,7 +41,7 @@ export default () => {
                 presentatiemateriaal is reeds beschikbaar).
               </p>
               <Heading title="Meer weten?" level={2} />
-              <Button text="Bekijk meer" icon="arrow-right" />
+              <Button text="Bekijk meer" icon="arrow-right" href={opportunity.moreInfo} />
               <div>
                 <Button icon="arrow-right" text="Schrijf je in" type="button" primary />
               </div>
@@ -59,11 +58,11 @@ export default () => {
                 </div>
                 <div>
                   <p className="info-label">Website</p>
-                  <p>https://www.htisa.be</p>
+                  <p>{opportunity.website}</p>
                 </div>
                 <div>
                   <p className="info-label">Contact</p>
-                  <p>roselien.vervaet@htisa.be</p>
+                  <p>{opportunity.contact}</p>
                 </div>
                 <div>
                   <p className="info-label">Locatie</p>
@@ -285,3 +284,29 @@ export default () => {
     </>
   );
 };
+
+export const getStaticPaths = async () => {
+  // Same query as in opportunities/index.js, would be nice if this could be called globally somewhere?
+  const opportunities = await getOpportunities();
+  const ids = opportunities.map((opp) => opp.id);
+  const paths = ids.map((id) => ({ params: { id } }));
+
+  return {
+    paths,
+    fallback: false
+  };
+};
+
+export const getStaticProps = async ({ params }) => {
+  // Will be a call for EVERY id, better to store data somewhere globally and filter with the id
+  const opportunity = await getOpportunityById(params.id);
+  opportunity.beginDate = getReadableDate(opportunity.beginDate);
+  opportunity.endDate = getReadableDate(opportunity.endDate);
+
+  return {
+    props: { opportunity }
+    // revalidate: 900
+  };
+};
+
+export default Opportunity;

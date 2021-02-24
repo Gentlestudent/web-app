@@ -60,26 +60,6 @@ const Opportunities = ({ opportunities }) => {
     <>
       <Container>
         <>
-          {/* <Link href={routes.issuer.CREATE_OPPORTUNITY}>Create new opportunity</Link> */}
-          {/* value &&
-        value.docs.map((doc) => {
-          const { title } = doc.data();
-          const { id } = doc;
-          return (
-            !loading && (
-              <button
-                className="button-container"
-                type="button"
-                key={id}
-                onClick={() =>
-                  Router.push(routes.issuer.OPPORTUNITY, `${routes.issuer.OPPORTUNITIES}/${id}`)
-                }
-              >
-                {title}
-              </button>
-            )
-          );
-        }) */}
           <div className="heading">
             <Heading title="Leerkansen" level={1} />
             <SearchBackup name="search" placeholder="Zoeken" type="search" />
@@ -88,16 +68,16 @@ const Opportunities = ({ opportunities }) => {
             <Map />
           </div>
           <article className="cards">
-            {OPPORTUNITIES.map((OPPORTUNITY, i) => (
+            {opportunities.map((opp) => (
               <Card
-                onClick={() => Router.push(`${routes.OPPORTUNITIES}/id`)}
-                key={i}
-                badge={OPPORTUNITY.badge}
+                onClick={() => Router.push(`${routes.OPPORTUNITIES}/${opp.id}`)}
+                key={opp.id}
+                badge={opp.badge}
                 image="https://picsum.photos/200/300"
-                title={OPPORTUNITY.title}
-                description={OPPORTUNITY.description}
-                date={OPPORTUNITY.date}
-                alt={OPPORTUNITY.alt ? OPPORTUNITY.alt : OPPORTUNITY.title}
+                title={opp.title}
+                description={opp.description}
+                date={opp.date}
+                alt={opp.alt ? opp.alt : opp.title}
               />
             ))}
           </article>

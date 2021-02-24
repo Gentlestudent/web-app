@@ -168,7 +168,7 @@ const Header = () => {
             display: flex;
             flex-direction: row;
             box-shadow: $shadow;
-            background-color: $white;
+            background-color: $color-white;
             z-index: 999;
           }
           .logo {

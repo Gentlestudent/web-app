@@ -5,11 +5,7 @@ import User from '../models/User';
 import { auth } from '../api/firebase';
 import { colors } from '../assets/styles';
 import Layout from '../components/layout';
-// import 'normalize.css';
 import globalStyles from '../assets/styles/global';
-
-// import '../styles/globals.scss';
-// import '../styles/styles.scss';
 
 const App = ({ Component, pageProps }) => {
   const [user, loading, error] = useAuthState(auth);
