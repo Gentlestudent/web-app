@@ -1,16 +1,12 @@
 import Head from 'next/head';
 import { Formik, Field, Form } from 'formik';
-import { useInput, useAuth } from '../../hooks';
-import Layout from '../../components/layout';
-import { Button, Input, Heading } from '../../components/UI';
+import { useAuth } from '../../hooks';
+import { Heading } from '../../components/UI';
 import { registerWithEmailPassword } from '../../api/auth';
 import Container from '../../components/container';
 import { colors } from '../../assets/styles';
 
 const Register = () => {
-  {
-    /* This method  was already written there */
-  }
   const { isUserSignedIn } = useAuth();
 
   return (
