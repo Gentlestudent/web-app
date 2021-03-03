@@ -1,16 +1,18 @@
 import { Formik, Field, Form } from 'formik';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { auth } from '../../api/firebase';
+import { useState } from 'react';
+
+import { registerWithEmailPassword } from '../../api/auth';
 import { Heading } from '../../components/UI';
 import Container from '../../components/container';
 import { colors } from '../../assets/styles';
+import { useAuth } from '../../hooks';
 
 const Register = () => {
-  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(
-    auth
-  );
+  const { isSignedIn } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  if (user) {
+  if (isSignedIn) {
     // redirect if needed or remove this block
   }
 
@@ -22,8 +24,16 @@ const Register = () => {
     console.log(error);
   }
 
-  const signup = ({ email, password, organisation, firstName, lastName }) => {
-    createUserWithEmailAndPassword(email, password);
+  const signup = async ({ email, password, institute, firstName, lastName }) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await registerWithEmailPassword(email, password, firstName, lastName, institute);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -38,7 +48,7 @@ const Register = () => {
               firstName: '',
               lastName: '',
               password: '',
-              organisation: ''
+              institute: ''
             }}
             onSubmit={signup}
           >
@@ -68,8 +78,8 @@ const Register = () => {
                 Organisatie/onderwijsinstelling
                 <div className="field">
                   <Field
-                    id="organisation"
-                    name="organisation"
+                    id="institute"
+                    name="institute"
                     placeholder="Organisatie/onderwijsinstelling"
                     type="text"
                   />
