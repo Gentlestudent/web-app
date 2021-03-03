@@ -1,13 +1,30 @@
-import Head from 'next/head';
 import { Formik, Field, Form } from 'formik';
-import { useAuth } from '../../hooks';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { auth } from '../../api/firebase';
 import { Heading } from '../../components/UI';
-import { registerWithEmailPassword } from '../../api/auth';
 import Container from '../../components/container';
 import { colors } from '../../assets/styles';
 
 const Register = () => {
-  const { isUserSignedIn } = useAuth();
+  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(
+    auth
+  );
+
+  if (user) {
+    // redirect if needed or remove this block
+  }
+
+  if (loading) {
+    console.log(loading);
+  }
+
+  if (error) {
+    console.log(error);
+  }
+
+  const signup = ({ email, password, organisation, firstName, lastName }) => {
+    createUserWithEmailAndPassword(email, password);
+  };
 
   return (
     <>
@@ -23,9 +40,7 @@ const Register = () => {
               password: '',
               organisation: ''
             }}
-            onSubmit={(values, actions) => {
-              console.log(values);
-            }}
+            onSubmit={signup}
           >
             <Form>
               <label className="formik-label" htmlFor="email">
@@ -64,7 +79,7 @@ const Register = () => {
               <label className="formik-label" htmlFor="password">
                 Wachtwoord
                 <div className="field">
-                  <Field id="password" name="password" placeholder="Wachtwoord" type="text" />
+                  <Field id="password" name="password" placeholder="Wachtwoord" type="password" />
                 </div>
               </label>
 

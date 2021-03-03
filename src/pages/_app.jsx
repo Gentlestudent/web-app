@@ -10,8 +10,6 @@ import globalStyles from '../assets/styles/global';
 const App = ({ Component, pageProps }) => {
   const [user, loading, error] = useAuthState(auth);
 
-  console.log(loading);
-
   const authState = {
     authStatusReported: !loading,
     isUserSignedIn: !!user,
