@@ -1,5 +1,5 @@
 import Router from 'next/router';
-import { getReadableDate } from '../../api/firebase';
+import { getReadableDate } from '../../utils/index';
 import { routes } from '../../constants';
 import Container from '../../components/container';
 import { Card, Heading, SearchBackup } from '../../components/UI';
@@ -133,6 +133,7 @@ const Opportunities = ({ opportunities }) => {
 };
 
 export const getStaticProps = async () => {
+  // Would be better if getOpportunities would be called somewhere globally (still as SSR data)
   const opportunitiesFromDb = await getOpportunities();
   const opportunities = opportunitiesFromDb.map((opp) => {
     opp.beginDate = getReadableDate(opp.beginDate);

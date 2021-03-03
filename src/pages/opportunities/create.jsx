@@ -43,11 +43,21 @@ export default () => {
                 </div>
               </label>
 
-              <label className="formik-label" htmlFor="lastName">
-                Titel
-                <Field id="lastName" name="lastName" placeholder="Doe" />
+              <label className="formik-label" htmlFor="info">
+                Beschrijving
+                <Field id="info" name="info" placeholder="Doe" as="textarea" />
               </label>
 
+              <label className="formik-label" htmlFor="lastName">
+                E-mail adres
+                <Field id="lastName" name="lastName" placeholder="john.doe@gmail.com" />
+              </label>
+
+              <label className="formik-label" htmlFor="lastName">
+                Telefoon nummer
+                <Field id="lastName" name="lastName" placeholder="" />
+              </label>
+              {/*
               <label className="formik-label" htmlFor="lastName">
                 Domein
                 <Field name="color" as="select">
@@ -55,14 +65,10 @@ export default () => {
                   <option value="green">Green</option>
                   <option value="blue">Blue</option>
                 </Field>
-              </label>
+              </label> */}
 
-              <label className="formik-label" htmlFor="info">
-                Beschrijving
-                <Field id="info" name="info" placeholder="Doe" as="textarea" />
-              </label>
-
-              <Button icon="arrow-right" text="Submit" type="submit" primary />
+              <button type="submit" text="submit" />
+              {/* <Button icon="arrow-right" text="Submit" type="submit" primary /> */}
             </Form>
           </Formik>
         </div>

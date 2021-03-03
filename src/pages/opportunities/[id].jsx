@@ -3,7 +3,7 @@ import { Heading, Button } from '../../components/UI';
 import { colors, spacers, breakpoints } from '../../assets/styles/constants';
 import Container from '../../components/container';
 import { getOpportunities, getOpportunityById } from '../../api/opportunities';
-import { getReadableDate } from '../../api/firebase';
+import { getReadableDate } from '../../utils/index';
 
 const Opportunity = ({ opportunity }) => {
   return (
@@ -286,7 +286,8 @@ const Opportunity = ({ opportunity }) => {
 };
 
 export const getStaticPaths = async () => {
-  // Same query as in opportunities/index.js, would be nice if this could be called globally somewhere?
+  // Same query as in opportunities/index.js, would be nice if this could be
+  // called globally somewhere? Avoid duplicate calls
   const opportunities = await getOpportunities();
   const ids = opportunities.map((opp) => opp.id);
   const paths = ids.map((id) => ({ params: { id } }));
@@ -298,7 +299,8 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  // Will be a call for EVERY id, better to store data somewhere globally and filter with the id
+  // Will be a call for EVERY opportunity, better to store data somewhere
+  // globally and filter with the id
   const opportunity = await getOpportunityById(params.id);
   opportunity.beginDate = getReadableDate(opportunity.beginDate);
   opportunity.endDate = getReadableDate(opportunity.endDate);
