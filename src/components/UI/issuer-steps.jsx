@@ -1,9 +1,9 @@
 import { colors, breakpoints } from '../../assets/styles/constants';
-import { Heading, Button } from '../../components/UI';
+import { Heading, Button } from '.';
 import { spacers } from '../../assets/styles';
-import Container from '../../components/container';
+import Container from '../container';
 
-const Steps = () => {
+const IssuerSteps = () => {
   return (
     <>
       <Container>
@@ -105,6 +105,6 @@ const Steps = () => {
   );
 };
 
-Steps.propTypes = {};
+IssuerSteps.propTypes = {};
 
-export default Steps;
+export default IssuerSteps;

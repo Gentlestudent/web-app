@@ -1,11 +1,10 @@
-import Header from './header';
-import Steps from './steps';
+import { IssuerHeader, IssuerSteps } from '../../components/UI';
 
 const Issuer = () => {
   return (
     <>
-      <Header />
-      <Steps />
+      <IssuerHeader />
+      <IssuerSteps />
     </>
   );
 };

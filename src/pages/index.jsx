@@ -1,13 +1,7 @@
 import { useContext } from 'react';
-import Link from 'next/link';
-import Head from 'next/head';
-import Header from './index/header';
-import Download from './index/download';
-import Oppertunities from './index/oppertunities';
-import News from './index/news';
 import AuthContext from '../context/auth';
 import Container from '../components/container';
-import { Banner } from '../components/UI';
+import { Banner, HomeHeader, Download, Oppertunities, News } from '../components/UI';
 
 import banner from '../assets/img/home/banner.jpg';
 
@@ -46,7 +40,7 @@ const Home = () => {
   return (
     <>
       <Banner image={banner} />
-      <Header />
+      <HomeHeader />
       <Container>
         <Oppertunities OPPORTUNITIES={OPPORTUNITIES} />
         <News />

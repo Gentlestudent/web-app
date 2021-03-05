@@ -1,10 +1,10 @@
 import { colors, breakpoints } from '../../assets/styles/constants';
 import banner from '../../assets/img/home/banner.jpg';
-import { Heading, Button } from '../../components/UI';
+import { Heading, Button } from '.';
 import { spacers } from '../../assets/styles';
-import Container from '../../components/container';
+import Container from '../container';
 
-const Header = () => {
+const HomeHeader = () => {
   return (
     <>
       <div className="heading">
@@ -130,6 +130,6 @@ const Header = () => {
   );
 };
 
-Header.propTypes = {};
+HomeHeader.propTypes = {};
 
-export default Header;
+export default HomeHeader;

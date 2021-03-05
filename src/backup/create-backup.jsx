@@ -1,10 +1,10 @@
 import Router from 'next/router';
-import { colors, breakpoints } from '../../assets/styles';
-import FormWithSteps from '../../components/form-with-steps';
-import { Heading, Icon, Button } from '../../components/UI';
-import Container from '../../components/container';
+import { colors, breakpoints } from '../assets/styles';
+import FormWithSteps from '../components/form-with-steps';
+import { Heading, Icon, Button } from '../components/UI';
+import Container from '../components/container';
 
-import OPPORTUNITY_STEPS from './steps';
+import OPPORTUNITY_STEPS from '../pages/opportunities/steps';
 
 export default () => {
   const createOpportunity = (opportunity) => console.log(opportunity);

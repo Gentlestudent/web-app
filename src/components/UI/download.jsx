@@ -1,6 +1,6 @@
 import { colors, breakpoints } from '../../assets/styles/constants';
-import { Heading } from '../../components/UI';
-import Container from '../../components/container';
+import { Heading } from '.';
+import Container from '../container';
 import mockup from '../../assets/img/home/download-mobile-app.png';
 import android from '../../assets/img/home/android.png';
 import ios from '../../assets/img/home/ios.png';

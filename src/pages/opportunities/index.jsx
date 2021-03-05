@@ -2,67 +2,19 @@ import Router from 'next/router';
 import { getReadableDate } from '../../utils/index';
 import { routes } from '../../constants';
 import Container from '../../components/container';
-import { Card, Heading, SearchBackup } from '../../components/UI';
+import { Card, Heading, Search } from '../../components/UI';
 import Map from '../../components/map/map';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
 import { getOpportunities } from '../../api/opportunities';
 
 const Opportunities = ({ opportunities }) => {
-  const OPPORTUNITIES = [
-    {
-      title: 'Gent Zonnestad: presenteer op een infoavond',
-      description:
-        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
-      image: 'https://picsum.photos/200/300',
-      date: '	2018-12-21 tot en met 2019-12-21',
-      badge:
-        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
-    },
-    {
-      title: 'Nog een titel',
-      description:
-        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
-      image: 'https://picsum.photos/200/300',
-      date: '	2018-12-21 tot en met 2019-12-21',
-      badge:
-        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
-    },
-    {
-      title: 'Nog een titel 2',
-      description:
-        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
-      image: 'https://picsum.photos/200/300',
-      date: '	2018-12-21 tot en met 2019-12-21',
-      badge:
-        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
-    },
-    {
-      title: 'Nog een titel',
-      description:
-        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
-      image: 'https://picsum.photos/200/300',
-      date: '	2018-12-21 tot en met 2019-12-21',
-      badge:
-        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
-    },
-    {
-      title: 'Nog een titel',
-      description:
-        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
-      image: 'https://picsum.photos/200/300',
-      date: '	2018-12-21 tot en met 2019-12-21',
-      badge:
-        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
-    }
-  ];
-
   return (
     <>
       <Container>
         <>
           <div className="heading">
             <Heading title="Leerkansen" level={1} />
-            <SearchBackup name="search" placeholder="Zoeken" type="search" />
+            <Search name="search" placeholder="Zoeken" type="search" />
           </div>
           <div className="map-wrapper">
             <Map />

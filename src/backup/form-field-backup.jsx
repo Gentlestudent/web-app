@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useInput } from '../../hooks';
-import { inputTypes } from '../../constants';
-import { colors } from '../../assets/styles';
-import Input from './input';
-import TextArea from './textarea';
-import Dropdown from './dropdown';
-import Icon from './icon';
+import { useInput } from '../hooks';
+import { inputTypes } from '../constants';
+import { colors } from '../assets/styles';
+import Input from '../components/UI/input';
+import TextArea from '../components/UI/textarea';
+import Dropdown from '../components/UI/dropdown';
+import Icon from '../components/UI/icon';
 
 const FormField = ({
   type,

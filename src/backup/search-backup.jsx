@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { colors } from '../../assets/styles';
-import { Icon, FormField } from '.';
+import { colors } from '../assets/styles';
+import { Icon, FormField } from '../components/UI';
 
 const SearchBackup = ({ type, name, placeholder, required, error, value, ...rest }) => {
   return (
