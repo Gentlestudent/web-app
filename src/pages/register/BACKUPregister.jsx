@@ -1,8 +1,8 @@
 import Head from 'next/head';
-import { useInput, useAuth } from '../hooks';
-import Layout from '../components/layout';
-import { Button, Input } from '../components/UI';
-import { registerWithEmailPassword } from '../api/auth';
+import { useInput, useAuth } from '../../hooks';
+import Layout from '../../components/layout';
+import { Button, Input } from '../../components/UI';
+import { registerWithEmailPassword } from '../../api/auth';
 
 const Register = () => {
   const { isUserSignedIn } = useAuth();
