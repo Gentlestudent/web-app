@@ -1,17 +1,40 @@
-import Head from 'next/head';
 import { Formik, Field, Form } from 'formik';
-import { useInput, useAuth } from '../../hooks';
-import Layout from '../../components/layout';
-import { Button, Input, Heading } from '../../components/UI';
+import { useState } from 'react';
+
 import { registerWithEmailPassword } from '../../api/auth';
+import { Heading } from '../../components/UI';
 import Container from '../../components/container';
 import { colors } from '../../assets/styles';
+import { useAuth } from '../../hooks';
 
 const Register = () => {
-  {
-    /* This method  was already written there */
+  const { isSignedIn } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  if (isSignedIn) {
+    // redirect if needed or remove this block
   }
-  const { isUserSignedIn } = useAuth();
+
+  if (loading) {
+    console.log(loading);
+  }
+
+  if (error) {
+    console.log(error);
+  }
+
+  const signup = async ({ email, password, institute, firstName, lastName }) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await registerWithEmailPassword(email, password, firstName, lastName, institute);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -25,11 +48,9 @@ const Register = () => {
               firstName: '',
               lastName: '',
               password: '',
-              organisation: ''
+              institute: ''
             }}
-            onSubmit={(values, actions) => {
-              console.log(values);
-            }}
+            onSubmit={signup}
           >
             <Form>
               <label className="formik-label" htmlFor="email">
@@ -57,8 +78,8 @@ const Register = () => {
                 Organisatie/onderwijsinstelling
                 <div className="field">
                   <Field
-                    id="organisation"
-                    name="organisation"
+                    id="institute"
+                    name="institute"
                     placeholder="Organisatie/onderwijsinstelling"
                     type="text"
                   />
@@ -68,7 +89,7 @@ const Register = () => {
               <label className="formik-label" htmlFor="password">
                 Wachtwoord
                 <div className="field">
-                  <Field id="password" name="password" placeholder="Wachtwoord" type="text" />
+                  <Field id="password" name="password" placeholder="Wachtwoord" type="password" />
                 </div>
               </label>
 

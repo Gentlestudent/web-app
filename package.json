@@ -26,7 +26,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-firebase-hooks": "^2.1.1",
+    "react-firebase-hooks": "^3.0.1",
     "react-hamburger-menu": "^1.2.1",
     "react-leaflet": "^2.7.0",
     "react-map-gl": "^5.2.8",
@@ -54,8 +54,8 @@
     "next-optimized-images": "^2.6.1",
     "prettier": "^2.0.2",
     "rimraf": "^3.0.2",
+    "sass": "^1.32.7",
     "shelljs": "^0.8.4",
-    "webpack": "^4.43.0",
-    "sass": "^1.32.7"
+    "webpack": "^4.43.0"
   }
 }

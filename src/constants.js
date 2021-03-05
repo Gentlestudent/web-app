@@ -13,6 +13,8 @@ export const routes = {
   CONDITIONS: '/conditions',
   PRIVACY: '/privacy',
   ISSUER: '/issuer',
+  LOGIN: '/login',
+  REGISTER: '/register',
 
   /* user */
   user: {

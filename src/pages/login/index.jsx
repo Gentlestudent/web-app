@@ -1,11 +1,31 @@
-import Router from 'next/router';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Formik, Field, Form } from 'formik';
+
+import { auth } from '../../api/firebase';
 import { colors } from '../../assets/styles';
-import { Heading, Icon, Button } from '../../components/UI';
+import { Heading } from '../../components/UI';
 import Container from '../../components/container';
 
 const Login = () => {
-  const createOpportunity = (opportunity) => console.log(opportunity);
+  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+
+  if (user) {
+    // Implement redirect logic if needed or remove this
+  }
+
+  if (loading) {
+    // May be useful to show a loading state on the button
+    console.log('loading');
+  }
+
+  if (error) {
+    // Todo something useful with these errors
+    console.log(error);
+  }
+
+  const signup = ({ email, password }) => {
+    signInWithEmailAndPassword(email, password);
+  };
 
   return (
     <>
@@ -17,10 +37,7 @@ const Login = () => {
               email: '',
               password: ''
             }}
-            onSubmit={async (values) => {
-              await new Promise((r) => setTimeout(r, 500));
-              alert(JSON.stringify(values, null, 2));
-            }}
+            onSubmit={signup}
           >
             <Form>
               <label className="formik-label" htmlFor="email">
