@@ -6,17 +6,18 @@ import 'firebase/firestore';
 
 const config = process.env.FIREBASE;
 
-// if (process.browser) {
-//   if (window.location.hostname === 'localhost' && process.env.USE_FUNCTIONS_EMULATOR) {
-//     functions.useFunctionsEmulator('http://localhost:5001');
-//   }
-// }
-
-// auth.useDeviceLanguage();
-
 export const app = !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
-export const firestore = firebase.firestore();
 export const auth = firebase.auth();
 export const storage = firebase.storage();
 export const functions = firebase.functions();
 export const { Timestamp } = firebase.firestore;
+
+if (process.browser) {
+  if (window.location.hostname === 'localhost' && process.env.USE_FUNCTIONS_EMULATOR) {
+    functions.useFunctionsEmulator('http://localhost:5001');
+  }
+}
+
+auth.useDeviceLanguage();
+
+export const firestore = firebase.firestore();

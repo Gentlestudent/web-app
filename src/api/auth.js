@@ -1,5 +1,4 @@
-import { auth } from './firebase';
-import { createParticipant } from './participants';
+import { auth, functions } from './firebase';
 
 export const createAuthSubscription = (fn) => auth.onAuthStateChanged(fn);
 
@@ -14,9 +13,7 @@ export const registerWithEmailPassword = async (
   const userCredential = await auth.createUserWithEmailAndPassword(email, password);
   const { user } = userCredential;
   await user.updateProfile({ displayName: name });
-  await createParticipant(userCredential.user.uid, { email, name, institute });
-  user.sendEmailVerification();
-  // return functions.httpsCallable('createUser').call(firstName, lastName);
+  await functions.httpsCallable('createParticipant')({ email, name, institute });
 };
 
 export const signInWithEmailPassword = (email, password) =>
