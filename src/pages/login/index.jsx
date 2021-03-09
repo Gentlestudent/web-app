@@ -6,6 +6,7 @@ import { auth } from '../../api/firebase';
 import { Heading, Button } from '../../components/UI';
 import { Panel, InputField } from '../../components/form';
 import Container from '../../components/container';
+import { useAuth } from '../../hooks';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email('Ongeldig e-mail adres').required('Vul een e-mail adres in'),
@@ -13,9 +14,10 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword, _, loading, error] = useSignInWithEmailAndPassword(auth);
+  const { isUserSignedIn } = useAuth();
 
-  if (user) {
+  if (isUserSignedIn) {
     // Implement redirect logic if needed or remove this
   }
 
