@@ -16,3 +16,4 @@ export { default as News } from './news';
 export { default as Oppertunities } from './oppertunities';
 export { default as IssuerSteps } from './issuer-steps';
 export { default as IssuerHeader } from './issuer-header';
+export { default as BannerSplit } from './banner-split';

@@ -1,6 +1,6 @@
 import Router from 'next/router';
 import Container from '../../components/container';
-import { Card, Heading, Button } from '../../components/UI';
+import { Heading, Button, BannerSplit } from '../../components/UI';
 import { routes } from '../../constants';
 import { colors, breakpoints, spacers } from '../../assets/styles/constants';
 import banner from '../../assets/img/home/banner.jpg';
@@ -8,30 +8,24 @@ import banner from '../../assets/img/home/banner.jpg';
 export default () => {
   return (
     <>
-      <div className="heading">
-        <Container>
-          <div className="heading__content">
-            <div className="heading__image" />
-            <div className="heading__text">
-              <Heading title="Jane Doe" level={1} color="white" />
-              <div>
-                <div className="text__item">
-                  <Heading title="Email" level={2} color="white" />
-                  <p>john.doe@gmail.com</p>
-                </div>
-                <div className="text__item">
-                  <Heading title="Organisatie/onderwijsinstelling" level={2} color="white" />
-                  <p>Howest</p>
-                </div>
-                <div className="text__item">
-                  <Heading title="Rollen" level={2} color="white" />
-                  <p>Admin</p>
-                </div>
-              </div>
-            </div>
+      <BannerSplit>
+        <Heading title="Jane Doe" level={1} color="white" />
+        <div>
+          <div className="text__item">
+            <Heading title="Email" level={2} color="white" />
+            <p>john.doe@gmail.com</p>
           </div>
-        </Container>
-      </div>
+          <div className="text__item">
+            <Heading title="Organisatie/onderwijsinstelling" level={2} color="white" />
+            <p>Arteveldehogeschool</p>
+          </div>
+          <div className="text__item">
+            <Heading title="Rollen" level={2} color="white" />
+            <p>Admin</p>
+          </div>
+        </div>
+      </BannerSplit>
+
       <div className="badges__wrapper">
         <Container>
           <Heading title="Mijn badges" marginTop level={1} />
@@ -86,37 +80,6 @@ export default () => {
             width: 12rem;
             height: auto;
             margin-right: 2rem;
-          }
-
-          .heading {
-            position: relative;
-          }
-
-          .heading::before {
-            content: '';
-            position: absolute;
-            height: 100%;
-            width: calc((1300px + ((100% - 1300px) / 2)) - 10rem);
-            right: 0;
-            z-index: -1;
-            background: ${colors.blue};
-          }
-
-          .heading__content {
-            padding: 5rem 5rem 5rem 0;
-            color: white;
-            display: grid;
-            grid-template-columns: 40rem 1fr;
-            grid-gap: 6rem;
-          }
-
-          .heading__image {
-            background-image: url('https://images.pexels.com/photos/1858175/pexels-photo-1858175.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260');
-            background-size: cover;
-          }
-
-          .heading__text {
-            margin-right: 5rem;
           }
 
           .text__item p {
