@@ -8,10 +8,9 @@ const IssuerHeader = () => {
     <>
       <div className="heading">
         <Container>
-          <div className="heading-content">
-            <div className="heading-image" />
-
-            <div className="heading-text">
+          <div className="heading__content">
+            <div className="heading__image" />
+            <div className="heading__text">
               <Heading title="Word vandaag nog een issuer!" level={1} color="white" />
               <div>
                 <Heading title="Wat is een issuer" level={2} color="white" />
@@ -56,7 +55,7 @@ const IssuerHeader = () => {
             background: ${colors.orange};
           }
 
-          .heading-content {
+          .heading__content {
             padding: 5rem 5rem 5rem 0;
             color: white;
             display: grid;
@@ -64,11 +63,11 @@ const IssuerHeader = () => {
             grid-gap: 6rem;
           }
 
-          .heading-image {
+          .heading__image {
             background-image: url(${banner});
           }
 
-          .heading-text {
+          .heading__text {
             margin-right: 5rem;
           }
 

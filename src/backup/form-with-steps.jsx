@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSteps } from '../hooks';
 import { colors, breakpoints } from '../assets/styles';
-import { Button } from './UI';
-import Form from './form';
+import { Button } from '../components/UI';
+import Form from '../components/form';
 
 const FormWithSteps = ({ title, steps, onCompleteAll }) => {
   const { currentStep, isFinalStep, stepForward, stepBack, steppedBack } = useSteps(steps.length);

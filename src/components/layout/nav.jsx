@@ -7,7 +7,7 @@ import Container from '../container';
 import NavLink from './nav-link';
 import logo from '../../assets/img/logo.svg';
 
-const Header = () => {
+const Nav = () => {
   const [menu, setMenu] = useState(false);
 
   return (
@@ -165,4 +165,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Nav;

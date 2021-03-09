@@ -5,7 +5,7 @@ import Container from '../container';
 import logo from '../../assets/img/footer-gentlestudent.svg';
 import { routes } from '../../constants';
 
-const Header = () => {
+const Footer = () => {
   return (
     <>
       <footer className="footer">
@@ -92,4 +92,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Footer;

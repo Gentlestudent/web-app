@@ -1,11 +1,20 @@
-import { Formik, Field, Form } from 'formik';
+import { Formik, Form } from 'formik';
 import { useState } from 'react';
+import * as Yup from 'yup';
+import { Panel, InputField } from '../../components/form';
 
 import { registerWithEmailPassword } from '../../api/auth';
-import { Heading } from '../../components/UI';
+import { Heading, Button } from '../../components/UI';
 import Container from '../../components/container';
-import { colors } from '../../assets/styles';
 import { useAuth } from '../../hooks';
+
+const RegisterSchema = Yup.object().shape({
+  email: Yup.string().email('Ongeldig e-mail adres').required('Vul een e-mail adres in'),
+  password: Yup.string().required('Wachtwoord is vereist'),
+  firstName: Yup.string().required('Voornaam is vereist'),
+  lastName: Yup.string().required('Familienaam is vereist'),
+  institute: Yup.string().required('Voeg een organisatie of onderwijsinstelling toe')
+});
 
 const Register = () => {
   const { isSignedIn } = useAuth();
@@ -39,94 +48,49 @@ const Register = () => {
   return (
     <>
       <Container>
-        {/* TODO Sarah: create form-panel component */}
-        <div className="form-panel">
-          <Heading title="Register" />
-          <Formik
-            initialValues={{
-              email: '',
-              firstName: '',
-              lastName: '',
-              password: '',
-              institute: ''
-            }}
-            onSubmit={signup}
-          >
-            <Form>
-              <label className="formik-label" htmlFor="email">
-                E-mailadres
-                <div className="field">
-                  <Field id="email" name="email" placeholder="Email" type="email" />
-                </div>
-              </label>
+        <Panel>
+          <>
+            <Heading title="Registreer" />
+            <Formik
+              initialValues={{
+                email: '',
+                firstname: '',
+                lastname: '',
+                institute: '',
+                password: ''
+              }}
+              validationSchema={RegisterSchema}
+              onSubmit={signup}
+            >
+              <Form>
+                <InputField name="email" type="email" label="Email" placeholder="Email" />
+                <InputField name="firstName" type="text" label="Voornaam" placeholder="Voornaam" />
+                <InputField
+                  name="lastName"
+                  type="text"
+                  label="Familienaam"
+                  placeholder="Familienaam"
+                />
+                <InputField
+                  name="institute"
+                  type="text"
+                  label="Organisatie/Onderwijsinstelling"
+                  placeholder="Organisatie/Onderwijsinstelling"
+                />
+                <InputField
+                  name="password"
+                  type="password"
+                  label="Wachtwoord"
+                  placeholder="Wachtwoord"
+                />
 
-              <label className="formik-label" htmlFor="firstName">
-                Voornaam
-                <div className="field">
-                  <Field id="firstName" name="firstName" placeholder="Voornaam" type="text" />
-                </div>
-              </label>
-
-              <label className="formik-label" htmlFor="lastName">
-                Achternaam
-                <div className="field">
-                  <Field id="lastName" name="lastName" placeholder="Achternaam" type="text" />
-                </div>
-              </label>
-
-              <label className="formik-label" htmlFor="organisation">
-                Organisatie/onderwijsinstelling
-                <div className="field">
-                  <Field
-                    id="institute"
-                    name="institute"
-                    placeholder="Organisatie/onderwijsinstelling"
-                    type="text"
-                  />
-                </div>
-              </label>
-
-              <label className="formik-label" htmlFor="password">
-                Wachtwoord
-                <div className="field">
-                  <Field id="password" name="password" placeholder="Wachtwoord" type="password" />
-                </div>
-              </label>
-
-              <button type="submit">Registreer</button>
-            </Form>
-          </Formik>
-        </div>
+                {/* <button type="submit">Registreer</button> */}
+                <Button text="Registreren" type="submit" primary />
+              </Form>
+            </Formik>
+          </>
+        </Panel>
       </Container>
-      <style jsx>
-        {`
-          .form-panel {
-            background: ${colors.blueLight};
-            margin: 4rem auto 0;
-            padding: 4.5rem;
-            max-width: 50%;
-          }
-
-          .formik-label {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 3rem;
-          }
-
-          .field {
-            display: flex;
-            align-items: center;
-            margin-top: 0.7rem;
-          }
-
-          .field-icon {
-            margin-left: 1.5rem;
-            position: absolute;
-            z-index: 2;
-            color: ${colors.blue};
-          }
-        `}
-      </style>
     </>
   );
 };

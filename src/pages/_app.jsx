@@ -6,6 +6,7 @@ import { auth } from '../api/firebase';
 import { colors } from '../assets/styles';
 import Layout from '../components/layout';
 import globalStyles from '../assets/styles/global';
+import 'react-quill/dist/quill.snow.css';
 
 const App = ({ Component, pageProps }) => {
   const [user, loading, error] = useAuthState(auth);

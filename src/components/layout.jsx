@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
-import Header from './nav/nav';
-import Footer from './footer/footer';
+import Nav from './layout/nav';
+import Footer from './layout/footer';
 import { breakpoints } from '../assets/styles/constants';
 
 const Layout = ({ /* withHeader, */ children }) => (
   <>
     {/* withHeader && <Header /> */}
-    <Header />
+    <Nav />
     <div className="page-container">{children}</div>
     <Footer />
+
     <style jsx>
       {`
         .page-container {

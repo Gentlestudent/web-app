@@ -138,4 +138,18 @@ export default css.global`
   textarea {
     padding: 1rem 1.2rem 1rem 1.2rem;
   }
+
+  .quill {
+    margin-top: 1rem;
+    background: white;
+  }
+
+  .ql-container.ql-snow,
+  .ql-toolbar.ql-snow {
+    border: 0.1rem solid ${colors.border};
+  }
+
+  .ql-editor {
+    padding: 1.5rem;
+  }
 `;

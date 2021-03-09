@@ -1,10 +1,16 @@
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { Formik, Field, Form } from 'formik';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 
 import { auth } from '../../api/firebase';
-import { colors } from '../../assets/styles';
-import { Heading } from '../../components/UI';
+import { Heading, Button } from '../../components/UI';
+import { Panel, InputField } from '../../components/form';
 import Container from '../../components/container';
+
+const SignupSchema = Yup.object().shape({
+  email: Yup.string().email('Ongeldig e-mail adres').required('Vul een e-mail adres in'),
+  password: Yup.string().required('Wachtwoord is vereist')
+});
 
 const Login = () => {
   const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
@@ -30,63 +36,39 @@ const Login = () => {
   return (
     <>
       <Container>
-        <div className="form-panel">
-          <Heading title="Login" />
-          <Formik
-            initialValues={{
-              email: '',
-              password: ''
-            }}
-            onSubmit={signup}
-          >
-            <Form>
-              <label className="formik-label" htmlFor="email">
-                E-mailadres
-                <div className="field">
-                  <Field id="email" name="email" placeholder="" type="email" />
-                </div>
-              </label>
-              <label className="formik-label" htmlFor="info">
-                Wachtwoord
-                <div className="field">
-                  <Field id="password" name="password" placeholder="" type="password" />
-                </div>
-              </label>
-              <button type="submit">Login</button>
-              {/* <Button icon="arrow-right" text="Submit" type="submit" primary /> */}
-            </Form>
-          </Formik>
-        </div>
+        <Panel>
+          <>
+            <Heading title="Login" />
+            <Formik
+              initialValues={{
+                email: '',
+                password: ''
+              }}
+              validationSchema={SignupSchema}
+              // onSubmit={signup}
+              onSubmit={(values) => {
+                console.log(values);
+              }}
+            >
+              <Form>
+                <InputField
+                  name="email"
+                  type="email"
+                  label="E-mail adres"
+                  placeholder="john.doe@gmail.com"
+                />
+                <InputField
+                  name="password"
+                  type="password"
+                  label="Wachtwoord"
+                  placeholder="wachtwoord"
+                />
+                <Button text="Inloggen" type="submit" primary />
+              </Form>
+            </Formik>
+          </>
+        </Panel>
       </Container>
-      <style jsx>
-        {`
-          .form-panel {
-            background: ${colors.blueLight};
-            margin: 4rem auto 0;
-            padding: 4.5rem;
-            max-width: 50%;
-          }
-
-          .formik-label {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 3rem;
-          }
-
-          .field {
-            display: flex;
-            align-items: center;
-            margin-top: 0.7rem;
-          }
-
-          .field-icon {
-            margin-left: 1.5rem;
-            position: absolute;
-            z-index: 2;
-            color: ${colors.blue};
-          }
-        `}
-      </style>
     </>
   );
 };

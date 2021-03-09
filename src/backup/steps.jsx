@@ -1,4 +1,4 @@
-import { inputTypes } from '../../constants';
+import { inputTypes } from '../constants';
 
 const { TEXT, CONTENT, TEXTAREA, DROPDOWN, EMAIL, URL } = inputTypes;
 
