@@ -1,13 +1,18 @@
 import { firestore } from './firebase';
+import { opportunityConverter } from '../utils';
 
-// const addOpportunity = async (opportunity) => {
-//   try {
-//     const { id } = await firestore.collection('Opportunities').add(opportunity);
-//     return id;
-//   } catch (err) {
-//     throw new Error(err);
-//   }
-// };
+const addOpportunity = async (opportunity) => {
+  try {
+    await firestore
+      // TODO: empty doc and change set to 'add' in final stage
+      .collection('Opportunities')
+      .doc('dummy')
+      .withConverter(opportunityConverter)
+      .set(opportunity);
+  } catch (err) {
+    throw new Error(err);
+  }
+};
 
 const getOpportunities = async () => {
   try {
@@ -33,4 +38,4 @@ const getOpportunityById = async (id) => {
   }
 };
 
-export { getOpportunities, getOpportunityById };
+export { getOpportunities, getOpportunityById, addOpportunity };

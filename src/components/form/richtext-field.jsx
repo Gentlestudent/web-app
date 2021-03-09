@@ -34,9 +34,9 @@ const formats = [
   'video'
 ];
 
-export default ({ label }) => (
+const RichtextField = ({ label, name }) => (
   <>
-    <Label label={label} />
+    <Label name={name} label={label} />
     <div className="field">
       <RichTextField modules={modules} formats={formats} theme="snow" />
     </div>
@@ -52,3 +52,5 @@ export default ({ label }) => (
     </style>
   </>
 );
+
+export default RichtextField;

@@ -1,28 +1,26 @@
 import Router from 'next/router';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
-import { EditorState } from 'draft-js';
+import { addOpportunity } from '../../api/opportunities';
 import { Panel, InputField, SelectField, RichtextField } from '../../components/form';
-import { colors, breakpoints } from '../../assets/styles';
-// import FormWithSteps from '../../components/form-with-steps';
-
-import { Heading, Icon, Button } from '../../components/UI';
+import { Heading, Button } from '../../components/UI';
 import Container from '../../components/container';
-
-// const Editor = dynamic(() => import('react-draft-wysiwyg').then((mod) => mod.Editor), {
-//   ssr: false
-// });
+import FORM from './consts';
 
 const CreateSchema = Yup.object().shape({
   title: Yup.string().required('Titel is vereist'),
-  domain: Yup.string().required('Kies een domein'),
-  description: Yup.string().required('Beschrijf de beschrijvingen'),
-  expectations: Yup.string().required('Schrijf de verwachtingen')
+  expectations: Yup.string()
+    .min(5, 'Geef minstens 5 karakters in')
+    .required('Schrijf de verwachtingen'),
+  website: Yup.string().url('Geef een geldige URL mee'),
+  email: Yup.string().email('Geef een geldig e-mail adres mee')
 });
 
-export default () => {
-  const createOpportunity = (opportunity) => console.log(opportunity);
+const Create = () => {
+  const createOpportunity = (values) => {
+    addOpportunity(values);
+  };
 
   return (
     <>
@@ -35,36 +33,63 @@ export default () => {
               icon="arrow-left"
               back
             />
+
             <Heading title="Nieuwe leerkans" />
+
             <Formik
               initialValues={{
                 title: '',
                 domain: '',
                 expectations: '',
-                description: ''
+                level: '',
+                description: '',
+                website: '',
+                email: ''
               }}
               validationSchema={CreateSchema}
-              onSubmit={async (values) => {
-                await new Promise((r) => setTimeout(r, 500));
-                alert(JSON.stringify(values, null, 2));
+              onSubmit={(values) => {
+                createOpportunity(values);
               }}
             >
               <Form>
                 <InputField name="title" type="title" label="Titel" placeholder="Titel" />
 
                 <SelectField as="select" name="domain" label="Selecteer een domein">
-                  <option value="red">Domein X</option>
-                  <option value="green">Domen Y</option>
-                  <option value="blue">Domein Z</option>
+                  <>
+                    {FORM.DOMAINS.map((domain) => (
+                      <option key={domain} value={domain}>
+                        {domain}
+                      </option>
+                    ))}
+                  </>
                 </SelectField>
 
-                <RichtextField label="Beschrijving" />
+                <RichtextField name="description" label="Beschrijving" />
 
                 <InputField
                   name="expectations"
-                  type="expectations"
+                  type="text"
                   label="Verwachtingen"
                   placeholder="Korte beschrijving van wat er verwacht wordt"
+                />
+
+                <SelectField as="select" name="level" label="Selecteer niveau">
+                  <>
+                    {FORM.LEVELS.map((level) => (
+                      <option key={level} value={level}>
+                        {level}
+                      </option>
+                    ))}
+                  </>
+                </SelectField>
+
+                <InputField name="website" type="text" label="Website" placeholder="Website url" />
+
+                <InputField
+                  name="email"
+                  type="email"
+                  label="Email contactpersoon"
+                  placeholder="Emailadres contactpersoon"
                 />
 
                 <Button icon="arrow-right" text="Submit" type="submit" primary />
@@ -76,3 +101,5 @@ export default () => {
     </>
   );
 };
+
+export default Create;

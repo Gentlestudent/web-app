@@ -1,16 +1,14 @@
 import PropTypes from 'prop-types';
-import { Field, ErrorMessage } from 'formik';
-import { colors } from '../../assets/styles';
-import { Error, Label } from '.';
+import { Field } from 'formik';
+import { Label } from '.';
 
-const SelectField = ({ name, placeholder, label, children }) => (
+const SelectField = ({ name, label, children }) => (
   <>
     <div className="field">
-      <Label label={label} />
-      <Field as="select" name={name} placeholder={placeholder || ''}>
+      <Label name={name} label={label} />
+      <Field as="select" name={name}>
         {children}
       </Field>
-      {/* <Error name={name} /> */}
     </div>
 
     <style jsx>
@@ -27,9 +25,8 @@ const SelectField = ({ name, placeholder, label, children }) => (
 
 SelectField.propTypes = {
   name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  children: PropTypes.isRequired
+  children: PropTypes.element.isRequired
 };
 
 export default SelectField;

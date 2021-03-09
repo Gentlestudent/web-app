@@ -6,7 +6,7 @@ import { Error, Label } from '.';
 const InputField = ({ name, type, placeholder, label }) => (
   <>
     <div className="field">
-      <Label label={label} />
+      <Label name={name} label={label} />
       <Field id={name} name={name} type={type || 'text'} placeholder={placeholder || ''} />
       <Error name={name} />
     </div>
