@@ -5,11 +5,13 @@ import { auth } from '../../api/firebase';
 import { colors } from '../../assets/styles';
 import { Heading } from '../../components/UI';
 import Container from '../../components/container';
+import { useAuth } from '../../hooks';
 
 const Login = () => {
-  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword, _, loading, error] = useSignInWithEmailAndPassword(auth);
+  const { isUserSignedIn } = useAuth();
 
-  if (user) {
+  if (isUserSignedIn) {
     // Implement redirect logic if needed or remove this
   }
 
