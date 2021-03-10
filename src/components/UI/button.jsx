@@ -7,10 +7,9 @@ const Button = ({
   isLoading,
   href,
   primary,
+  reverse = false,
   // children,
   text,
-  back,
-  onClick,
   type,
   ...rest
 }) => (
@@ -19,29 +18,28 @@ const Button = ({
     {/* eslint-disable-next-line react/button-has-type */}
     {type ? (
       <button
-        // onClick={() => onClick()}
         type={type || 'button'}
-        className={`button ${primary ? 'button-primary' : 'button-secondary'}`}
+        className={`button ${primary ? 'button--primary' : 'button--secondary'} ${
+          reverse && 'button--reverse'
+        }`}
         {...rest}
       >
-        {text ? <span className="button-text">{text}</span> : ''}
-        {icon && !back && (
+        {text ? <span className="button__text">{text}</span> : ''}
+        {icon && (
           <i>
             <Icon name={icon} />
           </i>
         )}
       </button>
     ) : (
-      <a className={`button ${primary ? 'button-primary' : 'button-secondary'}`} {...rest}>
-        {back ? (
-          <i>
-            <Icon name={icon} />
-          </i>
-        ) : (
-          ''
-        )}
-        {text ? <span className="button-text">{text}</span> : ''}
-        {icon && !back && (
+      <a
+        className={`button ${primary ? 'button--primary' : 'button--secondary'} ${
+          reverse && 'button--reverse'
+        }`}
+        {...rest}
+      >
+        {text ? <span className="button__text">{text}</span> : ''}
+        {icon && (
           <i>
             <Icon name={icon} />
           </i>
@@ -53,7 +51,7 @@ const Button = ({
     <style jsx>
       {`
         .button {
-          display: inline-block;
+          display: inline-flex;
           border: 0;
           cursor: pointer;
           font-size: 1.6rem;
@@ -61,18 +59,9 @@ const Button = ({
           transition: all 0.25s ease;
         }
 
-        .button:focus {
-          outline: none;
-        }
-
-        .button-text {
-          margin-right: 1.2rem;
-        }
-
-        .button-primary {
+        .button--primary {
           background-color: ${colors.primary};
           min-height: 4.5rem;
-
           border-radius: 3rem;
           margin: 3rem 0 0.5rem;
           padding: 1.3rem 1.6rem 1.3rem 2.2rem;
@@ -81,24 +70,32 @@ const Button = ({
           color: ${colors.white};
         }
 
-        .button-primary:hover {
-          cursor: pointer;
-          background-color: ${colors.orange};
-        }
-
-        .button-secondary {
+        .button--secondary {
           color: ${colors.grayDark};
           background-color: transparent;
           padding: 0;
           margin: 1rem 0;
         }
 
-        .button-secondary:hover {
+        .button--reverse {
+          flex-direction: row-reverse;
+        }
+
+        .button:focus {
+          outline: none;
+        }
+
+        .button--primary:hover {
+          cursor: pointer;
+          background-color: ${colors.orange};
+        }
+
+        .button--secondary:hover {
           color: ${colors.orange};
         }
 
         i {
-          margin-right: 1rem;
+          margin: 0 1rem;
         }
       `}
     </style>
@@ -112,7 +109,8 @@ Button.propTypes = {
   isLoading: PropTypes.bool,
   href: PropTypes.string,
   primary: PropTypes.bool,
-  back: PropTypes.bool
+  back: PropTypes.bool,
+  reverse: PropTypes.bool
   // children: PropTypes.node.isRequired
 };
 

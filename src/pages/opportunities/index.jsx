@@ -14,11 +14,14 @@ const Opportunities = ({ opportunities }) => {
         <>
           <div className="heading">
             <Heading title="Leerkansen" level={1} />
+
             <Search name="search" placeholder="Zoeken" type="search" />
           </div>
+
           <div className="map-wrapper">
             <Map />
           </div>
+
           <article className="cards">
             {opportunities.map((opp) => (
               <Card
@@ -35,6 +38,7 @@ const Opportunities = ({ opportunities }) => {
           </article>
         </>
       </Container>
+
       <style jsx>
         {`
           .cards {
