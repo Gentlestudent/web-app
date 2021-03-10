@@ -6,8 +6,7 @@ const StepOne = () => {
     <>
       <div className="step-three__address">
         <InputField name="street" type="text" label="Straat" placeholder="Straatnaam" />
-
-        <InputField name="number" type="number" label="Huisnummer" placeholder="Nr" />
+        <InputField name="number" type="number" label="Straatnummer" placeholder="Nr" />
       </div>
 
       <div className="step-three__city">
