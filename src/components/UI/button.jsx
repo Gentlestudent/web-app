@@ -33,7 +33,6 @@ const Button = ({
         )}
       </button>
     ) : (
-<<<<<<< HEAD
       <Link href={href}>
         <a
           className={`button ${primary ? 'button--primary' : 'button--secondary'} ${
@@ -49,22 +48,6 @@ const Button = ({
           )}
         </a>
       </Link>
-=======
-      <a
-        className={`button ${primary ? 'button--primary' : 'button--secondary'} ${
-          reverse && 'button--reverse'
-        }`}
-        {...rest}
-      >
-        {text ? <span className="button__text">{text}</span> : ''}
-        {icon && (
-          <i>
-            <Icon name={icon} />
-          </i>
-        )}
-        {/* {children} */}
-      </a>
->>>>>>> f4f43a3... added extra fields and checks to opportunity form
     )}
 
     <style jsx>
@@ -97,14 +80,11 @@ const Button = ({
           margin: 1rem 0;
         }
 
-<<<<<<< HEAD
         .button--white {
           color: white;
           opacity: 0.6;
         }
 
-=======
->>>>>>> f4f43a3... added extra fields and checks to opportunity form
         .button--reverse {
           flex-direction: row-reverse;
         }
