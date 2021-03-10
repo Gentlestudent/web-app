@@ -86,7 +86,7 @@ const Create = () => {
               onClick={() => Router.back()}
               text="Terug naar overzicht"
               icon="arrow-left"
-              back
+              reverse
             />
 
             <Heading title="Nieuwe leerkans" />

@@ -1,4 +1,4 @@
-import { InputField, SelectField, RichtextField } from '../form';
+import { InputField } from '../form';
 
 const StepTwo = () => {
   return (
