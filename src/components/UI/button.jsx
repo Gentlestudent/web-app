@@ -32,7 +32,11 @@ const Button = ({
         )}
       </button>
     ) : (
-      <a className={`button ${primary ? 'button-primary' : 'button-secondary'}`} {...rest}>
+      <a
+        className={`button ${primary ? 'button-primary' : 'button-secondary'}`}
+        href={href}
+        {...rest}
+      >
         {back ? (
           <i>
             <Icon name={icon} />
