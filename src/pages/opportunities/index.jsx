@@ -86,11 +86,10 @@ const Opportunities = ({ opportunities }) => {
 
 export const getStaticProps = async () => {
   // Would be better if getOpportunities would be called somewhere globally (still as SSR data)
-  const opportunitiesFromDb = await getOpportunities();
-  const opportunities = opportunitiesFromDb.map((opp) => {
+  const opportunities = (await getOpportunities()).map((opp) => {
     opp.beginDate = getReadableDate(opp.beginDate);
     opp.endDate = getReadableDate(opp.endDate);
-    return opp;
+    return { ...opp };
   });
 
   return {
