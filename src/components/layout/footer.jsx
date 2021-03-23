@@ -1,7 +1,6 @@
 import React from 'react';
-import FooterLink from './footer-link';
+import { FooterLink, Container } from './index';
 import { colors, breakpoints, spacers } from '../../assets/styles/constants';
-import Container from '../container';
 import logo from '../../assets/img/footer-gentlestudent.svg';
 import { routes } from '../../constants';
 

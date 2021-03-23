@@ -4,7 +4,7 @@ import { Formik, Field, Form } from 'formik';
 import { auth } from '../api/firebase';
 import { colors } from '../assets/styles';
 import { Heading } from '../components/UI';
-import Container from '../components/container';
+import { Container } from '../components/layout/index';
 
 const Login = () => {
   const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);

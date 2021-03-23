@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { auth } from '../../api/firebase';
 import { Heading, Button } from '../../components/UI';
 import { Panel, InputField } from '../../components/form';
-import Container from '../../components/container';
+import { Container } from '../../components/layout/index';
 import { useAuth } from '../../hooks';
 
 const SignupSchema = Yup.object().shape({

@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 import { colors } from '../../assets/styles';
 import Icon from './icon';
 
 const Button = ({
   icon,
   isLoading,
-  href,
+  href = '',
   primary,
-  // children,
+  reverse = false,
+  white = false,
   text,
-  back,
-  onClick,
   type,
   ...rest
 }) => (
@@ -19,60 +19,52 @@ const Button = ({
     {/* eslint-disable-next-line react/button-has-type */}
     {type ? (
       <button
-        // onClick={() => onClick()}
         type={type || 'button'}
-        className={`button ${primary ? 'button-primary' : 'button-secondary'}`}
+        className={`button ${primary ? 'button--primary' : 'button--secondary'} ${
+          reverse && 'button--reverse'
+        }`}
         {...rest}
       >
-        {text ? <span className="button-text">{text}</span> : ''}
-        {icon && !back && (
+        {text ? <span className="button__text">{text}</span> : ''}
+        {icon && (
           <i>
             <Icon name={icon} />
           </i>
         )}
       </button>
     ) : (
-      <a className={`button ${primary ? 'button-primary' : 'button-secondary'}`} {...rest}>
-        {back ? (
-          <i>
-            <Icon name={icon} />
-          </i>
-        ) : (
-          ''
-        )}
-        {text ? <span className="button-text">{text}</span> : ''}
-        {icon && !back && (
-          <i>
-            <Icon name={icon} />
-          </i>
-        )}
-        {/* {children} */}
-      </a>
+      <Link href={href}>
+        <a
+          className={`button ${primary ? 'button--primary' : 'button--secondary'} ${
+            reverse && 'button--reverse'
+          } ${white && 'button--white'}`}
+          {...rest}
+        >
+          {text ? <span className="button__text">{text}</span> : ''}
+          {icon && (
+            <i>
+              <Icon name={icon} />
+            </i>
+          )}
+        </a>
+      </Link>
     )}
 
     <style jsx>
       {`
         .button {
-          display: inline-block;
+          display: inline-flex;
           border: 0;
           cursor: pointer;
           font-size: 1.6rem;
           font-weight: bold;
           transition: all 0.25s ease;
+          text-decoration: none;
         }
 
-        .button:focus {
-          outline: none;
-        }
-
-        .button-text {
-          margin-right: 1.2rem;
-        }
-
-        .button-primary {
+        .button--primary {
           background-color: ${colors.primary};
           min-height: 4.5rem;
-
           border-radius: 3rem;
           margin: 3rem 0 0.5rem;
           padding: 1.3rem 1.6rem 1.3rem 2.2rem;
@@ -81,24 +73,42 @@ const Button = ({
           color: ${colors.white};
         }
 
-        .button-primary:hover {
-          cursor: pointer;
-          background-color: ${colors.orange};
-        }
-
-        .button-secondary {
+        .button--secondary {
           color: ${colors.grayDark};
           background-color: transparent;
           padding: 0;
           margin: 1rem 0;
         }
 
-        .button-secondary:hover {
+        .button--white {
+          color: white;
+          opacity: 0.6;
+        }
+
+        .button--reverse {
+          flex-direction: row-reverse;
+        }
+
+        .button:focus {
+          outline: none;
+        }
+
+        .button--primary:hover {
+          cursor: pointer;
+          background-color: ${colors.orange};
+        }
+
+        .button--secondary:hover {
           color: ${colors.orange};
         }
 
+        .button--white:hover {
+          color: white;
+          opacity: 1;
+        }
+
         i {
-          margin-right: 1rem;
+          margin: 0 1rem;
         }
       `}
     </style>
@@ -112,8 +122,9 @@ Button.propTypes = {
   isLoading: PropTypes.bool,
   href: PropTypes.string,
   primary: PropTypes.bool,
-  back: PropTypes.bool
-  // children: PropTypes.node.isRequired
+  back: PropTypes.bool,
+  reverse: PropTypes.bool,
+  white: PropTypes.bool
 };
 
 export default Button;
