@@ -5,7 +5,7 @@ import { Panel, InputField } from '../../components/form';
 
 import { registerWithEmailPassword } from '../../api/auth';
 import { Heading, Button } from '../../components/UI';
-import Container from '../../components/container';
+import { Container } from '../../components/layout/index';
 import { useAuth } from '../../hooks';
 
 const RegisterSchema = Yup.object().shape({

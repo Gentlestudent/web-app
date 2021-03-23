@@ -1,5 +1,5 @@
 import Router from 'next/router';
-import Container from '../../components/container';
+import { Container } from '../../components/layout/index';
 import { Card, Heading } from '../../components/UI';
 import { routes } from '../../constants';
 import { getOpportunities } from '../../api/opportunities';

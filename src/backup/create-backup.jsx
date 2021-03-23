@@ -1,8 +1,8 @@
 import Router from 'next/router';
-import { colors, breakpoints } from '../assets/styles';
+import { breakpoints } from '../assets/styles';
 import FormWithSteps from '../components/form-with-steps';
-import { Heading, Icon, Button } from '../components/UI';
-import Container from '../components/container';
+import { Heading, Button } from '../components/UI';
+import { Container } from '../components/layout/index';
 
 import OPPORTUNITY_STEPS from '../pages/opportunities/steps';
 

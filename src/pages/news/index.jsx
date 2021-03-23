@@ -1,8 +1,8 @@
-import Container from '../../components/container';
+import Router from 'next/router';
+import { Container } from '../../components/layout/index';
 import { spacers } from '../../assets/styles/constants';
 import { Card, Heading } from '../../components/UI';
 import { routes } from '../../constants';
-import Router from 'next/router';
 
 export default () => {
   const NEWS = [

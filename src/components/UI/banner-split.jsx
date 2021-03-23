@@ -1,6 +1,6 @@
 import { colors, breakpoints, spacers } from '../../assets/styles/constants';
 import banner from '../../assets/img/home/banner.jpg';
-import Container from '../container';
+import { Container } from '../layout/index';
 
 const BannerSplit = ({ children }) => {
   return (

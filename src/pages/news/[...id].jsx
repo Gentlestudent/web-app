@@ -1,7 +1,7 @@
 import Router, { useRouter } from 'next/router';
 import { Heading, Button } from '../../components/UI';
 import { colors, spacers, breakpoints } from '../../assets/styles/constants';
-import Container from '../../components/container';
+import { Container } from '../../components/layout/index';
 import banner from '../../assets/img/home/banner.jpg';
 
 export default () => {

@@ -11,7 +11,7 @@ import StepThree from '../../components/create/step-three';
 import { addOpportunity } from '../../api/opportunities';
 import { Panel } from '../../components/form';
 import { Heading, Button } from '../../components/UI';
-import Container from '../../components/container';
+import { Container } from '../../components/layout/index';
 import FORM from './consts';
 
 const CreateSchema = [
@@ -37,7 +37,7 @@ const CreateSchema = [
   Yup.object().shape({
     // STEP THREE
     street: Yup.string().required('Straatnaam is vereist'),
-    number: Yup.number('Geef een geldig straatnummer mee').required('Nummer is vereist'),
+    number: Yup.number('Geef een geldig huisnummer mee').required('Nummer is vereist'),
     city: Yup.string().required('Stad is vereist'),
     postal: Yup.number('Geef een geldig postcode mee').required('Postcode is vereist')
   })

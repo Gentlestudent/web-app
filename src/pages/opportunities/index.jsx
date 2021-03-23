@@ -1,7 +1,7 @@
 import Router from 'next/router';
 import { getReadableDate } from '../../utils/index';
 import { routes } from '../../constants';
-import Container from '../../components/container';
+import { Container } from '../../components/layout/index';
 import { Card, Heading, Search } from '../../components/UI';
 import Map from '../../components/map/map';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';

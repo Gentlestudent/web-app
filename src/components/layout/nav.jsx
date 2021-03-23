@@ -3,8 +3,7 @@ import Link from 'next/link';
 import HamburgerMenu from 'react-hamburger-menu';
 import { routes } from '../../constants';
 import { colors, breakpoints } from '../../assets/styles';
-import Container from '../container';
-import NavLink from './nav-link';
+import { Container, NavLink } from './index';
 import logo from '../../assets/img/logo.svg';
 
 const Nav = () => {

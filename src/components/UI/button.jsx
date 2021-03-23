@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 import { colors } from '../../assets/styles';
 import Icon from './icon';
 
 const Button = ({
   icon,
   isLoading,
-  href,
+  href = '',
   primary,
   reverse = false,
-  // children,
+  white = false,
   text,
   type,
   ...rest
@@ -32,20 +33,21 @@ const Button = ({
         )}
       </button>
     ) : (
-      <a
-        className={`button ${primary ? 'button--primary' : 'button--secondary'} ${
-          reverse && 'button--reverse'
-        }`}
-        {...rest}
-      >
-        {text ? <span className="button__text">{text}</span> : ''}
-        {icon && (
-          <i>
-            <Icon name={icon} />
-          </i>
-        )}
-        {/* {children} */}
-      </a>
+      <Link href={href}>
+        <a
+          className={`button ${primary ? 'button--primary' : 'button--secondary'} ${
+            reverse && 'button--reverse'
+          } ${white && 'button--white'}`}
+          {...rest}
+        >
+          {text ? <span className="button__text">{text}</span> : ''}
+          {icon && (
+            <i>
+              <Icon name={icon} />
+            </i>
+          )}
+        </a>
+      </Link>
     )}
 
     <style jsx>
@@ -57,6 +59,7 @@ const Button = ({
           font-size: 1.6rem;
           font-weight: bold;
           transition: all 0.25s ease;
+          text-decoration: none;
         }
 
         .button--primary {
@@ -77,6 +80,11 @@ const Button = ({
           margin: 1rem 0;
         }
 
+        .button--white {
+          color: white;
+          opacity: 0.6;
+        }
+
         .button--reverse {
           flex-direction: row-reverse;
         }
@@ -92,6 +100,11 @@ const Button = ({
 
         .button--secondary:hover {
           color: ${colors.orange};
+        }
+
+        .button--white:hover {
+          color: white;
+          opacity: 1;
         }
 
         i {
@@ -110,8 +123,8 @@ Button.propTypes = {
   href: PropTypes.string,
   primary: PropTypes.bool,
   back: PropTypes.bool,
-  reverse: PropTypes.bool
-  // children: PropTypes.node.isRequired
+  reverse: PropTypes.bool,
+  white: PropTypes.bool
 };
 
 export default Button;

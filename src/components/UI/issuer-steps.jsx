@@ -1,7 +1,7 @@
 import { colors, breakpoints } from '../../assets/styles/constants';
 import { Heading, Button } from '.';
 import { spacers } from '../../assets/styles';
-import Container from '../container';
+import { Container } from '../layout/index';
 
 const IssuerSteps = () => {
   return (

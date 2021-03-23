@@ -3,7 +3,7 @@ import { InputField, SelectField, RichtextField } from '../form';
 const StepOne = ({ FORM }) => {
   return (
     <>
-      <InputField name="title" type="title" label="Titel" placeholder="Titel" />
+      <InputField name="title" type="text" label="Titel" placeholder="Titel" />
 
       <SelectField as="select" name="domain" label="Selecteer een domein">
         <>
