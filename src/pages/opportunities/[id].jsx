@@ -1,3 +1,4 @@
+import { routes } from '../../constants';
 import Router, { useRouter } from 'next/router';
 import { Heading, Button, Icon } from '../../components/UI';
 import { colors, spacers, breakpoints } from '../../assets/styles/constants';
@@ -13,7 +14,7 @@ const Opportunity = ({ opportunity }) => {
           <div className="detail__heading">
             <div>
               <Button
-                onClick={() => Router.back()}
+                href={routes.OPPORTUNITIES}
                 text="Terug naar overzicht"
                 icon="arrow-left"
                 reverse
@@ -348,10 +349,7 @@ const Opportunity = ({ opportunity }) => {
 export const getStaticPaths = async () => {
   // Same query as in opportunities/index.js, would be nice if this could be
   // called globally somewhere? Avoid duplicate calls
-  const opportunities = await getOpportunities();
-  const ids = opportunities.map((opp) => opp.id);
-  const paths = ids.map((id) => ({ params: { id } }));
-
+  const paths = (await getOpportunities()).map((opp) => ({ params: { id: opp.id } }));
   return {
     paths,
     fallback: false
@@ -366,7 +364,7 @@ export const getStaticProps = async ({ params }) => {
   opportunity.endDate = getReadableDate(opportunity.endDate);
 
   return {
-    props: { opportunity }
+    props: { opportunity: { ...opportunity } }
     // revalidate: 900
   };
 };
