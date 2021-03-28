@@ -4,6 +4,15 @@ import { colors, breakpoints } from '../../assets/styles/constants';
 import { routes } from '../../constants';
 
 export default () => {
+  // TODO: get profile
+  const profile = {
+    email: 'john.doe@gmail.com',
+    firstName: 'John',
+    lastName: 'Doe',
+    institution: 'Arteveldehogeschool',
+    role: 'Admin'
+  };
+
   // TODO: get badges from database (not sure where this can be found in the current structure)
   const badges = [
     {
@@ -21,25 +30,26 @@ export default () => {
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.'
     }
   ];
+
   return (
     <>
       <BannerSplit>
         <div className="heading">
-          <Heading title="Jane Doe" level={1} color="white" />
+          <Heading title={`${profile.firstName} ${profile.lastName}`} level={1} color="white" />
           <Button href={routes.user.EDIT_PROFILE} text="Bewerk profiel" icon="edit" white />
         </div>
         <div>
           <div className="text__item">
             <Heading title="Email" level={2} color="white" />
-            <p>john.doe@gmail.com</p>
+            <p>{profile.email}</p>
           </div>
           <div className="text__item">
             <Heading title="Organisatie/onderwijsinstelling" level={2} color="white" />
-            <p>Arteveldehogeschool</p>
+            <p>{profile.institution}</p>
           </div>
           <div className="text__item">
             <Heading title="Rollen" level={2} color="white" />
-            <p>Admin</p>
+            <p>{profile.role}</p>
           </div>
         </div>
       </BannerSplit>
