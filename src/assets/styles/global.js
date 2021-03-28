@@ -122,8 +122,15 @@ export default css.global`
     border-radius: 0.5rem;
     padding: 1rem 1.2rem 1rem 1.4rem;
     position: relative;
-    width: 100%;
     margin-top: 0.5rem;
+  }
+
+  input[type=text],
+  input[type=email],
+  input[type=number],
+  input[type=password],
+  input[type=date] {
+    width: 100%;
   }
 
   i + input {

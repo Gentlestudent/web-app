@@ -18,7 +18,8 @@ export const routes = {
 
   /* user */
   user: {
-    OPPORTUNITIES: '/user/opportunities'
+    OPPORTUNITIES: '/profile/opportunities',
+    EDIT_PROFILE: 'profile/edit'
   },
 
   /* issuer */

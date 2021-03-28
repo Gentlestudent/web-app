@@ -1,7 +1,7 @@
 import Router from 'next/router';
 import { getReadableDate } from '../../utils/index';
 import { routes } from '../../constants';
-import Container from '../../components/container';
+import { Container } from '../../components/layout/index';
 import { Card, Heading, Search } from '../../components/UI';
 import Map from '../../components/map/map';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
@@ -14,11 +14,14 @@ const Opportunities = ({ opportunities }) => {
         <>
           <div className="heading">
             <Heading title="Leerkansen" level={1} />
+
             <Search name="search" placeholder="Zoeken" type="search" />
           </div>
+
           <div className="map-wrapper">
             <Map />
           </div>
+
           <article className="cards">
             {opportunities.map((opp) => (
               <Card
@@ -35,6 +38,7 @@ const Opportunities = ({ opportunities }) => {
           </article>
         </>
       </Container>
+
       <style jsx>
         {`
           .cards {

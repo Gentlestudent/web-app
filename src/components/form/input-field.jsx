@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
-import { Field, ErrorMessage } from 'formik';
-import { colors } from '../../assets/styles';
+import { Field } from 'formik';
 import { Error, Label } from '.';
 
-const InputField = ({ name, type, placeholder, label }) => (
+const InputField = ({ name, type, label, ...props }) => (
   <>
-    <div className="field">
-      <Label name={name} label={label} />
-      <Field id={name} name={name} type={type || 'text'} placeholder={placeholder || ''} />
+    <div className={`field ${type === 'checkbox' && 'field--checkbox'}`}>
+      <Label name={name} label={label} inline={type === 'checkbox'}>
+        <Field id={name} name={name} type={type || 'text'} {...props} />
+      </Label>
       <Error name={name} />
     </div>
 
@@ -18,6 +18,11 @@ const InputField = ({ name, type, placeholder, label }) => (
           flex-direction: column;
           margin-bottom: 2.5rem;
         }
+
+        .field--checkbox {
+          flex-direction: row;
+          margin: 1rem 0;
+        }
       `}
     </style>
   </>
@@ -26,7 +31,6 @@ const InputField = ({ name, type, placeholder, label }) => (
 InputField.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired
 };
 

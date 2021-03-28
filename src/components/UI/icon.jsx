@@ -13,7 +13,9 @@ import {
   faCheck,
   faArrowRight,
   faArrowLeft,
-  faSearch
+  faSearch,
+  faEdit,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -27,7 +29,9 @@ library.add(
   faCheck,
   faArrowRight,
   faArrowLeft,
-  faSearch
+  faSearch,
+  faEdit,
+  faTimes
 );
 
 const Icon = ({ name }) => <FontAwesomeIcon icon={name} />;

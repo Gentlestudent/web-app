@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import AuthContext from '../context/auth';
-import Container from '../components/container';
+import { Container } from '../components/layout/index';
 import { Banner, HomeHeader, Download, Oppertunities, News } from '../components/UI';
 
 import banner from '../assets/img/home/banner.jpg';

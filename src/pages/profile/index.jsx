@@ -1,15 +1,16 @@
-import Router from 'next/router';
-import Container from '../../components/container';
+import { Container, Grid } from '../../components/layout/index';
 import { Heading, Button, BannerSplit } from '../../components/UI';
-import { routes } from '../../constants';
 import { colors, breakpoints, spacers } from '../../assets/styles/constants';
-import banner from '../../assets/img/home/banner.jpg';
+import { routes } from '../../constants';
 
 export default () => {
   return (
     <>
       <BannerSplit>
-        <Heading title="Jane Doe" level={1} color="white" />
+        <div className="heading">
+          <Heading title="Jane Doe" level={1} color="white" />
+          <Button href={routes.user.EDIT_PROFILE} text="Bewerk profiel" icon="edit" white />
+        </div>
         <div>
           <div className="text__item">
             <Heading title="Email" level={2} color="white" />
@@ -29,8 +30,8 @@ export default () => {
       <div className="badges__wrapper">
         <Container>
           <Heading title="Mijn badges" marginTop level={1} />
-          <ul className="badges">
-            <li className="badge">
+          <Grid>
+            <div className="badge">
               <img src="https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_2.png?alt=media" />
               <div>
                 <Heading title="Titeltje" level={2} />
@@ -39,8 +40,8 @@ export default () => {
                   incididunt ut.
                 </p>
               </div>
-            </li>
-            <li className="badge">
+            </div>
+            <div className="badge">
               <img src="https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_wereldburgerschap_1.png?alt=media" />
               <div>
                 <Heading title="Titeltje" level={2} />
@@ -49,24 +50,28 @@ export default () => {
                   incididunt ut.
                 </p>
               </div>
-            </li>
-            <li className="badge">
+            </div>
+            <div className="badge">
               <div>
                 <Heading title="Verdien nog meer badges" level={2} />
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <Button text="Bekijk leerkansen" icon="arrow-right" primary />
               </div>
-            </li>
-          </ul>
+            </div>
+          </Grid>
         </Container>
       </div>
 
       <style jsx>
         {`
-          .badges {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-gap: 3rem;
+          .heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+
+          .button--secondary {
+            color: red !important;
           }
 
           .badge {
@@ -74,6 +79,7 @@ export default () => {
             display: flex;
             align-items: center;
             padding: 3rem;
+            grid-column-end: span 4;
           }
 
           .badge img {
@@ -87,6 +93,10 @@ export default () => {
           }
 
           @media (max-width: ${breakpoints.medium}) {
+            .badge {
+              grid-column-end: span 6;
+            }
+
             .heading::before {
               width: calc(100% - 5rem);
             }
@@ -96,6 +106,10 @@ export default () => {
           }
 
           @media (max-width: 900px) {
+            .badge {
+              grid-column-end: span 12;
+            }
+
             .heading-content {
               grid-template-columns: 1fr;
               grid-gap: 3rem;
@@ -119,6 +133,12 @@ export default () => {
 
             .heading::before {
               width: 100%;
+            }
+          }
+
+          @media (max-width: ${breakpoints.extraSmall}) {
+            .badge {
+              flex-direction: column;
             }
           }
         `}

@@ -1,8 +1,8 @@
-import { useRouter } from 'next/router';
 import { routes } from '../../constants';
-import { Heading, Button } from '../../components/UI';
+import Router, { useRouter } from 'next/router';
+import { Heading, Button, Icon } from '../../components/UI';
 import { colors, spacers, breakpoints } from '../../assets/styles/constants';
-import Container from '../../components/container';
+import { Container } from '../../components/layout/index';
 import { getOpportunities, getOpportunityById } from '../../api/opportunities';
 import { getReadableDate } from '../../utils/index';
 
@@ -10,20 +10,20 @@ const Opportunity = ({ opportunity }) => {
   return (
     <>
       <Container>
-        <div className="grid">
-          <div className="detail-heading">
+        <div className="detail">
+          <div className="detail__heading">
             <div>
               <Button
                 href={routes.OPPORTUNITIES}
                 text="Terug naar overzicht"
                 icon="arrow-left"
-                back
+                reverse
               />
               <Heading title={opportunity.title} level={1} />
             </div>
           </div>
 
-          <div className="detail-description">
+          <div className="detail__description">
             <div>
               <Heading title="Beschrijving" level={2} />
               <p>
@@ -49,39 +49,99 @@ const Opportunity = ({ opportunity }) => {
             </div>
           </div>
 
-          <div className="detail-contact">
+          <div className="detail__contact">
             <div>
               <Heading title="Info" level={2} />
-              <div className="detail-info">
-                <div>
-                  <p className="info-label">Organisatie</p>
+              <div className="detail__info">
+                <div className="info">
+                  <p className="info__label">Organisatie</p>
                   <p>Hoger Technisch Instituut Sint-Antonius</p>
                 </div>
                 <div>
-                  <p className="info-label">Website</p>
+                  <p className="info__label">Website</p>
                   <p>{opportunity.website}</p>
                 </div>
                 <div>
-                  <p className="info-label">Contact</p>
+                  <p className="info__label">Contact</p>
                   <p>{opportunity.contact}</p>
                 </div>
                 <div>
-                  <p className="info-label">Locatie</p>
+                  <p className="info__label">Locatie</p>
                   <p>Holstraat 66, 9000 Gent</p>
                 </div>
                 <div>
-                  <p className="info-label">Periode</p>
+                  <p className="info__label">Periode</p>
                   <p>2019-12-02 tot en met 2025-06-30</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <Heading title="Inschrijvingen" level={1} marginTop />
+        <Heading title="Nieuwe inschrijvingen" level={2} />
+        <div className="participants">
+          <div className="participants__participant">
+            <p>02/03/2021</p>
+            <div className="partcipant__img" />
+            <p>John Doe</p>
+            <p>john.doe@gmail.com</p>
+            <p>Arteveldehogeschool</p>
+            <div className="participant__buttons">
+              <i>
+                <Icon name="check" />
+              </i>
+              <i>
+                <Icon name="times" />
+              </i>
+            </div>
+          </div>
+          <div className="participants__participant">
+            <p>04/03/2021</p>
+            <div className="partcipant__img" />
+            <p>Jane Doe</p>
+            <p>jane.doe@gmail.com</p>
+            <p>Arteveldehogeschool</p>
+            <div className="participant__buttons">
+              <i>
+                <Icon name="check" />
+              </i>
+              <i>
+                <Icon name="times" />
+              </i>
+            </div>
+          </div>
+        </div>
+
+        <Heading title="Voorbije inschrijvingen" level={2} marginTop />
       </Container>
 
       <style jsx>
         {`
-          .grid {
+          .participants__participant {
+            display: grid;
+            grid-template-columns: 10rem 4rem 2fr 3fr 1fr 1fr;
+            grid-gap: 3rem;
+            align-items: center;
+
+            padding: 1.5rem 0;
+            background-image: linear-gradient(90deg, #000 33%, hsla(0, 0%, 100%, 0) 0);
+            background-position: 0 bottom;
+            background-size: 3px 1px;
+            background-repeat: repeat-x;
+          }
+
+          .participant__buttons > * {
+            margin: 0 1rem;
+          }
+
+          .partcipant__img {
+            border-radius: 50%;
+            background: grey;
+            width: 4rem;
+            height: 4rem;
+          }
+
+          .detail {
             display: grid;
             grid-template: 1fr auto / repeat(2, 1fr);
 
@@ -90,26 +150,26 @@ const Opportunity = ({ opportunity }) => {
               'description info';
           }
 
-          .detail-heading {
+          .detail__heading {
             grid-area: heading;
             padding-right: ${spacers.large};
             display: flex;
           }
 
-          .detail-heading > div {
+          .detail__heading > div {
             margin-top: ${spacers.small};
           }
 
-          .detail-description {
+          .detail__description {
             grid-area: description;
             position: relative;
           }
 
-          .detail-description > div {
+          .detail__description > div {
             padding: ${spacers.large} ${spacers.large} ${spacers.large} 0;
           }
 
-          .detail-description::before {
+          .detail__description::before {
             background: ${colors.blueLight};
             content: '';
             position: absolute;
@@ -119,30 +179,30 @@ const Opportunity = ({ opportunity }) => {
             left: calc((100vw - 1300px) / -2);
           }
 
-          .detail-contact > div {
+          .detail__contact > div {
             transform: translateY(60rem);
             padding-left: 18rem;
           }
 
-          .detail-info div {
+          .detail__info div {
             display: flex;
           }
 
-          .detail-info {
+          .detail__info {
             margin-top: ${spacers.small};
             grid-area: info;
           }
 
-          .info-label {
+          .info__label {
             width: 10rem;
             font-weight: bold;
           }
 
-          .detail-info p {
+          .detail__info p {
             margin: 0.5rem;
           }
 
-          .detail-heading::after {
+          .detail__heading::after {
             background: url('https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'),
               url('https://blog.top5gent.com/hs-fs/hubfs/Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg?width=1000&name=Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg');
             background-repeat: no-repeat;
@@ -163,22 +223,22 @@ const Opportunity = ({ opportunity }) => {
                 'description info';
             }
 
-            .detail-heading::after {
+            .detail__heading::after {
               width: 45%;
             }
 
-            .detail-description::before {
+            .detail__description::before {
               width: calc(60vw);
               left: -8rem;
             }
 
-            .detail-contact > div {
+            .detail__contact > div {
               padding-left: 10rem;
             }
           }
 
           @media (max-width: 1400px) {
-            .detail-description::before {
+            .detail__description::before {
               left: -5rem;
             }
           }
@@ -191,15 +251,15 @@ const Opportunity = ({ opportunity }) => {
                 'description info';
             }
 
-            .detail-description::before {
+            .detail__description::before {
               width: 57vw;
             }
 
-            .detail-heading::after {
+            .detail__heading::after {
               width: 46vw;
             }
 
-            .detail-contact > div {
+            .detail__contact > div {
               padding-left: ${spacers.large};
             }
           }
@@ -212,38 +272,38 @@ const Opportunity = ({ opportunity }) => {
                 'description info';
             }
 
-            .detail-heading {
+            .detail__heading {
               flex-direction: column;
               padding: 0;
             }
 
-            .detail-heading::after {
+            .detail__heading::after {
               width: calc(100% + 5rem);
               position: inherit;
             }
 
-            .detail-contact > div {
+            .detail__contact > div {
               transform: translateY(0);
               padding-top: ${spacers.large};
             }
 
-            .detail-description::before {
+            .detail__description::before {
               top: -${spacers.large};
               height: calc(100% + ${spacers.large});
             }
 
-            .detail-info p {
+            .detail__info p {
               margin: 0;
             }
 
-            .detail-info > div {
+            .detail__info > div {
               flex-direction: column;
               margin-bottom: 1rem;
             }
           }
 
           @media (max-width: 900px) {
-            .detail-heading::after {
+            .detail__heading::after {
               width: calc(100% + 6rem);
               transform: translateX(-${spacers.medium});
             }
@@ -258,25 +318,25 @@ const Opportunity = ({ opportunity }) => {
                 'info';
             }
 
-            .detail-heading::after {
+            .detail__heading::after {
               width: calc(100% + (${spacers.small} * 2));
               transform: translateX(-${spacers.small});
             }
 
-            .detail-description > div {
+            .detail__description > div {
               padding-right: 0;
             }
 
-            .detail-description::before {
+            .detail__description::before {
               width: calc(100% + (${spacers.small} * 2));
               left: -${spacers.small};
             }
 
-            .detail-contact > div {
+            .detail__contact > div {
               padding: ${spacers.large} 0 0;
             }
 
-            .detail-info > div {
+            .detail__info > div {
               flex-direction: row;
             }
           }
