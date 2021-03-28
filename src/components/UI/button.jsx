@@ -123,13 +123,8 @@ Button.propTypes = {
   href: PropTypes.string,
   primary: PropTypes.bool,
   back: PropTypes.bool,
-<<<<<<< HEAD
   reverse: PropTypes.bool,
   white: PropTypes.bool
-=======
-  reverse: PropTypes.bool
-  // children: PropTypes.node.isRequired
->>>>>>> f4f43a3... added extra fields and checks to opportunity form
 };
 
 export default Button;
