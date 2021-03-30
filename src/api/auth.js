@@ -1,4 +1,4 @@
-import { auth, functions } from './firebase';
+import { auth, functions, Auth } from './firebase';
 
 export const createAuthSubscription = (fn) => auth.onAuthStateChanged(fn);
 
@@ -18,5 +18,8 @@ export const registerWithEmailPassword = async (
 
 export const signInWithEmailPassword = (email, password) =>
   auth.signInWithEmailAndPassword(email, password);
+
+export const reauthenticate = (email, password) =>
+  auth.currentUser.reauthenticateWithCredential(Auth.EmailAuthProvider.credential(email, password));
 
 export const signOut = () => auth.signOut();

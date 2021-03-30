@@ -1,4 +1,4 @@
-import { firestore } from './firebase';
+import { firestore, auth } from './firebase';
 import { participantConverter, issuerConverter } from '../models/User';
 
 /**
@@ -34,4 +34,23 @@ export const getProfile = async (id) => {
   }
 
   return profile;
+};
+
+export const updateProfile = async ({ email, name, password }) => {
+  const user = auth.currentUser;
+  if (!user) return;
+
+  const newEmail = user.email === email ? null : email;
+
+  if (newEmail || password) {
+    if (newEmail) {
+      await user.updateEmail(newEmail);
+    }
+
+    if (password) {
+      await user.updatePassword(password);
+    }
+  }
+
+  if (user.displayName !== name) await user.updateProfile({ displayName: name });
 };

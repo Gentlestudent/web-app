@@ -8,6 +8,7 @@ const config = process.env.FIREBASE;
 
 export const app = !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
 export const auth = firebase.auth();
+export const Auth = firebase.auth;
 export const storage = firebase.storage();
 export const functions = firebase.functions();
 export const { Timestamp } = firebase.firestore;

@@ -3,7 +3,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import AuthContext from '../context/auth';
 import User from '../models/User';
 import { auth } from '../api/firebase';
-import { getProfile } from '../api/user';
+import { getProfile } from '../api/users';
 import { colors } from '../assets/styles';
 import Layout from '../components/layout';
 import globalStyles from '../assets/styles/global';
