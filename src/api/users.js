@@ -1,5 +1,6 @@
 import { firestore, auth } from './firebase';
-import { participantConverter, issuerConverter } from '../models/User';
+import { getParticipantById } from './participants';
+import { getIssuerById } from './issuers';
 
 /**
  * Retrieves the profile data of the user whose id matches the parameter
@@ -11,21 +12,17 @@ export const getProfile = async (id) => {
   profile.role = {};
 
   // get data from participant
-  const participant = await firestore
-    .collection('Participants')
-    .doc(id)
-    .withConverter(participantConverter)
-    .get();
-  if (participant.exists) {
+  const participant = await getParticipantById(id);
+  if (participant) {
     profile.role.participant = true;
-    profile.participant = participant.data();
+    profile.participant = participant;
   }
 
   // get data from issuer
-  const issuer = await firestore.collection('Issuers').doc(id).withConverter(issuerConverter).get();
-  if (issuer.exists) {
+  const issuer = await getIssuerById(id);
+  if (issuer) {
     profile.role.issuer = true;
-    profile.issuer = issuer.data();
+    profile.issuer = issuer;
   }
   // get data from admin
   const admin = await firestore.collection('Admins').doc(id).get();

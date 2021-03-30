@@ -20,6 +20,8 @@ const App = ({ Component, pageProps }) => {
     });
   }
 
+  console.log(currentUser);
+
   const authState = {
     authStatusReported: !loading,
     isUserSignedIn: !!user,
