@@ -1,8 +1,8 @@
 import { functions } from './firebase';
 
 export const createParticipant = functions.httpsCallable('createParticipant');
-export const createAssertion = functions.httpsCallable('createParticipant');
-export const getAssertion = functions.httpsCallable('createParticipant');
-export const createBadgeClass = functions.httpsCallable('createParticipant');
-export const getBadge = functions.httpsCallable('createParticipant');
-export const getIssuer = functions.httpsCallable('createParticipant');
+export const createAssertion = functions.httpsCallable('createAssertion');
+export const getAssertion = functions.httpsCallable('getAssertion');
+export const createBadgeClass = functions.httpsCallable('createBadgeClass');
+export const getBadge = functions.httpsCallable('getBadge');
+export const getIssuer = functions.httpsCallable('getIssuer');
