@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import Heading from './heading';
 import { colors, spacers, breakpoints } from '../../assets/styles/constants';
 import arrow from '../../assets/img/icons/arrow-white.svg';
+import { routes } from '../../constants';
 
-const Card = ({ image, title, date, description, onClick, badge, alt, row }) => {
+const Card = ({ image, title, date, description, onClick, badge, alt, row, id }) => {
   const [hover, setHover] = useState(false);
 
   return (
@@ -37,7 +38,7 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row }) => 
           </div>
         </div>
 
-        <a className="card-button" href="/id">
+        <a className="card-button" href={`${routes.OPPORTUNITIES}/${id}`}>
           Meer info
         </a>
       </button>
