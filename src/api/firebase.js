@@ -13,10 +13,8 @@ export const storage = firebase.storage();
 export const functions = firebase.functions();
 export const { Timestamp } = firebase.firestore;
 
-if (process.browser) {
-  if (window.location.hostname === 'localhost' && process.env.USE_FUNCTIONS_EMULATOR) {
-    functions.useFunctionsEmulator('http://localhost:5001');
-  }
+if (process.env.USE_FUNCTIONS_EMULATOR) {
+  functions.useFunctionsEmulator('http://localhost:5001');
 }
 
 auth.useDeviceLanguage();
