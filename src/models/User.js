@@ -1,10 +1,9 @@
 class User {
   constructor(user) {
     this.id = user.uid;
-    this.uid = user.uid;
+    this.email = user.email;
+    this.isVerified = user.emailVerified;
   }
-
-  get role() {}
 }
 
 export default User;

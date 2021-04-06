@@ -48,9 +48,7 @@ const Login = () => {
               }}
               validationSchema={SignupSchema}
               // onSubmit={signup}
-              onSubmit={(values) => {
-                console.log(values);
-              }}
+              onSubmit={signup}
             >
               <Form>
                 <InputField
