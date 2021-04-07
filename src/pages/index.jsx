@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import AuthContext from '../context/auth';
 import { Container } from '../components/layout/index';
-import { Banner, HomeHeader, Download, Oppertunities, News } from '../components/UI';
+import { Banner, HomeHeader, Download, Opportunities, News } from '../components/UI';
 
 import banner from '../assets/img/home/banner.jpg';
 
@@ -42,7 +42,7 @@ const Home = () => {
       <Banner image={banner} />
       <HomeHeader />
       <Container>
-        <Oppertunities OPPORTUNITIES={OPPORTUNITIES} />
+        <Opportunities opportunities={OPPORTUNITIES} />
         <News />
       </Container>
       <Download />

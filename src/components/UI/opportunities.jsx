@@ -4,20 +4,20 @@ import Button from './button';
 import Card from './card';
 import { spacers } from '../../assets/styles';
 
-const Oppertunities = ({ OPPORTUNITIES }) => {
+const Opportunities = ({ opportunities }) => {
   return (
     <>
       <article className="oppertunities">
         <section className="cards">
-          {OPPORTUNITIES.map((OPPORTUNITY) => (
+          {opportunities.map((opportunity) => (
             <Card
-              key={OPPORTUNITY}
-              badge={OPPORTUNITY.badge}
+              key={opportunity} // TODO this should be an id
+              badge={opportunity.badge}
               image="https://picsum.photos/200/300"
-              title={OPPORTUNITY.title}
-              description={OPPORTUNITY.description}
-              date={OPPORTUNITY.date}
-              alt={OPPORTUNITY.alt ? OPPORTUNITY.alt : OPPORTUNITY.title}
+              title={opportunity.title}
+              description={opportunity.description}
+              date={opportunity.date}
+              alt={opportunity.alt ? opportunity.alt : opportunity.title}
             />
           ))}
         </section>
@@ -55,8 +55,8 @@ const Oppertunities = ({ OPPORTUNITIES }) => {
   );
 };
 
-Oppertunities.propTypes = {
-  OPPORTUNITIES: PropTypes.isRequired
+Opportunities.propTypes = {
+  opportunities: PropTypes.isRequired
 };
 
-export default Oppertunities;
+export default Opportunities;
