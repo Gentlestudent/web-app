@@ -27,6 +27,7 @@ const Opportunities = ({ opportunities }) => {
               <Card
                 onClick={() => Router.push(`${routes.OPPORTUNITIES}/${opp.id}`)}
                 key={opp.id}
+                id={opp.id}
                 badge={opp.badge}
                 image="https://picsum.photos/200/300"
                 title={opp.title}

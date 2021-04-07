@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { colors } from '../../assets/styles';
-import { Icon, FormField } from '.';
+import FormField from './form-field';
 
 /*   type,
   name,

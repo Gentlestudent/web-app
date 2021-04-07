@@ -1,12 +1,47 @@
+import PropTypes from 'prop-types';
 import { routes } from '../../constants';
-import Router, { useRouter } from 'next/router';
-import { Heading, Button, Icon } from '../../components/UI';
+import { Heading, Button, Participant } from '../../components/UI';
 import { colors, spacers, breakpoints } from '../../assets/styles/constants';
 import { Container } from '../../components/layout/index';
 import { getOpportunities, getOpportunityById } from '../../api/opportunities';
 import { getReadableDate } from '../../utils/index';
 
 const Opportunity = ({ opportunity }) => {
+  // TODO: get participants for opportunity detail (with certain roles only)
+  const newParticipants = [
+    {
+      img: 'empty',
+      date: '02/03/2021',
+      email: 'john.doe@gmail.com',
+      name: 'John Doe',
+      institution: 'Arteveldehogeschool'
+    },
+    {
+      img: 'empty',
+      date: '02/03/2021',
+      email: 'jane.doe@gmail.com',
+      name: 'Jane Doe',
+      institution: 'Arteveldehogeschool'
+    }
+  ];
+
+  const acceptedParticipants = [
+    {
+      img: 'empty',
+      date: '02/03/2021',
+      email: 'john.doe@gmail.com',
+      name: 'John Doe',
+      institution: 'Arteveldehogeschool'
+    },
+    {
+      img: 'empty',
+      date: '02/03/2021',
+      email: 'jane.doe@gmail.com',
+      name: 'Jane Doe',
+      institution: 'Arteveldehogeschool'
+    }
+  ];
+
   return (
     <>
       <Container>
@@ -53,25 +88,30 @@ const Opportunity = ({ opportunity }) => {
             <div>
               <Heading title="Info" level={2} />
               <div className="detail__info">
-                <div className="info">
+                <div className="info__wrapper">
                   <p className="info__label">Organisatie</p>
-                  <p>Hoger Technisch Instituut Sint-Antonius</p>
+                  <p className="info__detail">Hoger Technisch Instituut Sint-Antonius</p>
                 </div>
-                <div>
-                  <p className="info__label">Website</p>
-                  <p>{opportunity.website}</p>
-                </div>
-                <div>
-                  <p className="info__label">Contact</p>
-                  <p>{opportunity.contact}</p>
-                </div>
+                {opportunity.website && (
+                  <div>
+                    <p className="info__label">Website</p>
+                    <p className="info__detail">{opportunity.website}</p>
+                  </div>
+                )}
+                {opportunity.contact && (
+                  <div>
+                    <p className="info__label">Contact</p>
+                    <p className="info__detail">{opportunity.contact}</p>
+                  </div>
+                )}
                 <div>
                   <p className="info__label">Locatie</p>
-                  <p>Holstraat 66, 9000 Gent</p>
+                  <p className="info__detail">Holstraat 66, 9000 Gent</p>
                 </div>
+
                 <div>
                   <p className="info__label">Periode</p>
-                  <p>2019-12-02 tot en met 2025-06-30</p>
+                  <p className="info__detail">2019-12-02 tot en met 2025-06-30</p>
                 </div>
               </div>
             </div>
@@ -80,65 +120,31 @@ const Opportunity = ({ opportunity }) => {
         <Heading title="Inschrijvingen" level={1} marginTop />
         <Heading title="Nieuwe inschrijvingen" level={2} />
         <div className="participants">
-          <div className="participants__participant">
-            <p>02/03/2021</p>
-            <div className="partcipant__img" />
-            <p>John Doe</p>
-            <p>john.doe@gmail.com</p>
-            <p>Arteveldehogeschool</p>
-            <div className="participant__buttons">
-              <i>
-                <Icon name="check" />
-              </i>
-              <i>
-                <Icon name="times" />
-              </i>
-            </div>
-          </div>
-          <div className="participants__participant">
-            <p>04/03/2021</p>
-            <div className="partcipant__img" />
-            <p>Jane Doe</p>
-            <p>jane.doe@gmail.com</p>
-            <p>Arteveldehogeschool</p>
-            <div className="participant__buttons">
-              <i>
-                <Icon name="check" />
-              </i>
-              <i>
-                <Icon name="times" />
-              </i>
-            </div>
-          </div>
+          {newParticipants.length > 0 ? (
+            newParticipants.map((participant) => (
+              <Participant key={participant.name} participant={participant} withButtons />
+            ))
+          ) : (
+            <p className="participants__empty">Geen nieuwe inschrijvingen.</p>
+          )}
         </div>
 
-        <Heading title="Voorbije inschrijvingen" level={2} marginTop />
+        <Heading title="Geaccepteerde inschrijvingen" level={2} marginTop />
+        <div className="participants">
+          {acceptedParticipants.length > 0 ? (
+            acceptedParticipants.map((participant) => (
+              <Participant key={participant.name} participant={participant} />
+            ))
+          ) : (
+            <p className="participants__empty">Nog geen geaccepteerde inschrijvingen.</p>
+          )}
+        </div>
       </Container>
 
       <style jsx>
         {`
-          .participants__participant {
-            display: grid;
-            grid-template-columns: 10rem 4rem 2fr 3fr 1fr 1fr;
-            grid-gap: 3rem;
-            align-items: center;
-
-            padding: 1.5rem 0;
-            background-image: linear-gradient(90deg, #000 33%, hsla(0, 0%, 100%, 0) 0);
-            background-position: 0 bottom;
-            background-size: 3px 1px;
-            background-repeat: repeat-x;
-          }
-
-          .participant__buttons > * {
-            margin: 0 1rem;
-          }
-
-          .partcipant__img {
-            border-radius: 50%;
-            background: grey;
-            width: 4rem;
-            height: 4rem;
+          .participants__empty {
+            margin-top: 2rem;
           }
 
           .detail {
@@ -146,8 +152,8 @@ const Opportunity = ({ opportunity }) => {
             grid-template: 1fr auto / repeat(2, 1fr);
 
             grid-template-areas:
-              'heading info'
-              'description info';
+              'heading contact'
+              'description contact';
           }
 
           .detail__heading {
@@ -158,6 +164,19 @@ const Opportunity = ({ opportunity }) => {
 
           .detail__heading > div {
             margin-top: ${spacers.small};
+          }
+
+          .detail__heading::after {
+            background: url('https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'),
+              url('https://blog.top5gent.com/hs-fs/hubfs/Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg?width=1000&name=Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg');
+            background-repeat: no-repeat;
+            background-size: 12rem, cover;
+            background-position: 2rem 0, center;
+            content: '';
+            position: absolute;
+            height: 54rem;
+            width: 50%;
+            right: 0;
           }
 
           .detail__description {
@@ -179,18 +198,25 @@ const Opportunity = ({ opportunity }) => {
             left: calc((100vw - 1300px) / -2);
           }
 
+          .detail__contact {
+            grid-area: contact;
+          }
+
           .detail__contact > div {
             transform: translateY(60rem);
             padding-left: 18rem;
+          }
+
+          .detail__info {
+            margin-top: ${spacers.small};
           }
 
           .detail__info div {
             display: flex;
           }
 
-          .detail__info {
-            margin-top: ${spacers.small};
-            grid-area: info;
+          .detail__info p {
+            margin: 0.5rem;
           }
 
           .info__label {
@@ -198,29 +224,12 @@ const Opportunity = ({ opportunity }) => {
             font-weight: bold;
           }
 
-          .detail__info p {
-            margin: 0.5rem;
-          }
-
-          .detail__heading::after {
-            background: url('https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'),
-              url('https://blog.top5gent.com/hs-fs/hubfs/Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg?width=1000&name=Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg');
-            background-repeat: no-repeat;
-            background-size: 12rem, cover;
-            background-position: 2rem 0, center;
-            content: '';
-            position: absolute;
-            height: 54rem;
-            width: 50%;
-            right: 0;
-          }
-
           @media (max-width: ${breakpoints.large}) {
-            .grid {
+            .detail {
               grid-template: 1fr auto / 5fr 4fr;
               grid-template-areas:
-                'heading info'
-                'description info';
+                'heading contact'
+                'description contact';
             }
 
             .detail__heading::after {
@@ -244,11 +253,11 @@ const Opportunity = ({ opportunity }) => {
           }
 
           @media (max-width: ${breakpoints.medium}) {
-            .grid {
+            .detail {
               grid-template: 1fr auto / 5fr 4fr;
               grid-template-areas:
-                'heading info'
-                'description info';
+                'heading contact'
+                'description contact';
             }
 
             .detail__description::before {
@@ -265,11 +274,11 @@ const Opportunity = ({ opportunity }) => {
           }
 
           @media (max-width: 1080px) {
-            .grid {
+            .detail {
               grid-template: 1fr auto / 5fr 4fr;
               grid-template-areas:
                 'heading heading'
-                'description info';
+                'description contact';
             }
 
             .detail__heading {
@@ -292,7 +301,12 @@ const Opportunity = ({ opportunity }) => {
               height: calc(100% + ${spacers.large});
             }
 
-            .detail__info p {
+            .info__label {
+              width: 100%;
+              margin: 1.5rem 0 0 0;
+            }
+
+            .info__detail {
               margin: 0;
             }
 
@@ -310,12 +324,20 @@ const Opportunity = ({ opportunity }) => {
           }
 
           @media (max-width: ${breakpoints.small}) {
-            .grid {
+            .detail {
               grid-template: 1fr auto / 1fr;
               grid-template-areas:
                 'heading'
                 'description'
-                'info';
+                'contact';
+            }
+
+            .detail__info div {
+              flex-direction: column;
+            }
+
+            .detail__info p {
+              margin: 0 !important;
             }
 
             .detail__heading::after {
@@ -337,7 +359,7 @@ const Opportunity = ({ opportunity }) => {
             }
 
             .detail__info > div {
-              flex-direction: row;
+              flex-direction: column;
             }
           }
         `}
@@ -367,6 +389,10 @@ export const getStaticProps = async ({ params }) => {
     props: { opportunity: { ...opportunity } }
     // revalidate: 900
   };
+};
+
+Opportunity.propTypes = {
+  opportunity: PropTypes.isRequired
 };
 
 export default Opportunity;
