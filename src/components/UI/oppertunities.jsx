@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { breakpoints } from '../../assets/styles/constants';
-import { Button, Card } from '../../components/UI';
+import Button from './button';
+import Card from './card';
 import { spacers } from '../../assets/styles';
 
 const Oppertunities = ({ OPPORTUNITIES }) => {

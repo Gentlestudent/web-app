@@ -1,5 +1,6 @@
 import { colors, breakpoints } from '../../assets/styles/constants';
-import { Heading, Button } from '.';
+import Heading from './heading';
+import Button from './button';
 import { spacers } from '../../assets/styles';
 import { Container } from '../layout/index';
 

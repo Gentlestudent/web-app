@@ -1,5 +1,5 @@
 import { colors, breakpoints } from '../../assets/styles/constants';
-import { Heading } from '.';
+import Heading from './heading';
 import { Container } from '../layout/index';
 import mockup from '../../assets/img/home/download-mobile-app.png';
 import android from '../../assets/img/home/android.png';

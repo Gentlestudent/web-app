@@ -1,4 +1,5 @@
-import { Heading, Button } from '../../components/UI';
+import Heading from './heading';
+import Button from './button';
 import { colors, spacers, breakpoints } from '../../assets/styles/constants';
 
 const News = () => {

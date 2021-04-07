@@ -1,6 +1,7 @@
 import { colors, breakpoints, spacers } from '../../assets/styles/constants';
 import banner from '../../assets/img/home/banner.jpg';
-import { Heading, BannerSplit } from '.';
+import Heading from './heading';
+import BannerSplit from './banner-split';
 
 const IssuerHeader = () => {
   return (

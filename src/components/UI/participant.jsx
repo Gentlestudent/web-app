@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Icon } from '.';
+import Icon from './icon';
 import { colors } from '../../assets/styles/constants';
 
 const Paticipant = ({ participant, withButtons }) => {
