@@ -1,6 +1,8 @@
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 import { auth } from '../../api/firebase';
 import { Heading, Button } from '../../components/UI';
@@ -16,10 +18,18 @@ const SignupSchema = Yup.object().shape({
 const Login = () => {
   const [signInWithEmailAndPassword, _, loading, error] = useSignInWithEmailAndPassword(auth);
   const { isUserSignedIn } = useAuth();
+  const router = useRouter();
 
-  if (isUserSignedIn) {
-    // Implement redirect logic if needed or remove this
-  }
+  useEffect(() => {
+    if (isUserSignedIn) {
+      if (router.query.from) {
+        router.push(router.query.from);
+      } else {
+        // TODO change this
+        router.push('/home');
+      }
+    }
+  }, [isUserSignedIn, router]);
 
   if (loading) {
     // May be useful to show a loading state on the button

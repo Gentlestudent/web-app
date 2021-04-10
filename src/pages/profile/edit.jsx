@@ -1,10 +1,18 @@
-import Router from 'next/router';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { Formik, Form } from 'formik';
 import { InputField, Panel } from '../../components/form';
 import { Container, Grid } from '../../components/layout/index';
 import { Heading, Button } from '../../components/UI';
+import { updateProfile } from '../../api/users';
+import { updateParticipant } from '../../api/participants';
+import { reauthenticate } from '../../api/auth';
+import { useAuth } from '../../hooks';
 
 const EditProfile = () => {
+  const { isUserSignedIn, currentUser: profile } = useAuth();
+  const router = useRouter();
+
   // TODO: get role, depending on role, different info will be shown (getNotifInfo). Text is not final!
   const getNotifInfo = (role) => {
     switch (role) {
@@ -19,10 +27,7 @@ const EditProfile = () => {
     }
   };
 
-  const editProfile = (values) => {
-    // TODO: make editting profile possible
-    console.log(values);
-  };
+  const editProfile = async (values) => {};
 
   const editNotifications = (values) => {
     // TODO: make editting notifications possible
@@ -30,14 +35,23 @@ const EditProfile = () => {
   };
 
   // TODO: get profile info from database (if logged in, if not redirect, possibly through React router)
-  const profile = {
-    email: 'john.doe@gmail.com',
-    firstName: 'John',
-    lastName: 'Doe',
-    institution: 'Arteveldehogeschool',
-    notifEmail: false,
-    notifApp: true
-  };
+  // const profile = {
+  //   email: 'john.doe@gmail.com',
+  //   firstName: 'John',
+  //   lastName: 'Doe',
+  //   institution: 'Arteveldehogeschool',
+  //   notifEmail: false,
+  //   notifApp: true
+  // };
+
+  useEffect(() => {
+    if (!isUserSignedIn) {
+      router.push({
+        pathname: '/login',
+        query: { from: router.pathname }
+      });
+    }
+  }, [isUserSignedIn, router]);
 
   return (
     <>
@@ -48,7 +62,7 @@ const EditProfile = () => {
               <Panel>
                 <>
                   <Button
-                    onClick={() => Router.back()}
+                    onClick={() => router.back()}
                     text="Terug naar profiel"
                     icon="arrow-left"
                     reverse
@@ -58,10 +72,10 @@ const EditProfile = () => {
 
                   <Formik
                     initialValues={{
-                      email: profile.email,
-                      firstName: profile.firstName,
-                      lastName: profile.lastName,
-                      institution: profile.institution
+                      email: profile?.email,
+                      firstName: profile?.firstName,
+                      lastName: profile?.lastName,
+                      institution: profile?.institution
                     }}
                     onSubmit={(values) => {
                       editProfile(values);
@@ -103,8 +117,8 @@ const EditProfile = () => {
               <p>{getNotifInfo('user')}</p>
               <Formik
                 initialValues={{
-                  notifEmail: profile.notifEmail,
-                  notifApp: profile.notifApp
+                  notifEmail: profile?.notifEmail,
+                  notifApp: profile?.notifApp
                 }}
                 onSubmit={(values) => {
                   editNotifications(values);
