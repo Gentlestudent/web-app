@@ -1,5 +1,7 @@
 import { useEffect, useReducer } from 'react';
 import Head from 'next/head';
+import Router from 'next/router';
+import NProgress from 'nprogress';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import AuthContext from '../context/auth';
 import User from '../models/User';
@@ -10,6 +12,12 @@ import Layout from '../components/layout';
 import globalStyles from '../assets/styles/global';
 import 'react-quill/dist/quill.snow.css';
 import useExec from '../hooks/useExec';
+
+Router.events.on('routeChangeStart', () => {
+  NProgress.start();
+});
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 function currentUserReducer(state, [type, payload]) {
   switch (type) {
@@ -68,6 +76,7 @@ const App = ({ Component, pageProps }) => {
           href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap"
           rel="stylesheet"
         />
+        <link rel="stylesheet" type="text/css" href="/nprogress.css" />
       </Head>
       <AuthContext.Provider value={authState}>
         <Layout>
