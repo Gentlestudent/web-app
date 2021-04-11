@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useReducer } from 'react';
 import { useRouter } from 'next/router';
 import { Formik, Form } from 'formik';
 import { InputField, Panel } from '../../components/form';
@@ -9,11 +9,13 @@ import { updateParticipant } from '../../api/participants';
 import { reauthenticate } from '../../api/auth';
 import { useAuth } from '../../hooks';
 import usePrivateRoute from '../../hooks/usePrivateRoute';
+import fetchReducer from '../../utils/fetchReducer';
 
 const EditProfile = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, reload } = useAuth();
   usePrivateRoute();
   const router = useRouter();
+  const [state, dispatch] = useReducer(fetchReducer, {});
 
   // TODO: get role, depending on role, different info will be shown (getNotifInfo). Text is not final!
   const getNotifInfo = (role) => {
@@ -29,11 +31,33 @@ const EditProfile = () => {
     }
   };
 
-  const editProfile = async (values) => {};
+  const editProfile = async (values) => {
+    dispatch(['INIT']);
+    try {
+      // reauthenticate the user;
+      await reauthenticate(values);
 
-  const editNotifications = (values) => {
-    // TODO: make editting notifications possible
-    console.log(values);
+      // update firebase auth profile
+      await updateProfile(values);
+
+      // update participant document
+      await updateParticipant(currentUser.id, values);
+      dispatch(['COMPLETE']);
+    } catch (err) {
+      dispatch(['ERROR', err]);
+    }
+  };
+
+  const editNotifications = async (values) => {
+    dispatch(['INIT']);
+    try {
+      // update participant document
+      await updateParticipant(currentUser.id, values);
+      reload();
+      dispatch(['COMPLETE']);
+    } catch (err) {
+      dispatch(['ERROR', err]);
+    }
   };
 
   return (
@@ -79,7 +103,7 @@ const EditProfile = () => {
                         placeholder="Voornaam"
                       />
                       <InputField
-                        name="lastname"
+                        name="lastName"
                         type="text"
                         label="Familienaam"
                         placeholder="Familienaam"
@@ -101,8 +125,8 @@ const EditProfile = () => {
               <p>{getNotifInfo('user')}</p>
               <Formik
                 initialValues={{
-                  notifEmail: currentUser?.participant?.notifEmail || '',
-                  notifApp: currentUser?.participant?.notifApp || ''
+                  notifEmail: currentUser?.participant?.notifEmail || false,
+                  notifApp: currentUser?.participant?.notifApp || false
                 }}
                 onSubmit={(values) => {
                   editNotifications(values);

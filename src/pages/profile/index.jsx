@@ -42,7 +42,7 @@ const Profile = () => {
           </div>
           <div className="text__item">
             <Heading title="Organisatie/onderwijsinstelling" level={2} color="white" />
-            <p>{profile?.institution}</p>
+            <p>{profile?.institute}</p>
           </div>
           <div className="text__item">
             <Heading title="Rollen" level={2} color="white" />
