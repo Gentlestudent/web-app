@@ -3,7 +3,10 @@ export class Participant {
     this.email = participant.email;
     this.institute = participant.institute;
     this.profilePicture = participant.profilePicture;
-    this.name = participant.name;
+    this.lastName = participant.lastName;
+    this.firstName = participant.firstName;
+    this.notifApp = participant.notifApp;
+    this.notifEmail = participant.notifEmail;
   }
 }
 
@@ -18,7 +21,11 @@ export const participantConverter = {
       email: participant.email,
       institute: participant.institute,
       profilePicture: participant.profilePicture,
-      name: participant.name
+      name: participant.name,
+      lastName: participant.lastName,
+      firstName: participant.firstName,
+      notifApp: participant.notifApp,
+      notifEmail: participant.notifEmail
     };
   },
 
