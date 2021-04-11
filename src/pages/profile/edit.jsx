@@ -8,9 +8,11 @@ import { updateProfile } from '../../api/users';
 import { updateParticipant } from '../../api/participants';
 import { reauthenticate } from '../../api/auth';
 import { useAuth } from '../../hooks';
+import usePrivateRoute from '../../hooks/usePrivateRoute';
 
 const EditProfile = () => {
-  const { isUserSignedIn, currentUser: profile } = useAuth();
+  const { currentUser } = useAuth();
+  usePrivateRoute();
   const router = useRouter();
 
   // TODO: get role, depending on role, different info will be shown (getNotifInfo). Text is not final!
@@ -20,7 +22,7 @@ const EditProfile = () => {
         return 'Bepaal hoe je meldingen krijgt wanneer je aanvraag om deel te nemen aan een leerkans gereviewed werd.';
       case 'admin':
         return 'Bepaal hoe je meldingen krijgt wanneer organisaties een nieuwe leerkans aanmaken.';
-      case 'institution':
+      case 'organisation':
         return 'Bepaal hoe je meldingen krijgt wanneer jouw leerkans werd goedgekeurd en wanneer studenten zich aanmelden aan een leerkans. ';
       default:
         return 'Bepaal hoe je meldingen krijgt.';
@@ -33,25 +35,6 @@ const EditProfile = () => {
     // TODO: make editting notifications possible
     console.log(values);
   };
-
-  // TODO: get profile info from database (if logged in, if not redirect, possibly through React router)
-  // const profile = {
-  //   email: 'john.doe@gmail.com',
-  //   firstName: 'John',
-  //   lastName: 'Doe',
-  //   institution: 'Arteveldehogeschool',
-  //   notifEmail: false,
-  //   notifApp: true
-  // };
-
-  useEffect(() => {
-    if (!isUserSignedIn) {
-      router.push({
-        pathname: '/login',
-        query: { from: router.pathname }
-      });
-    }
-  }, [isUserSignedIn, router]);
 
   return (
     <>
@@ -71,11 +54,12 @@ const EditProfile = () => {
                   <Heading title="Bewerk profiel" />
 
                   <Formik
+                    enableReinitialize
                     initialValues={{
-                      email: profile?.email,
-                      firstName: profile?.firstName,
-                      lastName: profile?.lastName,
-                      institution: profile?.institution
+                      email: currentUser?.participant?.email || '',
+                      firstName: currentUser?.participant?.firstName || '',
+                      lastName: currentUser?.participant?.lastName || '',
+                      institute: currentUser?.participant?.institute || ''
                     }}
                     onSubmit={(values) => {
                       editProfile(values);
@@ -101,7 +85,7 @@ const EditProfile = () => {
                         placeholder="Familienaam"
                       />
                       <InputField
-                        name="institution"
+                        name="institute"
                         type="text"
                         label="Organisatie/Onderwijsinstelling"
                         placeholder="Organisatie/Onderwijsinstelling"
@@ -117,8 +101,8 @@ const EditProfile = () => {
               <p>{getNotifInfo('user')}</p>
               <Formik
                 initialValues={{
-                  notifEmail: profile?.notifEmail,
-                  notifApp: profile?.notifApp
+                  notifEmail: currentUser?.participant?.notifEmail || '',
+                  notifApp: currentUser?.participant?.notifApp || ''
                 }}
                 onSubmit={(values) => {
                   editNotifications(values);

@@ -26,7 +26,7 @@ const Login = () => {
         router.push(router.query.from);
       } else {
         // TODO change this
-        router.push('/home');
+        router.push('/');
       }
     }
   }, [isUserSignedIn, router]);

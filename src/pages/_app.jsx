@@ -24,7 +24,7 @@ function currentUserReducer(state, [type, payload]) {
     case 'auth':
       return payload ? new User(payload) : null;
     case 'data':
-      return state ? Object.assign(state, payload) : null;
+      return state ? Object.assign(new User(state), payload) : null;
     default:
       return null;
   }
@@ -56,7 +56,7 @@ const App = ({ Component, pageProps }) => {
     if (!execLoading) {
       dispatch(['data', data]);
     }
-  }, [execLoading, data, currentUser]);
+  }, [execLoading, data]);
 
   const authState = {
     authStatusReported: !loading,
