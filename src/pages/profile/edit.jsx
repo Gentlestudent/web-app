@@ -42,6 +42,7 @@ const EditProfile = () => {
 
       // update participant document
       await updateParticipant(currentUser.id, values);
+      reload();
       dispatch(['COMPLETE']);
     } catch (err) {
       dispatch(['ERROR', err]);
