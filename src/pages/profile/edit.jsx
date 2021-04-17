@@ -9,13 +9,13 @@ import { updateParticipant } from '../../api/participants';
 import { reauthenticate } from '../../api/auth';
 import { useAuth } from '../../hooks';
 import usePrivateRoute from '../../hooks/usePrivateRoute';
-import fetchReducer from '../../utils/fetchReducer';
+import fetchStatusReducer from '../../reducers/fetchStatusReducer';
 
 const EditProfile = () => {
   const { currentUser, reload } = useAuth();
   usePrivateRoute();
   const router = useRouter();
-  const [state, dispatch] = useReducer(fetchReducer, {});
+  const [state, dispatch] = useReducer(fetchStatusReducer, {});
 
   // TODO: get role, depending on role, different info will be shown (getNotifInfo). Text is not final!
   const getNotifInfo = (role) => {
