@@ -14,8 +14,7 @@ const Action = () => {
       dispatch(['INIT']);
       try {
         if (mode === 'verifyEmail') {
-          const res = await handleVerifyEmail(oobCode);
-          console.log(res);
+          await handleVerifyEmail(oobCode);
           dispatch(['COMPLETE']);
         }
       } catch (error) {

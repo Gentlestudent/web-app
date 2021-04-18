@@ -1,27 +1,28 @@
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 
-import { auth } from '../../api/firebase';
 import { Heading, Button } from '../../components/UI';
 import { Panel, InputField } from '../../components/form';
 import { Container } from '../../components/layout/index';
 import { useAuth } from '../../hooks';
+import { signInWithEmailPassword, signOut } from '../../api/auth';
+import fetchStatusReducer from '../../reducers/fetchStatusReducer';
+import { sendAccountVerificationEmail } from '../../api/functions';
 
-const SignupSchema = Yup.object().shape({
+const SigninSchema = Yup.object().shape({
   email: Yup.string().email('Ongeldig e-mail adres').required('Vul een e-mail adres in'),
   password: Yup.string().required('Wachtwoord is vereist')
 });
 
 const Login = () => {
-  const [signInWithEmailAndPassword, _, loading, error] = useSignInWithEmailAndPassword(auth);
-  const { isUserSignedIn } = useAuth();
+  const { isUserSignedIn, currentUser } = useAuth();
   const router = useRouter();
+  const [state, dispatch] = useReducer(fetchStatusReducer, {});
 
   useEffect(() => {
-    if (isUserSignedIn) {
+    if (isUserSignedIn && currentUser?.isVerified) {
       if (router.query.from) {
         router.push(router.query.from);
       } else {
@@ -29,20 +30,35 @@ const Login = () => {
         router.push('/');
       }
     }
-  }, [isUserSignedIn, router]);
+  }, [isUserSignedIn, currentUser, router]);
 
-  if (loading) {
+  if (state.loading) {
     // May be useful to show a loading state on the button
     console.log('loading');
   }
 
-  if (error) {
+  if (state.error) {
     // Todo something useful with these errors
-    console.log(error);
+    console.log(state.error);
   }
 
-  const signup = ({ email, password }) => {
-    signInWithEmailAndPassword(email, password);
+  const signin = async ({ email, password }) => {
+    dispatch(['INIT']);
+    try {
+      const userCredential = await signInWithEmailPassword(email, password);
+
+      if (!userCredential.user.emailVerified) {
+        await sendAccountVerificationEmail();
+        await signOut();
+        // eslint-disable-next-line no-throw-literal
+        throw { code: 'not-verified' };
+      }
+      dispatch(['COMPLETE']);
+    } catch (error) {
+      if (error.code !== 'not-verified') await signOut();
+
+      dispatch(['ERROR', error]);
+    }
   };
 
   return (
@@ -56,9 +72,8 @@ const Login = () => {
                 email: '',
                 password: ''
               }}
-              validationSchema={SignupSchema}
-              // onSubmit={signup}
-              onSubmit={signup}
+              validationSchema={SigninSchema}
+              onSubmit={signin}
             >
               <Form>
                 <InputField
