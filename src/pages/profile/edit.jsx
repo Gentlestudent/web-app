@@ -17,18 +17,14 @@ const EditProfile = () => {
   const router = useRouter();
   const [state, dispatch] = useReducer(fetchStatusReducer, {});
 
-  // TODO: get role, depending on role, different info will be shown (getNotifInfo). Text is not final!
   const getNotifInfo = (role) => {
-    switch (role) {
-      case 'user':
-        return 'Bepaal hoe je meldingen krijgt wanneer je aanvraag om deel te nemen aan een leerkans gereviewed werd.';
-      case 'admin':
-        return 'Bepaal hoe je meldingen krijgt wanneer organisaties een nieuwe leerkans aanmaken.';
-      case 'organisation':
-        return 'Bepaal hoe je meldingen krijgt wanneer jouw leerkans werd goedgekeurd en wanneer studenten zich aanmelden aan een leerkans. ';
-      default:
-        return 'Bepaal hoe je meldingen krijgt.';
-    }
+    if (role.admin)
+      return 'Bepaal hoe je meldingen krijgt wanneer organisaties een nieuwe leerkans aanmaken.';
+    if (role.participant)
+      return 'Bepaal hoe je meldingen krijgt wanneer je aanvraag om deel te nemen aan een leerkans gereviewed werd.';
+    if (role.issuer)
+      return 'Bepaal hoe je meldingen krijgt wanneer jouw leerkans werd goedgekeurd en wanneer studenten zich aanmelden aan een leerkans. ';
+    return 'Bepaal hoe je meldingen krijgt.';
   };
 
   const editProfile = async (values) => {
@@ -123,7 +119,7 @@ const EditProfile = () => {
             </div>
             <div className="edit__preferences">
               <Heading marginTop title="Meldingsvoorkeuren" level={2} />
-              <p>{getNotifInfo('user')}</p>
+              <p>{getNotifInfo(currentUser?.role)}</p>
               <Formik
                 initialValues={{
                   notifEmail: currentUser?.participant?.notifEmail || false,

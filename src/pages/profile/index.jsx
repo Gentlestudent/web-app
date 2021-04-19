@@ -44,10 +44,20 @@ const Profile = () => {
             <Heading title="Organisatie/onderwijsinstelling" level={2} color="white" />
             <p>{profile?.institute}</p>
           </div>
-          <div className="text__item">
-            <Heading title="Rollen" level={2} color="white" />
-            <p>{profile?.role}</p>
-          </div>
+
+          {(currentUser?.role?.admin || currentUser?.role?.issuer) && (
+            <div className="text__item">
+              <Heading title="Rollen" level={2} color="white" />
+              <p>
+                {/* eslint-disable-next-line no-nested-ternary */}
+                {currentUser.role.admin
+                  ? 'Admin'
+                  : currentUser.issuer.validated
+                  ? 'Gevalideerde issuer'
+                  : 'Issuer status aangevraagd'}
+              </p>
+            </div>
+          )}
         </div>
       </BannerSplit>
 
