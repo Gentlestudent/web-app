@@ -41,7 +41,7 @@ const Container = ({ text, children }) => (
 );
 
 Container.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
   text: PropTypes.bool
 };
 

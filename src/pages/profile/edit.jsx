@@ -18,12 +18,14 @@ const EditProfile = () => {
   const [state, dispatch] = useReducer(fetchStatusReducer, {});
 
   const getNotifInfo = (role) => {
-    if (role.admin)
-      return 'Bepaal hoe je meldingen krijgt wanneer organisaties een nieuwe leerkans aanmaken.';
-    if (role.participant)
-      return 'Bepaal hoe je meldingen krijgt wanneer je aanvraag om deel te nemen aan een leerkans gereviewed werd.';
-    if (role.issuer)
-      return 'Bepaal hoe je meldingen krijgt wanneer jouw leerkans werd goedgekeurd en wanneer studenten zich aanmelden aan een leerkans. ';
+    if (role) {
+      if (role.admin)
+        return 'Bepaal hoe je meldingen krijgt wanneer organisaties een nieuwe leerkans aanmaken.';
+      if (role.participant)
+        return 'Bepaal hoe je meldingen krijgt wanneer je aanvraag om deel te nemen aan een leerkans gereviewed werd.';
+      if (role.issuer)
+        return 'Bepaal hoe je meldingen krijgt wanneer jouw leerkans werd goedgekeurd en wanneer studenten zich aanmelden aan een leerkans. ';
+    }
     return 'Bepaal hoe je meldingen krijgt.';
   };
 

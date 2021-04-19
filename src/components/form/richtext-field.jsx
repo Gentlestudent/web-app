@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
-import { Label } from '.';
+import Label from './label';
 
 const RichTextField = dynamic(import('react-quill'), {
   ssr: false,
@@ -52,5 +53,10 @@ const RichtextField = ({ label, name }) => (
     </style>
   </>
 );
+
+RichtextField.propTypes = {
+  label: PropTypes.string,
+  name: PropTypes.string
+};
 
 export default RichtextField;

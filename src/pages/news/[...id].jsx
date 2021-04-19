@@ -1,25 +1,17 @@
-import Router, { useRouter } from 'next/router';
 import { Heading, Button } from '../../components/UI';
 import { colors, spacers, breakpoints } from '../../assets/styles/constants';
 import { Container } from '../../components/layout/index';
 import banner from '../../assets/img/home/banner.jpg';
+import { routes } from '../../constants';
 
-export default () => {
-  const router = useRouter();
-  const { id } = router.query;
-
+export default function News() {
   return (
     <>
       <div className="news-wrapper">
         <Container>
           <div className="news-content">
             <div className="article">
-              <Button
-                onClick={() => Router.back()}
-                text="Terug naar overzicht"
-                icon="arrow-left"
-                back
-              />
+              <Button href={routes.NEWS} text="Terug naar overzicht" icon="arrow-left" reverse />
               <Heading title="Titel van artikel komt hier terecht" level={1} />
               <div className="article-info">
                 <p>2018-05-25 | Lore Demedts</p>
@@ -179,4 +171,4 @@ export default () => {
       </style>
     </>
   );
-};
+}

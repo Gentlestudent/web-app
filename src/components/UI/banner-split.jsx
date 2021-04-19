@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { colors, breakpoints, spacers } from '../../assets/styles/constants';
 import banner from '../../assets/img/home/banner.jpg';
 import { Container } from '../layout/index';
@@ -87,6 +89,8 @@ const BannerSplit = ({ children }) => {
   );
 };
 
-BannerSplit.propTypes = {};
+BannerSplit.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
+};
 
 export default BannerSplit;

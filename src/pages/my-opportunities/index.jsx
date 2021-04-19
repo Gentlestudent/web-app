@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Router from 'next/router';
 import { Container } from '../../components/layout/index';
 import { Card, Heading } from '../../components/UI';

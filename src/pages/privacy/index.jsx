@@ -1,7 +1,7 @@
 import { Container } from '../../components/layout/index';
 import { Heading, List } from '../../components/UI';
 
-export default () => {
+export default function Privacy() {
   return (
     <>
       <Container text>
@@ -157,4 +157,4 @@ export default () => {
       </Container>
     </>
   );
-};
+}

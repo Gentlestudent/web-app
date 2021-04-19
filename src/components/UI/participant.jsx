@@ -3,14 +3,14 @@ import Icon from './icon';
 import { colors } from '../../assets/styles/constants';
 
 const Paticipant = ({ participant, withButtons }) => {
-  const acceptParticipant = (participant) => {
+  const acceptParticipant = (data) => {
     // TODO: accept
-    console.log('accept');
+    console.log('accept', data);
   };
 
-  const denyParticipant = (participant) => {
+  const denyParticipant = (data) => {
     // TODO: accept
-    console.log('deny');
+    console.log('deny', data);
   };
 
   return (
@@ -20,7 +20,7 @@ const Paticipant = ({ participant, withButtons }) => {
         <div className="participant__img" />
         <p className="partcipant__name">{participant.name}</p>
         <p className="participant__email">{participant.email}</p>
-        <p className="participant__institution">{participant.institution}</p>
+        <p className="participant__institution">{participant.institute}</p>
         {withButtons && (
           <div className="participant__buttons">
             <button
@@ -119,7 +119,9 @@ const Paticipant = ({ participant, withButtons }) => {
 };
 
 Paticipant.propTypes = {
-  participant: PropTypes.isRequired
+  // eslint-disable-next-line react/forbid-prop-types
+  participant: PropTypes.object,
+  withButtons: PropTypes.bool
 };
 
 export default Paticipant;

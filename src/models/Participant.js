@@ -5,6 +5,7 @@ export class Participant {
     this.profilePicture = participant.profilePicture;
     this.lastName = participant.lastName;
     this.firstName = participant.firstName;
+    this.name = participant.name;
     this.notifApp = participant.notifApp;
     this.notifEmail = participant.notifEmail;
   }

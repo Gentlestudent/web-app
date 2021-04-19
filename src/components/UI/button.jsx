@@ -11,15 +11,13 @@ const Button = ({
   reverse = false,
   white = false,
   text,
-  type,
+  type = 'button',
   ...rest
 }) => (
   <>
-    {/* see https://github.com/yannickcr/eslint-plugin-react/issues/1555 */}
-    {/* eslint-disable-next-line react/button-has-type */}
-    {type ? (
+    {!href ? (
       <button
-        type={type || 'button'}
+        type={type}
         className={`button ${primary ? 'button--primary' : 'button--secondary'} ${
           reverse && 'button--reverse'
         }`}

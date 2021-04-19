@@ -1,8 +1,12 @@
 import { useEffect, useReducer } from 'react';
+import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import 'react-quill/dist/quill.snow.css';
+
 import AuthContext from '../context/auth';
 import User from '../models/User';
 import { auth } from '../api/firebase';
@@ -10,7 +14,6 @@ import { getProfile } from '../api/users';
 import { colors } from '../assets/styles';
 import Layout from '../components/layout';
 import globalStyles from '../assets/styles/global';
-import 'react-quill/dist/quill.snow.css';
 import useExec from '../hooks/useExec';
 
 Router.events.on('routeChangeStart', () => {
@@ -88,6 +91,12 @@ const App = ({ Component, pageProps }) => {
       </AuthContext.Provider>
     </>
   );
+};
+
+App.propTypes = {
+  Component: PropTypes.elementType,
+  // eslint-disable-next-line react/forbid-prop-types
+  pageProps: PropTypes.any
 };
 
 export default App;

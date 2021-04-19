@@ -1,6 +1,7 @@
 import { InputField, SelectField, RichtextField } from '../form';
+import { FORM } from '../../models/Opportunity';
 
-const StepOne = ({ FORM }) => {
+const StepOne = () => {
   return (
     <>
       <InputField name="title" type="text" label="Titel" placeholder="Titel" />

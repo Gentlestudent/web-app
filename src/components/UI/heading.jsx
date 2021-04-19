@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { fonts, colors } from '../../assets/styles';
 
-const Heading = ({ color, title, level, classNames, marginTop }) => {
+const Heading = ({ color, title, level, classNames, marginTop = false }) => {
   const H = `h${level}`;
   return (
     <H className={`title ${classNames || ''} ${marginTop ? 'title-margin' : ''}`}>
@@ -69,7 +69,8 @@ Heading.propTypes = {
   color: PropTypes.string,
   title: PropTypes.string,
   classNames: PropTypes.string,
-  level: PropTypes.number
+  level: PropTypes.number,
+  marginTop: PropTypes.bool
 };
 
 Heading.defaultProps = {

@@ -4,8 +4,8 @@ import { spacers } from '../../assets/styles/constants';
 import { Card, Heading } from '../../components/UI';
 import { routes } from '../../constants';
 
-export default () => {
-  const NEWS = [
+export default function News() {
+  const news = [
     {
       title: 'Gent Zonnestad: presenteer op een infoavond',
       description:
@@ -58,15 +58,15 @@ export default () => {
       <Container>
         <Heading title="Nieuws" level={1} marginTop />
         <article className="news-items">
-          {NEWS.map((ITEM) => (
+          {news.map((item) => (
             <Card
               onClick={() => Router.push(`${routes.NEWS}/id`)}
-              key={ITEM}
+              key={item}
               image="https://picsum.photos/200/300"
-              title={ITEM.title}
-              description={ITEM.description}
-              date={ITEM.date}
-              alt={ITEM.alt ? ITEM.alt : ITEM.title}
+              title={item.title}
+              description={item.description}
+              date={item.date}
+              alt={item.alt ? item.alt : item.title}
               row
             />
           ))}
@@ -90,4 +90,4 @@ export default () => {
       </style>
     </>
   );
-};
+}

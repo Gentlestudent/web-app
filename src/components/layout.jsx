@@ -29,6 +29,7 @@ const Layout = ({ /* withHeader, */ children }) => (
 
 Layout.propTypes = {
   // withHeader: PropTypes.bool
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired
 };
 
 Layout.defaultProps = {
