@@ -10,6 +10,7 @@ import { useAuth } from '../../hooks';
 import { signInWithEmailPassword, signOut } from '../../api/auth';
 import fetchStatusReducer from '../../reducers/fetchStatusReducer';
 import { sendAccountVerificationEmail } from '../../api/functions';
+import { routes } from '../../constants';
 
 const SigninSchema = Yup.object().shape({
   email: Yup.string().email('Ongeldig e-mail adres').required('Vul een e-mail adres in'),
@@ -27,7 +28,7 @@ const Login = () => {
         router.push(router.query.from);
       } else {
         // TODO change this
-        router.push('/');
+        router.push(routes.HOME);
       }
     }
   }, [isUserSignedIn, currentUser, router]);
