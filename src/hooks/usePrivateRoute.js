@@ -4,15 +4,15 @@ import useAuth from './useAuth';
 import { routes } from '../constants';
 
 export default function usePrivateRoute(pathname) {
-  const { isUserSignedIn } = useAuth();
+  const { isUserSignedIn, authStatusReported } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isUserSignedIn) {
+    if (authStatusReported && !isUserSignedIn) {
       router.push({
         pathname: pathname || routes.LOGIN,
         query: { from: router.pathname }
       });
     }
-  }, [isUserSignedIn, router, pathname]);
+  }, [authStatusReported, isUserSignedIn, router, pathname]);
 }
