@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/router';
 import { useEffect, useReducer } from 'react';
 
-import { Heading, Button } from '../../components/UI';
+import { Heading, Button, ErrorMessage } from '../../components/UI';
 import { Panel, InputField } from '../../components/form';
 import { Container } from '../../components/layout/index';
 import { useAuth } from '../../hooks';
@@ -20,7 +20,7 @@ const SigninSchema = Yup.object().shape({
 const Login = () => {
   const { isUserSignedIn, currentUser } = useAuth();
   const router = useRouter();
-  const [state, dispatch] = useReducer(fetchStatusReducer, {});
+  const [state, dispatch] = useReducer(fetchStatusReducer, { loading: false });
 
   useEffect(() => {
     if (isUserSignedIn && currentUser?.isVerified) {
@@ -32,16 +32,6 @@ const Login = () => {
       }
     }
   }, [isUserSignedIn, currentUser, router]);
-
-  if (state.loading) {
-    // May be useful to show a loading state on the button
-    console.log('loading');
-  }
-
-  if (state.error) {
-    // Todo something useful with these errors
-    console.log(state.error);
-  }
 
   const signin = async ({ email, password }) => {
     dispatch(['INIT']);
@@ -68,6 +58,7 @@ const Login = () => {
         <Panel>
           <>
             <Heading title="Login" />
+            <ErrorMessage code={state.error?.code} />
             <Formik
               initialValues={{
                 email: '',
@@ -89,7 +80,7 @@ const Login = () => {
                   label="Wachtwoord"
                   placeholder="wachtwoord"
                 />
-                <Button text="Inloggen" type="submit" primary />
+                <Button text="Inloggen" type="submit" primary isLoading={state.loading} />
               </Form>
             </Formik>
           </>

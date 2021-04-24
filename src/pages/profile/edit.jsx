@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Formik, Form } from 'formik';
 import { InputField, Panel } from '../../components/form';
 import { Container, Grid } from '../../components/layout/index';
-import { Heading, Button } from '../../components/UI';
+import { Heading, Button, ErrorMessage } from '../../components/UI';
 import { updateProfile } from '../../api/users';
 import { updateParticipant } from '../../api/participants';
 import { reauthenticate } from '../../api/auth';
@@ -15,7 +15,7 @@ const EditProfile = () => {
   const { currentUser, reload } = useAuth();
   usePrivateRoute();
   const router = useRouter();
-  const [state, dispatch] = useReducer(fetchStatusReducer, {});
+  const [state, dispatch] = useReducer(fetchStatusReducer, { loading: false });
 
   const getNotifInfo = (role) => {
     if (role) {
@@ -41,7 +41,7 @@ const EditProfile = () => {
       // update participant document
       await updateParticipant(currentUser.id, values);
       reload();
-      dispatch(['COMPLETE']);
+      dispatch(['COMPLETE', {}]);
     } catch (err) {
       dispatch(['ERROR', err]);
     }
@@ -53,7 +53,7 @@ const EditProfile = () => {
       // update participant document
       await updateParticipant(currentUser.id, values);
       reload();
-      dispatch(['COMPLETE']);
+      dispatch(['COMPLETE', {}]);
     } catch (err) {
       dispatch(['ERROR', err]);
     }
@@ -75,7 +75,7 @@ const EditProfile = () => {
                   />
 
                   <Heading title="Bewerk profiel" />
-
+                  <ErrorMessage code={state.error?.code} />
                   <Formik
                     enableReinitialize
                     initialValues={{
@@ -113,7 +113,7 @@ const EditProfile = () => {
                         label="Organisatie/Onderwijsinstelling"
                         placeholder="Organisatie/Onderwijsinstelling"
                       />
-                      <Button text="Opslaan" type="submit" primary />
+                      <Button text="Opslaan" type="submit" primary isLoading={state.loading} />
                     </Form>
                   </Formik>
                 </>
@@ -121,6 +121,7 @@ const EditProfile = () => {
             </div>
             <div className="edit__preferences">
               <Heading marginTop title="Meldingsvoorkeuren" level={2} />
+              <ErrorMessage code={state.error?.code} padTop />
               <p>{getNotifInfo(currentUser?.role)}</p>
               <Formik
                 initialValues={{
@@ -143,7 +144,7 @@ const EditProfile = () => {
                     label="Ontvang meldingen via de app"
                   />
 
-                  <Button text="Opslaan" type="submit" primary />
+                  <Button text="Opslaan" type="submit" primary isLoading={state.loading} />
                 </Form>
               </Formik>
             </div>
