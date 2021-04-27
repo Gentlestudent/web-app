@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 const Label = ({ label, name, children, inline }) => (
   <>
     <label className={`label ${inline && 'label--inline'}`} htmlFor={name}>
-      <span>{label || ''}</span>
-      {children && children}
+      <span>{label}</span>
+      {children}
     </label>
 
     <style jsx>
@@ -29,7 +29,9 @@ const Label = ({ label, name, children, inline }) => (
 
 Label.propTypes = {
   label: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  inline: PropTypes.bool,
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
 };
 
 export default Label;

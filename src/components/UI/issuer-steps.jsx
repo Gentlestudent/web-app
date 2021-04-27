@@ -1,4 +1,4 @@
-import { colors, breakpoints } from '../../assets/styles/constants';
+import { colors } from '../../assets/styles/constants';
 import Heading from './heading';
 import Button from './button';
 import { spacers } from '../../assets/styles';

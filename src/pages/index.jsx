@@ -1,12 +1,9 @@
-import { useContext } from 'react';
-import AuthContext from '../context/auth';
 import { Container } from '../components/layout/index';
 import { Banner, HomeHeader, Download, Opportunities, News } from '../components/UI';
 
 import banner from '../assets/img/home/banner.jpg';
 
 const Home = () => {
-  const { isUserSignedIn, currentUser } = useContext(AuthContext);
   const OPPORTUNITIES = [
     {
       title: 'Gent Zonnestad: presenteer op een infoavond',

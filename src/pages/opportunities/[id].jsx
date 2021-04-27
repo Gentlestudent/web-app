@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+/* eslint-disable react/prop-types */
 import { routes } from '../../constants';
 import { Heading, Button, Participant } from '../../components/UI';
 import { colors, spacers, breakpoints } from '../../assets/styles/constants';
@@ -14,14 +14,14 @@ const Opportunity = ({ opportunity }) => {
       date: '02/03/2021',
       email: 'john.doe@gmail.com',
       name: 'John Doe',
-      institution: 'Arteveldehogeschool'
+      institute: 'Arteveldehogeschool'
     },
     {
       img: 'empty',
       date: '02/03/2021',
       email: 'jane.doe@gmail.com',
       name: 'Jane Doe',
-      institution: 'Arteveldehogeschool'
+      institute: 'Arteveldehogeschool'
     }
   ];
 
@@ -31,14 +31,14 @@ const Opportunity = ({ opportunity }) => {
       date: '02/03/2021',
       email: 'john.doe@gmail.com',
       name: 'John Doe',
-      institution: 'Arteveldehogeschool'
+      institute: 'Arteveldehogeschool'
     },
     {
       img: 'empty',
       date: '02/03/2021',
       email: 'jane.doe@gmail.com',
       name: 'Jane Doe',
-      institution: 'Arteveldehogeschool'
+      institute: 'Arteveldehogeschool'
     }
   ];
 
@@ -389,10 +389,6 @@ export const getStaticProps = async ({ params }) => {
     props: { opportunity: { ...opportunity } }
     // revalidate: 900
   };
-};
-
-Opportunity.propTypes = {
-  opportunity: PropTypes.isRequired
 };
 
 export default Opportunity;

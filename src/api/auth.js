@@ -21,4 +21,6 @@ export const signInWithEmailPassword = (email, password) =>
 export const reauthenticate = (email, password) =>
   auth.currentUser.reauthenticateWithCredential(Auth.EmailAuthProvider.credential(email, password));
 
+export const handleVerifyEmail = (actionCode) => auth.applyActionCode(actionCode);
+
 export const signOut = () => auth.signOut();

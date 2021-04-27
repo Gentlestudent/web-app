@@ -16,7 +16,7 @@ const List = ({ children }) => (
 );
 
 List.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
 };
 
 export default List;

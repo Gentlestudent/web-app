@@ -16,7 +16,7 @@ const Grid = ({ children }) => (
 );
 
 Grid.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
 };
 
 export default Grid;

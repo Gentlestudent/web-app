@@ -2,16 +2,13 @@ import { Container, Grid } from '../../components/layout/index';
 import { Heading, Button, BannerSplit } from '../../components/UI';
 import { colors, breakpoints } from '../../assets/styles/constants';
 import { routes } from '../../constants';
+import { useAuth } from '../../hooks';
+import usePrivateRoute from '../../hooks/usePrivateRoute';
 
-export default () => {
-  // TODO: get profile
-  const profile = {
-    email: 'john.doe@gmail.com',
-    firstName: 'John',
-    lastName: 'Doe',
-    institution: 'Arteveldehogeschool',
-    role: 'Admin'
-  };
+const Profile = () => {
+  const { currentUser } = useAuth();
+  usePrivateRoute();
+  const profile = currentUser?.participant;
 
   // TODO: get badges from database (not sure where this can be found in the current structure)
   const badges = [
@@ -35,22 +32,32 @@ export default () => {
     <>
       <BannerSplit>
         <div className="heading">
-          <Heading title={`${profile.firstName} ${profile.lastName}`} level={1} color="white" />
+          <Heading title={`${profile?.firstName} ${profile?.lastName}`} level={1} color="white" />
           <Button href={routes.user.EDIT_PROFILE} text="Bewerk profiel" icon="edit" white />
         </div>
         <div>
           <div className="text__item">
             <Heading title="Email" level={2} color="white" />
-            <p>{profile.email}</p>
+            <p>{profile?.email}</p>
           </div>
           <div className="text__item">
             <Heading title="Organisatie/onderwijsinstelling" level={2} color="white" />
-            <p>{profile.institution}</p>
+            <p>{profile?.institute}</p>
           </div>
-          <div className="text__item">
-            <Heading title="Rollen" level={2} color="white" />
-            <p>{profile.role}</p>
-          </div>
+
+          {(currentUser?.role?.admin || currentUser?.role?.issuer) && (
+            <div className="text__item">
+              <Heading title="Rollen" level={2} color="white" />
+              <p>
+                {/* eslint-disable-next-line no-nested-ternary */}
+                {currentUser.role.admin
+                  ? 'Admin'
+                  : currentUser.issuer.validated
+                  ? 'Gevalideerde issuer'
+                  : 'Issuer status aangevraagd'}
+              </p>
+            </div>
+          )}
         </div>
       </BannerSplit>
 
@@ -141,3 +148,5 @@ export default () => {
     </>
   );
 };
+
+export default Profile;

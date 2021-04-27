@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { Field } from 'formik';
-import { Error, Label } from '.';
+import Error from './error';
+import Label from './label';
 
 const InputField = ({ name, type, label, ...props }) => (
   <>

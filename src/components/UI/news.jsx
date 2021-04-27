@@ -1,6 +1,6 @@
 import Heading from './heading';
 import Button from './button';
-import { colors, spacers, breakpoints } from '../../assets/styles/constants';
+import { colors } from '../../assets/styles/constants';
 
 const News = () => {
   return (

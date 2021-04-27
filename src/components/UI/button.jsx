@@ -11,18 +11,17 @@ const Button = ({
   reverse = false,
   white = false,
   text,
-  type,
+  type = 'button',
   ...rest
 }) => (
   <>
-    {/* see https://github.com/yannickcr/eslint-plugin-react/issues/1555 */}
-    {/* eslint-disable-next-line react/button-has-type */}
-    {type ? (
+    {!href ? (
       <button
-        type={type || 'button'}
+        type={type}
         className={`button ${primary ? 'button--primary' : 'button--secondary'} ${
           reverse && 'button--reverse'
-        }`}
+        } ${isLoading ? 'disabled' : ''}`}
+        disabled={isLoading}
         {...rest}
       >
         {text ? <span className="button__text">{text}</span> : ''}
@@ -67,7 +66,7 @@ const Button = ({
           min-height: 4.5rem;
           border-radius: 3rem;
           margin: 3rem 0 0.5rem;
-          padding: 1.3rem 1.6rem 1.3rem 2.2rem;
+          padding: 1.3rem 2.2rem 1.3rem 2.2rem;
           vertical-align: middle;
           line-height: 1.1;
           color: ${colors.white};
@@ -109,6 +108,11 @@ const Button = ({
 
         i {
           margin: 0 1rem;
+        }
+
+        .button.disabled,
+        .button.disabled:hover {
+          background-color: ${colors.gray};
         }
       `}
     </style>
