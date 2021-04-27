@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Router from 'next/router';
 import { getReadableDate } from '../../utils/index';
 import { routes } from '../../constants';

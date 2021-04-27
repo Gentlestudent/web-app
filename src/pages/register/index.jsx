@@ -1,12 +1,13 @@
 import { Formik, Form } from 'formik';
-import { useState } from 'react';
+import { useReducer } from 'react';
 import * as Yup from 'yup';
 import { Panel, InputField } from '../../components/form';
 
-import { registerWithEmailPassword } from '../../api/auth';
+import { registerWithEmailPassword, signOut } from '../../api/auth';
 import { Heading, Button } from '../../components/UI';
 import { Container } from '../../components/layout/index';
 import { useAuth } from '../../hooks';
+import fetchStatusReducer from '../../reducers/fetchStatusReducer';
 
 const RegisterSchema = Yup.object().shape({
   email: Yup.string().email('Ongeldig e-mail adres').required('Vul een e-mail adres in'),
@@ -18,30 +19,31 @@ const RegisterSchema = Yup.object().shape({
 
 const Register = () => {
   const { isSignedIn } = useAuth();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [state, dispatch] = useReducer(fetchStatusReducer, {});
 
   if (isSignedIn) {
     // redirect if needed or remove this block
   }
 
-  if (loading) {
-    console.log(loading);
+  if (state.loading) {
+    console.log(state.loading);
   }
 
-  if (error) {
-    console.log(error);
+  if (state.error) {
+    console.log(state.error);
   }
 
   const signup = async ({ email, password, institute, firstName, lastName }) => {
-    setLoading(true);
-    setError(null);
+    dispatch(['INIT']);
     try {
       await registerWithEmailPassword(email, password, firstName, lastName, institute);
+
+      // sign out user
+      await signOut();
+
+      dispatch(['COMPLETE']);
     } catch (err) {
-      setError(err);
-    } finally {
-      setLoading(false);
+      dispatch(['ERROR', err]);
     }
   };
 

@@ -80,3 +80,14 @@ export const Authority = {
   APPROVED: 1,
   DELETED: 2
 };
+
+export const FORM = {
+  DOMAINS: [
+    'Digitale geletterdheid',
+    'Duurzaamheid',
+    'Ondernemingszin',
+    'Onderzoek',
+    'Wereldburgerschap'
+  ],
+  LEVELS: ['Beginner', 'Gevorderd', 'Expert']
+};

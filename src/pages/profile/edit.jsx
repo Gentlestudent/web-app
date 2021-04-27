@@ -1,42 +1,62 @@
-import Router from 'next/router';
+import { useReducer } from 'react';
+import { useRouter } from 'next/router';
 import { Formik, Form } from 'formik';
 import { InputField, Panel } from '../../components/form';
 import { Container, Grid } from '../../components/layout/index';
-import { Heading, Button } from '../../components/UI';
+import { Heading, Button, ErrorMessage } from '../../components/UI';
+import { updateProfile } from '../../api/users';
+import { updateParticipant } from '../../api/participants';
+import { reauthenticate } from '../../api/auth';
+import { useAuth } from '../../hooks';
+import usePrivateRoute from '../../hooks/usePrivateRoute';
+import fetchStatusReducer from '../../reducers/fetchStatusReducer';
 
 const EditProfile = () => {
-  // TODO: get role, depending on role, different info will be shown (getNotifInfo). Text is not final!
+  const { currentUser, reload } = useAuth();
+  usePrivateRoute();
+  const router = useRouter();
+  const [state, dispatch] = useReducer(fetchStatusReducer, { loading: false });
+
   const getNotifInfo = (role) => {
-    switch (role) {
-      case 'user':
-        return 'Bepaal hoe je meldingen krijgt wanneer je aanvraag om deel te nemen aan een leerkans gereviewed werd.';
-      case 'admin':
+    if (role) {
+      if (role.admin)
         return 'Bepaal hoe je meldingen krijgt wanneer organisaties een nieuwe leerkans aanmaken.';
-      case 'institution':
+      if (role.participant)
+        return 'Bepaal hoe je meldingen krijgt wanneer je aanvraag om deel te nemen aan een leerkans gereviewed werd.';
+      if (role.issuer)
         return 'Bepaal hoe je meldingen krijgt wanneer jouw leerkans werd goedgekeurd en wanneer studenten zich aanmelden aan een leerkans. ';
-      default:
-        return 'Bepaal hoe je meldingen krijgt.';
+    }
+    return 'Bepaal hoe je meldingen krijgt.';
+  };
+
+  const editProfile = async (values) => {
+    dispatch(['INIT']);
+    try {
+      // reauthenticate the user;
+      await reauthenticate(values);
+
+      // update firebase auth profile
+      await updateProfile(values);
+
+      // update participant document
+      await updateParticipant(currentUser.id, values);
+      reload();
+      dispatch(['COMPLETE', {}]);
+    } catch (err) {
+      dispatch(['ERROR', err]);
     }
   };
 
-  const editProfile = (values) => {
-    // TODO: make editting profile possible
-    console.log(values);
-  };
-
-  const editNotifications = (values) => {
-    // TODO: make editting notifications possible
-    console.log(values);
-  };
-
-  // TODO: get profile info from database (if logged in, if not redirect, possibly through React router)
-  const profile = {
-    email: 'john.doe@gmail.com',
-    firstName: 'John',
-    lastName: 'Doe',
-    institution: 'Arteveldehogeschool',
-    notifEmail: false,
-    notifApp: true
+  const editNotifications = async (values) => {
+    dispatch(['INIT']);
+    try {
+      // update participant document
+      await updateParticipant(currentUser.id, values);
+      reload();
+      dispatch(['COMPLETE', {}]);
+    } catch (err) {
+      dispatch(['ERROR', err]);
+    }
   };
 
   return (
@@ -48,20 +68,21 @@ const EditProfile = () => {
               <Panel>
                 <>
                   <Button
-                    onClick={() => Router.back()}
+                    onClick={() => router.back()}
                     text="Terug naar profiel"
                     icon="arrow-left"
                     reverse
                   />
 
                   <Heading title="Bewerk profiel" />
-
+                  <ErrorMessage code={state.error?.code} />
                   <Formik
+                    enableReinitialize
                     initialValues={{
-                      email: profile.email,
-                      firstName: profile.firstName,
-                      lastName: profile.lastName,
-                      institution: profile.institution
+                      email: currentUser?.participant?.email || '',
+                      firstName: currentUser?.participant?.firstName || '',
+                      lastName: currentUser?.participant?.lastName || '',
+                      institute: currentUser?.participant?.institute || ''
                     }}
                     onSubmit={(values) => {
                       editProfile(values);
@@ -81,18 +102,18 @@ const EditProfile = () => {
                         placeholder="Voornaam"
                       />
                       <InputField
-                        name="lastname"
+                        name="lastName"
                         type="text"
                         label="Familienaam"
                         placeholder="Familienaam"
                       />
                       <InputField
-                        name="institution"
+                        name="institute"
                         type="text"
                         label="Organisatie/Onderwijsinstelling"
                         placeholder="Organisatie/Onderwijsinstelling"
                       />
-                      <Button text="Opslaan" type="submit" primary />
+                      <Button text="Opslaan" type="submit" primary isLoading={state.loading} />
                     </Form>
                   </Formik>
                 </>
@@ -100,11 +121,12 @@ const EditProfile = () => {
             </div>
             <div className="edit__preferences">
               <Heading marginTop title="Meldingsvoorkeuren" level={2} />
-              <p>{getNotifInfo('user')}</p>
+              <ErrorMessage code={state.error?.code} padTop />
+              <p>{getNotifInfo(currentUser?.role)}</p>
               <Formik
                 initialValues={{
-                  notifEmail: profile.notifEmail,
-                  notifApp: profile.notifApp
+                  notifEmail: currentUser?.participant?.notifEmail || false,
+                  notifApp: currentUser?.participant?.notifApp || false
                 }}
                 onSubmit={(values) => {
                   editNotifications(values);
@@ -122,7 +144,7 @@ const EditProfile = () => {
                     label="Ontvang meldingen via de app"
                   />
 
-                  <Button text="Opslaan" type="submit" primary />
+                  <Button text="Opslaan" type="submit" primary isLoading={state.loading} />
                 </Form>
               </Formik>
             </div>

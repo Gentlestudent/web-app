@@ -2,16 +2,6 @@ import PropTypes from 'prop-types';
 import { colors } from '../../assets/styles';
 import FormField from './form-field';
 
-/*   type,
-  name,
-  info,
-  required,
-  label,
-  icon,
-  error,
-  setField,
-  value,
-  showFeedback:  */
 const Search = ({ type, name, placeholder, required, error, value, ...rest }) => {
   return (
     <>

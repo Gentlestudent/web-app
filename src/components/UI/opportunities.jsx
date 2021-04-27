@@ -56,7 +56,8 @@ const Opportunities = ({ opportunities }) => {
 };
 
 Opportunities.propTypes = {
-  opportunities: PropTypes.isRequired
+  // eslint-disable-next-line react/forbid-prop-types
+  opportunities: PropTypes.object
 };
 
 export default Opportunities;

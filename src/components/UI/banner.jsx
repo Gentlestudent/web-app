@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 
 const Banner = ({ image }) => {
-
   return (
     <>
-      <div className="banner" style={{background: `url(${image})`}}/>
+      <div className="banner" style={{ background: `url(${image})` }} />
 
       <style jsx>
         {`
@@ -35,7 +34,7 @@ const Banner = ({ image }) => {
 };
 
 Banner.propTypes = {
-  image: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired
 };
 
 export default Banner;

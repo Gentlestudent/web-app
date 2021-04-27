@@ -18,3 +18,5 @@ export { default as IssuerSteps } from './issuer-steps';
 export { default as IssuerHeader } from './issuer-header';
 export { default as BannerSplit } from './banner-split';
 export { default as Participant } from './participant';
+export { default as ErrorMessage } from './error-message';
+export { default as SuccessMessage } from './success-message';

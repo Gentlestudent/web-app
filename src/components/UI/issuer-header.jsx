@@ -1,5 +1,3 @@
-import { colors, breakpoints, spacers } from '../../assets/styles/constants';
-import banner from '../../assets/img/home/banner.jpg';
 import Heading from './heading';
 import BannerSplit from './banner-split';
 

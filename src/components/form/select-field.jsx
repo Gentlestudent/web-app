@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Field } from 'formik';
-import { Label } from '.';
+import Label from './label';
 
 const SelectField = ({ name, label, children }) => (
   <>
