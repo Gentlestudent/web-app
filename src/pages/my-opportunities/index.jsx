@@ -88,7 +88,7 @@ export const getStaticProps = async () => {
   });
 
   return {
-    props: { opportunities }
+    props: { opportunities: [] }
     // revalidate: 900
   };
 };

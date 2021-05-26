@@ -14,7 +14,7 @@ const getReadableDate = (timestamp) => {
     'december'
   ];
 
-  const date = timestamp.toDate();
+  const date = timestamp ? timestamp.toDate() : new Date();
   const today = new Date();
   const seconds = Math.abs(today - date) / 1000;
   const days = Math.floor(seconds / 86400);

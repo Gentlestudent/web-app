@@ -6,27 +6,29 @@ NOTE: this is NOT required to use Next.js on Firebase. You can completely remove
 
  */
 
-var shell = require('shelljs');
-var nextjsConfig = require('../next.config');
-var BUILD_ID = shell.cat(`${nextjsConfig.distDir}/BUILD_ID`);
+const shell = require('shelljs');
+const nextjsConfig = require('../next.config');
+
+const BUILD_ID = shell.cat(`${nextjsConfig.distDir}/BUILD_ID`);
 
 function hoistPages(fileExt, outputPath) {
   console.log(
     `${nextjsConfig.distDir}/server/static/${BUILD_ID}/pages/**/*${fileExt} -> ${outputPath}/`
   );
-  var match = new RegExp('\\' + `${fileExt}`);
-  var filesToHoist = shell
-    .find(`${nextjsConfig.distDir}/server/static/${BUILD_ID}/pages/`)
-    .filter(function (file) {
+  const match = new RegExp(`\\${fileExt}`);
+  let filesToHoist = shell.find(`${nextjsConfig.distDir}/server/static/${BUILD_ID}/pages/`);
+  if (filesToHoist && filesToHoist.filter) {
+    filesToHoist = filesToHoist.filter((file) => {
       return file.match(match) && file.match(/^((?!\[|\]).)*$/);
     });
-  filesToHoist.forEach((filePath) => {
-    var outPath = filePath.split('pages/')[1];
-    if (outPath.includes('/')) {
-      shell.mkdir('-p', `${outputPath}/${outPath.substring(0, outPath.lastIndexOf('/'))}`);
-    }
-    shell.cp('-f', filePath, `${outputPath}/${outPath}`);
-  });
+    filesToHoist.forEach((filePath) => {
+      const outPath = filePath.split('pages/')[1];
+      if (outPath.includes('/')) {
+        shell.mkdir('-p', `${outputPath}/${outPath.substring(0, outPath.lastIndexOf('/'))}`);
+      }
+      shell.cp('-f', filePath, `${outputPath}/${outPath}`);
+    });
+  }
 }
 
 console.log(

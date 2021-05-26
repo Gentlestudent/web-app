@@ -7,8 +7,12 @@
     "dev": "cross-env NODE_ENV=development next dev src",
     "build": "cross-env NODE_ENV=production next build src",
     "start": "next start",
-    "predeploy": "npm run clean && next build && node ./scripts/export.js",
+    "predeploy": "npm run clean && next build",
+    "_predeploy": "npm run clean && next build && node ./scripts/export.js",
     "deploy": "firebase deploy"
+  },
+  "engines": {
+    "node": "16"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
@@ -52,8 +56,9 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
+    "firebase-tools": "^9.11.0",
     "next-images": "^1.4.0",
-    "next-optimized-images": "^2.6.1",
+    "next-optimized-images": "^2.6.2",
     "prettier": "^2.0.2",
     "rimraf": "^3.0.2",
     "sass": "^1.32.7",
