@@ -25,7 +25,8 @@ export const getProfile = async (id) => {
     profile.issuer = issuer;
   }
   // get data from admin
-  const admin = await firestore.collection('Admins').doc(id).get();
+  const admin = {};
+  // const admin = await firestore.collection('Admins').doc(id).get();
   if (admin.exists) {
     profile.role.admin = true;
   }
