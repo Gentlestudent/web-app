@@ -8,7 +8,7 @@ import StepOne from '../../components/opportunity-form-steps/step-one';
 import StepTwo from '../../components/opportunity-form-steps/step-two';
 import StepThree from '../../components/opportunity-form-steps/step-three';
 
-import { addOpportunity } from '../../api/opportunities';
+import { addOpportunity } from '../../connector/opportunities';
 import { Panel } from '../../components/form';
 import { Heading, Button } from '../../components/UI';
 import { Container } from '../../components/layout/index';

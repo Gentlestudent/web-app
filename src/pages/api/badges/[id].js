@@ -1,4 +1,4 @@
-import { getBadge } from '../../../api/functions';
+import { getBadge } from '../../../connector/functions';
 
 export default async function handler(req, res) {
   const { id } = req.query;

@@ -6,7 +6,7 @@ import { Container } from '../../components/layout/index';
 import { Card, Heading, Search } from '../../components/UI';
 import Map from '../../components/map/map';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
-import { getOpportunities } from '../../api/opportunities';
+import { getOpportunities } from '../../connector/opportunities';
 
 const Opportunities = ({ opportunities }) => {
   return (

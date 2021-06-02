@@ -3,7 +3,7 @@ import { routes } from '../../constants';
 import { Heading, Button, Participant } from '../../components/UI';
 import { colors, spacers, breakpoints } from '../../assets/styles/constants';
 import { Container } from '../../components/layout/index';
-import { getOpportunities, getOpportunityById } from '../../api/opportunities';
+import { getOpportunities, getOpportunityById } from '../../connector/opportunities';
 import { getReadableDate } from '../../utils/index';
 
 const Opportunity = ({ opportunity }) => {

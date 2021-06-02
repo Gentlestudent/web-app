@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useReducer } from 'react';
-import { handleVerifyEmail } from '../../api/auth';
+import { handleVerifyEmail } from '../../connector/auth';
 import fetchStatusReducer from '../../reducers/fetchStatusReducer';
 
 const Action = () => {

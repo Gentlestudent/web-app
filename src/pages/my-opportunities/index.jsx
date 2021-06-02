@@ -3,7 +3,7 @@ import Router from 'next/router';
 import { Container } from '../../components/layout/index';
 import { Card, Heading } from '../../components/UI';
 import { routes } from '../../constants';
-import { getOpportunities } from '../../api/opportunities';
+import { getOpportunities } from '../../connector/opportunities';
 import { getReadableDate } from '../../utils/index';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
 

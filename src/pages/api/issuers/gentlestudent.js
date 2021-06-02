@@ -1,4 +1,4 @@
-import { getIssuer } from '../../../api/functions';
+import { getIssuer } from '../../../connector/functions';
 
 export default async function handler(req, res) {
   try {
