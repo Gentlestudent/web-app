@@ -7,10 +7,10 @@ import { Heading, Button, ErrorMessage } from '../../components/UI';
 import { Panel, InputField } from '../../components/form';
 import { Container } from '../../components/layout/index';
 import { useAuth } from '../../hooks';
-import { signInWithEmailPassword, signOut } from '../../api/auth';
 import fetchStatusReducer from '../../reducers/fetchStatusReducer';
-import { sendAccountVerificationEmail } from '../../api/functions';
+import { sendAccountVerificationEmail } from '../../connector/auth';
 import { routes } from '../../constants';
+import { getFirebaseAppForClient } from '../../utils/firebase';
 
 const SigninSchema = Yup.object().shape({
   email: Yup.string().email('Ongeldig e-mail adres').required('Vul een e-mail adres in'),
@@ -35,19 +35,17 @@ const Login = () => {
 
   const signin = async ({ email, password }) => {
     dispatch(['INIT']);
+    const app = getFirebaseAppForClient();
+    const auth = app.auth();
     try {
-      const userCredential = await signInWithEmailPassword(email, password);
-
+      const userCredential = await auth.signInWithEmailAndPassword(email, password);
       if (!userCredential.user.emailVerified) {
         await sendAccountVerificationEmail();
-        await signOut();
-        // eslint-disable-next-line no-throw-literal
-        throw { code: 'not-verified' };
+        await auth.signOut();
+        throw new Error('not-verified');
       }
       dispatch(['COMPLETE']);
     } catch (error) {
-      if (error.code !== 'not-verified') await signOut();
-
       dispatch(['ERROR', error]);
     }
   };
@@ -58,7 +56,7 @@ const Login = () => {
         <Panel>
           <>
             <Heading title="Login" />
-            <ErrorMessage code={state.error?.code} />
+            <ErrorMessage code={state.error?.message} />
             <Formik
               initialValues={{
                 email: '',

@@ -3,7 +3,7 @@ import { useReducer } from 'react';
 import * as Yup from 'yup';
 import { Panel, InputField } from '../../components/form';
 
-import { registerWithEmailPassword, signOut } from '../../api/auth';
+import { registerWithEmailPassword, signOut } from '../../connector/auth';
 import { Heading, Button } from '../../components/UI';
 import { Container } from '../../components/layout/index';
 import { useAuth } from '../../hooks';
@@ -36,7 +36,7 @@ const Register = () => {
   const signup = async ({ email, password, institute, firstName, lastName }) => {
     dispatch(['INIT']);
     try {
-      await registerWithEmailPassword(email, password, firstName, lastName, institute);
+      await registerWithEmailPassword({ email, password, firstName, lastName, institute });
 
       // sign out user
       await signOut();

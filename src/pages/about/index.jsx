@@ -12,7 +12,7 @@ import startersfabriek from '../../assets/img/about/logo-startersfabriek.jpg';
 import thebox from '../../assets/img/about/logo-thebox.jpg';
 import banner from '../../assets/img/about/banner.jpg';
 
-export default () => {
+export default function about() {
   return (
     <>
       <Container text>
