@@ -13,7 +13,7 @@ const Opportunity = sqlClient.define('Opportunity', {
   endDate: DataTypes.STRING,
   international: DataTypes.BOOLEAN,
   issuerId: DataTypes.STRING,
-  longDescription: DataTypes.STRING,
+  longDescription: DataTypes.TEXT,
   shortDescription: DataTypes.STRING,
   moreInfo: DataTypes.STRING,
   oppImageUrl: DataTypes.STRING,

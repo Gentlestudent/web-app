@@ -11,12 +11,13 @@ const Opportunities = ({ opportunities }) => {
         <section className="cards">
           {opportunities.map((opportunity) => (
             <Card
-              key={opportunity} // TODO this should be an id
-              badge={opportunity.badge}
-              image="https://picsum.photos/200/300"
+              key={opportunity.id}
+              id={opportunity.id}
+              badge={opportunity.pinImageUrl}
+              image={opportunity.oppImageUrl}
               title={opportunity.title}
-              description={opportunity.description}
-              date={opportunity.date}
+              description={opportunity.shortDescription}
+              date={`${opportunity.beginDate} tot en met ${opportunity.endDate}`}
               alt={opportunity.alt ? opportunity.alt : opportunity.title}
             />
           ))}
@@ -56,8 +57,7 @@ const Opportunities = ({ opportunities }) => {
 };
 
 Opportunities.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  opportunities: PropTypes.array
+  opportunities: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default Opportunities;

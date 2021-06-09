@@ -1,12 +1,18 @@
-/* eslint-disable react/prop-types */
+import { useRouter } from 'next/router';
 import { routes } from '../../constants';
 import { Heading, Button, Participant } from '../../components/UI';
 import { colors, spacers, breakpoints } from '../../assets/styles/constants';
 import { Container } from '../../components/layout/index';
-import { getOpportunities, getOpportunityById } from '../../connector/opportunities';
-import { getReadableDate } from '../../utils/index';
+import { useOpportunity } from '../../hooks';
 
-const Opportunity = ({ opportunity }) => {
+const Opportunity = () => {
+  const router = useRouter();
+  const [errorOpportunity, loadingOpportunity, opportunity] = useOpportunity(
+    Number(router.query.id),
+    {}
+  );
+  // TODO handle error & show loading
+
   // TODO: get participants for opportunity detail (with certain roles only)
   const newParticipants = [
     {
@@ -61,20 +67,11 @@ const Opportunity = ({ opportunity }) => {
           <div className="detail__description">
             <div>
               <Heading title="Beschrijving" level={2} />
-              <p>
-                De Gentse burgercoöperatie Energent organiseert met steun van Het Gents Milieufront
-                (GMF), Natuurpunt Gent en Beweging.net een groepsaankoop van zonnepanelen: Gent
-                Zonnestad. Zonnepanelen zijn vandaag een rendabele investering, ook nu er geen
-                subsidies meer zijn. Voor ongeveer 4.000 euro heb je een installatie op je dak die
-                je volledige jaarverbruik opwekt en die bovendien tot gemiddeld 8% financieel
-                rendement oplevert... Dat is beter dan een spaarrekening! Leg zonnepanelen op je dak
-                draag zo je steentje bij aan een klimaatneutrale stad!
-              </p>
+              <p>{opportunity.longDescription}</p>
               <Heading title="Wat wordt er verwacht?" level={2} />
               <p>
-                Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent,
-                en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het
-                presentatiemateriaal is reeds beschikbaar).
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tempus tristique
+                pretium. Pellentesque risus nunc, semper ut molestie nec, sagittis in tellus.
               </p>
               <Heading title="Meer weten?" level={2} />
               <Button text="Bekijk meer" icon="arrow-right" href={opportunity.moreInfo} />
@@ -111,7 +108,7 @@ const Opportunity = ({ opportunity }) => {
 
                 <div>
                   <p className="info__label">Periode</p>
-                  <p className="info__detail">2019-12-02 tot en met 2025-06-30</p>
+                  <p className="info__detail">{`${opportunity.beginDate} tot en met ${opportunity.endDate}`}</p>
                 </div>
               </div>
             </div>
@@ -167,8 +164,7 @@ const Opportunity = ({ opportunity }) => {
           }
 
           .detail__heading::after {
-            background: url('https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'),
-              url('https://blog.top5gent.com/hs-fs/hubfs/Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg?width=1000&name=Ghent-In-the-morning-streets-of-the-Ghent.-Ghent-is-a-city-and-a-municipality-in-the-Flemish-Region-of-Belgium..jpg');
+            background: url('${opportunity.pinImageUrl}'), url('${opportunity.oppImageUrl}');
             background-repeat: no-repeat;
             background-size: 12rem, cover;
             background-position: 2rem 0, center;
@@ -366,29 +362,6 @@ const Opportunity = ({ opportunity }) => {
       </style>
     </>
   );
-};
-
-export const getStaticPaths = async () => {
-  // Same query as in opportunities/index.js, would be nice if this could be
-  // called globally somewhere? Avoid duplicate calls
-  const paths = (await getOpportunities()).map((opp) => ({ params: { id: opp.id } }));
-  return {
-    paths,
-    fallback: false
-  };
-};
-
-export const getStaticProps = async ({ params }) => {
-  // Will be a call for EVERY opportunity, better to store data somewhere
-  // globally and filter with the id
-  const opportunity = await getOpportunityById(params.id);
-  opportunity.beginDate = getReadableDate(opportunity.beginDate);
-  opportunity.endDate = getReadableDate(opportunity.endDate);
-
-  return {
-    props: { opportunity: { ...opportunity } }
-    // revalidate: 900
-  };
 };
 
 export default Opportunity;

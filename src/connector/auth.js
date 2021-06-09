@@ -1,6 +1,11 @@
 // import { auth, Auth } from './firebase';
 // import { getFirebaseAppForClient } from '../utils/firebase';
 
+async function getKy() {
+  const { default: ky } = await import('ky'); // read here why this instead of importing on line 1 -> https://github.com/sindresorhus/ky/issues/322
+  return ky;
+}
+
 export const registerWithEmailPassword = async ({
   email,
   password,
@@ -8,7 +13,7 @@ export const registerWithEmailPassword = async ({
   lastName,
   institute
 }) => {
-  const { default: ky } = await import('ky'); // read here why this instead of importing on line 1 -> https://github.com/sindresorhus/ky/issues/322
+  const ky = await getKy();
   return ky.post('/api/auth/createParticipant', {
     json: {
       email,
@@ -21,7 +26,7 @@ export const registerWithEmailPassword = async ({
 };
 
 export const sendAccountVerificationEmail = async (email) => {
-  const { default: ky } = await import('ky'); // read here why this instead of importing on line 1 -> https://github.com/sindresorhus/ky/issues/322
+  const ky = await getKy();
   return ky.get(`/api/auth/verifyEmail?email=${email}`);
 };
 

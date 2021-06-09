@@ -1,45 +1,19 @@
 import { Container } from '../components/layout/index';
 import { Banner, HomeHeader, Download, Opportunities, News } from '../components/UI';
+import { useOpportunities } from '../hooks';
 
 import banner from '../assets/img/home/banner.jpg';
 
 const Home = () => {
-  const OPPORTUNITIES = [
-    {
-      title: 'Gent Zonnestad: presenteer op een infoavond',
-      description:
-        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
-      image: 'https://picsum.photos/200/300',
-      date: '	2018-12-21 tot en met 2019-12-21',
-      badge:
-        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
-    },
-    {
-      title: 'Nog een titel',
-      description:
-        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
-      image: 'https://picsum.photos/200/300',
-      date: '	2018-12-21 tot en met 2019-12-21',
-      badge:
-        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
-    },
-    {
-      title: 'Nog een titel',
-      description:
-        'Verkrijg de intermediate badge wanneer je één keer op een infoavond aanwezig bent, en op één infoavond de presentatie omtrent de groepsaankoop hebt gegeven. (Het presentatiemateriaal is reeds beschikbaar).',
-      image: 'https://picsum.photos/200/300',
-      date: '	2018-12-21 tot en met 2019-12-21',
-      badge:
-        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_3.png?alt=media'
-    }
-  ];
+  const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities();
+  // TODO handle error & show loading
 
   return (
     <>
       <Banner image={banner} />
       <HomeHeader />
       <Container>
-        <Opportunities opportunities={OPPORTUNITIES} />
+        <Opportunities opportunities={opportunities} />
         <News />
       </Container>
       <Download />

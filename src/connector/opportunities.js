@@ -1,23 +1,23 @@
-import { firestore } from './firebase';
-import { opportunityConverter } from '../models/Opportunity';
+async function getKy() {
+  const { default: ky } = await import('ky'); // read here why this instead of importing on line 1 -> https://github.com/sindresorhus/ky/issues/322
+  return ky;
+}
 
-const addOpportunity = (opportunity) => {
-  return;
-  // return firestore.collection('Opportunities').withConverter(opportunityConverter).add(opportunity);
+const addOpportunity = async (opportunity) => {
+  const ky = await getKy();
+  return ky.post('/api/opportunity', {
+    json: opportunity
+  });
 };
 
 const getOpportunities = async () => {
-  return [];
-  // return (
-  //   await firestore.collection('Opportunities').withConverter(opportunityConverter).get()
-  // ).docs.map((opp) => opp.data());
+  const ky = await getKy();
+  return ky.get('/api/opportunity');
 };
 
 const getOpportunityById = async (id) => {
-  return {};
-  // return (
-  //   await firestore.collection('Opportunities').doc(id).withConverter(opportunityConverter).get()
-  // ).data();
+  const ky = await getKy();
+  return ky.get(`/api/opportunity/${id}`);
 };
 
 export { getOpportunities, getOpportunityById, addOpportunity };

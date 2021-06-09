@@ -1,14 +1,15 @@
-/* eslint-disable react/prop-types */
 import Router from 'next/router';
-import { getReadableDate } from '../../utils/index';
 import { routes } from '../../constants';
 import { Container } from '../../components/layout/index';
 import { Card, Heading, Search } from '../../components/UI';
 import Map from '../../components/map/map';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
-import { getOpportunities } from '../../connector/opportunities';
+import { useOpportunities } from '../../hooks';
 
-const Opportunities = ({ opportunities }) => {
+const Opportunities = () => {
+  const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities();
+  // TODO handle error & show loading
+
   return (
     <>
       <Container>
@@ -24,17 +25,17 @@ const Opportunities = ({ opportunities }) => {
           </div>
 
           <article className="cards">
-            {opportunities.map((opp) => (
+            {opportunities.map((opportunity) => (
               <Card
-                onClick={() => Router.push(`${routes.OPPORTUNITIES}/${opp.id}`)}
-                key={opp.id}
-                id={opp.id}
-                badge={opp.badge}
-                image="https://picsum.photos/200/300"
-                title={opp.title}
-                description={opp.shortDescription}
-                date={opp.date}
-                alt={opp.alt ? opp.alt : opp.title}
+                onClick={() => Router.push(`${routes.OPPORTUNITIES}/${opportunity.id}`)}
+                key={opportunity.id}
+                id={opportunity.id}
+                badge={opportunity.pinImageUrl}
+                image={opportunity.oppImageUrl}
+                title={opportunity.title}
+                description={opportunity.shortDescription}
+                date={`${opportunity.beginDate} tot en met ${opportunity.endDate}`}
+                alt={opportunity.alt ? opportunity.alt : opportunity.title}
               />
             ))}
           </article>
@@ -88,20 +89,6 @@ const Opportunities = ({ opportunities }) => {
       </style>
     </>
   );
-};
-
-export const getStaticProps = async () => {
-  // Would be better if getOpportunities would be called somewhere globally (still as SSR data)
-  const opportunities = (await getOpportunities()).map((opp) => {
-    opp.beginDate = getReadableDate(opp.beginDate);
-    opp.endDate = getReadableDate(opp.endDate);
-    return { ...opp };
-  });
-
-  return {
-    props: { opportunities }
-    // revalidate: 900
-  };
 };
 
 export default Opportunities;

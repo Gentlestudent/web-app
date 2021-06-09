@@ -5,3 +5,5 @@ export { default as useInput } from './useInput';
 export { default as usePrivateRoute } from './usePrivateRoute';
 export { default as useAuthState } from './useAuthState';
 export { default as useProgressBar } from './useProgressBar';
+export { default as useOpportunities } from './useOpportunities';
+export { default as useOpportunity } from './useOpportunity';
