@@ -7,3 +7,5 @@ export { default as useAuthState } from './useAuthState';
 export { default as useProgressBar } from './useProgressBar';
 export { default as useOpportunities } from './useOpportunities';
 export { default as useOpportunity } from './useOpportunity';
+export { default as useNews } from './useNews';
+export { default as useNewsItem } from './useNewsItem';

@@ -1,4 +1,7 @@
 import { Sequelize } from 'sequelize';
+// import badge from './models/badge';
+// import issuer from './models/issuer';
+import news from './models/news';
 import opportunity from './models/opportunity';
 import participant from './models/participant';
 import participation from './models/participation';
@@ -15,13 +18,16 @@ const sqlClient = new Sequelize(
   }
 );
 
+// const Badge = sqlClient.define('Badge', badge);
+// const Issuer = sqlClient.define('Issuer', issuer);
+const News = sqlClient.define('News', news);
 const Opportunity = sqlClient.define('Opportunity', opportunity);
 const Participant = sqlClient.define('Participant', participant);
 const Participation = sqlClient.define('Participation', participation);
 Opportunity.belongsToMany(Participant, { through: Participation });
 Participant.belongsToMany(Opportunity, { through: Participation });
 
-export { Opportunity, Participant };
+export { News, Opportunity, Participant, Participation };
 
 // // sync models
 // (async () => {

@@ -1,10 +1,16 @@
+import { useRouter } from 'next/router';
 import { Heading, Button } from '../../components/UI';
 import { colors, spacers, breakpoints } from '../../assets/styles/constants';
 import { Container } from '../../components/layout/index';
 import banner from '../../assets/img/home/banner.jpg';
 import { routes } from '../../constants';
+import { useNewsItem } from '../../hooks';
 
 export default function News() {
+  const router = useRouter();
+  const [errorNews, loadingNews, news] = useNewsItem(Number(router.query.id) || null, {});
+  // TODO handle error & show loading
+
   return (
     <>
       <div className="news-wrapper">
@@ -12,29 +18,11 @@ export default function News() {
           <div className="news-content">
             <div className="article">
               <Button href={routes.NEWS} text="Terug naar overzicht" icon="arrow-left" reverse />
-              <Heading title="Titel van artikel komt hier terecht" level={1} />
+              <Heading title={news.title} level={1} />
               <div className="article-info">
-                <p>2018-05-25 | Lore Demedts</p>
+                <p>{`${news.published} | ${news.author}`}</p>
               </div>
-              <p className="article-text">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
-                veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
-                voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur
-                magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,
-                qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non
-                numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-                suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum
-                iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur,
-                vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
-              </p>
-              <p className="article-text">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
-                veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
-                voluptatem quia voluptas.
-              </p>
+              <p className="article-text">{news.longText}</p>
             </div>
             <div className="others">
               <div className="header">
@@ -71,7 +59,7 @@ export default function News() {
           }
 
           .news-wrapper::before {
-            background: url(${banner});
+            background: url(${news.imageUrl || banner});
             background-repeat: no-repeat;
             background-size: cover;
             content: '';

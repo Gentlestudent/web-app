@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
+import Router from 'next/router';
 import { breakpoints } from '../../assets/styles/constants';
 import Button from './button';
 import Card from './card';
 import { spacers } from '../../assets/styles';
+import { routes } from '../../constants';
 
 const Opportunities = ({ opportunities }) => {
   return (
@@ -11,6 +13,7 @@ const Opportunities = ({ opportunities }) => {
         <section className="cards">
           {opportunities.map((opportunity) => (
             <Card
+              onClick={() => Router.push(`${routes.OPPORTUNITIES}/${opportunity.id}`)}
               key={opportunity.id}
               id={opportunity.id}
               badge={opportunity.pinImageUrl}

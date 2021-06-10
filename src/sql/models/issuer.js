@@ -1,7 +1,6 @@
 import { DataTypes } from 'sequelize';
 
 export default {
-  addressID: DataTypes.INTEGER,
   badgrId: DataTypes.INTEGER,
   email: DataTypes.STRING,
   institution: DataTypes.STRING,
