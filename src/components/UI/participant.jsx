@@ -3,38 +3,32 @@ import Icon from './icon';
 import { colors } from '../../assets/styles/constants';
 
 const Paticipant = ({ participant, withButtons }) => {
-  const acceptParticipant = (data) => {
+  const acceptParticipant = () => {
     // TODO: accept
-    console.log('accept', data);
+    console.log('accept', participant);
   };
 
-  const denyParticipant = (data) => {
-    // TODO: accept
-    console.log('deny', data);
+  const denyParticipant = () => {
+    // TODO: deny
+    console.log('deny', participant);
   };
 
   return (
     <>
       <div className="participant">
-        <p>02/03/2021</p>
+        <p>
+          {new Intl.DateTimeFormat('nl-BE').format(new Date(participant.Participation.createdAt))}
+        </p>
         <div className="participant__img" />
         <p className="partcipant__name">{participant.name}</p>
         <p className="participant__email">{participant.email}</p>
         <p className="participant__institution">{participant.institute}</p>
         {withButtons && (
           <div className="participant__buttons">
-            <button
-              type="button"
-              className="button button--accept"
-              onClick={() => acceptParticipant(participant)}
-            >
+            <button type="button" className="button button--accept" onClick={acceptParticipant}>
               <Icon name="check" />
             </button>
-            <button
-              type="button"
-              className="button button--decline"
-              onClick={() => denyParticipant(participant)}
-            >
+            <button type="button" className="button button--decline" onClick={denyParticipant}>
               <Icon name="times" />
             </button>
           </div>

@@ -7,6 +7,8 @@ function useOpportunity(id, initialOpportunity = null) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (!id) return;
+
     (async () => {
       try {
         setLoading(true);

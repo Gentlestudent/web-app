@@ -1,18 +1,13 @@
-import { DataTypes, literal } from 'sequelize';
-import sqlClient from '../sqlClient';
+import { DataTypes } from 'sequelize';
 
-const Opportunity = sqlClient.define('Opportunity', {
-  // id: DataTypes.STRING,
-  addressId: DataTypes.STRING,
+export default {
   authority: DataTypes.INTEGER,
-  badgeId: DataTypes.STRING,
   beginDate: DataTypes.STRING,
   category: DataTypes.INTEGER,
   contact: DataTypes.STRING,
   difficulty: DataTypes.INTEGER,
   endDate: DataTypes.STRING,
   international: DataTypes.BOOLEAN,
-  issuerId: DataTypes.STRING,
   longDescription: DataTypes.TEXT,
   shortDescription: DataTypes.STRING,
   moreInfo: DataTypes.STRING,
@@ -21,15 +16,12 @@ const Opportunity = sqlClient.define('Opportunity', {
   pinImageUrl: DataTypes.STRING,
   title: DataTypes.STRING,
   website: DataTypes.STRING,
-  createdAt: {
-    allowNull: false,
-    type: DataTypes.DATE,
-    defaultValue: literal('CURRENT_TIMESTAMP')
-  // }, // updatedAt ON UPDATE doesn't work on mssql
-  // updatedAt: {
-  //   allowNull: false,
-  //   type: 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
-  }
-});
-
-export default Opportunity;
+  addressBus: DataTypes.STRING,
+  addressCity: DataTypes.STRING,
+  addressCountry: DataTypes.STRING,
+  addressHousenumber: DataTypes.INTEGER,
+  addressLatitude: DataTypes.FLOAT,
+  addressLongitude: DataTypes.FLOAT,
+  addressPostalcode: DataTypes.INTEGER,
+  addressStreet: DataTypes.STRING
+};

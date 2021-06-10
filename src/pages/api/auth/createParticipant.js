@@ -1,6 +1,6 @@
 import { sendEmailVerification } from '../../../utils/postmark';
 import { getFirebaseAppForServer } from '../../../utils/firebaseServer';
-import Participant from '../../../sql/models/participant';
+import { Participant } from '../../../sql/sqlClient';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(404).end();

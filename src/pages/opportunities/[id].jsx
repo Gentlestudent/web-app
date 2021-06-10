@@ -8,45 +8,44 @@ import { useOpportunity } from '../../hooks';
 const Opportunity = () => {
   const router = useRouter();
   const [errorOpportunity, loadingOpportunity, opportunity] = useOpportunity(
-    Number(router.query.id),
+    Number(router.query.id) || null,
     {}
   );
   // TODO handle error & show loading
 
   // TODO: get participants for opportunity detail (with certain roles only)
-  const newParticipants = [
-    {
-      img: 'empty',
-      date: '02/03/2021',
-      email: 'john.doe@gmail.com',
-      name: 'John Doe',
-      institute: 'Arteveldehogeschool'
+  const [newParticipants, acceptedParticipants] = (opportunity.Participants || []).reduce(
+    // status 0 = new
+    // status 1 = accepted
+    // status 2 = refused
+    // status 3 = finished
+    (accumulator, participant) => {
+      if (participant.Participation.status === 0) {
+        return [[...accumulator[0], participant], accumulator[1]];
+      }
+      if (participant.Participation.status === 1) {
+        return [accumulator[0], [...accumulator[1], participant]];
+      }
+      // if (participant.Participation.status === 2) {
+      //   return [accumulator[0], [...accumulator[1], participant]];
+      // }
+      // if (participant.Participation.status === 3) {
+      //   return [accumulator[0], [...accumulator[1], participant]];
+      // }
+      return accumulator;
     },
-    {
-      img: 'empty',
-      date: '02/03/2021',
-      email: 'jane.doe@gmail.com',
-      name: 'Jane Doe',
-      institute: 'Arteveldehogeschool'
-    }
-  ];
+    [[], []]
+  );
 
-  const acceptedParticipants = [
-    {
-      img: 'empty',
-      date: '02/03/2021',
-      email: 'john.doe@gmail.com',
-      name: 'John Doe',
-      institute: 'Arteveldehogeschool'
-    },
-    {
-      img: 'empty',
-      date: '02/03/2021',
-      email: 'jane.doe@gmail.com',
-      name: 'Jane Doe',
-      institute: 'Arteveldehogeschool'
-    }
-  ];
+  function getAddress() {
+    const {
+      addressStreet: street = '',
+      addressHousenumber: housenumber = '',
+      addressPostalcode: postalcode = '',
+      addressCity: city = ''
+    } = opportunity || {};
+    return `${street} ${housenumber}${(street || housenumber) && ', '}${postalcode} ${city}`;
+  }
 
   return (
     <>
@@ -103,7 +102,7 @@ const Opportunity = () => {
                 )}
                 <div>
                   <p className="info__label">Locatie</p>
-                  <p className="info__detail">Holstraat 66, 9000 Gent</p>
+                  <p className="info__detail">{getAddress()}</p>
                 </div>
 
                 <div>
@@ -117,9 +116,9 @@ const Opportunity = () => {
         <Heading title="Inschrijvingen" level={1} marginTop />
         <Heading title="Nieuwe inschrijvingen" level={2} />
         <div className="participants">
-          {newParticipants.length > 0 ? (
+          {newParticipants.length ? (
             newParticipants.map((participant) => (
-              <Participant key={participant.name} participant={participant} withButtons />
+              <Participant key={participant.id} participant={participant} withButtons />
             ))
           ) : (
             <p className="participants__empty">Geen nieuwe inschrijvingen.</p>
@@ -128,9 +127,9 @@ const Opportunity = () => {
 
         <Heading title="Geaccepteerde inschrijvingen" level={2} marginTop />
         <div className="participants">
-          {acceptedParticipants.length > 0 ? (
+          {acceptedParticipants.length ? (
             acceptedParticipants.map((participant) => (
-              <Participant key={participant.name} participant={participant} />
+              <Participant key={participant.id} participant={participant} />
             ))
           ) : (
             <p className="participants__empty">Nog geen geaccepteerde inschrijvingen.</p>

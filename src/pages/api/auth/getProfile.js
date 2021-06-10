@@ -1,4 +1,4 @@
-import Participant from '../../../sql/models/participant';
+import { Participant } from '../../../sql/sqlClient';
 // import Issuer from '../../../sql/models/issuer';
 // import Admin from '../../../sql/models/admin';
 

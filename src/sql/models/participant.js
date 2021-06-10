@@ -1,8 +1,6 @@
-import { DataTypes, literal } from 'sequelize';
-import sqlClient from '../sqlClient';
+import { DataTypes } from 'sequelize';
 
-const Participant = sqlClient.define('Participant', {
-  // id: DataTypes.STRING,
+export default {
   firebaseUid: DataTypes.STRING,
   email: DataTypes.STRING,
   institute: DataTypes.STRING,
@@ -11,16 +9,5 @@ const Participant = sqlClient.define('Participant', {
   lastName: DataTypes.STRING,
   firstName: DataTypes.STRING,
   notifApp: DataTypes.STRING,
-  notifEmail: DataTypes.STRING,
-  createdAt: {
-    allowNull: false,
-    type: DataTypes.DATE,
-    defaultValue: literal('CURRENT_TIMESTAMP')
-  // }, // updatedAt ON UPDATE doesn't work on mssql
-  // updatedAt: {
-  //   allowNull: false,
-  //   type: 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
-  }
-});
-
-export default Participant;
+  notifEmail: DataTypes.STRING
+};

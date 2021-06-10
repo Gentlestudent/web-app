@@ -1,11 +1,12 @@
-import Opportunity from '../../../sql/models/opportunity';
+import { Opportunity, Participant } from '../../../sql/sqlClient';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     let opportunity;
     try {
       opportunity = await Opportunity.findOne({
-        where: { id: Number(req.query.id) }
+        where: { id: Number(req.query.id) },
+        include: [Participant]
       });
     } catch (error) {
       console.error(error);

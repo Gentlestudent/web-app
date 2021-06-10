@@ -1,4 +1,4 @@
-import Opportunity from '../../../sql/models/opportunity';
+import { Opportunity } from '../../../sql/sqlClient';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
