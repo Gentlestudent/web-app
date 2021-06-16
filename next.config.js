@@ -1,3 +1,4 @@
+require('dotenv').config();
 const withOptimizedImages = require('next-optimized-images');
 const env = require('./environments')(process.env.NODE_ENV || 'development');
 

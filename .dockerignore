@@ -1,0 +1,4 @@
+node_modules
+/next
+environments/env.*.js
+!environments/env.example.js
