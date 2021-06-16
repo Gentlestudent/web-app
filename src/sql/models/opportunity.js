@@ -1,6 +1,14 @@
 import { DataTypes } from 'sequelize';
+import { nanoid } from 'nanoid';
 
 export default {
+  id: {
+    type: DataTypes.STRING(21),
+    allowNull: false,
+    defaultValue: nanoid,
+    unique: true,
+    primaryKey: true
+  },
   authority: DataTypes.INTEGER,
   beginDate: DataTypes.STRING,
   category: DataTypes.INTEGER,

@@ -8,7 +8,7 @@ import { useNewsItem } from '../../hooks';
 
 export default function News() {
   const router = useRouter();
-  const [errorNews, loadingNews, news] = useNewsItem(Number(router.query.id) || null, {});
+  const [errorNews, loadingNews, news] = useNewsItem(router.query.id || null, {});
   // TODO handle error & show loading
 
   return (

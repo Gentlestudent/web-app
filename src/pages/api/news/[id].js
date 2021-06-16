@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     let news;
     try {
       news = await News.findOne({
-        where: { id: Number(req.query.id) }
+        where: { id: req.query.id }
       });
     } catch (error) {
       console.error(error);

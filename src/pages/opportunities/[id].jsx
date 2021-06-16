@@ -8,7 +8,7 @@ import { useOpportunity } from '../../hooks';
 const Opportunity = () => {
   const router = useRouter();
   const [errorOpportunity, loadingOpportunity, opportunity] = useOpportunity(
-    Number(router.query.id) || null,
+    router.query.id || null,
     {}
   );
   // TODO handle error & show loading

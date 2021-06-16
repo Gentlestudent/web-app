@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     let opportunity;
     try {
       opportunity = await Opportunity.findOne({
-        where: { id: Number(req.query.id) },
+        where: { id: req.query.id },
         include: [Participant]
       });
     } catch (error) {
