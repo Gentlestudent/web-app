@@ -1,6 +1,6 @@
 import { sendEmailVerification } from '../../../utils/postmark';
 import { getFirebaseAppForServer } from '../../../utils/firebaseServer';
-import { Participant } from '../../../sql/sqlClient';
+import { User } from '../../../sql/sqlClient';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(404).end();
@@ -8,11 +8,11 @@ export default async function handler(req, res) {
   const { email, password, firstName, lastName, institute } = req.body;
 
   try {
-    const participantCount = await Participant.count({
+    const participantCount = await User.count({
       where: { email }
     });
     if (participantCount === 0) {
-      await Participant.create({ email, firstName, lastName, institute });
+      await User.create({ email, firstName, lastName, institute });
     } else {
       return res.status(400).end('PARTICIPANT_ALREADY_EXISTS');
     }

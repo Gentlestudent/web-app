@@ -17,7 +17,12 @@ const getOpportunities = async () => {
 
 const getOpportunityById = async (id) => {
   const ky = await getKy();
-  return ky.get(`/api/opportunity/${id}`);
+  const { getFirebaseToken } = await import('../utils/firebase');
+  return ky.get(`/api/opportunity/${id}`, {
+    headers: {
+      token: await getFirebaseToken()
+    }
+  });
 };
 
 export { getOpportunities, getOpportunityById, addOpportunity };

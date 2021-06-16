@@ -1,4 +1,4 @@
-import { Participant } from '../../../sql/sqlClient';
+import { User } from '../../../sql/sqlClient';
 // import Issuer from '../../../sql/models/issuer';
 // import Admin from '../../../sql/models/admin';
 
@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   const { id } = req.query;
 
   // get data from participant
-  const participant = await Participant.findOne({ where: { firebaseUid: id } });
+  const participant = await User.findOne({ where: { firebaseUid: id } });
   if (participant) {
     profile.role.participant = true;
     profile.participant = participant;

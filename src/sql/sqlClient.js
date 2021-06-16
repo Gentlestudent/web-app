@@ -3,8 +3,8 @@ import { Sequelize } from 'sequelize';
 // import issuer from './models/issuer';
 import news from './models/news';
 import opportunity from './models/opportunity';
-import participant from './models/participant';
 import participation from './models/participation';
+import user from './models/user';
 
 const sqlClient = new Sequelize(
   process.env.DATABASE_DATABASE,
@@ -22,18 +22,22 @@ const sqlClient = new Sequelize(
 // const Issuer = sqlClient.define('Issuer', issuer);
 const News = sqlClient.define('News', news);
 const Opportunity = sqlClient.define('Opportunity', opportunity);
-const Participant = sqlClient.define('Participant', participant);
 const Participation = sqlClient.define('Participation', participation);
-Opportunity.belongsToMany(Participant, { through: Participation });
-Participant.belongsToMany(Opportunity, { through: Participation });
+const User = sqlClient.define('User', user);
 
-export { News, Opportunity, Participant, Participation };
+Opportunity.belongsToMany(User, { through: Participation, as: 'participants' });
+User.belongsToMany(Opportunity, { through: Participation, as: 'opportunities' });
+
+Opportunity.belongsTo(User, { as: 'issuer' });
+
+export { News, Opportunity, Participation, User };
 
 // // sync models
 // (async () => {
 //   try {
-//     // await sqlClient.sync();
-//     await sqlClient.sync({ alter: true });
+//     await sqlClient.sync();
+//     // await sqlClient.sync({ alter: true });
+//     // await sqlClient.sync({ alter: true, force: true });
 //     console.info('sql sync successful');
 //   } catch (error) {
 //     console.error('sql sync error:', error);

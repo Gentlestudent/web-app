@@ -44,3 +44,9 @@ export const inputTypes = {
   EMAIL: 'email',
   URL: 'url'
 };
+
+export const roles = {
+  ADMIN: 'admin',
+  ISSUER: 'issuer',
+  PARTICIPANT: 'participant'
+};

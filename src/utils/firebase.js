@@ -19,4 +19,16 @@ const getFirebaseAppForClient = (() => {
   };
 })();
 
-export { getFirebaseAppForClient };
+async function getFirebaseToken() {
+  try {
+    const app = getFirebaseAppForClient();
+    const auth = app.auth();
+    const user = auth.currentUser;
+    return user?.getIdToken();
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export { getFirebaseAppForClient, getFirebaseToken };
