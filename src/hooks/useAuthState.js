@@ -47,7 +47,8 @@ export default function useAuthState() {
     };
   }, [auth]);
 
-  return useMemo(() => [state.loading, state.error, state.data, async () => setData(dispatch)], [
-    state
-  ]);
+  return useMemo(
+    () => [state.loading, state.error, state.data, async () => setData(dispatch)],
+    [state]
+  );
 }

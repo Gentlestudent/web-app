@@ -1,13 +1,30 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import HamburgerMenu from 'react-hamburger-menu';
+import { Container, NavLink } from './index';
 import { routes } from '../../constants';
 import { colors, breakpoints } from '../../assets/styles';
-import { Container, NavLink } from './index';
 import logo from '../../assets/img/logo.svg';
+import { useAuth } from '../../hooks';
+import hasRole from '../../utils/hasRole';
+import { getFirebaseAppForClient } from '../../utils/firebase';
 
 const Nav = () => {
   const [menu, setMenu] = useState(false);
+  const { isUserSignedIn, currentUser } = useAuth();
+
+  function handleDropdownMenuClick(event) {
+    event.preventDefault();
+    console.log('handleDropdownMenuClick');
+    // TODO create and show dropdown menu
+  }
+
+  function handleLogoutClick(event) {
+    event.preventDefault();
+    const app = getFirebaseAppForClient();
+    const auth = app.auth();
+    auth.signOut();
+  }
 
   return (
     <>
@@ -15,7 +32,7 @@ const Nav = () => {
         <Container>
           <div className={`nav-wrapper ${menu ? 'nav-wrapper-open' : ''}`}>
             <div className="nav-top">
-              <Link href="/">
+              <Link href={routes.HOME}>
                 <img src={logo} alt="logo" />
               </Link>
               <div className="nav-toggle">
@@ -38,21 +55,34 @@ const Nav = () => {
                 <NavLink onClick={() => setMenu(false)} href={routes.OPPORTUNITIES}>
                   Leerkansen
                 </NavLink>
+                {(!isUserSignedIn || !hasRole(currentUser, 'issuer')) && (
+                  <NavLink onClick={() => setMenu(false)} href={routes.ISSUER}>
+                    Word Issuer
+                  </NavLink>
+                )}
                 <NavLink onClick={() => setMenu(false)} href={routes.NEWS}>
                   Nieuws
                 </NavLink>
                 <NavLink onClick={() => setMenu(false)} href={routes.ABOUT}>
                   Over ons
                 </NavLink>
-                <NavLink onClick={() => setMenu(false)} href={routes.ISSUER}>
-                  Word Issuer
-                </NavLink>
-                <NavLink onClick={() => setMenu(false)} href={routes.LOGIN} isButton>
-                  Login
-                </NavLink>
-                <NavLink onClick={() => setMenu(false)} href={routes.REGISTER} isButton>
-                  Registreer
-                </NavLink>
+                {!isUserSignedIn ? (
+                  <>
+                    <NavLink onClick={() => setMenu(false)} href={routes.LOGIN} isButton>
+                      Login
+                    </NavLink>
+                    <NavLink onClick={() => setMenu(false)} href={routes.REGISTER} isButton>
+                      Registreer
+                    </NavLink>
+                  </>
+                ) : (
+                  <>
+                    <NavLink onClick={handleDropdownMenuClick}>
+                      {`Welkom ${currentUser.firstName || ''}!`}
+                    </NavLink>
+                    <NavLink onClick={handleLogoutClick}>Log uit</NavLink>
+                  </>
+                )}
               </ul>
             </div>
           </div>
