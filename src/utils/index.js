@@ -28,6 +28,10 @@ const getReadableDate = (timestamp) => {
   return `${date.getDate()} ${months[date.getMonth()]}`;
 };
 
+const getFullDate = (date) => {
+  return new Intl.DateTimeFormat('nl-BE').format(new Date(date));
+};
+
 const opportunityConverter = {
   toFirestore(values) {
     const opportunity = {
@@ -71,4 +75,4 @@ const opportunityConverter = {
   }
 };
 
-export { getReadableDate, opportunityConverter };
+export { getReadableDate, opportunityConverter, getFullDate };

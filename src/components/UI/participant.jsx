@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import Icon from './icon';
 import { colors } from '../../assets/styles/constants';
+import { getFullDate } from '../../utils';
 
 const Paticipant = ({ participant, withButtons }) => {
   const acceptParticipant = () => {
@@ -16,9 +17,7 @@ const Paticipant = ({ participant, withButtons }) => {
   return (
     <>
       <div className="participant">
-        <p>
-          {new Intl.DateTimeFormat('nl-BE').format(new Date(participant.Participation.createdAt))}
-        </p>
+        <p>{getFullDate(participant.Participation.createdAt)}</p>
         <div className="participant__img" />
         <p className="partcipant__name">{participant.name}</p>
         <p className="participant__email">{participant.email}</p>

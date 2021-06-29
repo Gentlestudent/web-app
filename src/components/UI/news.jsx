@@ -1,39 +1,33 @@
+import PropTypes from 'prop-types';
 import Heading from './heading';
 import Button from './button';
 import { colors } from '../../assets/styles/constants';
+import { getFullDate } from '../../utils';
 
-const News = () => {
+const News = ({ news = [] }) => {
   return (
     <>
       <article className="news">
         <div className="news-text">
           <Heading level={2} title="Nieuws" />
           <p>Zie wat Gentlestudent heeft te bieden en wat je mag verwachten in de toekomst</p>
-          <Button text="Wat is er nieuw?" icon="arrow-right" />
+          <Button text="Wat is er nieuw?" icon="arrow-right" href="/news" />
         </div>
         <div className="others">
           <div className="header">
             <Heading title="Lees meer" level={2} />
           </div>
           <ul className="news-list">
-            <li className="news-item">
-              <div>
-                <p className="date">15/09/2020</p>
-                <p className="title">Dit was Startevent 2020: verhalen met een hart</p>
-              </div>
-            </li>
-            <li className="news-item">
-              <div>
-                <p className="date">15/09/2020</p>
-                <p className="title">Dit was Startevent 2020: verhalen met een hart</p>
-              </div>
-            </li>
-            <li className="news-item">
-              <div>
-                <p className="date">15/09/2020</p>
-                <p className="title">Dit was Startevent 2020: verhalen met een hart</p>
-              </div>
-            </li>
+            {news.map((newsItem) => {
+              return (
+                <li key={newsItem.id} className="news-item">
+                  <a href={`/news/${newsItem.id}`}>
+                    <p className="date">{getFullDate(newsItem.published)}</p>
+                    <p className="title">{newsItem.title}</p>
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </article>
@@ -73,6 +67,11 @@ const News = () => {
           .news-item .title {
             margin: 0;
             padding: 0.5rem 0 0;
+            color: black;
+          }
+
+          .news-item a {
+            text-decoration: none;
           }
 
           .others .header {
@@ -84,6 +83,8 @@ const News = () => {
   );
 };
 
-News.propTypes = {};
+News.propTypes = {
+  news: PropTypes.arrayOf(PropTypes.object)
+};
 
 export default News;

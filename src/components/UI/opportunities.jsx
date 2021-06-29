@@ -6,7 +6,7 @@ import Card from './card';
 import { spacers } from '../../assets/styles';
 import { routes } from '../../constants';
 
-const Opportunities = ({ opportunities }) => {
+const Opportunities = ({ opportunities = [] }) => {
   return (
     <>
       <article className="oppertunities">
