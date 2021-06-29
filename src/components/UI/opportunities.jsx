@@ -25,7 +25,7 @@ const Opportunities = ({ opportunities = [] }) => {
             />
           ))}
         </section>
-        <Button text="Bekijk meer" icon="arrow-right" primary />
+        <Button text="Bekijk meer" icon="arrow-right" primary href="/opportunities" />
       </article>
 
       <style jsx>

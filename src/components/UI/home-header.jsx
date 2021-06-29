@@ -13,7 +13,7 @@ const HomeHeader = () => {
             <div className="heading-text">
               <Heading level={1} title="Aan de slag met Gentlestudent" />
               <p className="heading-slogan">Verken je stad, help je buren.</p>
-              <Button text="Bekijk meer" icon="arrow-right" primary />
+              <Button text="Bekijk meer" icon="arrow-right" primary href="/opportunities" />
             </div>
             <div className="heading-video">
               <iframe
