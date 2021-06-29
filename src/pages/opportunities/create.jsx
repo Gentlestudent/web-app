@@ -65,10 +65,15 @@ const Create = () => {
     setActiveStep(activeStep - 1);
   };
 
-  const createOpportunity = (values, actions) => {
+  const createOpportunity = async (values, actions) => {
     if (activeStep === steps.length - 1) {
-      console.log(values);
-      // addOpportunity(values);
+      try {
+        await addOpportunity(values);
+        alert('opportunity created');
+        console.log('success');
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       setActiveStep(activeStep + 1);
       actions.setTouched({});
