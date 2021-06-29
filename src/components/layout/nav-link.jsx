@@ -20,7 +20,6 @@ const NavLink = ({ href, children, isButton, ...rest }) => {
       <style jsx>
         {`
           .link {
-            margin-left: 2.5rem;
             font-weight: 600;
             transition: 0.2s;
             font-size: 1.8rem;

@@ -8,16 +8,11 @@ import logo from '../../assets/img/logo.svg';
 import { useAuth } from '../../hooks';
 import hasRole from '../../utils/hasRole';
 import { getFirebaseAppForClient } from '../../utils/firebase';
+import { DropdownMenu } from '../UI';
 
 const Nav = () => {
   const [menu, setMenu] = useState(false);
   const { isUserSignedIn, currentUser } = useAuth();
-
-  function handleDropdownMenuClick(event) {
-    event.preventDefault();
-    console.log('handleDropdownMenuClick');
-    // TODO create and show dropdown menu
-  }
 
   function handleLogoutClick(event) {
     event.preventDefault();
@@ -77,9 +72,37 @@ const Nav = () => {
                   </>
                 ) : (
                   <>
-                    <NavLink onClick={handleDropdownMenuClick}>
-                      {`Welkom ${currentUser.firstName || ''}!`}
-                    </NavLink>
+                    <DropdownMenu>
+                      <DropdownMenu.Button>
+                        {`Welkom ${currentUser.firstName || ''}!`}
+                      </DropdownMenu.Button>
+                      <DropdownMenu.Content>
+                        <DropdownMenu.Option href="/profile">Profiel</DropdownMenu.Option>
+                        <DropdownMenu.Option href="/backpack" disabled>
+                          Backpack
+                        </DropdownMenu.Option>
+                        <DropdownMenu.Option href="/my-opportunities">
+                          Mijn leerkansen
+                        </DropdownMenu.Option>
+                        <DropdownMenu.Separator />
+                        <DropdownMenu.Option href="/created-opportunities" disabled>
+                          Aangemaakte leerkansen
+                        </DropdownMenu.Option>
+                        <DropdownMenu.Option href="/opportunities/create">
+                          Maak leerkans
+                        </DropdownMenu.Option>
+                        <DropdownMenu.Option href="/quest/create" disabled>
+                          Maak quest
+                        </DropdownMenu.Option>
+                        <DropdownMenu.Separator />
+                        <DropdownMenu.Option href="/admin/validate-issuer" disabled>
+                          Valideer issuer
+                        </DropdownMenu.Option>
+                        <DropdownMenu.Option href="/admin/validate-opportunity" disabled>
+                          Valideer leerkans
+                        </DropdownMenu.Option>
+                      </DropdownMenu.Content>
+                    </DropdownMenu>
                     <NavLink onClick={handleLogoutClick}>Log uit</NavLink>
                   </>
                 )}
@@ -117,6 +140,8 @@ const Nav = () => {
 
           .links {
             display: flex;
+            align-items: center;
+            grid-gap: 2.5rem;
           }
 
           .nav-toggle {
