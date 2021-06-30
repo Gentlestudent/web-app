@@ -40,7 +40,9 @@ const Login = () => {
     try {
       const userCredential = await auth.signInWithEmailAndPassword(email, password);
       if (!userCredential.user.emailVerified) {
-        await sendAccountVerificationEmail();
+        try {
+          await sendAccountVerificationEmail(userCredential.user.email);
+        } catch {}
         await auth.signOut();
         throw new Error('not-verified');
       }

@@ -11,9 +11,7 @@ export default async function handler(req, res) {
     const participantCount = await User.count({
       where: { email }
     });
-    if (participantCount === 0) {
-      await User.create({ email, firstName, lastName, institute });
-    } else {
+    if (participantCount !== 0) {
       return res.status(400).end('PARTICIPANT_ALREADY_EXISTS');
     }
   } catch (error) {
@@ -26,7 +24,7 @@ export default async function handler(req, res) {
     const app = await getFirebaseAppForServer();
     const auth = app.auth();
 
-    await auth.createUser({
+    const firebaseUser = await auth.createUser({
       email,
       emailVerified: false,
       firstName,
@@ -37,6 +35,8 @@ export default async function handler(req, res) {
       disabled: false
     });
 
+    await User.create({ email, firstName, lastName, institute, firebaseUid: firebaseUser.uid });
+
     link = await auth.generateEmailVerificationLink(email);
   } catch (error) {
     try {
@@ -46,7 +46,7 @@ export default async function handler(req, res) {
       );
       const originalError = JSON.parse(originalString);
       return res.status(originalError.error.code || 500).end(originalError.error.message);
-    } catch (error) {}
+    } catch {}
     return res.status(500).end(error.message);
   }
 

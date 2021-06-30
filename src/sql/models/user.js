@@ -19,5 +19,8 @@ export default {
   firstName: DataTypes.STRING,
   notifApp: DataTypes.STRING,
   notifEmail: DataTypes.STRING,
-  role: DataTypes.ENUM(Object.values(roles))
+  role: {
+    type: DataTypes.ENUM(Object.values(roles)),
+    defaultValue: roles.PARTICIPANT
+  }
 };

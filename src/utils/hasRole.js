@@ -16,7 +16,6 @@ function hasRole(user, role) {
     }
     // falls through
     default: {
-      console.warn(`permission requested for unhandled role '${role}', returning 'false'`);
       return false;
     }
   }

@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       );
       const originalError = JSON.parse(originalString);
       return res.status(originalError.error.code || 500).end(originalError.error.message);
-    } catch (error) {}
+    } catch {}
     return res.status(500).end(error.message);
   }
 
