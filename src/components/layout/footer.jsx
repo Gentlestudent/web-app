@@ -3,8 +3,12 @@ import { FooterLink, Container } from './index';
 import { colors, breakpoints, spacers } from '../../assets/styles/constants';
 import logo from '../../assets/img/footer-gentlestudent.svg';
 import { routes } from '../../constants';
+import { useAuth } from '../../hooks';
+import hasRole from '../../utils/hasRole';
 
 const Footer = () => {
+  const { isUserSignedIn, currentUser } = useAuth();
+
   return (
     <>
       <footer className="footer">
@@ -13,11 +17,17 @@ const Footer = () => {
             <nav className="footer-top">
               <ul className="menu">
                 <FooterLink href={routes.OPPORTUNITIES}>Leerkansen</FooterLink>
-                <FooterLink href={routes.ISSUER}>Word issuer</FooterLink>
+                {(!isUserSignedIn || !hasRole(currentUser, 'issuer')) && (
+                  <FooterLink href={routes.ISSUER}>Word issuer</FooterLink>
+                )}
                 <FooterLink href={routes.ABOUT}>Over ons</FooterLink>
                 <FooterLink href={routes.NEWS}>Nieuws</FooterLink>
-                <FooterLink href={routes.OPPORTUNITIES}>Inloggen</FooterLink>
-                <FooterLink href={routes.OPPORTUNITIES}>Registreer</FooterLink>
+                {!isUserSignedIn && (
+                  <>
+                    <FooterLink href={routes.LOGIN}>Inloggen</FooterLink>
+                    <FooterLink href={routes.REGISTER}>Registreer</FooterLink>
+                  </>
+                )}
               </ul>
             </nav>
             <div className="footer-bottom">

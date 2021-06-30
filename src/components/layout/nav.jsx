@@ -77,30 +77,40 @@ const Nav = () => {
                         {`Welkom ${currentUser.firstName || ''}!`}
                       </DropdownMenu.Button>
                       <DropdownMenu.Content>
-                        <DropdownMenu.Option href="/profile">Profiel</DropdownMenu.Option>
-                        <DropdownMenu.Option href="/backpack" disabled>
+                        <DropdownMenu.Option href={routes.user.PROFILE}>
+                          Profiel
+                        </DropdownMenu.Option>
+                        <DropdownMenu.Option href={routes.user.BACKPACK} disabled>
                           Backpack
                         </DropdownMenu.Option>
-                        <DropdownMenu.Option href="/my-opportunities">
+                        <DropdownMenu.Option href={routes.user.OPPORTUNITIES}>
                           Mijn leerkansen
                         </DropdownMenu.Option>
-                        <DropdownMenu.Separator />
-                        <DropdownMenu.Option href="/created-opportunities" disabled>
-                          Aangemaakte leerkansen
-                        </DropdownMenu.Option>
-                        <DropdownMenu.Option href="/opportunities/create">
-                          Maak leerkans
-                        </DropdownMenu.Option>
-                        <DropdownMenu.Option href="/quest/create" disabled>
-                          Maak quest
-                        </DropdownMenu.Option>
-                        <DropdownMenu.Separator />
-                        <DropdownMenu.Option href="/admin/validate-issuer" disabled>
-                          Valideer issuer
-                        </DropdownMenu.Option>
-                        <DropdownMenu.Option href="/admin/validate-opportunity" disabled>
-                          Valideer leerkans
-                        </DropdownMenu.Option>
+                        {hasRole(currentUser, 'issuer') && (
+                          <>
+                            <DropdownMenu.Separator />
+                            <DropdownMenu.Option href={routes.issuer.OPPORTUNITIES}>
+                              Aangemaakte leerkansen
+                            </DropdownMenu.Option>
+                            <DropdownMenu.Option href={routes.issuer.CREATE_OPPORTUNITY}>
+                              Maak leerkans
+                            </DropdownMenu.Option>
+                            <DropdownMenu.Option href={routes.issuer.CREATE_QUEST} disabled>
+                              Maak quest
+                            </DropdownMenu.Option>
+                          </>
+                        )}
+                        {hasRole(currentUser, 'admin') && (
+                          <>
+                            <DropdownMenu.Separator />
+                            <DropdownMenu.Option href={routes.admin.VALIDATE_ISSUER} disabled>
+                              Valideer issuer
+                            </DropdownMenu.Option>
+                            <DropdownMenu.Option href={routes.admin.VALIDATE_OPPORTUNITY} disabled>
+                              Valideer leerkans
+                            </DropdownMenu.Option>
+                          </>
+                        )}
                       </DropdownMenu.Content>
                     </DropdownMenu>
                     <NavLink onClick={handleLogoutClick}>Log uit</NavLink>

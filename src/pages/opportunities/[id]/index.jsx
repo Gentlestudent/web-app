@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
-import { routes } from '../../constants';
-import { Heading, Button, Participant } from '../../components/UI';
-import { colors, spacers, breakpoints } from '../../assets/styles/constants';
-import { Container } from '../../components/layout/index';
-import { useOpportunity } from '../../hooks';
+import { routes } from '../../../constants';
+import { Heading, Button, Participant } from '../../../components/UI';
+import { colors, spacers, breakpoints } from '../../../assets/styles/constants';
+import { Container } from '../../../components/layout/index';
+import { useOpportunity } from '../../../hooks';
 
 const Opportunity = () => {
   const router = useRouter();
