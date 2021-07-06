@@ -103,10 +103,10 @@ const Nav = () => {
                         {hasRole(currentUser, 'admin') && (
                           <>
                             <DropdownMenu.Separator />
-                            <DropdownMenu.Option href={routes.admin.VALIDATE_ISSUER} disabled>
+                            <DropdownMenu.Option href={routes.admin.VALIDATE_ISSUER}>
                               Valideer issuer
                             </DropdownMenu.Option>
-                            <DropdownMenu.Option href={routes.admin.VALIDATE_OPPORTUNITY} disabled>
+                            <DropdownMenu.Option href={routes.admin.VALIDATE_OPPORTUNITY}>
                               Valideer leerkans
                             </DropdownMenu.Option>
                           </>

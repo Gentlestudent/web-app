@@ -9,11 +9,17 @@ export default {
     unique: true,
     primaryKey: true
   },
-  badgrId: DataTypes.INTEGER,
-  email: DataTypes.STRING,
-  institution: DataTypes.STRING,
-  name: DataTypes.STRING,
+  institute: DataTypes.STRING,
+  longname: DataTypes.STRING,
   phonenumber: DataTypes.STRING,
   url: DataTypes.STRING,
-  validated: DataTypes.BOOL
+  street: DataTypes.STRING,
+  housenumber: DataTypes.STRING,
+  bus: DataTypes.STRING,
+  postalcode: DataTypes.STRING,
+  city: DataTypes.STRING,
+  validated: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  }
 };

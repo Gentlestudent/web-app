@@ -62,7 +62,7 @@ const NavLink = ({ href, children, isButton, ...rest }) => {
 };
 
 NavLink.propTypes = {
-  href: PropTypes.string.isRequired,
+  href: PropTypes.string,
   children: PropTypes.node.isRequired,
   isButton: PropTypes.bool
 };

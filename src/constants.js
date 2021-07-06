@@ -28,12 +28,14 @@ export const routes = {
     OPPORTUNITIES: '/issuer/opportunities',
     OPPORTUNITY: '/issuer/opportunities/[id]',
     CREATE_OPPORTUNITY: '/opportunities/create',
-    EDIT_OPPORTUNITY: '/opportunities/[id]/edit'
+    EDIT_OPPORTUNITY: '/opportunities/[id]/edit',
+    REGISTER: '/issuer/register'
   },
 
   /* admin */
   admin: {
-    VALIDATE_OPPORTUNITY: '/admin/opportunities/[id]/validate'
+    VALIDATE_OPPORTUNITY: '/admin/validate-opportunities',
+    VALIDATE_ISSUER: '/admin/validate-issuers'
   }
 };
 
