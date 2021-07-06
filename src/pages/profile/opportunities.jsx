@@ -3,9 +3,10 @@ import { Container } from '../../components/layout/index';
 import { Card, Heading } from '../../components/UI';
 import { routes } from '../../constants';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
-import { useOpportunities } from '../../hooks';
+import { useOpportunities, usePrivateRoute } from '../../hooks';
 
 const MyOpportunities = () => {
+  usePrivateRoute();
   const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities();
   // TODO handle error & show loading
 

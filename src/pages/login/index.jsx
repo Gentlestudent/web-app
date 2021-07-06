@@ -1,15 +1,13 @@
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { useRouter } from 'next/router';
-import { useEffect, useReducer } from 'react';
+import { useReducer } from 'react';
 
 import { Heading, Button, ErrorMessage } from '../../components/UI';
 import { Panel, InputField } from '../../components/form';
 import { Container } from '../../components/layout/index';
-import { useAuth } from '../../hooks';
+import { usePublicRoute } from '../../hooks';
 import fetchStatusReducer from '../../reducers/fetchStatusReducer';
 import { sendAccountVerificationEmail } from '../../connector/auth';
-import { routes } from '../../constants';
 import { getFirebaseAppForClient } from '../../utils/firebase';
 
 const SigninSchema = Yup.object().shape({
@@ -18,20 +16,8 @@ const SigninSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const { isUserSignedIn, currentUser } = useAuth();
-  const router = useRouter();
   const [state, dispatch] = useReducer(fetchStatusReducer, { loading: false });
-
-  useEffect(() => {
-    if (isUserSignedIn && currentUser?.isVerified) {
-      if (router.query.from) {
-        router.push(router.query.from);
-      } else {
-        // TODO change this
-        router.push(routes.HOME);
-      }
-    }
-  }, [isUserSignedIn, currentUser, router]);
+  usePublicRoute();
 
   const signin = async ({ email, password }) => {
     dispatch(['INIT']);

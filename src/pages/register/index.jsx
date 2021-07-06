@@ -6,7 +6,7 @@ import { Panel, InputField } from '../../components/form';
 import { registerWithEmailPassword, signOut } from '../../connector/auth';
 import { Heading, Button } from '../../components/UI';
 import { Container } from '../../components/layout/index';
-import { useAuth } from '../../hooks';
+import { useAuth, usePublicRoute } from '../../hooks';
 import fetchStatusReducer from '../../reducers/fetchStatusReducer';
 
 const RegisterSchema = Yup.object().shape({
@@ -18,6 +18,7 @@ const RegisterSchema = Yup.object().shape({
 });
 
 const Register = () => {
+  usePublicRoute();
   const { isSignedIn } = useAuth();
   const [state, dispatch] = useReducer(fetchStatusReducer, {});
 

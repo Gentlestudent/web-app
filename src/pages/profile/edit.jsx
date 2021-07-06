@@ -7,8 +7,7 @@ import { Heading, Button, ErrorMessage } from '../../components/UI';
 import { updateProfile } from '../../connector/users';
 import { updateParticipant } from '../../connector/participants';
 import { reauthenticate } from '../../connector/auth';
-import { useAuth } from '../../hooks';
-import usePrivateRoute from '../../hooks/usePrivateRoute';
+import { useAuth, usePrivateRoute } from '../../hooks';
 import fetchStatusReducer from '../../reducers/fetchStatusReducer';
 
 const EditProfile = () => {

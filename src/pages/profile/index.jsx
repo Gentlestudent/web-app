@@ -3,7 +3,7 @@ import { Heading, Button, BannerSplit } from '../../components/UI';
 import { colors, breakpoints } from '../../assets/styles/constants';
 import { routes } from '../../constants';
 import { useAuth } from '../../hooks';
-import usePrivateRoute from '../../hooks/usePrivateRoute';
+import { usePrivateRoute } from '../../hooks';
 
 const Profile = () => {
   const { currentUser } = useAuth();
@@ -14,15 +14,13 @@ const Profile = () => {
   const badges = [
     {
       title: 'Title',
-      img:
-        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_2.png?alt=media',
+      img: 'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_2.png?alt=media',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.'
     },
     {
       title: 'Title',
-      img:
-        'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_wereldburgerschap_1.png?alt=media',
+      img: 'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_wereldburgerschap_1.png?alt=media',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.'
     }
