@@ -13,6 +13,7 @@ import { Panel } from '../../components/form';
 import { Heading, Button } from '../../components/UI';
 import { Container } from '../../components/layout/index';
 import requiresRole from '../../hoc/requiresRole';
+import { roles } from '../../constants';
 
 const CreateSchema = [
   Yup.object().shape({
@@ -166,4 +167,4 @@ const Create = () => {
   );
 };
 
-export default requiresRole(Create, 'issuer');
+export default requiresRole(Create, roles.ISSUER);

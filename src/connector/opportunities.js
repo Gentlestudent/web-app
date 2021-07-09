@@ -10,8 +10,15 @@ const addOpportunity = async (opportunity) => {
   });
 };
 
-const getOpportunities = async () => {
+const getOpportunities = async ({ searchParams } = {}) => {
   const ky = await getKy();
+  if (searchParams) {
+    searchParams =
+      searchParams instanceof window.URLSearchParams
+        ? searchParams
+        : new window.URLSearchParams(searchParams);
+    return ky.get(`/api/opportunity?${searchParams.toString()}`);
+  }
   return ky.get('/api/opportunity');
 };
 
@@ -25,4 +32,16 @@ const getOpportunityById = async (id) => {
   });
 };
 
-export { getOpportunities, getOpportunityById, addOpportunity };
+async function approveOpportunity(id) {
+  const ky = await getKy();
+  const searchParams = new window.URLSearchParams({ id })
+  return ky.get(`/api/opportunity/approve?${searchParams.toString()}`);
+}
+
+async function denyOpportunity(id) {
+  const ky = await getKy();
+  const searchParams = new window.URLSearchParams({ id })
+  return ky.get(`/api/opportunity/deny?${searchParams.toString()}`);
+}
+
+export { getOpportunities, getOpportunityById, addOpportunity, approveOpportunity, denyOpportunity };

@@ -4,7 +4,11 @@ export default async function handler(req, res) {
   if (req.method === 'GET') {
     let opportunities;
     try {
-      opportunities = await Opportunity.findAll();
+      opportunities = await Opportunity.findAll({
+        where: {
+          ...(!!req.query.authority && { authority: req.query.authority })
+        }
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).end('ERROR_GETTING_OPPORTUNITIES_FROM_DB');

@@ -11,7 +11,7 @@ export default {
   },
   criteria: DataTypes.TEXT,
   description: DataTypes.TEXT,
-  image: DataTypes.STRING,
+  image: DataTypes.TEXT,
   name: DataTypes.STRING,
   type: DataTypes.STRING
 };

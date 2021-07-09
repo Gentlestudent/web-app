@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getOpportunities } from '../connector/opportunities';
 
-function useOpportunities(initialOpportunities = []) {
+function useOpportunities(options, initialOpportunities = []) {
   const [opportunities, setOpportunities] = useState(initialOpportunities);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -10,7 +10,7 @@ function useOpportunities(initialOpportunities = []) {
     (async () => {
       try {
         setLoading(true);
-        const opportunities = await (await getOpportunities()).json();
+        const opportunities = await (await getOpportunities(options)).json();
         setOpportunities(opportunities);
       } catch (error) {
         setError(error);
@@ -18,7 +18,7 @@ function useOpportunities(initialOpportunities = []) {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [options]);
 
   return [error, loading, opportunities];
 }

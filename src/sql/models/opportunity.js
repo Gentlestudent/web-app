@@ -9,7 +9,10 @@ export default {
     unique: true,
     primaryKey: true
   },
-  authority: DataTypes.INTEGER,
+  authority: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
   beginDate: DataTypes.STRING,
   category: DataTypes.INTEGER,
   contact: DataTypes.STRING,
