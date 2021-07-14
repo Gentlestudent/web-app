@@ -1,5 +1,5 @@
 function hasRole(user, role) {
-  switch (user.role) {
+  switch (user?.role) {
     case 'admin': {
       return true;
     }

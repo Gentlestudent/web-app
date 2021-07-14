@@ -2,13 +2,12 @@ import { Container, Grid } from '../../components/layout/index';
 import { Heading, Button, BannerSplit } from '../../components/UI';
 import { colors, breakpoints } from '../../assets/styles/constants';
 import { routes } from '../../constants';
-import { useAuth } from '../../hooks';
-import { usePrivateRoute } from '../../hooks';
+import { useAuth, usePrivateRoute } from '../../hooks';
+import { hasRole } from '../../utils';
 
 const Profile = () => {
   const { currentUser } = useAuth();
   usePrivateRoute();
-  const profile = currentUser?.participant;
 
   // TODO: get badges from database (not sure where this can be found in the current structure)
   const badges = [
@@ -26,33 +25,33 @@ const Profile = () => {
     }
   ];
 
+  const isAdmin = hasRole(currentUser, 'admin');
+  const isIssuer = !isAdmin && hasRole(currentUser, 'issuer');
+
   return (
     <>
       <BannerSplit>
         <div className="heading">
-          <Heading title={`${profile?.firstName} ${profile?.lastName}`} level={1} color="white" />
+          <Heading title={`${currentUser?.firstName} ${currentUser?.lastName}`} level={1} color="white" />
           <Button href={routes.user.EDIT_PROFILE} text="Bewerk profiel" icon="edit" white />
         </div>
         <div>
           <div className="text__item">
             <Heading title="Email" level={2} color="white" />
-            <p>{profile?.email}</p>
+            <p>{currentUser?.email}</p>
           </div>
           <div className="text__item">
             <Heading title="Organisatie/onderwijsinstelling" level={2} color="white" />
-            <p>{profile?.institute}</p>
+            <p>{currentUser?.institute}</p>
           </div>
 
-          {(currentUser?.role?.admin || currentUser?.role?.issuer) && (
+          {(hasRole(currentUser, 'issuer')) && (
             <div className="text__item">
               <Heading title="Rollen" level={2} color="white" />
               <p>
-                {/* eslint-disable-next-line no-nested-ternary */}
-                {currentUser.role.admin
-                  ? 'Admin'
-                  : currentUser.issuer.validated
-                  ? 'Gevalideerde issuer'
-                  : 'Issuer status aangevraagd'}
+                {isAdmin && 'Admin'}
+                {isIssuer && currentUser.issuer?.validated && 'Gevalideerde issuer'}
+                {isIssuer && !currentUser.issuer?.validated && 'Issuer status aangevraagd'}
               </p>
             </div>
           )}

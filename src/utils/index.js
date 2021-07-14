@@ -76,3 +76,4 @@ const opportunityConverter = {
 };
 
 export { getReadableDate, opportunityConverter, getFullDate };
+export { default as hasRole } from './hasRole';
