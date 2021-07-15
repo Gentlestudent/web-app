@@ -11,7 +11,8 @@ module.exports = (environment) => {
         DATABASE_USERNAME: fs.readFileSync('/run/secrets/DATABASE_USERNAME', 'utf8'),
         DATABASE_PASSWORD: fs.readFileSync('/run/secrets/DATABASE_PASSWORD', 'utf8'),
         DATABASE_HOST: fs.readFileSync('/run/secrets/DATABASE_HOST', 'utf8'),
-        POSTMARK_TOKEN: fs.readFileSync('/run/secrets/POSTMARK_TOKEN', 'utf8')
+        POSTMARK_TOKEN: fs.readFileSync('/run/secrets/POSTMARK_TOKEN', 'utf8'),
+        HOST_URL: fs.readFileSync('/run/secrets/HOST_URL', 'utf8')
       };
     } catch {
       console.log('secrets not found, skipping');
@@ -25,6 +26,7 @@ module.exports = (environment) => {
     DATABASE_USERNAME: process.env.DATABASE_USERNAME,
     DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
     DATABASE_HOST: process.env.DATABASE_HOST,
-    POSTMARK_TOKEN: process.env.POSTMARK_TOKEN
+    POSTMARK_TOKEN: process.env.POSTMARK_TOKEN,
+    HOST_URL: process.env.DATABASE_USERNAME
   };
 };

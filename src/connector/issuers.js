@@ -20,14 +20,14 @@ const getIssuers = async ({ searchParams } = {}) => {
       searchParams instanceof window.URLSearchParams
         ? searchParams
         : new window.URLSearchParams(searchParams);
-    return ky.get(`/api/issuers?${searchParams.toString()}`);
+    return ky.get(`/api/issuer?${searchParams.toString()}`);
   }
-  return ky.get('/api/issuers');
+  return ky.get('/api/issuer');
 };
 
 async function registerIssuer({ id, institute, longName, url, phonenumber }) {
   const ky = await getKy();
-  return ky.post('/api/issuers/register', {
+  return ky.post('/api/issuer/register', {
     json: { id, institute, longName, url, phonenumber }
   });
 }
@@ -35,13 +35,13 @@ async function registerIssuer({ id, institute, longName, url, phonenumber }) {
 async function approveIssuer(id) {
   const ky = await getKy();
   const searchParams = new window.URLSearchParams({ id })
-  return ky.get(`/api/issuers/approve?${searchParams.toString()}`);
+  return ky.get(`/api/issuer/approve?${searchParams.toString()}`);
 }
 
 async function denyIssuer(id) {
   const ky = await getKy();
   const searchParams = new window.URLSearchParams({ id })
-  return ky.get(`/api/issuers/deny?${searchParams.toString()}`);
+  return ky.get(`/api/issuer/deny?${searchParams.toString()}`);
 }
 
 export { getIssuerById, getIssuers, registerIssuer, approveIssuer, denyIssuer };

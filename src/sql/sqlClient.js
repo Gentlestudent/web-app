@@ -5,6 +5,7 @@ import news from './models/news';
 import opportunity from './models/opportunity';
 import participation from './models/participation';
 import user from './models/user';
+import assertion from './models/assertion';
 
 const sqlClient = new Sequelize(
   process.env.DATABASE_DATABASE,
@@ -24,6 +25,7 @@ const Opportunity = sqlClient.define('Opportunity', opportunity);
 const Participation = sqlClient.define('Participation', participation);
 const User = sqlClient.define('User', user);
 const Issuer = sqlClient.define('Issuer', issuer);
+const Assertion = sqlClient.define('Assertion', assertion);
 
 Opportunity.belongsToMany(User, { through: Participation, as: 'participants' });
 User.belongsToMany(Opportunity, { through: Participation, as: 'opportunities' });
@@ -33,7 +35,18 @@ Opportunity.belongsTo(Badge, { as: 'badge' });
 Issuer.belongsTo(User, { as: 'user' });
 Badge.belongsTo(Issuer, { as: 'issuer' });
 
-export { News, Opportunity, Participation, User, Issuer, Badge };
+Assertion.belongsTo(User, { as: 'recipient' });
+Assertion.belongsTo(Badge, { as: 'badge' });
+
+export {
+  News,
+  Opportunity,
+  Participation,
+  User,
+  Issuer,
+  Badge,
+  Assertion
+};
 
 // // sync models
 // (async () => {

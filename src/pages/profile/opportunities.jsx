@@ -7,7 +7,7 @@ import { useOpportunities, usePrivateRoute } from '../../hooks';
 
 const MyOpportunities = () => {
   usePrivateRoute();
-  const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities();
+  const [opportunitiesError, opportunitiesLoading, opportunities] = useOpportunities();
   // TODO handle error & show loading
 
   return (

@@ -14,5 +14,6 @@ module.exports = {
   DATABASE_USERNAME: '',
   DATABASE_PASSWORD: '',
   DATABASE_HOST: '',
-  POSTMARK_TOKEN: ''
+  POSTMARK_TOKEN: '',
+  HOST_URL: ''
 };
