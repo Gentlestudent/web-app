@@ -78,3 +78,4 @@ const opportunityConverter = {
 export { getReadableDate, opportunityConverter, getFullDate };
 export { default as hasRole } from './hasRole';
 export { default as saltedHash } from './saltedHash';
+export { default as getBase64AsDataUrl } from './getBase64AsDataUrl';

@@ -1,29 +1,16 @@
+import { useMemo } from 'react';
 import { Container, Grid } from '../../components/layout/index';
 import { Heading, Button, BannerSplit } from '../../components/UI';
 import { colors, breakpoints } from '../../assets/styles/constants';
 import { routes } from '../../constants';
-import { useAuth, usePrivateRoute } from '../../hooks';
-import { hasRole } from '../../utils';
+import { useAuth, usePrivateRoute, useAssertions } from '../../hooks';
+import { hasRole, getBase64AsDataUrl } from '../../utils';
 
 const Profile = () => {
   const { currentUser } = useAuth();
+  const options = useMemo(() => ({ searchParams: { recipient: currentUser?.id, includeBadge: true } }), [currentUser]);
+  const [assertionsError, assertionsLoading, assertions] = useAssertions(options);
   usePrivateRoute();
-
-  // TODO: get badges from database (not sure where this can be found in the current structure)
-  const badges = [
-    {
-      title: 'Title',
-      img: 'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_duurzaamheid_2.png?alt=media',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.'
-    },
-    {
-      title: 'Title',
-      img: 'https://firebasestorage.googleapis.com/v0/b/gentle-student.appspot.com/o/Pins%2Fpin_wereldburgerschap_1.png?alt=media',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.'
-    }
-  ];
 
   const isAdmin = hasRole(currentUser, 'admin');
   const isIssuer = !isAdmin && hasRole(currentUser, 'issuer');
@@ -62,16 +49,14 @@ const Profile = () => {
         <Container>
           <Heading title="Mijn badges" marginTop level={1} />
           <Grid>
-            {badges.map((badge) => (
-              <>
-                <div className="badge">
-                  <img src={badge.img} alt={badge.title} />
-                  <div>
-                    <Heading title={badge.title} level={2} />
-                    <p>{badge.description}</p>
-                  </div>
+            {assertions.map(assertion => (
+              <div key={assertion.id} className="badge">
+                <img src={getBase64AsDataUrl(assertion.badge.image)} alt={assertion.badge.name} />
+                <div>
+                  <Heading title={assertion.badge.name} level={2} />
+                  <p>{assertion.badge.description}</p>
                 </div>
-              </>
+              </div>
             ))}
             <div className="badge">
               <div>
