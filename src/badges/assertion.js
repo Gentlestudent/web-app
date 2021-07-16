@@ -1,7 +1,6 @@
 import { saltedHash } from '../utils';
 // import { featTypes } from '../constants';
-
-const frontendUrl = process.env.HOST_URL;
+import { frontendUrl } from '../constants';
 
 function buildAssertion(assertion) {
   const { hash: identity, salt } = saltedHash(assertion.recipient.email);

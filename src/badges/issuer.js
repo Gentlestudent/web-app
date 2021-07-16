@@ -1,4 +1,4 @@
-const frontendUrl = process.env.HOST_URL;
+import { frontendUrl } from '../constants';
 
 function buildIssuer(issuer) {
   return {

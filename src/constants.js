@@ -74,3 +74,4 @@ export const errorMessages = {
 };
 
 export const jwtSecret = process.env.JWT_SECRET;
+export const frontendUrl = process.env.HOST_URL;

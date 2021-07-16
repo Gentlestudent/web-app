@@ -3,10 +3,8 @@ import jwt from 'jsonwebtoken';
 import { nanoid } from 'nanoid';
 import { sendEmailVerification } from '../../../utils/postmark';
 import { User } from '../../../sql/sqlClient';
-import { errorCodes, jwtSecret } from '../../../constants';
+import { errorCodes, jwtSecret, frontendUrl } from '../../../constants';
 import { createApiErrorMessage } from '../../../utils';
-
-const frontendUrl = process.env.HOST_URL;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(404).end();
