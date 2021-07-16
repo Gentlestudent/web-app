@@ -1,6 +1,12 @@
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { nanoid } from 'nanoid';
 import { sendEmailVerification } from '../../../utils/postmark';
-import { getFirebaseAppForServer } from '../../../utils/firebaseServer';
 import { User } from '../../../sql/sqlClient';
+import { errorCodes, jwtSecret } from '../../../constants';
+import { createApiErrorMessage } from '../../../utils';
+
+const frontendUrl = process.env.HOST_URL;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(404).end();
@@ -12,53 +18,44 @@ export default async function handler(req, res) {
       where: { email }
     });
     if (participantCount !== 0) {
-      return res.status(400).end('PARTICIPANT_ALREADY_EXISTS');
+      return res.status(400).json(createApiErrorMessage(errorCodes.PARTICIPANT_ALREADY_EXISTS));
     }
   } catch (error) {
     console.log(error);
-    return res.status(500).end('ERROR_CREATING_PARTICIPANT');
+    return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_CREATING_PARTICIPANT));
   }
 
-  let link;
-  try {
-    const app = await getFirebaseAppForServer();
-    const auth = app.auth();
+  const emailVerificationId = nanoid();
 
-    const firebaseUser = await auth.createUser({
+  try {
+    const hash = await bcrypt.hash(password, 12);
+    await User.create({
       email,
-      emailVerified: false,
       firstName,
       lastName,
-      displayName: `${firstName} ${lastName}`,
       institute,
-      password,
-      disabled: false
-    });
-
-    await User.create({ email, firstName, lastName, institute, firebaseUid: firebaseUser.uid });
-
-    link = await auth.generateEmailVerificationLink(email);
-  } catch (error) {
-    try {
-      const originalString = error.message.slice(
-        error.message.indexOf('Raw server response: ') + 22,
-        error.message.length - 1
-      );
-      const originalError = JSON.parse(originalString);
-      return res.status(originalError.error.code || 500).end(originalError.error.message);
-    } catch {}
-    return res.status(500).end(error.message);
-  }
-
-  try {
-    await sendEmailVerification({
-      to: email,
-      displayName: `${firstName} ${lastName}`,
-      verificationLink: link
+      password: hash,
+      emailVerificationId
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).end('ERROR_SENDING_EMAIL');
+    return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_CREATING_PARTICIPANT));
+  }
+
+  try {
+    const emailToken = jwt.sign(
+      { email },
+      jwtSecret,
+      { expiresIn: '1 day', jwtid: emailVerificationId }
+    );
+    await sendEmailVerification({
+      to: email,
+      displayName: `${firstName} ${lastName}`,
+      verificationLink: `${frontendUrl}/api/auth/verifyEmail?t=${emailToken}`
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_SENDING_EMAIL));
   }
 
   return res.send('ok');

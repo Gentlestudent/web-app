@@ -1,40 +1,41 @@
-import { sendEmailVerification } from '../../../utils/postmark';
-import { getFirebaseAppForServer } from '../../../utils/firebaseServer';
+import jwt from 'jsonwebtoken';
+import { User } from '../../../sql/sqlClient';
+import { errorCodes, jwtSecret } from '../../../constants';
+import { createApiErrorMessage } from '../../../utils';
 
 export default async function handler(req, res) {
-  if (req.method !== 'GET') return res.status(404).end();
+  if (req.method === 'GET') {
+    const token = req.query.t;
 
-  const { email } = req.query;
+    if (!token) {
+      return res.status(204).end();
+    }
 
-  let link;
-  let user;
-  try {
-    const app = getFirebaseAppForServer();
-    const auth = app.auth();
-    user = await auth.getUserByEmail(email);
-    link = await auth.generateEmailVerificationLink(email);
-  } catch (error) {
+    let decodedToken;
     try {
-      const originalString = error.message.slice(
-        error.message.indexOf('Raw server response: ') + 22,
-        error.message.length - 1
+      decodedToken = jwt.verify(token, jwtSecret);
+    } catch (error) {
+      if (error.name !== 'TokenExpiredError') {
+        console.log(error);
+      }
+      return res.status(401).json(createApiErrorMessage(errorCodes.EMAIL_VERIFICATION_TOKEN_EXPIRED));
+    }
+
+    try {
+      const [affectedRows] = await User.update(
+        { emailVerified: true, emailVerificationId: null },
+        { where: { email: decodedToken.email || '', emailVerificationId: decodedToken.jti || '' } }
       );
-      const originalError = JSON.parse(originalString);
-      return res.status(originalError.error.code || 500).end(originalError.error.message);
-    } catch {}
-    return res.status(500).end(error.message);
+      if (affectedRows === 0) {
+        return res.status(401).json(createApiErrorMessage(errorCodes.EMAIL_VERIFICATION_TOKEN_EXPIRED));
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_VERIFYING_EMAIL));
+    }
+
+    return res.send('<p>Your email was successfully verified, you can now <a href="/login">log in</a>.</p>');
   }
 
-  try {
-    await sendEmailVerification({
-      to: email,
-      displayName: user.displayName,
-      verificationLink: link
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).end('ERROR_SENDING_EMAIL');
-  }
-
-  return res.send('ok');
+  return res.status(404).end();
 }

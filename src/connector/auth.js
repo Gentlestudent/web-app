@@ -28,7 +28,7 @@ export const registerWithEmailPassword = async ({
 export const sendAccountVerificationEmail = async (email) => {
   const ky = await getKy();
   const searchParams = new window.URLSearchParams({ email });
-  return ky.get(`/api/auth/verifyEmail?${searchParams.toString()}`);
+  return ky.get(`/api/auth/requestEmailVerification?${searchParams.toString()}`);
 };
 
 export const reauthenticate = (email, password) => {

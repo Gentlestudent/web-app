@@ -10,8 +10,13 @@ export default {
     unique: true,
     primaryKey: true
   },
-  firebaseUid: DataTypes.STRING,
+  password: DataTypes.STRING,
   email: DataTypes.STRING,
+  emailVerified: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+  emailVerificationId: DataTypes.STRING(21),
   institute: DataTypes.STRING,
   profilePicture: DataTypes.STRING,
   name: DataTypes.STRING,
