@@ -17,6 +17,7 @@ export default {
     defaultValue: false
   },
   emailVerificationId: DataTypes.STRING(21),
+  sessionId: DataTypes.STRING(21),
   institute: DataTypes.STRING,
   profilePicture: DataTypes.STRING,
   name: DataTypes.STRING,

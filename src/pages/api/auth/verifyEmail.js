@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     try {
       decodedToken = jwt.verify(token, jwtSecret);
     } catch (error) {
-      if (error.name !== 'TokenExpiredError') {
+      if (error.name !== 'TokenExpiredError' && error.name !== 'JsonWebTokenError') {
         console.log(error);
       }
       return res.status(401).json(createApiErrorMessage(errorCodes.EMAIL_VERIFICATION_TOKEN_EXPIRED));

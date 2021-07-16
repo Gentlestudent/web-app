@@ -1,30 +1,37 @@
-import { getFirebaseAppForServer } from './firebaseServer';
+import jwt from 'jsonwebtoken';
 import { User } from '../sql/sqlClient';
+import { jwtSecret } from '../constants';
 
-async function verifyToken(token) {
-  if (!token) {
-    return {
-      authenticated: false
-    };
-  }
+async function verifyToken(req, res) {
+  const initial = req.headers.authorization;
+  const token = (initial || '').replace(/^Bearer /, '');
 
-  try {
-    const app = await getFirebaseAppForServer();
-    const auth = app.auth();
-    const decodedToken = await auth.verifyIdToken(token);
-    const user = await User.findOne({
-      where: { firebaseUid: decodedToken.user_id }
-    });
-    return {
-      decodedToken,
-      user,
-      authenticated: true
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      authenticated: false
-    };
+  const auth = {
+    decodedToken: null,
+    user: null,
+    authenticated: false
+  };
+  req.auth = auth;
+
+  if (token) {
+    try {
+      const decodedToken = jwt.verify(token, jwtSecret);
+      const user = await User.findOne({
+        where: {
+          email: decodedToken.email,
+          sessionId: decodedToken.jti
+        }
+      });
+      if (user) {
+        auth.decodedToken = decodedToken;
+        auth.user = user.toJSON();
+        auth.authenticated = true;
+      }
+    } catch (error) {
+      if (error.name !== 'TokenExpiredError' && error.name !== 'JsonWebTokenError') {
+        console.log(error);
+      }
+    }
   }
 }
 
