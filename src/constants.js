@@ -66,7 +66,8 @@ export const errorCodes = {
   ERROR_LOGGING_IN: 'ERROR_LOGGING_IN',
   ERROR_LOGGING_OUT: 'ERROR_LOGGING_OUT',
   EMAIL_ALREADY_VERIFIED: 'EMAIL_ALREADY_VERIFIED',
-  ERROR_UPDATING_USER: 'ERROR_UPDATING_USER'
+  ERROR_UPDATING_USER: 'ERROR_UPDATING_USER',
+  ERROR_GETTING_PARTICIPATIONS_FROM_DB: 'ERROR_GETTING_PARTICIPATIONS_FROM_DB'
 };
 
 export const errorMessages = {
@@ -80,7 +81,8 @@ export const errorMessages = {
   ERROR_LOGGING_IN: 'An unexpected error occurred while logging in.',
   ERROR_LOGGING_OUT: 'An unexpected error occurred while logging out.',
   EMAIL_ALREADY_VERIFIED: 'This user\'s email address has already been verified',
-  ERROR_UPDATING_USER: 'An unexpected error occurred while updating the user.'
+  ERROR_UPDATING_USER: 'An unexpected error occurred while updating the user.',
+  ERROR_GETTING_PARTICIPATIONS_FROM_DB: 'An unexpected error occurred while fetching the participations.'
 };
 
 export const jwtSecret = process.env.JWT_SECRET;

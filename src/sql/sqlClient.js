@@ -29,6 +29,8 @@ const Assertion = sqlClient.define('Assertion', assertion);
 
 Opportunity.belongsToMany(User, { through: Participation, as: 'participants' });
 User.belongsToMany(Opportunity, { through: Participation, as: 'opportunities' });
+Participation.belongsTo(User, { as: 'User' });
+Participation.belongsTo(Opportunity, { as: 'Opportunity' });
 
 Opportunity.belongsTo(Issuer, { as: 'issuer' });
 Opportunity.belongsTo(Badge, { as: 'badge' });

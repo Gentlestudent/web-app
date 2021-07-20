@@ -107,7 +107,7 @@ const Opportunity = () => {
 
                 <div>
                   <p className="info__label">Periode</p>
-                  <p className="info__detail">{`${opportunity.beginDate} tot en met ${opportunity.endDate}`}</p>
+                  <p className="info__detail">{`${opportunity.beginDate || '-'} tot en met ${opportunity.endDate || '-'}`}</p>
                 </div>
               </div>
             </div>

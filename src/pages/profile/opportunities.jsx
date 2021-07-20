@@ -1,13 +1,16 @@
 import Router from 'next/router';
+import { useMemo } from 'react';
 import { Container } from '../../components/layout/index';
 import { Card, Heading } from '../../components/UI';
 import { routes } from '../../constants';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
-import { useOpportunities, usePrivateRoute } from '../../hooks';
+import { useParticipations, usePrivateRoute, useAuth } from '../../hooks';
 
 const MyOpportunities = () => {
+  const { currentUser } = useAuth();
   usePrivateRoute();
-  const [opportunitiesError, opportunitiesLoading, opportunities] = useOpportunities();
+  const options = useMemo(() => ({ searchParams: { user: currentUser?.id } }), [currentUser]);
+  const [participationsError, participationsLoading, participations] = useParticipations(options);
   // TODO handle error & show loading
 
   return (
@@ -16,17 +19,17 @@ const MyOpportunities = () => {
         <>
           <Heading title="Leerkansen" level={1} marginTop />
           <article className="cards">
-            {opportunities.map((opportunity) => (
+            {participations.map((participation) => (
               <Card
-                onClick={() => Router.push(`${routes.OPPORTUNITIES}/${opportunity.id}`)}
-                key={opportunity.id}
-                id={opportunity.id}
-                badge={opportunity.pinImageUrl}
-                image={opportunity.oppImageUrl}
-                title={opportunity.title}
-                description={opportunity.shortDescription}
-                date={`${opportunity.beginDate} tot en met ${opportunity.endDate}`}
-                alt={opportunity.alt ? opportunity.alt : opportunity.title}
+                onClick={() => Router.push(`${routes.OPPORTUNITIES}/${participation.Opportunity.id}`)}
+                key={participation.Opportunity.id}
+                id={participation.Opportunity.id}
+                badge={participation.Opportunity.pinImageUrl}
+                image={participation.Opportunity.oppImageUrl}
+                title={participation.Opportunity.title}
+                description={participation.Opportunity.shortDescription}
+                date={`${participation.Opportunity.beginDate} tot en met ${participation.Opportunity.endDate}`}
+                alt={participation.Opportunity.alt ? participation.Opportunity.alt : participation.Opportunity.title}
               />
             ))}
           </article>
