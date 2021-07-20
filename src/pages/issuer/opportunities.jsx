@@ -1,12 +1,15 @@
 import Router from 'next/router';
+import { useMemo } from 'react';
 import { Container } from '../../components/layout/index';
 import { Card, Heading } from '../../components/UI';
 import { routes } from '../../constants';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
-import { useOpportunities } from '../../hooks';
+import { useOpportunities, useAuth } from '../../hooks';
 
 const MyOpportunities = () => {
-  const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities();
+  const { currentUser } = useAuth();
+  const options = useMemo(() => ({ searchParams: { issuerId: currentUser?.issuer?.id } }), [currentUser]);
+  const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities(options);
   // TODO handle error & show loading
 
   return (
