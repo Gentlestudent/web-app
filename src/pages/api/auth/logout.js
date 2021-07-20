@@ -16,7 +16,7 @@ export default async function handler(req, res) {
       await User.update({ sessionId: null }, { where: { id: user.id, sessionId: decodedToken.jti } })
     } catch (error) {
       console.log(error);
-      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_LOGGING_OUT));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
 
     return res.status(200).end();

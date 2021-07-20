@@ -43,7 +43,7 @@ export default async function handler(req, res) {
       await User.update({ sessionId }, { where: { id: user.id } })
     } catch (error) {
       console.log(error);
-      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_LOGGING_IN));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
 
     return res.status(200).end(newToken);

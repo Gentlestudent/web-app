@@ -34,7 +34,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.log(error);
-      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_UPDATING_USER));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.send('ok');
   }

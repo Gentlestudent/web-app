@@ -27,7 +27,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_DENYING_OPPORTUNITY));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.send('ok');
   }

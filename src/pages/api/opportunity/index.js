@@ -15,7 +15,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_GETTING_OPPORTUNITIES_FROM_DB));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.json(opportunities);
   }
@@ -58,7 +58,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_CREATING_OPPORTUNITY));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.status(204).end();
   }

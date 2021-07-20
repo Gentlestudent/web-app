@@ -33,7 +33,7 @@ export default async function handler(req, res) {
       assertions = builtAssertions;
     } catch (error) {
       console.error(error);
-      return req.status(500).json(createApiErrorMessage(errorCodes.ERROR_GETTING_ASSERTIONS_FROM_DB));
+      return req.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.json(assertions);
   }

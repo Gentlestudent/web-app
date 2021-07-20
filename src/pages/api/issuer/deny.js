@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return req.status(500).json(createApiErrorMessage(errorCodes.ERROR_DENYING_ISSUER));
+      return req.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.send('ok');
   }

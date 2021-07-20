@@ -33,7 +33,7 @@ export default async function handler(req, res) {
       }
     } catch (error) {
       console.log(error);
-      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_VERIFYING_EMAIL));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
 
     return res.send('<p>Your email was successfully verified, you can now <a href="/login">log in</a>.</p>');

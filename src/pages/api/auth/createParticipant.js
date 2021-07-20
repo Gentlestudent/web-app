@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     }
   } catch (error) {
     console.log(error);
-    return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_CREATING_PARTICIPANT));
+    return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
   }
 
   const emailVerificationId = nanoid();
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_CREATING_PARTICIPANT));
+    return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
   }
 
   try {
@@ -53,7 +53,7 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_SENDING_EMAIL));
+    return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
   }
 
   return res.send('ok');

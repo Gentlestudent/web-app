@@ -30,7 +30,7 @@ async function handler(req, res) {
       }
     } catch (error) {
       console.error(error);
-      return req.status(500).json(createApiErrorMessage(errorCodes.ERROR_GETTING_OPPORTUNITY_FROM_DB));
+      return req.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.json(opportunity);
   }

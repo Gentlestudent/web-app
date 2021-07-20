@@ -19,6 +19,6 @@ export default async function handler(req, res) {
     return res.json(buildIssuer(issuer));
   } catch (error) {
     console.error(error);
-    return req.status(500).json(createApiErrorMessage(errorCodes.ERROR_GETTING_ISSUER));
+    return req.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
   }
 }

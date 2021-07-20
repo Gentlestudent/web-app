@@ -68,7 +68,7 @@ export default async function handler(req, res) {
       })
     } catch (error) {
       console.error(error);
-      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_APPROVING_OPPORTUNITY));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
 
     let badgeClass
@@ -83,7 +83,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_APPROVING_OPPORTUNITY));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
 
     try {
@@ -97,7 +97,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_APPROVING_OPPORTUNITY));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.send('ok');
   }

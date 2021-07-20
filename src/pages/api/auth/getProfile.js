@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     issuer = await Issuer.findOne({ where: { userId: user?.id } });
   } catch (error) {
     console.error(error);
-    return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_GETTING_USER));
+    return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
   }
 
   return res.json({
