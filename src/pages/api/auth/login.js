@@ -31,7 +31,10 @@ export default async function handler(req, res) {
     const sessionId = nanoid();
 
     const newToken = jwt.sign(
-      { email },
+      {
+        email,
+        id: user.id
+      },
       jwtSecret,
       { expiresIn: '1 day', jwtid: sessionId }
     );

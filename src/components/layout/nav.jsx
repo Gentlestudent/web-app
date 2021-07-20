@@ -7,18 +7,19 @@ import { colors, breakpoints } from '../../assets/styles';
 import logo from '../../assets/img/logo.svg';
 import { useAuth } from '../../hooks';
 import hasRole from '../../utils/hasRole';
-import { getFirebaseAppForClient } from '../../utils/firebase';
 import { DropdownMenu } from '../UI';
+import { signOut } from '../../connector/auth';
+import loginEvents from '../../utils/loginEvents';
 
 const Nav = () => {
   const [menu, setMenu] = useState(false);
   const { isUserSignedIn, currentUser } = useAuth();
 
-  function handleLogoutClick(event) {
+  async function handleLogoutClick(event) {
     event.preventDefault();
-    const app = getFirebaseAppForClient();
-    const auth = app.auth();
-    auth.signOut();
+    await signOut();
+    window.localStorage.removeItem('token');
+    loginEvents.trigger('logout');
   }
 
   return (
@@ -79,9 +80,6 @@ const Nav = () => {
                       <DropdownMenu.Content>
                         <DropdownMenu.Option href={routes.user.PROFILE}>
                           Profiel
-                        </DropdownMenu.Option>
-                        <DropdownMenu.Option href={routes.user.BACKPACK} disabled>
-                          Backpack
                         </DropdownMenu.Option>
                         <DropdownMenu.Option href={routes.user.OPPORTUNITIES}>
                           Mijn leerkansen

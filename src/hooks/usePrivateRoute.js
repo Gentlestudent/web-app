@@ -12,7 +12,7 @@ export default function usePrivateRoute(pathname) {
       return;
     }
 
-    if (!isUserSignedIn || !currentUser?.isVerified) {
+    if (!isUserSignedIn || !currentUser?.emailVerified) {
       router.push({
         pathname: pathname || routes.LOGIN,
         query: { from: router.pathname }

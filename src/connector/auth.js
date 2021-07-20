@@ -1,5 +1,4 @@
 // import { auth, Auth } from './firebase';
-// import { getFirebaseAppForClient } from '../utils/firebase';
 
 import { getAuthenticatedKy, getPublicKy } from '../utils/getKy';
 
@@ -39,7 +38,17 @@ export const handleVerifyEmail = (actionCode) => {
 };
 // export const handleVerifyEmail = (actionCode) => auth.applyActionCode(actionCode);
 
-export const signOut = () => {
-  console.warn('TODO delete signOut');
+export const signIn = async ({ email, password } = {}) => {
+  const ky = await getPublicKy();
+  return ky.post('/api/auth/login', {
+    json: {
+      email,
+      password
+    }
+  });
 };
-// export const signOut = () => auth.signOut();
+
+export const signOut = async () => {
+  const ky = await getAuthenticatedKy();
+  return ky.get('/api/auth/logout');
+};

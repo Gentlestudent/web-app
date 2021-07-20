@@ -1,39 +1,58 @@
+import jwt from 'jsonwebtoken';
+import { nanoid } from 'nanoid';
 import { sendEmailVerification } from '../../../utils/postmark';
-import { getFirebaseAppForServer } from '../../../utils/firebaseServer';
+import { verifyToken } from '../../../utils/middleware';
+import { createApiErrorMessage, hasRole } from '../../../utils';
+import { User } from '../../../sql/sqlClient';
+import { roles, errorCodes, jwtSecret, frontendUrl } from '../../../constants';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(404).end();
 
+  await verifyToken(req, res);
+  const { user: authenticatedUser, authenticated } = req.auth;
+
+  if (!authenticated) {
+    return res.status(401).end();
+  }
+
   const { email } = req.query;
 
-  let link;
   let user;
   try {
-    const app = getFirebaseAppForServer();
-    const auth = app.auth();
-    user = await auth.getUserByEmail(email);
-    link = await auth.generateEmailVerificationLink(email);
+    user = await User.findOne({
+      where: { email }
+    });
   } catch (error) {
-    try {
-      const originalString = error.message.slice(
-        error.message.indexOf('Raw server response: ') + 22,
-        error.message.length - 1
-      );
-      const originalError = JSON.parse(originalString);
-      return res.status(originalError.error.code || 500).end(originalError.error.message);
-    } catch {}
-    return res.status(500).end(error.message);
+    console.log(error);
+    return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_SENDING_EMAIL));
+  }
+
+  if (user.emailVerified) {
+    return res.status(400).json(createApiErrorMessage(errorCodes.EMAIL_ALREADY_VERIFIED));
+  }
+
+  if (!hasRole(authenticatedUser, roles.ADMIN) && user.id !== authenticatedUser.id) {
+    return res.status(401).end();
   }
 
   try {
+    const emailVerificationId = nanoid();
+    const emailToken = jwt.sign(
+      { email },
+      jwtSecret,
+      { expiresIn: '1 day', jwtid: emailVerificationId }
+    );
+    const link = `${frontendUrl}/api/auth/verifyEmail?t=${emailToken}`;
+    await User.update({ emailVerificationId }, { where: { id: user.id } });
     await sendEmailVerification({
       to: email,
-      displayName: user.displayName,
+      displayName: `${user.firstName || ''} ${user.lastName || ''}`,
       verificationLink: link
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).end('ERROR_SENDING_EMAIL');
+    return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_SENDING_EMAIL));
   }
 
   return res.send('ok');

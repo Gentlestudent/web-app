@@ -7,8 +7,9 @@ import { Panel, InputField } from '../../components/form';
 import { Container } from '../../components/layout/index';
 import { usePublicRoute } from '../../hooks';
 import fetchStatusReducer from '../../reducers/fetchStatusReducer';
-import { sendAccountVerificationEmail } from '../../connector/auth';
-import { getFirebaseAppForClient } from '../../utils/firebase';
+import { signIn, signOut, sendAccountVerificationEmail } from '../../connector/auth';
+import { getProfile } from '../../connector/users';
+import loginEvents from '../../utils/loginEvents';
 
 const SigninSchema = Yup.object().shape({
   email: Yup.string().email('Ongeldig e-mail adres').required('Vul een e-mail adres in'),
@@ -21,19 +22,24 @@ const Login = () => {
 
   const signin = async ({ email, password }) => {
     dispatch(['INIT']);
-    const app = getFirebaseAppForClient();
-    const auth = app.auth();
     try {
-      const userCredential = await auth.signInWithEmailAndPassword(email, password);
-      if (!userCredential.user.emailVerified) {
+      const tokenResponse = await signIn({ email, password });
+      const token = await tokenResponse.text();
+      window.localStorage.setItem('token', token);
+      const { id } = JSON.parse(window.atob(token.split('.')[1]));
+      const userResponse = await getProfile(id);
+      const user = await userResponse.json();
+      if (!user.emailVerified) {
         try {
-          await sendAccountVerificationEmail(userCredential.user.email);
+          await sendAccountVerificationEmail(user.email);
         } catch {}
-        await auth.signOut();
+        await signOut();
         throw new Error('not-verified');
       }
       dispatch(['COMPLETE']);
+      loginEvents.trigger('login');
     } catch (error) {
+      console.log('error', error)
       dispatch(['ERROR', error]);
     }
   };

@@ -18,7 +18,8 @@ export default async function handler(req, res) {
       if (error.name !== 'TokenExpiredError' && error.name !== 'JsonWebTokenError') {
         console.log(error);
       }
-      return res.status(401).json(createApiErrorMessage(errorCodes.EMAIL_VERIFICATION_TOKEN_EXPIRED));
+      // return res.status(401).json(createApiErrorMessage(errorCodes.EMAIL_VERIFICATION_TOKEN_EXPIRED));
+      return res.send('<p>This token has expired, please request a new one.</p>');
     }
 
     try {
@@ -27,7 +28,8 @@ export default async function handler(req, res) {
         { where: { email: decodedToken.email || '', emailVerificationId: decodedToken.jti || '' } }
       );
       if (affectedRows === 0) {
-        return res.status(401).json(createApiErrorMessage(errorCodes.EMAIL_VERIFICATION_TOKEN_EXPIRED));
+        // return res.status(401).json(createApiErrorMessage(errorCodes.EMAIL_VERIFICATION_TOKEN_EXPIRED));
+        return res.send('<p>This token has expired, please request a new one.</p>');
       }
     } catch (error) {
       console.log(error);

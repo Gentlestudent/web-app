@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useReducer } from 'react';
-import { getFirebaseAppForClient } from '../utils/firebase';
 import { getProfile } from '../connector/users';
-import User from '../models/User';
 import fetchStatusReducer from '../reducers/fetchStatusReducer';
+import loginEvents from '../utils/loginEvents';
 
 const setError = (dispatch, error) => {
   dispatch(['ERROR', error]);
@@ -11,41 +10,43 @@ const setError = (dispatch, error) => {
 const setData = async (dispatch) => {
   dispatch(['INIT']);
 
-  const app = getFirebaseAppForClient();
-  const auth = app.auth();
-  const user = auth.currentUser;
   try {
-    let data = null;
-    if (user) {
-      const profile = await getProfile(user.uid);
-      const body = await profile.json();
-      data = Object.assign(new User(user), body);
-    }
-    dispatch(['COMPLETE', data]);
+    const token = window.localStorage.getItem('token');
+    const { id } = JSON.parse(window.atob(token.split('.')[1]));
+    const userResponse = await getProfile(id);
+    const user = await userResponse.json();
+    dispatch(['COMPLETE', user])
   } catch (error) {
     setError(dispatch, error);
   }
 };
 
 export default function useAuthState() {
-  const app = getFirebaseAppForClient();
-  const auth = app.auth();
-
   const [state, dispatch] = useReducer(fetchStatusReducer, {
-    loading: true,
-    data: auth.currentUser ? new User(auth.currentUser) : null
+    loading: true
   });
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(
-      () => setData(dispatch),
-      (error) => setError(dispatch, error)
-    );
+    setData(dispatch);
+  }, []);
+
+  useEffect(() => {
+    function handleLogin() {
+      setData(dispatch);
+    }
+
+    function handleLogout() {
+      dispatch(['COMPLETE', null]);
+    }
+
+    const unsubscribeLogin = loginEvents.subscribe('login', handleLogin);
+    const unsubscribeLogout = loginEvents.subscribe('logout', handleLogout);
 
     return () => {
-      unsubscribe();
-    };
-  }, [auth]);
+      unsubscribeLogin();
+      unsubscribeLogout();
+    }
+  }, []);
 
   return useMemo(
     () => [state.loading, state.error, state.data, async () => setData(dispatch)],

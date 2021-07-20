@@ -12,7 +12,7 @@ export default function usePublicRoute(pathname) {
       return;
     }
 
-    if (isUserSignedIn && currentUser?.isVerified) {
+    if (isUserSignedIn && currentUser?.emailVerified) {
       router.push({
         pathname: pathname || router.query.from || routes.HOME
       });

@@ -20,13 +20,8 @@ const getOpportunities = async ({ searchParams } = {}) => {
 };
 
 const getOpportunityById = async (id) => {
-  const ky = await getPublicKy();
-  const { getFirebaseToken } = await import('../utils/firebase');
-  return ky.get(`/api/opportunity/${id}`, {
-    headers: {
-      token: await getFirebaseToken()
-    }
-  });
+  const ky = await getAuthenticatedKy();
+  return ky.get(`/api/opportunity/${id}`);
 };
 
 async function approveOpportunity(id) {

@@ -3,7 +3,7 @@ import { useReducer } from 'react';
 import * as Yup from 'yup';
 import { Panel, InputField } from '../../components/form';
 
-import { registerWithEmailPassword, signOut } from '../../connector/auth';
+import { registerWithEmailPassword } from '../../connector/auth';
 import { Heading, Button } from '../../components/UI';
 import { Container } from '../../components/layout/index';
 import { useAuth, usePublicRoute } from '../../hooks';
@@ -38,10 +38,6 @@ const Register = () => {
     dispatch(['INIT']);
     try {
       await registerWithEmailPassword({ email, password, firstName, lastName, institute });
-
-      // sign out user
-      await signOut();
-
       dispatch(['COMPLETE']);
     } catch (err) {
       dispatch(['ERROR', err]);
