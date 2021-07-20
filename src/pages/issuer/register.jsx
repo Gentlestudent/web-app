@@ -13,12 +13,12 @@ const RegisterSchema = Yup.object().shape({
   institute: Yup.string().required('Voeg een organisatie of onderwijsinstelling toe'),
   longName: Yup.string(),
   url: Yup.string(),
-  phonenumber: Yup.string(),
-  street: Yup.string(),
-  housenumber: Yup.string(),
-  bus: Yup.string(),
-  postalcode: Yup.string(),
-  city: Yup.string()
+  phonenumber: Yup.string()
+  // street: Yup.string(),
+  // housenumber: Yup.string(),
+  // bus: Yup.string(),
+  // postalcode: Yup.string(),
+  // city: Yup.string()
 });
 
 const Register = () => {
@@ -64,12 +64,12 @@ const Register = () => {
             institute: '',
             longName: '',
             url: '',
-            phonenumber: '',
-            street: '',
-            housenumber: '',
-            bus: '',
-            postalcode: '',
-            city: ''
+            phonenumber: ''
+            // street: '',
+            // housenumber: '',
+            // bus: '',
+            // postalcode: '',
+            // city: ''
           }}
           validationSchema={RegisterSchema}
           onSubmit={handleSubmit}
@@ -95,11 +95,11 @@ const Register = () => {
                 label="Telefoonnummer"
                 placeholder="Telefoonnummer"
               />
-              <InputField name="street" type="text" label="Adres" placeholder="Straat" />
-              <InputField name="housenumber" type="text" placeholder="Huisnummer" />
-              <InputField name="bus" type="text" placeholder="Bus" />
-              <InputField name="postalcode" type="text" placeholder="Postcode" />
-              <InputField name="city" type="text" placeholder="Stad" />
+              {/* <InputField name="street" type="text" label="Straat" placeholder="Straat" />
+              <InputField name="housenumber" type="text" label="Huisnummer" placeholder="Huisnummer" />
+              <InputField name="bus" type="text" label="Bus" placeholder="Bus" />
+              <InputField name="postalcode" type="text" label="Postcode" placeholder="Postcode" />
+              <InputField name="city" type="text" label="Stad" placeholder="Stad" /> */}
               <Button text="Word issuer" type="submit" primary />
             </div>
           </Form>

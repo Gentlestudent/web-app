@@ -11,11 +11,11 @@ export default async function handler(req, res) {
         ...(!!req.body.longName && { longName: req.body.longName }),
         ...(!!req.body.url && { url: req.body.url }),
         ...(!!req.body.phonenumber && { phonenumber: req.body.phonenumber }),
-        ...(!!req.body.street && { street: req.body.street }),
-        ...(!!req.body.housenumber && { housenumber: req.body.housenumber }),
-        ...(!!req.body.bus && { bus: req.body.bus }),
-        ...(!!req.body.postalcode && { postalcode: req.body.postalcode }),
-        ...(!!req.body.city && { city: req.body.city }),
+        // ...(!!req.body.street && { street: req.body.street }),
+        // ...(!!req.body.housenumber && { housenumber: req.body.housenumber }),
+        // ...(!!req.body.bus && { bus: req.body.bus }),
+        // ...(!!req.body.postalcode && { postalcode: req.body.postalcode }),
+        // ...(!!req.body.city && { city: req.body.city }),
         userId: req.body.id
       });
     } catch (error) {
