@@ -1,10 +1,7 @@
 // import { firestore } from './firebase';
 // import { issuerConverter } from '../models/Issuer';
 
-async function getKy() {
-  const { default: ky } = await import('ky'); // read here why this instead of importing on line 1 -> https://github.com/sindresorhus/ky/issues/322
-  return ky;
-}
+import { getAuthenticatedKy } from '../utils/getKy';
 
 async function getIssuerById(id) {
   return {};
@@ -14,7 +11,7 @@ async function getIssuerById(id) {
 }
 
 const getIssuers = async ({ searchParams } = {}) => {
-  const ky = await getKy();
+  const ky = await getAuthenticatedKy();
   if (searchParams) {
     searchParams =
       searchParams instanceof window.URLSearchParams
@@ -26,20 +23,20 @@ const getIssuers = async ({ searchParams } = {}) => {
 };
 
 async function registerIssuer({ id, institute, longName, url, phonenumber }) {
-  const ky = await getKy();
+  const ky = await getAuthenticatedKy();
   return ky.post('/api/issuer/register', {
     json: { id, institute, longName, url, phonenumber }
   });
 }
 
 async function approveIssuer(id) {
-  const ky = await getKy();
+  const ky = await getAuthenticatedKy();
   const searchParams = new window.URLSearchParams({ id })
   return ky.get(`/api/issuer/approve?${searchParams.toString()}`);
 }
 
 async function denyIssuer(id) {
-  const ky = await getKy();
+  const ky = await getAuthenticatedKy();
   const searchParams = new window.URLSearchParams({ id })
   return ky.get(`/api/issuer/deny?${searchParams.toString()}`);
 }

@@ -1,17 +1,14 @@
-async function getKy() {
-  const { default: ky } = await import('ky'); // read here why this instead of importing on line 1 -> https://github.com/sindresorhus/ky/issues/322
-  return ky;
-}
+import { getAuthenticatedKy, getPublicKy } from '../utils/getKy';
 
 const addOpportunity = async (opportunity) => {
-  const ky = await getKy();
+  const ky = await getAuthenticatedKy();
   return ky.post('/api/opportunity', {
     json: opportunity
   });
 };
 
 const getOpportunities = async ({ searchParams } = {}) => {
-  const ky = await getKy();
+  const ky = await getPublicKy();
   if (searchParams) {
     searchParams =
       searchParams instanceof window.URLSearchParams
@@ -23,7 +20,7 @@ const getOpportunities = async ({ searchParams } = {}) => {
 };
 
 const getOpportunityById = async (id) => {
-  const ky = await getKy();
+  const ky = await getPublicKy();
   const { getFirebaseToken } = await import('../utils/firebase');
   return ky.get(`/api/opportunity/${id}`, {
     headers: {
@@ -33,13 +30,13 @@ const getOpportunityById = async (id) => {
 };
 
 async function approveOpportunity(id) {
-  const ky = await getKy();
+  const ky = await getAuthenticatedKy();
   const searchParams = new window.URLSearchParams({ id })
   return ky.get(`/api/opportunity/approve?${searchParams.toString()}`);
 }
 
 async function denyOpportunity(id) {
-  const ky = await getKy();
+  const ky = await getAuthenticatedKy();
   const searchParams = new window.URLSearchParams({ id })
   return ky.get(`/api/opportunity/deny?${searchParams.toString()}`);
 }

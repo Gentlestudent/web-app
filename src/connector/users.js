@@ -33,8 +33,11 @@
 
 //   return profile;
 // };
+
+import { getAuthenticatedKy } from '../utils/getKy';
+
 export const getProfile = async (id) => {
-  const { default: ky } = await import('ky'); // read here why this instead of importing on line 1 -> https://github.com/sindresorhus/ky/issues/322
+  const ky = await getAuthenticatedKy();
   return ky.get(`/api/auth/getProfile?id=${id}`);
 };
 
