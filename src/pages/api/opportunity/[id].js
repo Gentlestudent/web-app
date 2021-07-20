@@ -1,6 +1,7 @@
 import { Opportunity, Issuer, User } from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
-import { roles } from '../../../constants';
+import { roles, errorCodes } from '../../../constants';
+import { createApiErrorMessage } from '../../../utils';
 
 async function handler(req, res) {
   if (req.method === 'GET') {
@@ -29,7 +30,7 @@ async function handler(req, res) {
       }
     } catch (error) {
       console.error(error);
-      return res.status(500).end('ERROR_GETTING_OPPORTUNITY_FROM_DB');
+      return req.status(500).json(createApiErrorMessage(errorCodes.ERROR_GETTING_OPPORTUNITY_FROM_DB));
     }
     return res.json(opportunity);
   }

@@ -1,5 +1,7 @@
 import { Issuer, User } from '../../../sql/sqlClient';
 import { buildIssuer } from '../../../badges';
+import { createApiErrorMessage } from '../../../utils';
+import { errorCodes } from '../../../constants';
 
 export default async function handler(req, res) {
   const { id } = req.query;
@@ -17,6 +19,6 @@ export default async function handler(req, res) {
     return res.json(buildIssuer(issuer));
   } catch (error) {
     console.error(error);
-    return res.status(500).end('ERROR_GETTING_ISSUER');
+    return req.status(500).json(createApiErrorMessage(errorCodes.ERROR_GETTING_ISSUER));
   }
 }

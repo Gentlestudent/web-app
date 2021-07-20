@@ -1,4 +1,6 @@
 import { News } from '../../../sql/sqlClient';
+import { createApiErrorMessage } from '../../../utils';
+import { errorCodes } from '../../../constants';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
@@ -9,7 +11,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).end('ERROR_GETTING_NEWS_FROM_DB');
+      return req.status(500).json(createApiErrorMessage(errorCodes.ERROR_GETTING_NEWS_FROM_DB));
     }
     return res.json(news);
   }

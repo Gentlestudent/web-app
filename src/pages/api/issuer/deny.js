@@ -1,10 +1,20 @@
 import { Issuer } from '../../../sql/sqlClient';
+import { verifyToken } from '../../../utils/middleware';
+import { hasRole, createApiErrorMessage } from '../../../utils';
+import { roles, errorCodes } from '../../../constants';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
+    await verifyToken(req, res);
+    const { user, authenticated } = req.auth;
+
+    if (!authenticated || !hasRole(user, roles.ADMIN)) {
+      return res.status(401).end();
+    }
+
     const issuerId = req.query.id;
     if (!issuerId) {
-      return req.status(400).end('MISSING_ISSUER_ID');
+      return req.status(400).json(createApiErrorMessage(errorCodes.MISSING_ISSUER_ID));
     }
 
     try {
@@ -15,7 +25,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).end('ERROR_DENYING_ISSUER');
+      return req.status(500).json(createApiErrorMessage(errorCodes.ERROR_DENYING_ISSUER));
     }
     return res.send('ok');
   }

@@ -1,4 +1,4 @@
-import { Issuer } from '../../../sql/sqlClient';
+import { Opportunity } from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
 import { roles, errorCodes } from '../../../constants';
@@ -12,22 +12,22 @@ export default async function handler(req, res) {
       return res.status(401).end();
     }
 
-    const issuerId = req.query.id;
-    if (!issuerId) {
-      return req.status(400).json(createApiErrorMessage(errorCodes.MISSING_ISSUER_ID));
+    const opportunityId = req.query.id;
+    if (!opportunityId) {
+      return req.status(400).json(createApiErrorMessage(errorCodes.MISSING_OPPORTUNITY_ID));
     }
 
     try {
-      await Issuer.update({
-        validated: true
+      await Opportunity.update({
+        authority: 2
       }, {
         where: {
-          id: issuerId
+          id: opportunityId
         }
       });
     } catch (error) {
       console.error(error);
-      return req.status(500).json(createApiErrorMessage(errorCodes.ERROR_APPROVING_ISSUER));
+      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_DENYING_OPPORTUNITY));
     }
     return res.send('ok');
   }

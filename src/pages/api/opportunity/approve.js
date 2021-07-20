@@ -2,6 +2,9 @@ import { readFile } from 'fs';
 import { promisify } from 'util';
 import path from 'path';
 import { Opportunity, Badge } from '../../../sql/sqlClient';
+import { verifyToken } from '../../../utils/middleware';
+import { hasRole, createApiErrorMessage } from '../../../utils';
+import { roles, errorCodes } from '../../../constants';
 
 const readFileAsync = promisify(readFile);
 
@@ -44,9 +47,16 @@ function getBadgeImage(category, difficulty) {
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
+    await verifyToken(req, res);
+    const { user, authenticated } = req.auth;
+
+    if (!authenticated || !hasRole(user, roles.ADMIN)) {
+      return res.status(401).end();
+    }
+
     const opportunityId = req.query.id;
     if (!opportunityId) {
-      return req.status(400).end('MISSING_OPPORTUNITY_ID');
+      return req.status(400).json(createApiErrorMessage(errorCodes.MISSING_OPPORTUNITY_ID));
     }
 
     let opportunity
@@ -58,7 +68,7 @@ export default async function handler(req, res) {
       })
     } catch (error) {
       console.error(error);
-      return res.status(500).end('ERROR_APPROVING_OPPORTUNITY');
+      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_APPROVING_OPPORTUNITY));
     }
 
     let badgeClass
@@ -73,7 +83,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).end('ERROR_APPROVING_OPPORTUNITY');
+      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_APPROVING_OPPORTUNITY));
     }
 
     try {
@@ -87,7 +97,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).end('ERROR_APPROVING_OPPORTUNITY');
+      return res.status(500).json(createApiErrorMessage(errorCodes.ERROR_APPROVING_OPPORTUNITY));
     }
     return res.send('ok');
   }

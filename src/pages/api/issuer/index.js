@@ -1,7 +1,17 @@
 import { Issuer, User } from '../../../sql/sqlClient';
+import { verifyToken } from '../../../utils/middleware';
+import { hasRole, createApiErrorMessage } from '../../../utils';
+import { roles, errorCodes } from '../../../constants';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
+    await verifyToken(req, res);
+    const { user, authenticated } = req.auth;
+
+    if (!authenticated || !hasRole(user, roles.ADMIN)) {
+      return res.status(401).end();
+    }
+
     let issuers;
     try {
       issuers = await Issuer.findAll({
@@ -13,7 +23,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).end('ERROR_GETTING_ISSUER');
+      return req.status(500).json(createApiErrorMessage(errorCodes.ERROR_GETTING_ISSUER));
     }
     return res.json(issuers);
   }

@@ -1,21 +1,22 @@
 import { Assertion, User, Badge } from '../../../sql/sqlClient';
-// import { verifyToken } from '../../../utils/middleware';
+import { verifyToken } from '../../../utils/middleware';
+import { hasRole, createApiErrorMessage } from '../../../utils';
+import { roles, errorCodes } from '../../../constants';
 import { buildAssertion, buildBadge } from '../../../badges';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    // const { authenticated } = await verifyToken(req.headers.token);
+    await verifyToken(req, res);
+    const { user, authenticated } = req.auth;
 
-    // if (!authenticated) {
-    //   return res.status(401).end();
-    // }
-
-    // only allow users to fetch their own? + admins
+    if (!authenticated || !hasRole(user, roles.PARTICIPANT)) {
+      return res.status(401).end();
+    }
 
     let assertions;
     try {
       if (!req.query.recipient) {
-        return res.status(400).end('ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED');
+        return req.status(400).json(createApiErrorMessage(errorCodes.ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED));
       }
       const rawAssertions = await Assertion.findAll({
         where: { recipientId: req.query.recipient },
@@ -32,7 +33,7 @@ export default async function handler(req, res) {
       assertions = builtAssertions;
     } catch (error) {
       console.error(error);
-      return res.status(500).end('ERROR_GETTING_ASSERTIONS_FROM_DB');
+      return req.status(500).json(createApiErrorMessage(errorCodes.ERROR_GETTING_ASSERTIONS_FROM_DB));
     }
     return res.json(assertions);
   }

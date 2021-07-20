@@ -1,4 +1,7 @@
 import { News } from '../../../sql/sqlClient';
+import { verifyToken } from '../../../utils/middleware';
+import { hasRole, createApiErrorMessage } from '../../../utils';
+import { roles, errorCodes } from '../../../constants';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
@@ -7,11 +10,18 @@ export default async function handler(req, res) {
       news = await News.findAll();
     } catch (error) {
       console.error(error);
-      return res.status(500).end('ERROR_GETTING_NEWS_FROM_DB');
+      return req.status(500).json(createApiErrorMessage(errorCodes.ERROR_GETTING_NEWS_FROM_DB));
     }
     return res.json(news);
   }
   if (req.method === 'POST') {
+    await verifyToken(req, res);
+    const { user, authenticated } = req.auth;
+
+    if (!authenticated || !hasRole(user, roles.ADMIN)) {
+      return res.status(401).end();
+    }
+
     try {
       await News.create({
         author: req.body.author,
@@ -23,7 +33,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return res.status(500).end('ERROR_CREATING_NEWS');
+      return req.status(500).json(createApiErrorMessage(errorCodes.ERROR_CREATING_NEWS));
     }
     return res.status(204).end();
   }

@@ -1,14 +1,4 @@
-// import { firestore } from './firebase';
-// import { issuerConverter } from '../models/Issuer';
-
 import { getAuthenticatedKy } from '../utils/getKy';
-
-async function getIssuerById(id) {
-  return {};
-  // return (
-  //   await firestore.collection('Issuers').doc(id).withConverter(issuerConverter).get()
-  // ).data();
-}
 
 const getIssuers = async ({ searchParams } = {}) => {
   const ky = await getAuthenticatedKy();
@@ -41,4 +31,4 @@ async function denyIssuer(id) {
   return ky.get(`/api/issuer/deny?${searchParams.toString()}`);
 }
 
-export { getIssuerById, getIssuers, registerIssuer, approveIssuer, denyIssuer };
+export { getIssuers, registerIssuer, approveIssuer, denyIssuer };
