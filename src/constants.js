@@ -65,7 +65,8 @@ export const errorCodes = {
   LOGIN_INCORRECT_CREDENTIALS: 'LOGIN_INCORRECT_CREDENTIALS',
   ERROR_LOGGING_IN: 'ERROR_LOGGING_IN',
   ERROR_LOGGING_OUT: 'ERROR_LOGGING_OUT',
-  EMAIL_ALREADY_VERIFIED: 'EMAIL_ALREADY_VERIFIED'
+  EMAIL_ALREADY_VERIFIED: 'EMAIL_ALREADY_VERIFIED',
+  ERROR_UPDATING_USER: 'ERROR_UPDATING_USER'
 };
 
 export const errorMessages = {
@@ -78,7 +79,8 @@ export const errorMessages = {
   LOGIN_INCORRECT_CREDENTIALS: 'The login credentials do not match any known records.',
   ERROR_LOGGING_IN: 'An unexpected error occurred while logging in.',
   ERROR_LOGGING_OUT: 'An unexpected error occurred while logging out.',
-  EMAIL_ALREADY_VERIFIED: 'This user\'s email address has already been verified'
+  EMAIL_ALREADY_VERIFIED: 'This user\'s email address has already been verified',
+  ERROR_UPDATING_USER: 'An unexpected error occurred while updating the user.'
 };
 
 export const jwtSecret = process.env.JWT_SECRET;

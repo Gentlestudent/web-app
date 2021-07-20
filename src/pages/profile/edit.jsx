@@ -5,10 +5,10 @@ import { InputField, Panel } from '../../components/form';
 import { Container, Grid } from '../../components/layout/index';
 import { Heading, Button, ErrorMessage } from '../../components/UI';
 import { updateProfile } from '../../connector/users';
-import { updateParticipant } from '../../connector/participants';
-import { reauthenticate } from '../../connector/auth';
+// import { reauthenticate } from '../../connector/auth';
 import { useAuth, usePrivateRoute } from '../../hooks';
 import fetchStatusReducer from '../../reducers/fetchStatusReducer';
+import { hasRole } from '../../utils';
 
 const EditProfile = () => {
   const { currentUser, reload } = useAuth();
@@ -16,14 +16,15 @@ const EditProfile = () => {
   const router = useRouter();
   const [state, dispatch] = useReducer(fetchStatusReducer, { loading: false });
 
-  const getNotifInfo = (role) => {
-    if (role) {
-      if (role.admin)
-        return 'Bepaal hoe je meldingen krijgt wanneer organisaties een nieuwe leerkans aanmaken.';
-      if (role.participant)
-        return 'Bepaal hoe je meldingen krijgt wanneer je aanvraag om deel te nemen aan een leerkans gereviewed werd.';
-      if (role.issuer)
-        return 'Bepaal hoe je meldingen krijgt wanneer jouw leerkans werd goedgekeurd en wanneer studenten zich aanmelden aan een leerkans. ';
+  const getNotifInfo = (user) => {
+    if (hasRole(user, 'admin')) {
+      return 'Bepaal hoe je meldingen krijgt wanneer organisaties een nieuwe leerkans aanmaken.';
+    }
+    if (hasRole(user, 'issuer')) {
+      return 'Bepaal hoe je meldingen krijgt wanneer jouw leerkans werd goedgekeurd en wanneer studenten zich aanmelden aan een leerkans. ';
+    }
+    if (hasRole(user, 'participant')) {
+      return 'Bepaal hoe je meldingen krijgt wanneer je aanvraag om deel te nemen aan een leerkans gereviewed werd.';
     }
     return 'Bepaal hoe je meldingen krijgt.';
   };
@@ -31,14 +32,10 @@ const EditProfile = () => {
   const editProfile = async (values) => {
     dispatch(['INIT']);
     try {
-      // reauthenticate the user;
-      await reauthenticate(values);
+      // // reauthenticate the user;
+      // await reauthenticate(values);
 
-      // update firebase auth profile
       await updateProfile(values);
-
-      // update participant document
-      await updateParticipant(currentUser.id, values);
       reload();
       dispatch(['COMPLETE', {}]);
     } catch (err) {
@@ -49,8 +46,7 @@ const EditProfile = () => {
   const editNotifications = async (values) => {
     dispatch(['INIT']);
     try {
-      // update participant document
-      await updateParticipant(currentUser.id, values);
+      await updateProfile(values);
       reload();
       dispatch(['COMPLETE', {}]);
     } catch (err) {
@@ -78,10 +74,10 @@ const EditProfile = () => {
                   <Formik
                     enableReinitialize
                     initialValues={{
-                      email: currentUser?.participant?.email || '',
-                      firstName: currentUser?.participant?.firstName || '',
-                      lastName: currentUser?.participant?.lastName || '',
-                      institute: currentUser?.participant?.institute || ''
+                      email: currentUser?.email || '',
+                      firstName: currentUser?.firstName || '',
+                      lastName: currentUser?.lastName || '',
+                      institute: currentUser?.institute || ''
                     }}
                     onSubmit={(values) => {
                       editProfile(values);
@@ -121,11 +117,11 @@ const EditProfile = () => {
             <div className="edit__preferences">
               <Heading marginTop title="Meldingsvoorkeuren" level={2} />
               <ErrorMessage code={state.error?.code} padTop />
-              <p>{getNotifInfo(currentUser?.role)}</p>
+              <p>{getNotifInfo(currentUser)}</p>
               <Formik
                 initialValues={{
-                  notifEmail: currentUser?.participant?.notifEmail || false,
-                  notifApp: currentUser?.participant?.notifApp || false
+                  notifEmail: currentUser?.notifEmail || false,
+                  notifApp: currentUser?.notifApp || false
                 }}
                 onSubmit={(values) => {
                   editNotifications(values);

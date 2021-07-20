@@ -41,8 +41,11 @@ export const getProfile = async (id) => {
   return ky.get(`/api/auth/getProfile?id=${id}`);
 };
 
-export const updateProfile = async ({ email, name, password }) => {
-  console.warn('TODO updateProfile');
+export const updateProfile = async (values) => {
+  const ky = await getAuthenticatedKy();
+  return ky.patch('/api/auth/updateProfile', {
+    json: values
+  });
 
   // const user = auth.currentUser;
   // if (!user) return;
