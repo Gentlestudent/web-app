@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Container } from '../../components/layout/index';
@@ -27,6 +27,7 @@ const Register = () => {
   const options = useMemo(() => ({ searchParams: { userId: currentUser?.id } }), [currentUser]);
   const [errorIssuers, loadingIssuers, issuers] = useIssuers(options);
   // TODO handle error & show loading icon
+  const [registrationComplete, setRegistrationComplete] = useState(false);
 
   if (loadingIssuers) {
     return (
@@ -50,6 +51,7 @@ const Register = () => {
         id: currentUser?.id,
         ...values
       });
+      setRegistrationComplete(true);
     } catch (error) {
       console.error(error);
     }
@@ -59,51 +61,56 @@ const Register = () => {
     <Container>
       <Panel>
         <Heading title="Word issuer" level={1} color="black" />
-        <Formik
-          initialValues={{
-            institute: '',
-            longName: '',
-            url: '',
-            phonenumber: ''
-            // street: '',
-            // housenumber: '',
-            // bus: '',
-            // postalcode: '',
-            // city: ''
-          }}
-          validationSchema={RegisterSchema}
-          onSubmit={handleSubmit}
-        >
-          <Form>
-            <div className="asd">
-              <InputField
-                name="institute"
-                type="text"
-                label="Organisatie/Onderwijsinstelling"
-                placeholder="Bedrijfsnaam voor op badge"
-              />
-              <InputField
-                name="longName"
-                type="text"
-                label="Volledige bedijfsnaam"
-                placeholder="Volledige bedijfsnaam"
-              />
-              <InputField name="url" type="text" label="Website" placeholder="URL bedrijf" />
-              <InputField
-                name="phonenumber"
-                type="text"
-                label="Telefoonnummer"
-                placeholder="Telefoonnummer"
-              />
-              {/* <InputField name="street" type="text" label="Straat" placeholder="Straat" />
-              <InputField name="housenumber" type="text" label="Huisnummer" placeholder="Huisnummer" />
-              <InputField name="bus" type="text" label="Bus" placeholder="Bus" />
-              <InputField name="postalcode" type="text" label="Postcode" placeholder="Postcode" />
-              <InputField name="city" type="text" label="Stad" placeholder="Stad" /> */}
-              <Button text="Word issuer" type="submit" primary />
-            </div>
-          </Form>
-        </Formik>
+        { registrationComplete
+          ? <p>Registratie bevestigd.</p>
+          : (
+            <Formik
+              initialValues={{
+                institute: '',
+                longName: '',
+                url: '',
+                phonenumber: ''
+                // street: '',
+                // housenumber: '',
+                // bus: '',
+                // postalcode: '',
+                // city: ''
+              }}
+              validationSchema={RegisterSchema}
+              onSubmit={handleSubmit}
+            >
+              <Form>
+                <div className="asd">
+                  <InputField
+                    name="institute"
+                    type="text"
+                    label="Organisatie/Onderwijsinstelling"
+                    placeholder="Bedrijfsnaam voor op badge"
+                  />
+                  <InputField
+                    name="longName"
+                    type="text"
+                    label="Volledige bedijfsnaam"
+                    placeholder="Volledige bedijfsnaam"
+                  />
+                  <InputField name="url" type="text" label="Website" placeholder="URL bedrijf" />
+                  <InputField
+                    name="phonenumber"
+                    type="text"
+                    label="Telefoonnummer"
+                    placeholder="Telefoonnummer"
+                  />
+                  {/* <InputField name="street" type="text" label="Straat" placeholder="Straat" />
+                  <InputField name="housenumber" type="text" label="Huisnummer" placeholder="Huisnummer" />
+                  <InputField name="bus" type="text" label="Bus" placeholder="Bus" />
+                  <InputField name="postalcode" type="text" label="Postcode" placeholder="Postcode" />
+                  <InputField name="city" type="text" label="Stad" placeholder="Stad" /> */}
+                  <Button text="Word issuer" type="submit" primary />
+                </div>
+              </Form>
+            </Formik>
+            )
+        }
       </Panel>
     </Container>
   );

@@ -49,6 +49,7 @@ const Create = () => {
   const steps = ['Basis informatie', 'Datum & Contact', 'Locatie'];
   // const currentValidationSchema = validationSchema[activeStep];
   const [latLng, setLatLng] = useState({});
+  const [opportunityCreated, setOpportunityCreated] = useState(false);
 
   const renderStepContent = (step) => {
     switch (step) {
@@ -71,9 +72,8 @@ const Create = () => {
   const createOpportunity = async (values, actions) => {
     if (activeStep === steps.length - 1) {
       try {
-        alert('opportunity created');
-        console.log('success');
         await addOpportunity({ ...values, addressLongitude: latLng.longitude, addressLatitude: latLng.latitude });
+        setOpportunityCreated(true);
       } catch (error) {
         // TODO show error
         console.error(error);
@@ -99,55 +99,59 @@ const Create = () => {
 
             <Heading title="Nieuwe leerkans" />
 
-            <Formik
-              initialValues={{
-                // STEP ONE
-                title: '',
-                domain: '',
-                expectations: '',
-                level: '',
-                description: '',
+            { opportunityCreated
+              ? <p>De nieuwe leerkans is aangemaakt.</p>
+              : (
+                <Formik
+                  initialValues={{
+                    // STEP ONE
+                    title: '',
+                    domain: '',
+                    expectations: '',
+                    level: '',
+                    description: '',
 
-                // STEP TWO
-                website: '',
-                email: '',
+                    // STEP TWO
+                    website: '',
+                    email: '',
 
-                // STEP THREE
-                street: '',
-                number: '',
-                city: '',
-                postal: ''
-              }}
-              validationSchema={CreateSchema[activeStep]}
-              onSubmit={(values) => {
-                createOpportunity(values);
-              }}
-            >
-              <Form>
-                {renderStepContent(activeStep)}
+                    // STEP THREE
+                    street: '',
+                    number: '',
+                    city: '',
+                    postal: ''
+                  }}
+                  validationSchema={CreateSchema[activeStep]}
+                  onSubmit={(values, actions) => {
+                    createOpportunity(values, actions);
+                  }}
+                >
+                  <Form>
+                    {renderStepContent(activeStep)}
 
-                <div className="buttons">
-                  {activeStep !== 0 && (
-                    <Button
-                      onClick={handleBack}
-                      back
-                      reverse
-                      text="Vorige stap"
-                      icon="arrow-left"
-                      type="button"
-                    />
-                  )}
+                    <div className="buttons">
+                      {activeStep !== 0 && (
+                        <Button
+                          onClick={handleBack}
+                          reverse
+                          text="Vorige stap"
+                          icon="arrow-left"
+                          type="button"
+                        />
+                      )}
 
-                  <Button
-                    // disabled={isSubmitting}
-                    icon="arrow-right"
-                    text={activeStep === steps.length - 1 ? 'Project indienen' : 'Volgende stap'}
-                    type="submit"
-                    primary={activeStep === steps.length - 1}
-                  />
-                </div>
-              </Form>
-            </Formik>
+                      <Button
+                        // disabled={isSubmitting}
+                        icon="arrow-right"
+                        text={activeStep === steps.length - 1 ? 'Project indienen' : 'Volgende stap'}
+                        type="submit"
+                        primary={activeStep === steps.length - 1}
+                      />
+                    </div>
+                  </Form>
+                </Formik>
+                )
+            }
           </>
         </Panel>
       </Container>
