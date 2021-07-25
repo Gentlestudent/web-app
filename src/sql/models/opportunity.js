@@ -26,6 +26,7 @@ export default {
   participations: DataTypes.INTEGER,
   pinImageUrl: DataTypes.STRING,
   title: DataTypes.STRING,
+  expectations: DataTypes.TEXT,
   website: DataTypes.STRING,
   addressBus: DataTypes.STRING,
   addressCity: DataTypes.STRING,
