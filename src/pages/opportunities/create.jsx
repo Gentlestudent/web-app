@@ -48,6 +48,7 @@ const Create = () => {
   const [activeStep, setActiveStep] = useState(0);
   const steps = ['Basis informatie', 'Datum & Contact', 'Locatie'];
   // const currentValidationSchema = validationSchema[activeStep];
+  const [latLng, setLatLng] = useState({});
 
   const renderStepContent = (step) => {
     switch (step) {
@@ -56,7 +57,7 @@ const Create = () => {
       case 1:
         return <StepTwo />;
       case 2:
-        return <StepThree />;
+        return <StepThree setLatLng={setLatLng} />;
 
       default:
         return <div>Not Found</div>;
@@ -70,10 +71,11 @@ const Create = () => {
   const createOpportunity = async (values, actions) => {
     if (activeStep === steps.length - 1) {
       try {
-        await addOpportunity(values);
         alert('opportunity created');
         console.log('success');
+        await addOpportunity({ ...values, addressLongitude: latLng.longitude, addressLatitude: latLng.latitude });
       } catch (error) {
+        // TODO show error
         console.error(error);
       }
     } else {

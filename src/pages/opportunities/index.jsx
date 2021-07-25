@@ -21,7 +21,7 @@ const Opportunities = () => {
           </div>
 
           <div className="map-wrapper">
-            <Map />
+            <Map opportunities={opportunities} />
           </div>
 
           <article className="cards">

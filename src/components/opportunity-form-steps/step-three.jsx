@@ -1,7 +1,8 @@
 import { InputField } from '../form';
-import { spacers, breakpoints } from '../../assets/styles/constants';
+import { spacers, colors, breakpoints } from '../../assets/styles/constants';
+import Map from '../map/mapMarkerPicker';
 
-const StepOne = () => {
+const StepOne = ({ formik, setLatLng }) => {
   return (
     <>
       <div className="step-three__address">
@@ -15,6 +16,10 @@ const StepOne = () => {
         <InputField name="postal" type="number" label="Postcode" placeholder="Postcode" />
       </div>
 
+      <div className="step-three__map">
+        <Map onChange={setLatLng} />
+      </div>
+
       <style jsx>
         {`
           .step-three__address,
@@ -22,6 +27,11 @@ const StepOne = () => {
             display: grid;
             grid-template-columns: 2fr 1fr;
             grid-gap: ${spacers.medium};
+          }
+
+          .step-three__map {
+            background: ${colors.blueLight};
+            height: 50rem;
           }
 
           @media (max-width: ${breakpoints.small}) {
