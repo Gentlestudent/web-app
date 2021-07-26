@@ -9,7 +9,7 @@ import { approveIssuer, denyIssuer } from '../../connector/issuers';
 
 const ValidateIssuers = () => {
   const options = useMemo(() => ({ searchParams: { validated: false } }), []);
-  const [errorIssuers, loadingIssuers, issuers] = useIssuers(options, []);
+  const [errorIssuers, loadingIssuers, issuers, reloadIssuers] = useIssuers(options, []);
   // TODO handle error & add loading icon
 
   return (
@@ -21,7 +21,7 @@ const ValidateIssuers = () => {
           <div>Er zijn geen te valideren issuers.</div>
         )}
         <div className="list">
-          {issuers.map(issuer => <Issuer key={issuer.id} issuer={issuer} />)}
+          {issuers.map(issuer => <Issuer key={issuer.id} issuer={issuer} reloadIssuers={reloadIssuers} />)}
         </div>
       </Container>
 
@@ -38,8 +38,7 @@ const ValidateIssuers = () => {
   );
 };
 
-const Issuer = ({ issuer }) => {
-  const [hidden, setHidden] = useState(false);
+const Issuer = ({ issuer, reloadIssuers }) => {
   const [loading, setLoading] = useState(false);
   // TODO show loading state
 
@@ -47,7 +46,7 @@ const Issuer = ({ issuer }) => {
     try {
       setLoading(true);
       await approveIssuer(issuer.id);
-      setHidden(true);
+      reloadIssuers();
     } catch (error) {
       console.error(error);
       // TODO show error message
@@ -60,7 +59,7 @@ const Issuer = ({ issuer }) => {
     try {
       setLoading(true);
       await denyIssuer(issuer.id);
-      setHidden(true);
+      reloadIssuers();
     } catch (error) {
       console.error(error);
       // TODO show error message
@@ -100,7 +99,6 @@ const Issuer = ({ issuer }) => {
             background: ${colors.blueLight};
             width: 400px;
             padding: 4.5rem;
-            ${hidden ? 'display: none;' : ''}
           }
 
           dl {

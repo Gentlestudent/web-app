@@ -1,4 +1,4 @@
-import { Issuer } from '../../../sql/sqlClient';
+import { Issuer, User } from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
 import { roles, errorCodes } from '../../../constants';
@@ -23,6 +23,17 @@ export default async function handler(req, res) {
       }, {
         where: {
           id: issuerId
+        }
+      });
+      const issuer = await Issuer.findOne({
+        where: { id: issuerId },
+        attributes: ['userId']
+      });
+      await User.update({
+        role: 'issuer'
+      }, {
+        where: {
+          id: issuer.userId
         }
       });
     } catch (error) {

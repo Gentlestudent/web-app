@@ -5,6 +5,11 @@ function useIssuers(options, initialIssuers = []) {
   const [issuers, setIssuers] = useState(initialIssuers);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [__reload, setReload] = useState(false);
+
+  function reload() {
+    setReload(!__reload);
+  }
 
   useEffect(() => {
     (async () => {
@@ -18,9 +23,9 @@ function useIssuers(options, initialIssuers = []) {
         setLoading(false);
       }
     })();
-  }, [options]);
+  }, [options, __reload]);
 
-  return [error, loading, issuers];
+  return [error, loading, issuers, reload];
 }
 
 export default useIssuers;

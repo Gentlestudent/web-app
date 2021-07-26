@@ -60,7 +60,7 @@ const Opportunity = ({ opportunity, reloadOpportunities }) => {
   //   try {
   //     setLoading(true);
   //     await denyOpportunity(opportunity.id);
-  //     setHidden(true);
+  //     reloadOpportunities();
   //   } catch (error) {
   //     console.error(error);
   //     // TODO show error message
