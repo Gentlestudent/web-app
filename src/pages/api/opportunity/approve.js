@@ -18,31 +18,39 @@ function getBadgeName(category) {
   })[category] || category;
 }
 
-function getBadgeImage(category, difficulty) {
+function getImage(imageType, category, difficulty) {
   const imageName = ({
-    0b0: 'badge_digital-literacy_1.png',
-    0b1: 'badge_digital-literacy_2.png',
-    0b10: 'badge_digital-literacy_3.png',
-    0b100: 'badge_sustainability_1.png',
-    0b101: 'badge_sustainability_2.png',
-    0b110: 'badge_sustainability_3.png',
-    0b1000: 'badge_entre-spirit_1.png',
-    0b1001: 'badge_entre-spirit_2.png',
-    0b1010: 'badge_entre-spirit_3.png',
-    0b1100: 'badge_research_1.png',
-    0b1101: 'badge_research_2.png',
-    0b1110: 'badge_research_3.png',
-    0b10000: 'badge_global-citizenship_1.png',
-    0b10001: 'badge_global-citizenship_2.png',
-    0b10010: 'badge_global-citizenship_3.png'
-  })[(category << 2) + difficulty]
+    0b0: '_digital-literacy_1.png',
+    0b1: '_digital-literacy_2.png',
+    0b10: '_digital-literacy_3.png',
+    0b100: '_sustainability_1.png',
+    0b101: '_sustainability_2.png',
+    0b110: '_sustainability_3.png',
+    0b1000: '_entre-spirit_1.png',
+    0b1001: '_entre-spirit_2.png',
+    0b1010: '_entre-spirit_3.png',
+    0b1100: '_research_1.png',
+    0b1101: '_research_2.png',
+    0b1110: '_research_3.png',
+    0b10000: '_global-citizenship_1.png',
+    0b10001: '_global-citizenship_2.png',
+    0b10010: '_global-citizenship_3.png'
+  })[(category << 2) + difficulty];
 
   if (!imageName) {
     return '';
   }
 
-  const imagePath = path.join('./src/assets/img/badges', imageName);
+  const imagePath = path.join('./badgeIcons', imageType, `${imageType}${imageName}`);
   return readFileAsync(imagePath, 'base64');
+}
+
+function getBadgeImage(category, difficulty) {
+  return getImage('badge', category, difficulty);
+}
+
+function getPinImage(category, difficulty) {
+  return getImage('pin', category, difficulty);
 }
 
 export default async function handler(req, res) {
@@ -59,19 +67,19 @@ export default async function handler(req, res) {
       return req.status(400).json(createApiErrorMessage(errorCodes.MISSING_OPPORTUNITY_ID));
     }
 
-    let opportunity
+    let opportunity;
     try {
       opportunity = await Opportunity.findOne({
         where: {
           id: opportunityId
         }
-      })
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
 
-    let badgeClass
+    let badgeClass;
     try {
       badgeClass = await Badge.create({
         criteria: `${opportunity.shortDescription} - ${getBadgeName(opportunity.category)}`,
@@ -89,7 +97,8 @@ export default async function handler(req, res) {
     try {
       await Opportunity.update({
         authority: 1,
-        badgeId: badgeClass.id
+        badgeId: badgeClass.id,
+        pinImage: await getPinImage(opportunity.category, opportunity.difficulty)
       }, {
         where: {
           id: opportunityId

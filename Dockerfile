@@ -15,6 +15,7 @@ WORKDIR /server
 COPY package*.json ./
 RUN npm i --only=prod
 COPY environments ./environments
+COPY badgeIcons ./badgeIcons
 COPY next.config.js ./next.config.js
 COPY --from=build /build/next ./next
 CMD ["npm", "start"]
