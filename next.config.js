@@ -13,7 +13,9 @@ module.exports = withOptimizedImages({
     DATABASE_USERNAME: env.DATABASE_USERNAME,
     DATABASE_PASSWORD: env.DATABASE_PASSWORD,
     DATABASE_HOST: env.DATABASE_HOST,
-    POSTMARK_TOKEN: env.POSTMARK_TOKEN
+    POSTMARK_TOKEN: env.POSTMARK_TOKEN,
+    HOST_URL: env.HOST_URL,
+    JWT_SECRET: env.JWT_SECRET
   },
   experimental: {
     sprFlushToDisk: false
