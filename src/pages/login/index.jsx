@@ -39,8 +39,12 @@ const Login = () => {
       dispatch(['COMPLETE']);
       loginEvents.trigger('login');
     } catch (error) {
-      console.log('error', error)
-      dispatch(['ERROR', error]);
+      console.log('error', error);
+      let message;
+      try {
+        message = { message: (await error.response.json()).code };
+      } catch {}
+      dispatch(['ERROR', message || error]);
     }
   };
 
