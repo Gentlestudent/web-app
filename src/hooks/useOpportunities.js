@@ -5,6 +5,11 @@ function useOpportunities(options, initialOpportunities = []) {
   const [opportunities, setOpportunities] = useState(initialOpportunities);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [__reload, setReload] = useState(false);
+
+  function reload() {
+    setReload(!__reload);
+  }
 
   useEffect(() => {
     (async () => {
@@ -18,9 +23,9 @@ function useOpportunities(options, initialOpportunities = []) {
         setLoading(false);
       }
     })();
-  }, [options]);
+  }, [options, __reload]);
 
-  return [error, loading, opportunities];
+  return [error, loading, opportunities, reload];
 }
 
 export default useOpportunities;

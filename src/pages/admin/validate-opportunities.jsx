@@ -10,8 +10,7 @@ import { approveOpportunity } from '../../connector/opportunities';
 
 const ValidateOpportunities = () => {
   const options = useMemo(() => ({ searchParams: { authority: 0 } }), []);
-  const [opportunitiesError, opportunitiesLoading, opportunities] = useOpportunities(options);
-  console.log('opportunities', opportunities);
+  const [opportunitiesError, opportunitiesLoading, opportunities, reloadOpportunities] = useOpportunities(options);
   // TODO handle error & add loading icon
 
   return (
@@ -23,7 +22,7 @@ const ValidateOpportunities = () => {
           <div>Er zijn geen te valideren leerkansen.</div>
         )}
         <div className="list">
-          {opportunities.map(opportunity => <div key={opportunity.id}><Opportunity opportunity={opportunity} /></div>)}
+          {opportunities.map(opportunity => <div key={opportunity.id}><Opportunity opportunity={opportunity} reloadOpportunities={reloadOpportunities} /></div>)}
         </div>
       </Container>
 
@@ -40,8 +39,7 @@ const ValidateOpportunities = () => {
   );
 };
 
-const Opportunity = ({ opportunity }) => {
-  const [hidden, setHidden] = useState(false);
+const Opportunity = ({ opportunity, reloadOpportunities }) => {
   const [loading, setLoading] = useState(false);
   // TODO show loading state
 
@@ -49,7 +47,7 @@ const Opportunity = ({ opportunity }) => {
     try {
       setLoading(true);
       await approveOpportunity(opportunity.id);
-      setHidden(true);
+      reloadOpportunities();
     } catch (error) {
       console.error(error);
       // TODO show error message
@@ -90,7 +88,6 @@ const Opportunity = ({ opportunity }) => {
             background: ${colors.blueLight};
             width: 400px;
             padding: 4.5rem;
-            ${hidden ? 'display: none;' : ''}
           }
 
           .flex {

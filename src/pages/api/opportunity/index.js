@@ -1,4 +1,4 @@
-import { Opportunity } from '../../../sql/sqlClient';
+import { Opportunity, Issuer } from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
 import { roles, errorCodes } from '../../../constants';
@@ -27,35 +27,31 @@ export default async function handler(req, res) {
       return res.status(401).end();
     }
 
+    const issuer = Issuer.findOne({
+      where: { userId: user.id },
+      attributes: ['id']
+    })
+
     try {
       await Opportunity.create({
-        // addressId: req.body.addressId,
-        // authority: req.body.authority,
-        // badgeId: req.body.badgeId,
         beginDate: req.body.startDate,
         category: Number(req.body.domain) || 1,
         contact: req.body.email,
         difficulty: Number(req.body.level) || 1,
         endDate: req.body.endDate,
-        // international: req.body.international,
-        // issuerId: req.body.issuerId,
+        issuerId: issuer.id,
         longDescription: req.body.description,
         // shortDescription: req.body.shortDescription,
         // moreInfo: req.body.moreInfo,
-        // oppImageUrl: req.body.oppImageUrl,
-        // participations: req.body.participations,
-        // pinImageUrl: req.body.pinImageUrl,
         title: req.body.title,
         expectations: req.body.expectations,
         website: req.body.website,
-        // addressBus: req.body.bus,
         addressCity: req.body.city,
-        // addressCountry: req.body.country,
         ...(!!req.body.number && { addressHousenumber: Number(req.body.number) || 1 }),
-        // addressLatitute: req.body.latitude,
-        // addressLongitude: req.body.longitude,
         ...(!!req.body.postal && { addressPostalcode: Number(req.body.postal) || 1000 }),
-        addressStreet: req.body.street
+        addressStreet: req.body.street,
+        addressLatitute: req.body.addressLongitude,
+        addressLongitude: req.body.addressLatitude
       });
     } catch (error) {
       console.error(error);
