@@ -1,13 +1,16 @@
 import { Formik, Form } from 'formik';
 import { useReducer } from 'react';
 import * as Yup from 'yup';
-import { Panel, InputField } from '../../components/form';
+import { useRouter } from 'next/router';
 
+import { Panel, InputField } from '../../components/form';
 import { registerWithEmailPassword } from '../../connector/auth';
-import { Heading, Button } from '../../components/UI';
+import { Heading, Button, ErrorMessage } from '../../components/UI';
 import { Container } from '../../components/layout/index';
-import { useAuth, usePublicRoute } from '../../hooks';
+import { usePublicRoute } from '../../hooks';
 import fetchStatusReducer from '../../reducers/fetchStatusReducer';
+import { routes } from '../../constants';
+import getErrorCode from '../../utils/getErrorCode';
 
 const RegisterSchema = Yup.object().shape({
   email: Yup.string().email('Ongeldig e-mail adres').required('Vul een e-mail adres in'),
@@ -19,28 +22,21 @@ const RegisterSchema = Yup.object().shape({
 
 const Register = () => {
   usePublicRoute();
-  const { isSignedIn } = useAuth();
+  const router = useRouter();
   const [state, dispatch] = useReducer(fetchStatusReducer, {});
-
-  if (isSignedIn) {
-    // redirect if needed or remove this block
-  }
-
-  if (state.loading) {
-    console.log(state.loading);
-  }
-
-  if (state.error) {
-    console.log(state.error);
-  }
 
   const signup = async ({ email, password, institute, firstName, lastName }) => {
     dispatch(['INIT']);
     try {
       await registerWithEmailPassword({ email, password, firstName, lastName, institute });
       dispatch(['COMPLETE']);
-    } catch (err) {
-      dispatch(['ERROR', err]);
+      router.push({
+        pathname: routes.LOGIN
+      });
+    } catch (error) {
+      console.log('error', error);
+      const code = await getErrorCode(error);
+      dispatch(['ERROR', code || error.message]);
     }
   };
 
@@ -50,11 +46,12 @@ const Register = () => {
         <Panel>
           <>
             <Heading title="Registreer" />
+            <ErrorMessage code={state.error} />
             <Formik
               initialValues={{
                 email: '',
-                firstname: '',
-                lastname: '',
+                firstName: '',
+                lastName: '',
                 institute: '',
                 password: ''
               }}
@@ -83,7 +80,6 @@ const Register = () => {
                   placeholder="Wachtwoord"
                 />
 
-                {/* <button type="submit">Registreer</button> */}
                 <Button text="Registreren" type="submit" primary />
               </Form>
             </Formik>

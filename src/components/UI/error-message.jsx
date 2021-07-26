@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
-import getErrorMessage from '../../utils/getErrorMessage';
+import { errorCodes, errorMessages } from '../../constants';
 
 const ErrorMessage = ({ code }) => {
+  const message = errorCodes[code] ? errorMessages[code] : code;
+
   return (
     <>
-      {code && <div>{getErrorMessage(code)}</div>}
+      {message && <div>{message}</div>}
       <style jsx>
         {`
           div {

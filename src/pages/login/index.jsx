@@ -10,6 +10,7 @@ import fetchStatusReducer from '../../reducers/fetchStatusReducer';
 import { signIn, signOut, sendAccountVerificationEmail } from '../../connector/auth';
 import { getProfile } from '../../connector/users';
 import loginEvents from '../../utils/loginEvents';
+import getErrorCode from '../../utils/getErrorCode';
 
 const SigninSchema = Yup.object().shape({
   email: Yup.string().email('Ongeldig e-mail adres').required('Vul een e-mail adres in'),
@@ -40,11 +41,8 @@ const Login = () => {
       loginEvents.trigger('login');
     } catch (error) {
       console.log('error', error);
-      let message;
-      try {
-        message = { message: (await error.response.json()).code };
-      } catch {}
-      dispatch(['ERROR', message || error]);
+      const code = await getErrorCode(error);
+      dispatch(['ERROR', code || error.message]);
     }
   };
 
@@ -54,7 +52,7 @@ const Login = () => {
         <Panel>
           <>
             <Heading title="Login" />
-            <ErrorMessage code={state.error?.message} />
+            <ErrorMessage code={state.error} />
             <Formik
               initialValues={{
                 email: '',
