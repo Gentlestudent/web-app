@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     let assertions;
     try {
       if (!req.query.recipient) {
-        return req.status(400).json(createApiErrorMessage(errorCodes.ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED));
+        return res.status(400).json(createApiErrorMessage(errorCodes.ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED));
       }
       const rawAssertions = await Assertion.findAll({
         where: { recipientId: req.query.recipient },
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
       assertions = builtAssertions;
     } catch (error) {
       console.error(error);
-      return req.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.json(assertions);
   }

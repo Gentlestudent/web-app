@@ -10,7 +10,7 @@ export default async function handler(req, res) {
       news = await News.findAll();
     } catch (error) {
       console.error(error);
-      return req.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.json(news);
   }
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return req.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.status(204).end();
   }

@@ -64,7 +64,7 @@ export default async function handler(req, res) {
 
     const opportunityId = req.query.id;
     if (!opportunityId) {
-      return req.status(400).json(createApiErrorMessage(errorCodes.MISSING_OPPORTUNITY_ID));
+      return res.status(400).json(createApiErrorMessage(errorCodes.MISSING_OPPORTUNITY_ID));
     }
 
     let opportunity;

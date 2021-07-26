@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
     const issuerId = req.query.id;
     if (!issuerId) {
-      return req.status(400).json(createApiErrorMessage(errorCodes.MISSING_ISSUER_ID));
+      return res.status(400).json(createApiErrorMessage(errorCodes.MISSING_ISSUER_ID));
     }
 
     try {
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return req.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.send('ok');
   }

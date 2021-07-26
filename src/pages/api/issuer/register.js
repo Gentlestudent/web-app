@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
     try {
       if (!req.body.id) {
-        return req.status(400).json(createApiErrorMessage(errorCodes.USER_ID_REQUIRED));
+        return res.status(400).json(createApiErrorMessage(errorCodes.USER_ID_REQUIRED));
       }
       await Issuer.create({
         ...(!!req.body.institute && { institute: req.body.institute }),
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
-      return req.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.status(200).end();
   }
