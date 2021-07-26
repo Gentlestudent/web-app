@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import HamburgerMenu from 'react-hamburger-menu';
 import { Container, NavLink } from './index';
-import { routes } from '../../constants';
+import { routes, roles } from '../../constants';
 import { colors, breakpoints } from '../../assets/styles';
 import logo from '../../assets/img/logo.svg';
 import { useAuth } from '../../hooks';
-import hasRole from '../../utils/hasRole';
+import { hasRole } from '../../utils';
 import { DropdownMenu } from '../UI';
 import { signOut } from '../../connector/auth';
 import loginEvents from '../../utils/loginEvents';
@@ -51,7 +51,7 @@ const Nav = () => {
                 <NavLink onClick={() => setMenu(false)} href={routes.OPPORTUNITIES}>
                   Leerkansen
                 </NavLink>
-                {(!isUserSignedIn || !hasRole(currentUser, 'issuer')) && (
+                {(!isUserSignedIn || !hasRole(currentUser, roles.ISSUER)) && (
                   <NavLink onClick={() => setMenu(false)} href={routes.ISSUER}>
                     Word Issuer
                   </NavLink>
@@ -84,7 +84,7 @@ const Nav = () => {
                         <DropdownMenu.Option href={routes.user.OPPORTUNITIES}>
                           Mijn leerkansen
                         </DropdownMenu.Option>
-                        {hasRole(currentUser, 'issuer') && (
+                        {hasRole(currentUser, roles.ISSUER) && (
                           <>
                             <DropdownMenu.Separator />
                             <DropdownMenu.Option href={routes.issuer.OPPORTUNITIES}>
@@ -98,7 +98,7 @@ const Nav = () => {
                             </DropdownMenu.Option>
                           </>
                         )}
-                        {hasRole(currentUser, 'admin') && (
+                        {hasRole(currentUser, roles.ADMIN) && (
                           <>
                             <DropdownMenu.Separator />
                             <DropdownMenu.Option href={routes.admin.VALIDATE_ISSUER}>

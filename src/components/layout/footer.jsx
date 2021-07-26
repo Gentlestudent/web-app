@@ -2,9 +2,9 @@ import React from 'react';
 import { FooterLink, Container } from './index';
 import { colors, breakpoints, spacers } from '../../assets/styles/constants';
 import logo from '../../assets/img/footer-gentlestudent.svg';
-import { routes } from '../../constants';
+import { routes, roles } from '../../constants';
 import { useAuth } from '../../hooks';
-import hasRole from '../../utils/hasRole';
+import { hasRole } from '../../utils';
 
 const Footer = () => {
   const { isUserSignedIn, currentUser } = useAuth();
@@ -17,7 +17,7 @@ const Footer = () => {
             <nav className="footer-top">
               <ul className="menu">
                 <FooterLink href={routes.OPPORTUNITIES}>Leerkansen</FooterLink>
-                {(!isUserSignedIn || !hasRole(currentUser, 'issuer')) && (
+                {(!isUserSignedIn || !hasRole(currentUser, roles.ISSUER)) && (
                   <FooterLink href={routes.ISSUER}>Word issuer</FooterLink>
                 )}
                 <FooterLink href={routes.ABOUT}>Over ons</FooterLink>

@@ -9,6 +9,7 @@ import { updateProfile } from '../../connector/users';
 import { useAuth, usePrivateRoute } from '../../hooks';
 import fetchStatusReducer from '../../reducers/fetchStatusReducer';
 import { hasRole } from '../../utils';
+import { roles } from '../../constants';
 
 const EditProfile = () => {
   const { currentUser, reload } = useAuth();
@@ -17,13 +18,13 @@ const EditProfile = () => {
   const [state, dispatch] = useReducer(fetchStatusReducer, { loading: false });
 
   const getNotifInfo = (user) => {
-    if (hasRole(user, 'admin')) {
+    if (hasRole(user, roles.ADMIN)) {
       return 'Bepaal hoe je meldingen krijgt wanneer organisaties een nieuwe leerkans aanmaken.';
     }
-    if (hasRole(user, 'issuer')) {
+    if (hasRole(user, roles.ISSUER)) {
       return 'Bepaal hoe je meldingen krijgt wanneer jouw leerkans werd goedgekeurd en wanneer studenten zich aanmelden aan een leerkans. ';
     }
-    if (hasRole(user, 'participant')) {
+    if (hasRole(user, roles.PARTICIPANT)) {
       return 'Bepaal hoe je meldingen krijgt wanneer je aanvraag om deel te nemen aan een leerkans gereviewed werd.';
     }
     return 'Bepaal hoe je meldingen krijgt.';

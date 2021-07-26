@@ -6,7 +6,7 @@ import { Heading, Button } from '../../components/UI';
 import { Panel, InputField } from '../../components/form';
 import requiresMissingRole from '../../hoc/requiresMissingRole';
 import { useAuth, usePrivateRoute, useIssuers } from '../../hooks';
-import { routes } from '../../constants';
+import { routes, roles } from '../../constants';
 import { registerIssuer } from '../../connector/issuers';
 
 const RegisterSchema = Yup.object().shape({
@@ -116,4 +116,4 @@ const Register = () => {
   );
 };
 
-export default requiresMissingRole(Register, 'issuer');
+export default requiresMissingRole(Register, roles.ISSUER);

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Container, Grid } from '../../components/layout/index';
 import { Heading, Button, BannerSplit } from '../../components/UI';
 import { colors, breakpoints } from '../../assets/styles/constants';
-import { routes } from '../../constants';
+import { routes, roles } from '../../constants';
 import { useAuth, usePrivateRoute, useAssertions } from '../../hooks';
 import { hasRole, getBase64AsDataUrl } from '../../utils';
 
@@ -12,8 +12,8 @@ const Profile = () => {
   const [assertionsError, assertionsLoading, assertions] = useAssertions(options);
   usePrivateRoute();
 
-  const isAdmin = hasRole(currentUser, 'admin');
-  const isIssuer = !isAdmin && hasRole(currentUser, 'issuer');
+  const isAdmin = hasRole(currentUser, roles.ADMIN);
+  const isIssuer = !isAdmin && hasRole(currentUser, roles.ISSUER);
 
   return (
     <>
@@ -32,7 +32,7 @@ const Profile = () => {
             <p>{currentUser?.institute}</p>
           </div>
 
-          {(hasRole(currentUser, 'issuer')) && (
+          {(hasRole(currentUser, roles.ISSUER)) && (
             <div className="text__item">
               <Heading title="Rollen" level={2} color="white" />
               <p>

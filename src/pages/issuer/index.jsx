@@ -2,7 +2,7 @@ import { colors } from '../../assets/styles/constants';
 import { spacers } from '../../assets/styles';
 import { Button, Heading, BannerSplit } from '../../components/UI';
 import { Container } from '../../components/layout/index';
-import { routes } from '../../constants';
+import { routes, roles } from '../../constants';
 import requiresMissingRole from '../../hoc/requiresMissingRole';
 
 const Issuer = () => {
@@ -133,4 +133,4 @@ const Issuer = () => {
 
 Issuer.propTypes = {};
 
-export default requiresMissingRole(Issuer, 'issuer');
+export default requiresMissingRole(Issuer, roles.ISSUER);
