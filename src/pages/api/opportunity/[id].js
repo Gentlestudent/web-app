@@ -23,7 +23,13 @@ async function handler(req, res) {
         include.push({ model: User, as: 'participants', attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] } });
       }
       if (user?.role === roles.PARTICIPANT) {
-        include.push({ model: User, as: 'participants', attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] }, where: { id: user.id } });
+        include.push({
+          model: User,
+          as: 'participants',
+          attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] },
+          where: { id: user.id },
+          required: false
+        });
       }
       opportunity = await Opportunity.findOne({
         where: { id: req.query.id },
