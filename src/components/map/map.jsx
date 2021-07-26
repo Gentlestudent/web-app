@@ -18,10 +18,14 @@ const Map = ({ opportunities }) => {
   });
 
   useEffect(() => {
-    const minLat = Math.min(51.0498, ...opportunities.map(({ addressLatitude }) => addressLatitude))
-    const minLng = Math.min(3.7322, ...opportunities.map(({ addressLongitude }) => addressLongitude))
-    const maxLat = Math.max(51.0498, ...opportunities.map(({ addressLatitude }) => addressLatitude))
-    const maxLng = Math.max(3.7322, ...opportunities.map(({ addressLongitude }) => addressLongitude))
+    function filterNumbers(array) {
+      return array.filter(number => typeof number === 'number');
+    }
+
+    const minLat = Math.min(51.0498, ...filterNumbers(opportunities.map(({ addressLatitude }) => addressLatitude)))
+    const minLng = Math.min(3.7322, ...filterNumbers(opportunities.map(({ addressLongitude }) => addressLongitude)))
+    const maxLat = Math.max(51.0498, ...filterNumbers(opportunities.map(({ addressLatitude }) => addressLatitude)))
+    const maxLng = Math.max(3.7322, ...filterNumbers(opportunities.map(({ addressLongitude }) => addressLongitude)))
 
     const viewport = new WebMercatorViewport({ width: 800, height: 600 })
       .fitBounds([[minLng, minLat], [maxLng, maxLat]], {
@@ -50,6 +54,7 @@ const Map = ({ opportunities }) => {
         onViewportChange={(nextViewport) => setViewport(nextViewport)}
       >
         {opportunities.map(opportunity => {
+          if (typeof opportunity.addressLatitude !== 'number' && typeof opportunity.addressLongitude !== 'number') return null;
           return (
             <Marker key={opportunity.id} latitude={opportunity.addressLatitude} longitude={opportunity.addressLongitude}>
               <svg
