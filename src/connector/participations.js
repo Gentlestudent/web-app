@@ -12,4 +12,10 @@ const getParticipations = async ({ searchParams } = {}) => {
   return ky.get('/api/participation');
 };
 
-export { getParticipations };
+const createParticipation = async (opportunityId) => {
+  const ky = await getAuthenticatedKy();
+  const searchParams = new window.URLSearchParams({ opportunity: opportunityId });
+  return ky.post(`/api/participation?${searchParams.toString()}`);
+};
+
+export { getParticipations, createParticipation };

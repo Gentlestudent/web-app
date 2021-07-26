@@ -1,41 +1,21 @@
 import { useRouter } from 'next/router';
-import { routes } from '../../../constants';
-import { Heading, Button, Participant } from '../../../components/UI';
+import { routes, roles } from '../../../constants';
+import { Heading, Button } from '../../../components/UI';
 import { colors, spacers, breakpoints } from '../../../assets/styles/constants';
 import { Container } from '../../../components/layout/index';
-import { useOpportunity } from '../../../hooks';
+import { useOpportunity, useAuth } from '../../../hooks';
+import { createParticipation } from '../../../connector/participations';
+import Participations from '../../../components/opportunity/participations';
+import { hasRole } from '../../../utils';
 
 const Opportunity = () => {
   const router = useRouter();
-  const [errorOpportunity, loadingOpportunity, opportunity] = useOpportunity(
+  const { currentUser } = useAuth();
+  const [errorOpportunity, loadingOpportunity, opportunity, reloadOpportunity] = useOpportunity(
     router.query.id || null,
     {}
   );
   // TODO handle error & show loading
-
-  // TODO: get participants for opportunity detail (with certain roles only)
-  const [newParticipants, acceptedParticipants] = (opportunity.Participants || []).reduce(
-    // status 0 = new
-    // status 1 = accepted
-    // status 2 = refused
-    // status 3 = finished
-    (accumulator, participant) => {
-      if (participant.Participation.status === 0) {
-        return [[...accumulator[0], participant], accumulator[1]];
-      }
-      if (participant.Participation.status === 1) {
-        return [accumulator[0], [...accumulator[1], participant]];
-      }
-      // if (participant.Participation.status === 2) {
-      //   return [accumulator[0], [...accumulator[1], participant]];
-      // }
-      // if (participant.Participation.status === 3) {
-      //   return [accumulator[0], [...accumulator[1], participant]];
-      // }
-      return accumulator;
-    },
-    [[], []]
-  );
 
   function getAddress() {
     const {
@@ -46,6 +26,22 @@ const Opportunity = () => {
     } = opportunity || {};
     return `${street} ${housenumber}${(street || housenumber) && ', '}${postalcode} ${city}`;
   }
+
+  async function handleRegisterClick() {
+    if (!opportunity.id) {
+      return;
+    }
+    try {
+      await createParticipation(opportunity.id);
+      reloadOpportunity();
+    } catch (error) {
+      // handle error
+      console.log(error);
+    }
+  }
+
+  const userIsParticipating = (opportunity?.participants || []).some(participant => participant.id === currentUser?.id);
+  const userCanModifyParticipations = (opportunity?.issuer?.id === currentUser?.id) || hasRole(currentUser, roles.ADMIN);
 
   return (
     <>
@@ -66,16 +62,16 @@ const Opportunity = () => {
           <div className="detail__description">
             <div>
               <Heading title="Beschrijving" level={2} />
-              <p>{opportunity.longDescription}</p>
+              <p>{opportunity.longDescription || '-'}</p>
               <Heading title="Wat wordt er verwacht?" level={2} />
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tempus tristique
-                pretium. Pellentesque risus nunc, semper ut molestie nec, sagittis in tellus.
-              </p>
+              <p>{opportunity.expectations || '-'}</p>
               <Heading title="Meer weten?" level={2} />
               <Button text="Bekijk meer" icon="arrow-right" href={opportunity.moreInfo} />
               <div>
-                <Button icon="arrow-right" text="Schrijf je in" type="button" primary />
+                {userIsParticipating
+                  ? <p>Je bent ingeschreven voor deze leerkans.</p>
+                  : <Button icon="arrow-right" text="Schrijf je in" type="button" primary onClick={handleRegisterClick} />
+                }
               </div>
             </div>
           </div>
@@ -113,28 +109,7 @@ const Opportunity = () => {
             </div>
           </div>
         </div>
-        <Heading title="Inschrijvingen" level={1} marginTop />
-        <Heading title="Nieuwe inschrijvingen" level={2} />
-        <div className="participants">
-          {newParticipants.length ? (
-            newParticipants.map((participant) => (
-              <Participant key={participant.id} participant={participant} withButtons />
-            ))
-          ) : (
-            <p className="participants__empty">Geen nieuwe inschrijvingen.</p>
-          )}
-        </div>
-
-        <Heading title="Geaccepteerde inschrijvingen" level={2} marginTop />
-        <div className="participants">
-          {acceptedParticipants.length ? (
-            acceptedParticipants.map((participant) => (
-              <Participant key={participant.id} participant={participant} />
-            ))
-          ) : (
-            <p className="participants__empty">Nog geen geaccepteerde inschrijvingen.</p>
-          )}
-        </div>
+        {userCanModifyParticipations && <Participations opportunity={opportunity} />}
       </Container>
 
       <style jsx>
@@ -146,6 +121,7 @@ const Opportunity = () => {
           .detail {
             display: grid;
             grid-template: 1fr auto / repeat(2, 1fr);
+            padding-bottom: 200px;
 
             grid-template-areas:
               'heading contact'
@@ -177,6 +153,7 @@ const Opportunity = () => {
           .detail__description {
             grid-area: description;
             position: relative;
+            min-height: 500px;
           }
 
           .detail__description > div {

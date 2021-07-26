@@ -20,7 +20,15 @@ export default async function handler(req, res) {
       }
       const rawAssertions = await Assertion.findAll({
         where: { recipientId: req.query.recipient },
-        include: [{ model: User, as: 'recipient' }, { model: Badge, as: 'badge' }]
+        include: [{
+          model: User,
+          as: 'recipient',
+          attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] }
+        },
+        {
+          model: Badge,
+          as: 'badge'
+        }]
       });
       const builtAssertions = rawAssertions.map(buildAssertion);
 

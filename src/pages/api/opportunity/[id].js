@@ -15,11 +15,15 @@ async function handler(req, res) {
         as: 'issuer',
         include: [{
           model: User,
-          as: 'user'
+          as: 'user',
+          attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] }
         }]
       }];
       if (user?.role === roles.ADMIN || user?.role === roles.ISSUER) {
-        include.push({ model: User, as: 'participants' });
+        include.push({ model: User, as: 'participants', attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] } });
+      }
+      if (user?.role === roles.PARTICIPANT) {
+        include.push({ model: User, as: 'participants', attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] }, where: { id: user.id } });
       }
       opportunity = await Opportunity.findOne({
         where: { id: req.query.id },
@@ -30,7 +34,7 @@ async function handler(req, res) {
       }
     } catch (error) {
       console.error(error);
-      return req.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.json(opportunity);
   }

@@ -6,7 +6,14 @@ export default async function handler(req, res) {
   try {
     const assertion = await Assertion.findOne({
       where: { id },
-      include: [{ model: User, as: 'recipient' }, { model: Badge, as: 'badge' }]
+      include: [{
+        model: User,
+        as: 'recipient',
+        attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] }
+      }, {
+        model: Badge,
+        as: 'badge'
+      }]
     });
     if (!assertion) {
       return res.status(404).end();

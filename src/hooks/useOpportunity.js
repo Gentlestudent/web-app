@@ -5,6 +5,11 @@ function useOpportunity(id, initialOpportunity = null) {
   const [opportunity, setOpportunity] = useState(initialOpportunity);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [__reload, setReload] = useState(false);
+
+  function reload() {
+    setReload(!__reload);
+  }
 
   useEffect(() => {
     if (!id) return;
@@ -20,9 +25,9 @@ function useOpportunity(id, initialOpportunity = null) {
         setLoading(false);
       }
     })();
-  }, [id]);
+  }, [id, __reload]);
 
-  return [error, loading, opportunity];
+  return [error, loading, opportunity, reload];
 }
 
 export default useOpportunity;

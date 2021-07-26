@@ -3,7 +3,7 @@ import Icon from './icon';
 import { colors } from '../../assets/styles/constants';
 import { getFullDate } from '../../utils';
 
-const Paticipant = ({ participant, withButtons }) => {
+const Participant = ({ participant, withButtons }) => {
   const acceptParticipant = () => {
     // TODO: accept
     console.log('accept', participant);
@@ -111,10 +111,10 @@ const Paticipant = ({ participant, withButtons }) => {
   );
 };
 
-Paticipant.propTypes = {
+Participant.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   participant: PropTypes.object,
   withButtons: PropTypes.bool
 };
 
-export default Paticipant;
+export default Participant;

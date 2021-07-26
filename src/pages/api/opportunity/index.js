@@ -9,6 +9,7 @@ export default async function handler(req, res) {
     try {
       opportunities = await Opportunity.findAll({
         where: {
+          authority: 1,
           ...(!!req.query.authority && { authority: req.query.authority }),
           ...(!!req.query.issuerId && { issuerId: req.query.issuerId })
         }

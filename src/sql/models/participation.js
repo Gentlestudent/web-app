@@ -11,5 +11,8 @@ export default {
   },
   message: DataTypes.TEXT,
   reason: DataTypes.STRING,
-  status: DataTypes.INTEGER
+  status: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  }
 };

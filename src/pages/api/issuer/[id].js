@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         id,
         validated: true
       },
-      include: { model: User, as: 'user' }
+      include: { model: User, as: 'user', attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] } }
     });
     if (!issuer) {
       return res.status(404).end();

@@ -19,7 +19,7 @@ export default async function handler(req, res) {
           ...(!!req.query.validated && { validated: req.query.validated }),
           ...(!!req.query.userId && { userId: req.query.userId })
         },
-        include: [{ model: User, as: 'user' }]
+        include: [{ model: User, as: 'user', attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] } }]
       });
     } catch (error) {
       console.error(error);
