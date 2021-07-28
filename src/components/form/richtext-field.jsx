@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
+import { useFormikContext } from 'formik';
 import Label from './label';
 
 const RichTextField = dynamic(import('react-quill'), {
@@ -35,24 +36,32 @@ const formats = [
   'video'
 ];
 
-const RichtextField = ({ label, name }) => (
-  <>
-    <Label name={name} label={label} />
-    <div className="field">
-      <RichTextField modules={modules} formats={formats} theme="snow" />
-    </div>
+const RichtextField = ({ label, name }) => {
+  const { setFieldValue } = useFormikContext();
 
-    <style jsx>
-      {`
-        .field {
-          display: flex;
-          flex-direction: column;
-          margin-bottom: 2.5rem;
-        }
-      `}
-    </style>
-  </>
-);
+  function handleChange(content, delta, source, editor) {
+    setFieldValue(name, content);
+  }
+
+  return (
+    <>
+      <Label name={name} label={label} />
+      <div className="field">
+        <RichTextField modules={modules} formats={formats} theme="snow" onChange={handleChange} />
+      </div>
+
+      <style jsx>
+        {`
+          .field {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 2.5rem;
+          }
+        `}
+      </style>
+    </>
+  );
+};
 
 RichtextField.propTypes = {
   label: PropTypes.string,
