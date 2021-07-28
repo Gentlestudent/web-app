@@ -28,7 +28,7 @@ module.exports = (environment) => {
     DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
     DATABASE_HOST: process.env.DATABASE_HOST,
     POSTMARK_TOKEN: process.env.POSTMARK_TOKEN,
-    HOST_URL: process.env.DATABASE_USERNAME,
+    HOST_URL: process.env.HOST_URL,
     JWT_SECRET: process.env.JWT_SECRET
   };
 };
