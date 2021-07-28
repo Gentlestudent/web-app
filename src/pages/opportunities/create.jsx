@@ -19,12 +19,12 @@ const CreateSchema = [
   Yup.object().shape({
     // STEP ONE
     title: Yup.string().required('Titel is vereist'),
-    // TODO: Domain
-    // TODO: Description (if possible)
+    domain: Yup.number(),
+    description: Yup.string(),
     expectations: Yup.string()
       .min(5, 'Geef minstens 5 karakters in')
-      .required('Verwachtingen zijn vereist')
-    // TODO: Level
+      .required('Verwachtingen zijn vereist'),
+    level: Yup.number()
   }),
   Yup.object().shape({
     // STEP TWO
@@ -107,9 +107,9 @@ const Create = () => {
                   initialValues={{
                     // STEP ONE
                     title: '',
-                    domain: '',
+                    domain: 0,
                     expectations: '',
-                    level: '',
+                    level: 0,
                     description: '',
 
                     // STEP TWO

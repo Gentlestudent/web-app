@@ -1,5 +1,5 @@
 import { InputField, SelectField, RichtextField } from '../form';
-import { FORM } from '../../models/Opportunity';
+import { categoryValues, categoryLabels, difficultyValues, difficultyLabels } from '../../constants';
 
 const StepOne = () => {
   return (
@@ -8,9 +8,9 @@ const StepOne = () => {
 
       <SelectField as="select" name="domain" label="Selecteer een domein">
         <>
-          {FORM.DOMAINS.map((domain) => (
-            <option key={domain} value={domain}>
-              {domain}
+          {Object.entries(categoryValues).map(([name, value]) => (
+            <option key={name} value={value}>
+              {categoryLabels[name]}
             </option>
           ))}
         </>
@@ -27,9 +27,9 @@ const StepOne = () => {
 
       <SelectField as="select" name="level" label="Selecteer niveau">
         <>
-          {FORM.LEVELS.map((level) => (
-            <option key={level} value={level}>
-              {level}
+          {Object.entries(difficultyValues).map(([name, value]) => (
+            <option key={name} value={value}>
+              {difficultyLabels[name]}
             </option>
           ))}
         </>

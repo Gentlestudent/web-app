@@ -77,5 +77,39 @@ export const errorMessages = {
   ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED: 'Recipient query parameter is required.'
 };
 
+export const categoryValues = {
+  DIGITAL_LITERACY: 0,
+  SUSTAINABILITY: 1,
+  ENTREPRENEURAL_SPIRIT: 2,
+  RESEARCH: 3,
+  GLOBAL_CITIZENSHIP: 4
+};
+
+export const categoryLabels = {
+  DIGITAL_LITERACY: 'Digitale geletterdheid',
+  SUSTAINABILITY: 'Duurzaamheid',
+  ENTREPRENEURAL_SPIRIT: 'Ondernemingszin',
+  RESEARCH: 'Onderzoek',
+  GLOBAL_CITIZENSHIP: 'Wereldburgerschap'
+};
+
+export const difficultyValues = {
+  BEGINNER: 0,
+  INTERMEDIATE: 1,
+  EXPERT: 2
+};
+
+export const difficultyLabels = {
+  BEGINNER: 'Beginner',
+  INTERMEDIATE: 'Gevorderd',
+  EXPERT: 'Expert'
+};
+
+export const authority = {
+  BLOCKED: 0,
+  APPROVED: 1,
+  DELETED: 2
+};
+
 export const jwtSecret = process.env.JWT_SECRET;
 export const frontendUrl = process.env.HOST_URL;
