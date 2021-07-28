@@ -29,7 +29,7 @@ const MyOpportunities = () => {
                 image={getBase64AsDataUrl(participation.Opportunity.oppImage)}
                 title={participation.Opportunity.title}
                 description={participation.Opportunity.shortDescription}
-                date={`${participation.Opportunity.beginDate} tot en met ${participation.Opportunity.endDate}`}
+                date={`${participation.Opportunity.beginDate || '-'} tot en met ${participation.Opportunity.endDate || '-'}`}
                 alt={participation.Opportunity.alt ? participation.Opportunity.alt : participation.Opportunity.title}
               />
             ))}

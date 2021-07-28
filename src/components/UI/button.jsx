@@ -5,7 +5,7 @@ import Icon from './icon';
 
 const Button = ({
   icon,
-  isLoading,
+  disabled,
   href = '',
   primary,
   reverse = false,
@@ -20,8 +20,8 @@ const Button = ({
         type={type}
         className={`button ${primary ? 'button--primary' : 'button--secondary'} ${
           reverse && 'button--reverse'
-        } ${isLoading ? 'disabled' : ''}`}
-        disabled={isLoading}
+        } ${disabled ? 'disabled' : ''}`}
+        disabled={disabled}
         {...rest}
       >
         {text ? <span className="button__text">{text}</span> : ''}
@@ -123,7 +123,7 @@ Button.propTypes = {
   text: PropTypes.string,
   type: PropTypes.string,
   icon: PropTypes.string,
-  isLoading: PropTypes.bool,
+  disabled: PropTypes.bool,
   href: PropTypes.string,
   primary: PropTypes.bool,
   back: PropTypes.bool,

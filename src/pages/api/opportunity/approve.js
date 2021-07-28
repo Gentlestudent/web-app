@@ -1,10 +1,11 @@
 import { readFile } from 'fs';
 import { promisify } from 'util';
 import path from 'path';
-import { Opportunity, Badge } from '../../../sql/sqlClient';
+import { Opportunity, Badge, Issuer, User } from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
-import { roles, errorCodes, categoryValues, categoryLabels } from '../../../constants';
+import { getPostmarkClient } from '../../../utils/postmark';
+import { roles, errorCodes, categoryValues, categoryLabels, frontendUrl } from '../../../constants';
 
 const readFileAsync = promisify(readFile);
 
@@ -53,7 +54,18 @@ export default async function handler(req, res) {
       opportunity = await Opportunity.findOne({
         where: {
           id: opportunityId
-        }
+        },
+        include: [{
+          model: Issuer,
+          as: 'issuer',
+          attributes: ['id'],
+          include: [{
+            model: User,
+            as: 'user',
+            attributes: ['email', 'firstName', 'lastName']
+          }]
+        }],
+        attributes: ['category', 'difficulty', 'shortDescription', 'longDescription', 'title', 'issuerId']
       });
     } catch (error) {
       console.error(error);
@@ -98,6 +110,50 @@ export default async function handler(req, res) {
       });
     } catch (error) {
       console.error(error);
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
+    }
+
+    try {
+      const postmarkClient = getPostmarkClient();
+
+      const opportunityLink = `${frontendUrl}/opportunities/${opportunityId}`;
+      const { firstName, lastName, email } = opportunity.issuer.user;
+      const displayName = `${firstName} ${lastName}`;
+
+      const HtmlBody = `
+        <p>Hallo ${displayName},</p>
+
+        <p>Je leerkans '${opportunity.title}' is goedgekeurd.</p>
+
+        <p>Je kan je leerkans op de gentlestudent website <a href="${opportunityLink}">hier bekijken</a>.</p>
+
+        <p>Met vriendelijke groet,</p>
+
+        <p>Team Gentlestudent</p>
+      `;
+
+      const TextBody = `
+        Hallo ${displayName},
+
+        Je leerkans '${opportunity.title}' is goedgekeurd.
+
+        Je kan je leerkans op de gentlestudent website bekijken via deze url: ${opportunityLink}.
+
+        Met vriendelijke groet,
+
+        Team Gentlestudent
+      `;
+
+      await postmarkClient.sendEmail({
+        From: 'noreply@appsaloon.be',
+        To: email,
+        Subject: 'Leerkans goedgekeurd',
+        HtmlBody,
+        TextBody,
+        MessageStream: 'outbound'
+      });
+    } catch (error) {
+      console.log(error);
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
     return res.send('ok');

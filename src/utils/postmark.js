@@ -48,4 +48,4 @@ async function sendEmailVerification({ to, displayName, verificationLink }) {
   });
 }
 
-export { sendEmailVerification };
+export { getPostmarkClient, sendEmailVerification };

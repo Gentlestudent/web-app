@@ -74,7 +74,7 @@ const Login = () => {
                   label="Wachtwoord"
                   placeholder="wachtwoord"
                 />
-                <Button text="Inloggen" type="submit" primary isLoading={state.loading} />
+                <Button text="Inloggen" type="submit" primary disabled={state.loading} />
               </Form>
             </Formik>
           </>

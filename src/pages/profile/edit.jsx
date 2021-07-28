@@ -109,7 +109,7 @@ const EditProfile = () => {
                         label="Organisatie/Onderwijsinstelling"
                         placeholder="Organisatie/Onderwijsinstelling"
                       />
-                      <Button text="Opslaan" type="submit" primary isLoading={state.loading} />
+                      <Button text="Opslaan" type="submit" primary disabled={state.loading} />
                     </Form>
                   </Formik>
                 </>
@@ -140,7 +140,7 @@ const EditProfile = () => {
                     label="Ontvang meldingen via de app"
                   />
 
-                  <Button text="Opslaan" type="submit" primary isLoading={state.loading} />
+                  <Button text="Opslaan" type="submit" primary disabled={state.loading} />
                 </Form>
               </Formik>
             </div>

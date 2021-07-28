@@ -73,7 +73,7 @@ const Opportunity = ({ opportunity, reloadOpportunities }) => {
     <>
       <div className="root">
         <Heading title={opportunity.title} level={2} color="black" />
-        <small>{opportunity.beginDate + ' - ' + opportunity.endDate}</small>
+        <small>{`${opportunity.beginDate || '-'} - ${opportunity.endDate || '-'}`}</small>
         <p className="description">{opportunity.shortDescription}</p>
         <div className="flex">
           <Button disabled={loading} text="Accepteren" onClick={handleAcceptClick} primary />
