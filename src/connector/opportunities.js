@@ -5,7 +5,7 @@ const addOpportunity = async (opportunity) => {
 
   const formData = new FormData();
   const availableOpportunityFields = ['title', 'domain', 'expectations', 'level', 'description', 'website', 'email', 'startDate', 'endDate', 'street', 'number', 'city', 'postal', 'image', 'addressLongitude', 'addressLatitude'];
-  availableOpportunityFields.forEach(name => formData.append(name, opportunity[name]));
+  availableOpportunityFields.forEach(name => opportunity[name] !== null && opportunity[name] !== undefined && formData.append(name, opportunity[name]));
 
   return ky.post('/api/opportunity', {
     body: formData
