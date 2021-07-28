@@ -73,7 +73,11 @@ const Create = () => {
   const createOpportunity = async (values, actions) => {
     if (activeStep === steps.length - 1) {
       try {
-        await addOpportunity({ ...values, addressLongitude: latLng.longitude, addressLatitude: latLng.latitude });
+        let website = values.website;
+        if (website && !website.match(/^https?:\/\//)) {
+          website = 'https://' + website;
+        }
+        await addOpportunity({ ...values, website, addressLongitude: latLng.longitude, addressLatitude: latLng.latitude });
         setOpportunityCreated(true);
       } catch (error) {
         // TODO show error
