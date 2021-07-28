@@ -1,12 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactMapGL, { Marker, Popup, WebMercatorViewport } from 'react-map-gl';
-
-const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,4.5,2,10c0,2,0.6,3.9,1.6,5.4c0,0.1,0.1,0.2,0.2,0.3
-  c0,0,0.1,0.1,0.1,0.2c0.2,0.3,0.4,0.6,0.7,0.9c2.6,3.1,7.4,7.6,7.4,7.6s4.8-4.5,7.4-7.5c0.2-0.3,0.5-0.6,0.7-0.9
-  C20.1,15.8,20.2,15.8,20.2,15.7z`;
-
-const SIZE = 20;
+import { getBase64AsDataUrl } from '../../utils';
 
 const Map = ({ opportunities }) => {
   const [viewport, setViewport] = useState({
@@ -57,20 +52,14 @@ const Map = ({ opportunities }) => {
           if (typeof opportunity.addressLatitude !== 'number' && typeof opportunity.addressLongitude !== 'number') return null;
           return (
             <Marker key={opportunity.id} latitude={opportunity.addressLatitude} longitude={opportunity.addressLongitude}>
-              <svg
-                height={SIZE}
-                viewBox="0 0 24 24"
-                style={{
-                  cursor: 'pointer',
-                  fill: '#d00',
-                  stroke: 'none',
-                  transform: `translate(${-SIZE / 2}px,${-SIZE}px)`
-                }}
-                onMouseOver={() => setMarker(opportunity)}
-                onMouseLeave={() => setMarker(null)}
-              >
-                <path d={ICON} />
-              </svg>
+              <div className="pin">
+                <img
+                  src={getBase64AsDataUrl(opportunity.pinImage)}
+                  alt="Opportunity pin marker"
+                  onMouseOver={() => setMarker(opportunity)}
+                  onMouseLeave={() => setMarker(null)}
+                />
+              </div>
             </Marker>
           )
         })}
@@ -107,6 +96,20 @@ const Map = ({ opportunities }) => {
           .popup-content p {
             font-size: 12px;
             margin: 0;
+          }
+
+          .pin {
+            width: 50px;
+            height: 50px;
+            transform: translate(-50%, -100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .pin img {
+            max-width: 100%;
+            max-height: 100%;
           }
         `}
       </style>
