@@ -4,43 +4,24 @@ import path from 'path';
 import { Opportunity, Badge } from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
-import { roles, errorCodes } from '../../../constants';
+import { roles, errorCodes, categoryValues, categoryLabels } from '../../../constants';
 
 const readFileAsync = promisify(readFile);
 
+function getCategoryConstantName(category) {
+  try {
+    return Object.entries(categoryValues).find(([, value]) => value === category)[1];
+  } catch {
+    return category;
+  }
+}
+
 function getBadgeName(category) {
-  return ({
-    0: 'Digitale Geletterdheid',
-    1: 'Duurzaamheid',
-    2: 'Ondernemingszin',
-    3: 'Onderzoekende houding',
-    4: 'Wereldburgerschap'
-  })[category] || category;
+  return categoryLabels[getCategoryConstantName(category)] || category;
 }
 
 function getImage(imageType, category, difficulty) {
-  const imageName = ({
-    0b0: '_digital-literacy_1.png',
-    0b1: '_digital-literacy_2.png',
-    0b10: '_digital-literacy_3.png',
-    0b100: '_sustainability_1.png',
-    0b101: '_sustainability_2.png',
-    0b110: '_sustainability_3.png',
-    0b1000: '_entre-spirit_1.png',
-    0b1001: '_entre-spirit_2.png',
-    0b1010: '_entre-spirit_3.png',
-    0b1100: '_research_1.png',
-    0b1101: '_research_2.png',
-    0b1110: '_research_3.png',
-    0b10000: '_global-citizenship_1.png',
-    0b10001: '_global-citizenship_2.png',
-    0b10010: '_global-citizenship_3.png'
-  })[(category << 2) + difficulty];
-
-  if (!imageName) {
-    return '';
-  }
-
+  const imageName = `_${getCategoryConstantName(category).toLowerCase().replace('_', '-')}_${difficulty}.png`;
   const imagePath = path.join('./badgeIcons', imageType, `${imageType}${imageName}`);
   return readFileAsync(imagePath, 'base64');
 }
@@ -79,12 +60,23 @@ export default async function handler(req, res) {
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
 
+    let badgeImage, pinImage;
+    try {
+      [badgeImage, pinImage] = await Promise.all([
+        getBadgeImage(opportunity.category, opportunity.difficulty),
+        getPinImage(opportunity.category, opportunity.difficulty)
+      ]);
+    } catch (error) {
+      console.warn('one of the images was not found or could not be read');
+      console.error(error);
+    }
+
     let badgeClass;
     try {
       badgeClass = await Badge.create({
         criteria: `${opportunity.shortDescription} - ${getBadgeName(opportunity.category)}`,
         description: opportunity.longDescription,
-        image: await getBadgeImage(opportunity.category, opportunity.difficulty),
+        image: badgeImage,
         name: opportunity.title,
         type: 'BadgeClass',
         issuerId: opportunity.issuerId
@@ -98,7 +90,7 @@ export default async function handler(req, res) {
       await Opportunity.update({
         authority: 1,
         badgeId: badgeClass.id,
-        pinImage: await getPinImage(opportunity.category, opportunity.difficulty)
+        pinImage
       }, {
         where: {
           id: opportunityId
