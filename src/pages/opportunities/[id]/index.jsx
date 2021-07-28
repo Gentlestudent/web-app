@@ -6,7 +6,7 @@ import { Container } from '../../../components/layout/index';
 import { useOpportunity, useAuth } from '../../../hooks';
 import { createParticipation } from '../../../connector/participations';
 import Participations from '../../../components/opportunity/participations';
-import { hasRole } from '../../../utils';
+import { hasRole, getBase64AsDataUrl } from '../../../utils';
 
 const Opportunity = () => {
   const router = useRouter();
@@ -139,7 +139,7 @@ const Opportunity = () => {
           }
 
           .detail__heading::after {
-            background: url('${opportunity.pinImageUrl}'), url('${opportunity.oppImageUrl}');
+            background: url('${getBase64AsDataUrl(opportunity.pinImage)}'), url('${getBase64AsDataUrl(opportunity.oppImage)}');
             background-repeat: no-repeat;
             background-size: 12rem, cover;
             background-position: 2rem 0, center;

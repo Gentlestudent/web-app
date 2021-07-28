@@ -40,7 +40,8 @@ const CreateSchema = [
     street: Yup.string().required('Straatnaam is vereist'),
     number: Yup.number('Geef een geldig straatnummer mee').required('Nummer is vereist'),
     city: Yup.string().required('Stad is vereist'),
-    postal: Yup.number('Geef een geldig postcode mee').required('Postcode is vereist')
+    postal: Yup.number('Geef een geldig postcode mee').required('Postcode is vereist'),
+    image: Yup.string().required('Afbeelding is vereist')
   })
 ];
 
@@ -114,12 +115,15 @@ const Create = () => {
                     // STEP TWO
                     website: '',
                     email: '',
+                    startDate: '',
+                    endDate: '',
 
                     // STEP THREE
                     street: '',
                     number: '',
                     city: '',
-                    postal: ''
+                    postal: '',
+                    image: ''
                   }}
                   validationSchema={CreateSchema[activeStep]}
                   onSubmit={(values, actions) => {

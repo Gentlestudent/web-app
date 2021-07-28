@@ -5,6 +5,7 @@ import { Card, Heading, Search } from '../../components/UI';
 import Map from '../../components/map/map';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
 import { useOpportunities } from '../../hooks';
+import { getBase64AsDataUrl } from '../../utils';
 
 const Opportunities = () => {
   const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities();
@@ -30,8 +31,8 @@ const Opportunities = () => {
                 onClick={() => Router.push(`${routes.OPPORTUNITIES}/${opportunity.id}`)}
                 key={opportunity.id}
                 id={opportunity.id}
-                badge={opportunity.pinImageUrl}
-                image={opportunity.oppImageUrl}
+                badge={getBase64AsDataUrl(opportunity.pinImage)}
+                image={getBase64AsDataUrl(opportunity.oppImage)}
                 title={opportunity.title}
                 description={opportunity.shortDescription}
                 date={`${opportunity.beginDate} tot en met ${opportunity.endDate}`}

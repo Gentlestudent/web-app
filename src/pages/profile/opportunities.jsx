@@ -5,6 +5,7 @@ import { Card, Heading } from '../../components/UI';
 import { routes } from '../../constants';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
 import { useParticipations, usePrivateRoute, useAuth } from '../../hooks';
+import { getBase64AsDataUrl } from '../../utils';
 
 const MyOpportunities = () => {
   const { currentUser } = useAuth();
@@ -24,8 +25,8 @@ const MyOpportunities = () => {
                 onClick={() => Router.push(`${routes.OPPORTUNITIES}/${participation.Opportunity.id}`)}
                 key={participation.Opportunity.id}
                 id={participation.Opportunity.id}
-                badge={participation.Opportunity.pinImageUrl}
-                image={participation.Opportunity.oppImageUrl}
+                badge={getBase64AsDataUrl(participation.Opportunity.pinImage)}
+                image={getBase64AsDataUrl(participation.Opportunity.oppImage)}
                 title={participation.Opportunity.title}
                 description={participation.Opportunity.shortDescription}
                 date={`${participation.Opportunity.beginDate} tot en met ${participation.Opportunity.endDate}`}

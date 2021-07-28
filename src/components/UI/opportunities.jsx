@@ -5,6 +5,7 @@ import Button from './button';
 import Card from './card';
 import { spacers } from '../../assets/styles';
 import { routes } from '../../constants';
+import { getBase64AsDataUrl } from '../../utils';
 
 const Opportunities = ({ opportunities = [] }) => {
   return (
@@ -16,8 +17,8 @@ const Opportunities = ({ opportunities = [] }) => {
               onClick={() => Router.push(`${routes.OPPORTUNITIES}/${opportunity.id}`)}
               key={opportunity.id}
               id={opportunity.id}
-              badge={opportunity.pinImageUrl}
-              image={opportunity.oppImageUrl}
+              badge={getBase64AsDataUrl(opportunity.pinImage)}
+              image={getBase64AsDataUrl(opportunity.oppImage)}
               title={opportunity.title}
               description={opportunity.shortDescription}
               date={`${opportunity.beginDate} tot en met ${opportunity.endDate}`}

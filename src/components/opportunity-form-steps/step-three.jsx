@@ -1,8 +1,23 @@
 import { InputField } from '../form';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
 import Map from '../map/mapMarkerPicker';
+import { useFormikContext } from 'formik';
+
+const FileInput = ({ ...props }) => {
+  delete props.value;
+
+  return (
+    <input type="file" {...props} />
+  );
+};
 
 const StepOne = ({ formik, setLatLng }) => {
+  const { setFieldValue } = useFormikContext();
+
+  function handleFileChange(event) {
+    setFieldValue('image', event.target.files[0]);
+  }
+
   return (
     <>
       <div className="step-three__address">
@@ -18,6 +33,16 @@ const StepOne = ({ formik, setLatLng }) => {
 
       <div className="step-three__map">
         <Map onChange={setLatLng} />
+      </div>
+
+      <div>
+        <InputField
+          name="image"
+          type="file"
+          label="Afbeelding uploaden"
+          onChange={handleFileChange}
+          as={FileInput}
+        />
       </div>
 
       <style jsx>

@@ -2,8 +2,13 @@ import { getAuthenticatedKy, getPublicKy } from '../utils/getKy';
 
 const addOpportunity = async (opportunity) => {
   const ky = await getAuthenticatedKy();
+
+  const formData = new FormData();
+  const availableOpportunityFields = ['title', 'domain', 'expectations', 'level', 'description', 'website', 'email', 'startDate', 'endDate', 'street', 'number', 'city', 'postal', 'image', 'addressLongitude', 'addressLatitude'];
+  availableOpportunityFields.forEach(name => formData.append(name, opportunity[name]));
+
   return ky.post('/api/opportunity', {
-    json: opportunity
+    body: formData
   });
 };
 
