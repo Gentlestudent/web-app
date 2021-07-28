@@ -1,17 +1,28 @@
 import PropTypes from 'prop-types';
-import Icon from './icon';
+import { Icon } from '../UI';
 import { colors } from '../../assets/styles/constants';
 import { getFullDate } from '../../utils';
+import { approveParticipation, denyParticipation } from '../../connector/participations';
 
-const Participant = ({ participant, withButtons }) => {
-  const acceptParticipant = () => {
-    // TODO: accept
-    console.log('accept', participant);
+const Participant = ({ participant, withButtons, reloadOpportunity }) => {
+  const acceptParticipant = async () => {
+    try {
+      await approveParticipation(participant.Participation.id);
+      reloadOpportunity();
+    } catch (error) {
+      // TODO show error
+      console.error(error);
+    }
   };
 
-  const denyParticipant = () => {
-    // TODO: deny
-    console.log('deny', participant);
+  const denyParticipant = async () => {
+    try {
+      await denyParticipation(participant.Participation.id);
+      reloadOpportunity();
+    } catch (error) {
+      // TODO show error
+      console.error(error);
+    }
   };
 
   return (
@@ -19,7 +30,7 @@ const Participant = ({ participant, withButtons }) => {
       <div className="participant">
         <p>{getFullDate(participant.Participation.createdAt)}</p>
         <div className="participant__img" />
-        <p className="partcipant__name">{participant.name}</p>
+        <p className="partcipant__name">{`${participant.firstName || ''} ${participant.lastName || ''}`}</p>
         <p className="participant__email">{participant.email}</p>
         <p className="participant__institution">{participant.institute}</p>
         {withButtons && (
@@ -112,7 +123,6 @@ const Participant = ({ participant, withButtons }) => {
 };
 
 Participant.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
   participant: PropTypes.object,
   withButtons: PropTypes.bool
 };

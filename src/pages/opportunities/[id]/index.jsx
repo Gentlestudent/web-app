@@ -109,7 +109,7 @@ const Opportunity = () => {
             </div>
           </div>
         </div>
-        {userCanModifyParticipations && <Participations opportunity={opportunity} />}
+        {userCanModifyParticipations && <Participations opportunity={opportunity} reloadOpportunity={reloadOpportunity} />}
       </Container>
 
       <style jsx>

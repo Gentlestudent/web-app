@@ -1,51 +1,43 @@
-import { Issuer, User } from '../../../sql/sqlClient';
+import { Participation, Opportunity, User } from '../../../sql/sqlClient';
+import { errorCodes, frontendUrl } from '../../../constants';
+import { createApiErrorMessage } from '../../../utils';
 import { verifyToken } from '../../../utils/middleware';
-import { hasRole, createApiErrorMessage } from '../../../utils';
 import { getPostmarkClient } from '../../../utils/postmark';
-import { roles, errorCodes } from '../../../constants';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     await verifyToken(req, res);
-    const { user, authenticated } = req.auth;
+    const { authenticated } = req.auth;
 
-    if (!authenticated || !hasRole(user, roles.ADMIN)) {
+    if (!authenticated) {
       return res.status(401).end();
     }
 
-    const issuerId = req.query.id;
-    if (!issuerId) {
-      return res.status(400).json(createApiErrorMessage(errorCodes.MISSING_ISSUER_ID));
-    }
-
-    let issuer;
+    const id = req.query.id;
+    let participation;
     try {
-      const [amountUpdated] = await Issuer.update({
-        validated: true
+      const [amountUpdated] = await Participation.update({
+        status: 1
       }, {
         where: {
-          id: issuerId,
-          validated: 0
+          id,
+          status: 0
         }
       });
       if (amountUpdated !== 1) {
-        return res.status(400).json(createApiErrorMessage(errorCodes.NO_UNAPPROVED_ISSUER));
+        return res.status(400).json(createApiErrorMessage(errorCodes.NO_UNAPPROVED_PARTICIPATION));
       }
-      issuer = await Issuer.findOne({
-        where: { id: issuerId },
-        attributes: ['userId'],
-        include: {
+      participation = await Participation.findOne({
+        where: { id },
+        include: [{
+          model: Opportunity,
+          as: 'Opportunity',
+          attributes: ['id', 'title']
+        }, {
           model: User,
-          as: 'user',
+          as: 'User',
           attributes: ['email', 'firstName', 'lastName']
-        }
-      });
-      await User.update({
-        role: 'issuer'
-      }, {
-        where: {
-          id: issuer.userId
-        }
+        }]
       });
     } catch (error) {
       console.error(error);
@@ -55,13 +47,16 @@ export default async function handler(req, res) {
     try {
       const postmarkClient = await getPostmarkClient();
 
-      const { firstName, lastName, email } = issuer.user;
+      const opportunityLink = `${frontendUrl}/opportunities/${participation.Opportunity.id}`;
+      const { firstName, lastName, email } = participation.User;
       const displayName = `${firstName} ${lastName}`;
 
       const HtmlBody = `
         <p>Hallo ${displayName},</p>
 
-        <p>Je aanvraag om issuer te worden is goedgekeurd.</p>
+        <p>Je inschrijving bij leerkans '${participation.Opportunity.title}' is geaccepteerd.</p>
+
+        <p>Je kan de leerkans op de gentlestudent website <a href="${opportunityLink}">hier bekijken</a>.</p>
 
         <p>Met vriendelijke groet,</p>
 
@@ -71,7 +66,9 @@ export default async function handler(req, res) {
       const TextBody = `
         Hallo ${displayName},
 
-        Je aanvraag om issuer te worden is goedgekeurd.
+        Je inschrijving bij leerkans '${participation.Opportunity.title}' is geaccepteerd.
+
+        Je kan de leerkans op de gentlestudent website bekijken via deze url: ${opportunityLink}.
 
         Met vriendelijke groet,
 
@@ -81,7 +78,7 @@ export default async function handler(req, res) {
       await postmarkClient.sendEmail({
         From: 'noreply@appsaloon.be',
         To: email,
-        Subject: 'Aanvraag goedgekeurd',
+        Subject: 'Inschrijving geaccepteerd',
         HtmlBody,
         TextBody,
         MessageStream: 'outbound'
@@ -92,5 +89,6 @@ export default async function handler(req, res) {
     }
     return res.send('ok');
   }
+
   return res.status(404).end();
 }

@@ -60,11 +60,12 @@ export const errorCodes = {
   LOGIN_INCORRECT_CREDENTIALS: 'LOGIN_INCORRECT_CREDENTIALS',
   EMAIL_ALREADY_VERIFIED: 'EMAIL_ALREADY_VERIFIED',
   MISSING_OPPORTUNITY_ID: 'MISSING_OPPORTUNITY_ID',
-  NO_UNVALIDATED_OPPORTUNITY: 'NO_UNVALIDATED_OPPORTUNITY',
+  NO_UNAPPROVED_OPPORTUNITY: 'NO_UNAPPROVED_OPPORTUNITY',
   MISSING_ISSUER_ID: 'MISSING_ISSUER_ID',
-  NO_UNVALIDATED_ISSUER: 'NO_UNVALIDATED_ISSUER',
+  NO_UNAPPROVED_ISSUER: 'NO_UNAPPROVED_ISSUER',
   USER_ID_REQUIRED: 'USER_ID_REQUIRED',
-  ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED: 'ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED'
+  ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED: 'ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED',
+  NO_UNAPPROVED_PARTICIPATION: 'NO_UNAPPROVED_PARTICIPATION'
 };
 
 export const errorMessages = {
@@ -74,11 +75,12 @@ export const errorMessages = {
   LOGIN_INCORRECT_CREDENTIALS: 'The login credentials do not match any known records.',
   EMAIL_ALREADY_VERIFIED: 'This user\'s email address has already been verified',
   MISSING_OPPORTUNITY_ID: 'Opportunity id is required.',
-  NO_UNVALIDATED_OPPORTUNITY: 'There is no opportunity with that id awaiting approval.',
+  NO_UNAPPROVED_OPPORTUNITY: 'There is no opportunity with that id awaiting approval.',
   MISSING_ISSUER_ID: 'Issuer id is required.',
-  NO_UNVALIDATED_ISSUER: 'There is no issuer with that id awaiting approval.',
+  NO_UNAPPROVED_ISSUER: 'There is no issuer with that id awaiting approval.',
   USER_ID_REQUIRED: 'User id is required.',
-  ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED: 'Recipient query parameter is required.'
+  ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED: 'Recipient query parameter is required.',
+  NO_UNAPPROVED_PARTICIPATION: 'There is no participation with that id awaiting approval.'
 };
 
 export const categoryValues = {

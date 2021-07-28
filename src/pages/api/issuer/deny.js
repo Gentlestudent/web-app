@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         }
       });
       if (!issuer) {
-        return res.status(400).json(createApiErrorMessage(errorCodes.NO_UNVALIDATED_ISSUER));
+        return res.status(400).json(createApiErrorMessage(errorCodes.NO_UNAPPROVED_ISSUER));
       }
       await Issuer.destroy({
         where: {
@@ -43,7 +43,7 @@ export default async function handler(req, res) {
     }
 
     try {
-      const postmarkClient = getPostmarkClient();
+      const postmarkClient = await getPostmarkClient();
 
       const { firstName, lastName, email } = issuer.user;
       const displayName = `${firstName} ${lastName}`;

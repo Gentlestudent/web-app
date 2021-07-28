@@ -15,7 +15,6 @@ export { default as HomeHeader } from './home-header';
 export { default as News } from './news';
 export { default as Opportunities } from './opportunities';
 export { default as BannerSplit } from './banner-split';
-export { default as Participant } from './participant';
 export { default as ErrorMessage } from './error-message';
 export { default as SuccessMessage } from './success-message';
 export { default as DropdownMenu } from './dropdown-menu';

@@ -74,7 +74,7 @@ export default async function handler(req, res) {
     }
 
     if (!opportunity) {
-      return res.status(400).json(createApiErrorMessage(errorCodes.NO_UNVALIDATED_OPPORTUNITY));
+      return res.status(400).json(createApiErrorMessage(errorCodes.NO_UNAPPROVED_OPPORTUNITY));
     }
 
     let badgeImage, pinImage;
@@ -119,7 +119,7 @@ export default async function handler(req, res) {
     }
 
     try {
-      const postmarkClient = getPostmarkClient();
+      const postmarkClient = await getPostmarkClient();
 
       const opportunityLink = `${frontendUrl}/opportunities/${opportunityId}`;
       const { firstName, lastName, email } = opportunity.issuer.user;
