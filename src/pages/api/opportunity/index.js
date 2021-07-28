@@ -33,10 +33,16 @@ export default async function handler(req, res) {
       return res.status(401).end();
     }
 
-    const issuer = Issuer.findOne({
-      where: { userId: user.id },
-      attributes: ['id']
-    })
+    let issuer;
+    try {
+      issuer = await Issuer.findOne({
+        where: { userId: user.id },
+        attributes: ['id']
+      })
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
+    }
 
     let body;
     try {
