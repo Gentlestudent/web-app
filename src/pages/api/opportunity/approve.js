@@ -53,7 +53,8 @@ export default async function handler(req, res) {
     try {
       opportunity = await Opportunity.findOne({
         where: {
-          id: opportunityId
+          id: opportunityId,
+          authority: 0
         },
         include: [{
           model: Issuer,
@@ -70,6 +71,10 @@ export default async function handler(req, res) {
     } catch (error) {
       console.error(error);
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
+    }
+
+    if (!opportunity) {
+      return res.status(400).json(createApiErrorMessage(errorCodes.NO_UNVALIDATED_OPPORTUNITY));
     }
 
     let badgeImage, pinImage;
