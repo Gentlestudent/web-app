@@ -35,7 +35,7 @@ async function handler(req, res) {
         where: { id: req.query.id },
         include
       });
-      if (user?.role === roles.ISSUER && opportunity.issuer?.id !== user?.id) {
+      if (user?.role === roles.ISSUER && opportunity.issuer?.userId !== user?.id) {
         opportunity.set('participants', []);
       }
     } catch (error) {

@@ -41,7 +41,8 @@ const Opportunity = () => {
   }
 
   const userIsParticipating = (opportunity?.participants || []).some(participant => participant.id === currentUser?.id);
-  const userCanModifyParticipations = (opportunity?.issuer?.id === currentUser?.id) || hasRole(currentUser, roles.ADMIN);
+  const userCanModifyParticipations = (opportunity?.issuer?.userId === currentUser?.id) || hasRole(currentUser, roles.ADMIN);
+  const userCanParticipate = !userCanModifyParticipations && currentUser;
 
   return (
     <>
@@ -68,10 +69,11 @@ const Opportunity = () => {
               <Heading title="Meer weten?" level={2} />
               <Button text="Bekijk meer" icon="arrow-right" href={opportunity.moreInfo} />
               <div>
-                {userIsParticipating
-                  ? <p>Je bent ingeschreven voor deze leerkans.</p>
-                  : <Button icon="arrow-right" text="Schrijf je in" type="button" primary onClick={handleRegisterClick} />
-                }
+                {userCanParticipate && (
+                  userIsParticipating
+                    ? <p>Je bent ingeschreven voor deze leerkans.</p>
+                    : <Button icon="arrow-right" text="Schrijf je in" type="button" primary onClick={handleRegisterClick} />
+                )}
               </div>
             </div>
           </div>
