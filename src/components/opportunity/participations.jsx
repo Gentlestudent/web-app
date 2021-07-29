@@ -2,27 +2,27 @@ import { Heading } from '../UI';
 import Participant from './participant';
 
 const Participations = ({ opportunity, reloadOpportunity }) => {
-  const [newParticipants, acceptedParticipants, refusedParticipants] = (opportunity.participants || []).reduce(
+  const [newParticipants, acceptedParticipants, refusedParticipants, finishedParticipants] = (opportunity.participants || []).reduce(
     // status 0 = new
     // status 1 = accepted
     // status 2 = refused
     // status 3 = finished
     (accumulator, participant) => {
       if (participant.Participation.status === 0) {
-        return [[...accumulator[0], participant], accumulator[1], accumulator[2]];
+        return [[...accumulator[0], participant], accumulator[1], accumulator[2], accumulator[3]];
       }
       if (participant.Participation.status === 1) {
-        return [accumulator[0], [...accumulator[1], participant], accumulator[2]];
+        return [accumulator[0], [...accumulator[1], participant], accumulator[2], accumulator[3]];
       }
       if (participant.Participation.status === 2) {
-        return [accumulator[0], accumulator[1], [...accumulator[2], participant]];
+        return [accumulator[0], accumulator[1], [...accumulator[2], participant], accumulator[3]];
       }
-      // if (participant.Participation.status === 3) {
-      //   return [accumulator[0], [...accumulator[1], participant], accumulator[2]];
-      // }
+      if (participant.Participation.status === 3) {
+        return [accumulator[0], accumulator[1], accumulator[2], [...accumulator[3], participant]];
+      }
       return accumulator;
     },
-    [[], [], []]
+    [[], [], [], []]
   );
 
   return (
@@ -32,7 +32,7 @@ const Participations = ({ opportunity, reloadOpportunity }) => {
       <div className="participants">
         {newParticipants.length
           ? newParticipants.map((participant) => (
-            <Participant key={participant.id} participant={participant} withButtons reloadOpportunity={reloadOpportunity} />
+            <Participant key={participant.id} participant={participant} reloadOpportunity={reloadOpportunity} />
           ))
           : <p className="participants__empty">Geen nieuwe inschrijvingen.</p>
         }
@@ -45,6 +45,16 @@ const Participations = ({ opportunity, reloadOpportunity }) => {
             <Participant key={participant.id} participant={participant} reloadOpportunity={reloadOpportunity} />
           ))
           : <p className="participants__empty">Nog geen geaccepteerde inschrijvingen.</p>
+        }
+      </div>
+
+      <Heading title="Afgewerkte inschrijvingen" level={2} marginTop />
+      <div className="participants">
+        {finishedParticipants.length
+          ? finishedParticipants.map((participant) => (
+            <Participant key={participant.id} participant={participant} reloadOpportunity={reloadOpportunity} />
+          ))
+          : <p className="participants__empty">Nog geen afgewerkte inschrijvingen.</p>
         }
       </div>
 

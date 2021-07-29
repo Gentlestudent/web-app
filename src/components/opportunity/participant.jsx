@@ -2,28 +2,38 @@ import PropTypes from 'prop-types';
 import { Icon } from '../UI';
 import { colors } from '../../assets/styles/constants';
 import { getFullDate } from '../../utils';
-import { approveParticipation, denyParticipation } from '../../connector/participations';
+import { updateParticipationStatus } from '../../connector/participations';
 
 const Participant = ({ participant, withButtons, reloadOpportunity }) => {
-  const acceptParticipant = async () => {
-    try {
-      await approveParticipation(participant.Participation.id);
-      reloadOpportunity();
-    } catch (error) {
-      // TODO show error
-      console.error(error);
+  function updateParticipation(status) {
+    return async () => {
+      try {
+        await updateParticipationStatus({ id: participant.Participation.id, status });
+        reloadOpportunity();
+      } catch (error) {
+        // TODO show error
+        console.error(error);
+      }
     }
-  };
+  }
 
-  const denyParticipant = async () => {
-    try {
-      await denyParticipation(participant.Participation.id);
-      reloadOpportunity();
-    } catch (error) {
-      // TODO show error
-      console.error(error);
+  let [showAcceptButton, showDenyButton, showUndoButton, showFinishButton] = new Array(4).fill(false);
+  switch (participant.Participation.status || 0) {
+    case 0: {
+      showAcceptButton = true;
+      showDenyButton = true;
+      break
     }
-  };
+    case 1: {
+      showFinishButton = true;
+      break
+    }
+    case 2: {
+      showUndoButton = true;
+      break
+    }
+    default:
+  }
 
   return (
     <>
@@ -33,16 +43,28 @@ const Participant = ({ participant, withButtons, reloadOpportunity }) => {
         <p className="partcipant__name">{`${participant.firstName || ''} ${participant.lastName || ''}`}</p>
         <p className="participant__email">{participant.email}</p>
         <p className="participant__institution">{participant.institute}</p>
-        {withButtons && (
-          <div className="participant__buttons">
-            <button type="button" className="button button--accept" onClick={acceptParticipant}>
+        <div className="participant__buttons">
+          {showAcceptButton && (
+            <button type="button" className="button button--accept" onClick={updateParticipation(1)}>
               <Icon name="check" />
             </button>
-            <button type="button" className="button button--decline" onClick={denyParticipant}>
+          )}
+          {showDenyButton && (
+            <button type="button" className="button button--decline" onClick={updateParticipation(2)}>
               <Icon name="times" />
             </button>
-          </div>
-        )}
+          )}
+          {showFinishButton && (
+            <button type="button" className="button button--decline" onClick={updateParticipation(3)}>
+              Geef badge
+            </button>
+          )}
+          {showUndoButton && (
+            <button type="button" className="button button--decline" onClick={updateParticipation(0)}>
+              Ongedaan maken
+            </button>
+          )}
+        </div>
       </div>
 
       <style jsx>

@@ -18,16 +18,10 @@ const createParticipation = async (opportunityId) => {
   return ky.post(`/api/participation?${searchParams.toString()}`);
 };
 
-async function approveParticipation(id) {
+async function updateParticipationStatus({ id, status }) {
   const ky = await getAuthenticatedKy();
-  const searchParams = new window.URLSearchParams({ id });
-  return ky.get(`/api/participation/approve?${searchParams.toString()}`)
+  const searchParams = new window.URLSearchParams({ id, status });
+  return ky.get(`/api/participation/updateStatus?${searchParams.toString()}`)
 }
 
-async function denyParticipation(id) {
-  const ky = await getAuthenticatedKy();
-  const searchParams = new window.URLSearchParams({ id });
-  return ky.get(`/api/participation/deny?${searchParams.toString()}`)
-}
-
-export { getParticipations, createParticipation, approveParticipation, denyParticipation };
+export { getParticipations, createParticipation, updateParticipationStatus };

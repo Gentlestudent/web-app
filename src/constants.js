@@ -65,7 +65,8 @@ export const errorCodes = {
   NO_UNAPPROVED_ISSUER: 'NO_UNAPPROVED_ISSUER',
   USER_ID_REQUIRED: 'USER_ID_REQUIRED',
   ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED: 'ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED',
-  NO_UNAPPROVED_PARTICIPATION: 'NO_UNAPPROVED_PARTICIPATION'
+  NO_AVAILABLE_PARTICIPATION: 'NO_AVAILABLE_PARTICIPATION',
+  INVALID_PARTICIPATION_STATUS: 'INVALID_PARTICIPATION_STATUS'
 };
 
 export const errorMessages = {
@@ -80,7 +81,8 @@ export const errorMessages = {
   NO_UNAPPROVED_ISSUER: 'There is no issuer with that id awaiting approval.',
   USER_ID_REQUIRED: 'User id is required.',
   ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED: 'Recipient query parameter is required.',
-  NO_UNAPPROVED_PARTICIPATION: 'There is no participation with that id awaiting approval.'
+  NO_AVAILABLE_PARTICIPATION: 'There is no participation with that id that can be set to this status.',
+  INVALID_PARTICIPATION_STATUS: 'This is not a valid participation status.'
 };
 
 export const categoryValues = {
