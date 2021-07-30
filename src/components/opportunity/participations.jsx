@@ -42,7 +42,7 @@ const Participations = ({ opportunity, reloadOpportunity }) => {
       <div className="participants">
         {acceptedParticipants.length
           ? acceptedParticipants.map((participant) => (
-            <Participant key={participant.id} participant={participant} reloadOpportunity={reloadOpportunity} />
+            <Participant key={participant.id} participant={participant} reloadOpportunity={reloadOpportunity} opportunity={opportunity} />
           ))
           : <p className="participants__empty">Nog geen geaccepteerde inschrijvingen.</p>
         }

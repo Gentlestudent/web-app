@@ -3,8 +3,9 @@ import { Icon } from '../UI';
 import { colors } from '../../assets/styles/constants';
 import { getFullDate } from '../../utils';
 import { updateParticipationStatus } from '../../connector/participations';
+import { createAssertion } from '../../connector/assertions';
 
-const Participant = ({ participant, withButtons, reloadOpportunity }) => {
+const Participant = ({ participant, withButtons, opportunity, reloadOpportunity }) => {
   function updateParticipation(status) {
     return async () => {
       try {
@@ -14,6 +15,20 @@ const Participant = ({ participant, withButtons, reloadOpportunity }) => {
         // TODO show error
         console.error(error);
       }
+    }
+  }
+
+  async function giveBadge() {
+    if (!opportunity?.id) {
+      return;
+    }
+    try {
+      await updateParticipationStatus({ id: participant.Participation.id, status: 3 });
+      await createAssertion({ opportunityId: opportunity.id });
+      reloadOpportunity();
+    } catch (error) {
+      // TODO show error
+      console.error(error);
     }
   }
 
@@ -55,12 +70,12 @@ const Participant = ({ participant, withButtons, reloadOpportunity }) => {
             </button>
           )}
           {showFinishButton && (
-            <button type="button" className="button button--decline" onClick={updateParticipation(3)}>
+            <button type="button" className="button button--finish" onClick={giveBadge}>
               Geef badge
             </button>
           )}
           {showUndoButton && (
-            <button type="button" className="button button--decline" onClick={updateParticipation(0)}>
+            <button type="button" className="button button--undo" onClick={updateParticipation(0)}>
               Ongedaan maken
             </button>
           )}
@@ -114,6 +129,12 @@ const Participant = ({ participant, withButtons, reloadOpportunity }) => {
 
           .button--decline {
             color: ${colors.sub};
+          }
+
+          .button--finish, .button--undo {
+            color: ${colors.sub};
+            width: unset;
+            border-radius: 1.5rem;
           }
 
           .participant__buttons {

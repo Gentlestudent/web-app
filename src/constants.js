@@ -66,7 +66,9 @@ export const errorCodes = {
   USER_ID_REQUIRED: 'USER_ID_REQUIRED',
   ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED: 'ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED',
   NO_AVAILABLE_PARTICIPATION: 'NO_AVAILABLE_PARTICIPATION',
-  INVALID_PARTICIPATION_STATUS: 'INVALID_PARTICIPATION_STATUS'
+  INVALID_PARTICIPATION_STATUS: 'INVALID_PARTICIPATION_STATUS',
+  ERROR_OPPORTUNITY_ID_QUERY_PARAMETER_IS_REQUIRED: 'ERROR_OPPORTUNITY_ID_QUERY_PARAMETER_IS_REQUIRED',
+  ASSERTION_ALREADY_EXISTS: 'ASSERTION_ALREADY_EXISTS'
 };
 
 export const errorMessages = {
@@ -82,7 +84,9 @@ export const errorMessages = {
   USER_ID_REQUIRED: 'User id is required.',
   ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED: 'Recipient query parameter is required.',
   NO_AVAILABLE_PARTICIPATION: 'There is no participation with that id that can be set to this status.',
-  INVALID_PARTICIPATION_STATUS: 'This is not a valid participation status.'
+  INVALID_PARTICIPATION_STATUS: 'This is not a valid participation status.',
+  ERROR_OPPORTUNITY_ID_QUERY_PARAMETER_IS_REQUIRED: 'Opportunity id query parameter is required.',
+  ASSERTION_ALREADY_EXISTS: 'This assertion already exists.'
 };
 
 export const categoryValues = {

@@ -13,11 +13,12 @@ export default async function handler(req, res) {
       return res.status(401).end();
     }
 
+    if (!req.query.recipient) {
+      return res.status(400).json(createApiErrorMessage(errorCodes.ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED));
+    }
+
     let assertions;
     try {
-      if (!req.query.recipient) {
-        return res.status(400).json(createApiErrorMessage(errorCodes.ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED));
-      }
       const rawAssertions = await Assertion.findAll({
         where: { recipientId: req.query.recipient },
         include: [{

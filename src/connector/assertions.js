@@ -12,4 +12,10 @@ const getAssertions = async ({ searchParams } = {}) => {
   return ky.get('/api/assertion');
 };
 
-export { getAssertions };
+const createAssertion = async ({ opportunityId } = {}) => {
+  const ky = await getAuthenticatedKy();
+  const searchParams = new window.URLSearchParams({ id: opportunityId });
+  return ky.get(`/api/assertion/createByOpportunityId?${searchParams.toString()}`);
+};
+
+export { getAssertions, createAssertion };
