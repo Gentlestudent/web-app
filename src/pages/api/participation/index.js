@@ -6,7 +6,7 @@ import { verifyToken } from '../../../utils/middleware';
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     await verifyToken(req, res);
-    const { user, authenticated } = req.auth;
+    const { authenticated } = req.auth;
 
     if (!authenticated) {
       return res.status(401).end();
@@ -16,15 +16,28 @@ export default async function handler(req, res) {
 
     let participations;
     try {
-      participations = await Participation.findAll({
+      if (req.query.opportunities === '') {
+        req.query.opportunities = '0'; // if the 'opportunities' query parameter is defined but the list is empty we should return an empty list of participations
+      }
+      const options = {
         where: {
-          UserId: user.id
-        },
-        include: [{
-          model: Opportunity,
-          as: 'Opportunity'
-        }]
-      });
+          ...(!!req.query.user && { UserId: req.query.user }),
+          ...(!!req.query.opportunities && { OpportunityId: req.query.opportunities.split(',') })
+        }
+      };
+      if (req.query.count === 'true') {
+        participations = await Participation.count(options);
+      } else {
+        participations = await Participation.findAll({
+          ...options,
+          limit: Number(req.query.limit || 100),
+          offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0,
+          include: [{
+            model: Opportunity,
+            as: 'Opportunity'
+          }]
+        });
+      }
     } catch (error) {
       console.error(error);
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));

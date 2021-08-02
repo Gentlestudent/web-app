@@ -87,15 +87,12 @@ const Nav = () => {
                         {hasRole(currentUser, roles.ISSUER) && (
                           <>
                             <DropdownMenu.Separator />
-                            <DropdownMenu.Option href={routes.issuer.OPPORTUNITIES}>
-                              Aangemaakte leerkansen
+                            <DropdownMenu.Option href={routes.issuer.DASHBOARD}>
+                              Issuer dashboard
                             </DropdownMenu.Option>
-                            <DropdownMenu.Option href={routes.issuer.CREATE_OPPORTUNITY}>
-                              Maak leerkans
-                            </DropdownMenu.Option>
-                            <DropdownMenu.Option href={routes.issuer.CREATE_QUEST} disabled>
+                            {/* <DropdownMenu.Option href={routes.issuer.CREATE_QUEST} disabled>
                               Maak quest
-                            </DropdownMenu.Option>
+                            </DropdownMenu.Option> */}
                           </>
                         )}
                         {hasRole(currentUser, roles.ADMIN) && (

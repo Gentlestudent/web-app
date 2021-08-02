@@ -29,7 +29,8 @@ export const routes = {
     OPPORTUNITY: '/issuer/opportunities/[id]',
     CREATE_OPPORTUNITY: '/opportunities/create',
     EDIT_OPPORTUNITY: '/opportunities/[id]/edit',
-    REGISTER: '/issuer/register'
+    REGISTER: '/issuer/register',
+    DASHBOARD: '/issuer/dashboard'
   },
 
   /* admin */
@@ -64,7 +65,6 @@ export const errorCodes = {
   MISSING_ISSUER_ID: 'MISSING_ISSUER_ID',
   NO_UNAPPROVED_ISSUER: 'NO_UNAPPROVED_ISSUER',
   USER_ID_REQUIRED: 'USER_ID_REQUIRED',
-  ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED: 'ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED',
   NO_AVAILABLE_PARTICIPATION: 'NO_AVAILABLE_PARTICIPATION',
   INVALID_PARTICIPATION_STATUS: 'INVALID_PARTICIPATION_STATUS',
   ERROR_OPPORTUNITY_ID_QUERY_PARAMETER_IS_REQUIRED: 'ERROR_OPPORTUNITY_ID_QUERY_PARAMETER_IS_REQUIRED',
@@ -82,7 +82,6 @@ export const errorMessages = {
   MISSING_ISSUER_ID: 'Issuer id is required.',
   NO_UNAPPROVED_ISSUER: 'There is no issuer with that id awaiting approval.',
   USER_ID_REQUIRED: 'User id is required.',
-  ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED: 'Recipient query parameter is required.',
   NO_AVAILABLE_PARTICIPATION: 'There is no participation with that id that can be set to this status.',
   INVALID_PARTICIPATION_STATUS: 'This is not a valid participation status.',
   ERROR_OPPORTUNITY_ID_QUERY_PARAMETER_IS_REQUIRED: 'Opportunity id query parameter is required.',

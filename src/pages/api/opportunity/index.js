@@ -13,15 +13,22 @@ export default async function handler(req, res) {
     const { Opportunity } = await getSqlClient();
     let opportunities;
     try {
-      opportunities = await Opportunity.findAll({
+      const options = {
         where: {
           authority: 1,
-          ...(!!req.query.authority && { authority: req.query.authority }),
+          ...(!!req.query.authority && { authority: req.query.authority.split(',') }),
           ...(!!req.query.issuer && { issuerId: req.query.issuer })
-        },
-        limit: Number(req.query.limit || 100),
-        offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0
-      });
+        }
+      };
+      if (req.query.count === 'true') {
+        opportunities = await Opportunity.count(options);
+      } else {
+        opportunities = await Opportunity.findAll({
+          ...options,
+          limit: Number(req.query.limit || 100),
+          offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0
+        });
+      }
     } catch (error) {
       console.error(error);
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
