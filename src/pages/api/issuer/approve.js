@@ -3,6 +3,7 @@ import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
 import { getPostmarkClient } from '../../../utils/postmark';
 import { roles, errorCodes } from '../../../constants';
+import { issuerApproved } from '../../../emailTemplates';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
@@ -60,32 +61,16 @@ export default async function handler(req, res) {
       const { firstName, lastName, email } = issuer.user;
       const displayName = `${firstName} ${lastName}`;
 
-      const HtmlBody = `
-        <p>Hallo ${displayName},</p>
-
-        <p>Je aanvraag om issuer te worden is goedgekeurd.</p>
-
-        <p>Met vriendelijke groet,</p>
-
-        <p>Team Gentlestudent</p>
-      `;
-
-      const TextBody = `
-        Hallo ${displayName},
-
-        Je aanvraag om issuer te worden is goedgekeurd.
-
-        Met vriendelijke groet,
-
-        Team Gentlestudent
-      `;
-
       await postmarkClient.sendEmail({
         From: 'noreply@appsaloon.be',
         To: email,
-        Subject: 'Aanvraag goedgekeurd',
-        HtmlBody,
-        TextBody,
+        Subject: issuerApproved.subject,
+        HtmlBody: issuerApproved.htmlBody({
+          displayName
+        }),
+        TextBody: issuerApproved.textBody({
+          displayName
+        }),
         MessageStream: 'outbound'
       });
     } catch (error) {

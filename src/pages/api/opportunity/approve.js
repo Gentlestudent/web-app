@@ -7,6 +7,7 @@ import { hasRole, createApiErrorMessage } from '../../../utils';
 import { getPostmarkClient } from '../../../utils/postmark';
 import { roles, errorCodes, categoryValues, categoryLabels, routes } from '../../../constants';
 import getEnvironmentVar from '../../../../environments';
+import { opportunityApproved } from '../../../emailTemplates';
 
 const readFileAsync = promisify(readFile);
 
@@ -129,36 +130,20 @@ export default async function handler(req, res) {
       const { firstName, lastName, email } = opportunity.issuer.user;
       const displayName = `${firstName} ${lastName}`;
 
-      const HtmlBody = `
-        <p>Hallo ${displayName},</p>
-
-        <p>Je leerkans '${opportunity.title}' is goedgekeurd.</p>
-
-        <p>Je kan je leerkans op de gentlestudent website <a href="${opportunityLink}">hier bekijken</a>.</p>
-
-        <p>Met vriendelijke groet,</p>
-
-        <p>Team Gentlestudent</p>
-      `;
-
-      const TextBody = `
-        Hallo ${displayName},
-
-        Je leerkans '${opportunity.title}' is goedgekeurd.
-
-        Je kan je leerkans op de gentlestudent website bekijken via deze url: ${opportunityLink}.
-
-        Met vriendelijke groet,
-
-        Team Gentlestudent
-      `;
-
       await postmarkClient.sendEmail({
         From: 'noreply@appsaloon.be',
         To: email,
-        Subject: 'Leerkans goedgekeurd',
-        HtmlBody,
-        TextBody,
+        Subject: opportunityApproved.subject,
+        HtmlBody: opportunityApproved.htmlBody({
+          displayName,
+          opportunityTitle: opportunity.title,
+          opportunityLink
+        }),
+        TextBody: opportunityApproved.textBody({
+          displayName,
+          opportunityTitle: opportunity.title,
+          opportunityLink
+        }),
         MessageStream: 'outbound'
       });
     } catch (error) {
