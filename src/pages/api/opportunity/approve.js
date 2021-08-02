@@ -5,7 +5,7 @@ import getSqlClient from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
 import { getPostmarkClient } from '../../../utils/postmark';
-import { roles, errorCodes, categoryValues, categoryLabels } from '../../../constants';
+import { roles, errorCodes, categoryValues, categoryLabels, routes } from '../../../constants';
 import getEnvironmentVar from '../../../../environments';
 
 const readFileAsync = promisify(readFile);
@@ -125,7 +125,7 @@ export default async function handler(req, res) {
       const postmarkClient = await getPostmarkClient();
 
       const frontendUrl = await getEnvironmentVar('HOST_URL');
-      const opportunityLink = `${frontendUrl}/opportunities/${opportunityId}`;
+      const opportunityLink = `${frontendUrl}${routes.OPPORTUNITIES}/${opportunityId}`;
       const { firstName, lastName, email } = opportunity.issuer.user;
       const displayName = `${firstName} ${lastName}`;
 

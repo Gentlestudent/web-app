@@ -1,5 +1,5 @@
 import getSqlClient from '../../../sql/sqlClient';
-import { errorCodes } from '../../../constants';
+import { errorCodes, routes } from '../../../constants';
 import { createApiErrorMessage } from '../../../utils';
 import { verifyToken } from '../../../utils/middleware';
 import { getPostmarkClient } from '../../../utils/postmark';
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
       const emailTemplate = emailTemplates[Number(status)];
       if (emailTemplate) {
         const frontendUrl = await getEnvironmentVar('HOST_URL');
-        const opportunityLink = `${frontendUrl}/opportunities/${participation.Opportunity.id}`;
+        const opportunityLink = `${frontendUrl}${routes.OPPORTUNITIES}/${participation.Opportunity.id}`;
         const { firstName, lastName, email } = participation.User;
         const displayName = `${firstName} ${lastName}`;
 
