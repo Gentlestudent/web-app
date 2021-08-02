@@ -14,13 +14,14 @@ module.exports = (() => {
     }
 
     try {
-      secrets[name] = process.env.NODE_ENV === 'development' ? (await import('./env.dev.js')).default[name] : await readFile(path.join(secretsDir, name));
+      secrets[name] = process.env.NODE_ENV === 'development' ? (await import('./env.dev.js')).default[name] : await readFile(path.join(secretsDir, name), 'utf8');
       return getEnvironmentVar(name);
     } catch (error) {
       if (error.code === 'ENOENT') {
         console.warn(`secret "${name}" doesn't exist`)
         return '';
       }
+      console.error(error);
     }
   }
 })();
