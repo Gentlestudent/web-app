@@ -1,4 +1,4 @@
-import { emailVerification } from '../../../emailTemplates';
+import { emailVerification } from '../emailTemplates';
 
 const getPostmarkClient = (() => {
   let client;
