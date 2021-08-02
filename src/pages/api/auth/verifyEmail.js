@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
-import { User } from '../../../sql/sqlClient';
-import { errorCodes, jwtSecret } from '../../../constants';
+import getSqlClient from '../../../sql/sqlClient';
+import { errorCodes } from '../../../constants';
 import { createApiErrorMessage } from '../../../utils';
+import getEnvironmentVar from '../../../../environments';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
@@ -11,8 +12,11 @@ export default async function handler(req, res) {
       return res.status(204).end();
     }
 
+    const { User } = await getSqlClient();
+
     let decodedToken;
     try {
+      const jwtSecret = await getEnvironmentVar('JWT_SECRET');
       decodedToken = jwt.verify(token, jwtSecret);
     } catch (error) {
       if (error.name !== 'TokenExpiredError' && error.name !== 'JsonWebTokenError') {

@@ -1,4 +1,4 @@
-import { Opportunity } from '../../../sql/sqlClient';
+import getSqlClient from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
 import { roles, errorCodes } from '../../../constants';
@@ -16,6 +16,8 @@ export default async function handler(req, res) {
     if (!opportunityId) {
       return res.status(400).json(createApiErrorMessage(errorCodes.MISSING_OPPORTUNITY_ID));
     }
+
+    const { Opportunity } = await getSqlClient();
 
     try {
       await Opportunity.update({

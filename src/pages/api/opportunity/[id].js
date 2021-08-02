@@ -1,4 +1,4 @@
-import { Opportunity, Issuer, User } from '../../../sql/sqlClient';
+import getSqlClient from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { roles, errorCodes } from '../../../constants';
 import { createApiErrorMessage } from '../../../utils';
@@ -7,6 +7,8 @@ async function handler(req, res) {
   if (req.method === 'GET') {
     await verifyToken(req, res);
     const { user } = req.auth;
+
+    const { Opportunity, Issuer, User } = await getSqlClient();
 
     let opportunity;
     try {

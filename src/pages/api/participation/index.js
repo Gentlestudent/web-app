@@ -1,4 +1,4 @@
-import { Participation, Opportunity } from '../../../sql/sqlClient';
+import getSqlClient from '../../../sql/sqlClient';
 import { errorCodes } from '../../../constants';
 import { createApiErrorMessage } from '../../../utils';
 import { verifyToken } from '../../../utils/middleware';
@@ -11,6 +11,8 @@ export default async function handler(req, res) {
     if (!authenticated) {
       return res.status(401).end();
     }
+
+    const { Participation, Opportunity } = await getSqlClient();
 
     let participations;
     try {
@@ -37,6 +39,8 @@ export default async function handler(req, res) {
     if (!authenticated) {
       return res.status(401).end();
     }
+
+    const { Participation } = await getSqlClient();
 
     try {
       Participation.create({

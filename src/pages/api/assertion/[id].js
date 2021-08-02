@@ -1,9 +1,10 @@
-import { Assertion, User, Badge } from '../../../sql/sqlClient';
+import getSqlClient from '../../../sql/sqlClient';
 import { buildAssertion } from '../../../badges';
 
 export default async function handler(req, res) {
   const { id } = req.query;
   try {
+    const { Assertion, User, Badge } = await getSqlClient();
     const assertion = await Assertion.findOne({
       where: { id },
       include: [{
@@ -18,7 +19,7 @@ export default async function handler(req, res) {
     if (!assertion) {
       return res.status(404).end();
     }
-    return res.json(buildAssertion(assertion));
+    return res.json(await buildAssertion(assertion));
   } catch (error) {
     console.error(error);
     return res.status(500).end('ERROR_GETTING_ASSERTION');

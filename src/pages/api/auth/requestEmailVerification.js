@@ -3,8 +3,9 @@ import { nanoid } from 'nanoid';
 import { sendEmailVerification } from '../../../utils/postmark';
 import { verifyToken } from '../../../utils/middleware';
 import { createApiErrorMessage, hasRole } from '../../../utils';
-import { User } from '../../../sql/sqlClient';
-import { roles, errorCodes, jwtSecret, frontendUrl } from '../../../constants';
+import getSqlClient from '../../../sql/sqlClient';
+import { roles, errorCodes } from '../../../constants';
+import getEnvironmentVar from '../../../../environments';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(404).end();
@@ -17,6 +18,7 @@ export default async function handler(req, res) {
   }
 
   const { email } = req.query;
+  const { User } = await getSqlClient();
 
   let user;
   try {
@@ -38,11 +40,13 @@ export default async function handler(req, res) {
 
   try {
     const emailVerificationId = nanoid();
+    const jwtSecret = await getEnvironmentVar('JWT_SECRET');
     const emailToken = jwt.sign(
       { email },
       jwtSecret,
       { expiresIn: '1 day', jwtid: emailVerificationId }
     );
+    const frontendUrl = await getEnvironmentVar('HOST_URL');
     const link = `${frontendUrl}/api/auth/verifyEmail?t=${emailToken}`;
     await User.update({ emailVerificationId }, { where: { id: user.id } });
     await sendEmailVerification({

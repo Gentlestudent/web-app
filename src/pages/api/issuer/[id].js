@@ -1,10 +1,11 @@
-import { Issuer, User } from '../../../sql/sqlClient';
+import getSqlClient from '../../../sql/sqlClient';
 import { buildIssuer } from '../../../badges';
 import { createApiErrorMessage } from '../../../utils';
 import { errorCodes } from '../../../constants';
 
 export default async function handler(req, res) {
   const { id } = req.query;
+  const { Issuer, User } = await getSqlClient();
   try {
     const issuer = await Issuer.findOne({
       where: {
@@ -16,7 +17,7 @@ export default async function handler(req, res) {
     if (!issuer) {
       return res.status(404).end();
     }
-    return res.json(buildIssuer(issuer));
+    return res.json(await buildIssuer(issuer));
   } catch (error) {
     console.error(error);
     return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));

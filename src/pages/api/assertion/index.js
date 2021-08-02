@@ -1,4 +1,4 @@
-import { Assertion, User, Badge } from '../../../sql/sqlClient';
+import getSqlClient from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
 import { roles, errorCodes } from '../../../constants';
@@ -17,6 +17,8 @@ export default async function handler(req, res) {
       return res.status(400).json(createApiErrorMessage(errorCodes.ERROR_RECIPIENT_QUERY_PARAMETER_IS_REQUIRED));
     }
 
+    const { Assertion, User, Badge } = await getSqlClient();
+
     let assertions;
     try {
       const rawAssertions = await Assertion.findAll({
@@ -31,11 +33,12 @@ export default async function handler(req, res) {
           as: 'badge'
         }]
       });
-      const builtAssertions = rawAssertions.map(buildAssertion);
+      const builtAssertions = await Promise.all(rawAssertions.map(buildAssertion));
 
       if (req.query.includeBadge === 'true') {
-        rawAssertions.forEach((assertion, index) => {
-          builtAssertions[index].badge = buildBadge(assertion.badge);
+        const badges = await Promise.all(rawAssertions.map((assertion) => buildBadge(assertion.badge)));
+        badges.forEach((badge, index) => {
+          builtAssertions[index].badge = badge;
         });
       }
 

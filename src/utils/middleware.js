@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { User } from '../sql/sqlClient';
-import { jwtSecret } from '../constants';
+import getSqlClient from '../sql/sqlClient';
+import getEnvironmentVar from '../../environments';
 
 async function verifyToken(req, res) {
   const initial = req.headers.authorization;
@@ -15,6 +15,8 @@ async function verifyToken(req, res) {
 
   if (token) {
     try {
+      const { User } = await getSqlClient();
+      const jwtSecret = await getEnvironmentVar('JWT_SECRET');
       const decodedToken = jwt.verify(token, jwtSecret);
       const user = await User.findOne({
         where: {

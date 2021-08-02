@@ -1,13 +1,15 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { nanoid } from 'nanoid';
-import { User } from '../../../sql/sqlClient';
-import { errorCodes, jwtSecret } from '../../../constants';
+import getSqlClient from '../../../sql/sqlClient';
+import { errorCodes } from '../../../constants';
 import { createApiErrorMessage } from '../../../utils';
+import getEnvironmentVar from '../../../../environments';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { email, password } = req.body;
+    const { User } = await getSqlClient();
 
     let user;
     try {
@@ -30,6 +32,7 @@ export default async function handler(req, res) {
 
     const sessionId = nanoid();
 
+    const jwtSecret = await getEnvironmentVar('JWT_SECRET');
     const newToken = jwt.sign(
       {
         email,

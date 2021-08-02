@@ -122,6 +122,3 @@ export const authority = {
   APPROVED: 1,
   DELETED: 2
 };
-
-export const jwtSecret = process.env.JWT_SECRET;
-export const frontendUrl = process.env.HOST_URL;

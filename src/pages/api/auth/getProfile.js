@@ -1,4 +1,4 @@
-import { User, Issuer } from '../../../sql/sqlClient';
+import getSqlClient from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
 import { roles, errorCodes } from '../../../constants';
@@ -12,6 +12,8 @@ export default async function handler(req, res) {
   if (!authenticated || !hasRole(authenticatedUser, roles.PARTICIPANT)) {
     return res.status(401).end();
   }
+
+  const { User, Issuer } = await getSqlClient();
 
   const { id } = req.query;
   let user, issuer;

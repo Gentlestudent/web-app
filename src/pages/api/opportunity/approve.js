@@ -1,11 +1,12 @@
 import { readFile } from 'fs';
 import { promisify } from 'util';
 import path from 'path';
-import { Opportunity, Badge, Issuer, User } from '../../../sql/sqlClient';
+import getSqlClient from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
 import { getPostmarkClient } from '../../../utils/postmark';
-import { roles, errorCodes, categoryValues, categoryLabels, frontendUrl } from '../../../constants';
+import { roles, errorCodes, categoryValues, categoryLabels } from '../../../constants';
+import getEnvironmentVar from '../../../../environments';
 
 const readFileAsync = promisify(readFile);
 
@@ -48,6 +49,8 @@ export default async function handler(req, res) {
     if (!opportunityId) {
       return res.status(400).json(createApiErrorMessage(errorCodes.MISSING_OPPORTUNITY_ID));
     }
+
+    const { Opportunity, Badge, Issuer, User } = await getSqlClient();
 
     let opportunity;
     try {
@@ -121,6 +124,7 @@ export default async function handler(req, res) {
     try {
       const postmarkClient = await getPostmarkClient();
 
+      const frontendUrl = await getEnvironmentVar('HOST_URL');
       const opportunityLink = `${frontendUrl}/opportunities/${opportunityId}`;
       const { firstName, lastName, email } = opportunity.issuer.user;
       const displayName = `${firstName} ${lastName}`;

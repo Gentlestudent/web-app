@@ -6,49 +6,71 @@ import opportunity from './models/opportunity';
 import participation from './models/participation';
 import user from './models/user';
 import assertion from './models/assertion';
+import getEnvironmentVar from '../../environments';
 
-const sqlClient = new Sequelize(
-  process.env.DATABASE_DATABASE,
-  process.env.DATABASE_USERNAME,
-  process.env.DATABASE_PASSWORD,
-  {
-    host: process.env.DATABASE_HOST,
-    dialect: 'mssql',
-    logging: () => {}
-    // logging: (...msg) => console.log(msg)
-  }
-);
+const getSqlClient = (() => {
+  let sqlClient;
+  const models = {};
 
-const Badge = sqlClient.define('Badge', badge);
-const News = sqlClient.define('News', news);
-const Opportunity = sqlClient.define('Opportunity', opportunity);
-const Participation = sqlClient.define('Participation', participation);
-const User = sqlClient.define('User', user);
-const Issuer = sqlClient.define('Issuer', issuer);
-const Assertion = sqlClient.define('Assertion', assertion);
+  return async function getSqlClient() {
+    if (sqlClient) {
+      return {
+        sqlClient,
+        ...models
+      };
+    }
 
-Opportunity.belongsToMany(User, { through: Participation, as: 'participants' });
-User.belongsToMany(Opportunity, { through: Participation, as: 'opportunities' });
-Participation.belongsTo(User, { as: 'User' });
-Participation.belongsTo(Opportunity, { as: 'Opportunity' });
+    const [databaseName, databaseUsername, databasePassword, databaseHost] = await Promise.all([
+      getEnvironmentVar('DATABASE_DATABASE'),
+      getEnvironmentVar('DATABASE_USERNAME'),
+      getEnvironmentVar('DATABASE_PASSWORD'),
+      getEnvironmentVar('DATABASE_HOST')
+    ]);
 
-Opportunity.belongsTo(Issuer, { as: 'issuer' });
-Opportunity.belongsTo(Badge, { as: 'badge' });
-Issuer.belongsTo(User, { as: 'user' });
-Badge.belongsTo(Issuer, { as: 'issuer' });
+    sqlClient = new Sequelize(
+      databaseName,
+      databaseUsername,
+      databasePassword,
+      {
+        host: databaseHost,
+        dialect: 'mssql',
+        logging: () => {}
+        // logging: (...msg) => console.log(msg)
+      }
+    );
 
-Assertion.belongsTo(User, { as: 'recipient' });
-Assertion.belongsTo(Badge, { as: 'badge' });
+    const Badge = sqlClient.define('Badge', badge);
+    const News = sqlClient.define('News', news);
+    const Opportunity = sqlClient.define('Opportunity', opportunity);
+    const Participation = sqlClient.define('Participation', participation);
+    const User = sqlClient.define('User', user);
+    const Issuer = sqlClient.define('Issuer', issuer);
+    const Assertion = sqlClient.define('Assertion', assertion);
 
-export {
-  News,
-  Opportunity,
-  Participation,
-  User,
-  Issuer,
-  Badge,
-  Assertion
-};
+    Opportunity.belongsToMany(User, { through: Participation, as: 'participants' });
+    User.belongsToMany(Opportunity, { through: Participation, as: 'opportunities' });
+    Participation.belongsTo(User, { as: 'User' });
+    Participation.belongsTo(Opportunity, { as: 'Opportunity' });
+
+    Opportunity.belongsTo(Issuer, { as: 'issuer' });
+    Opportunity.belongsTo(Badge, { as: 'badge' });
+    Issuer.belongsTo(User, { as: 'user' });
+    Badge.belongsTo(Issuer, { as: 'issuer' });
+
+    Assertion.belongsTo(User, { as: 'recipient' });
+    Assertion.belongsTo(Badge, { as: 'badge' });
+
+    models.Badge = Badge;
+    models.News = News;
+    models.Opportunity = Opportunity;
+    models.Participation = Participation;
+    models.User = User;
+    models.Issuer = Issuer;
+    models.Assertion = Assertion;
+
+    return getSqlClient();
+  };
+})();
 
 // // sync models
 // (async () => {
@@ -72,4 +94,4 @@ export {
 //   }
 // })();
 
-export default sqlClient;
+export default getSqlClient;

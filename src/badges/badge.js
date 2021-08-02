@@ -1,6 +1,7 @@
-import { frontendUrl } from '../constants';
+import getEnvironmentVar from '../../environments';
 
-function buildBadge(badge) {
+async function buildBadge(badge) {
+  const frontendUrl = await getEnvironmentVar('HOST_URL');
   return {
     '@context': 'https://w3id.org/openbadges/v2',
     id: `${frontendUrl}/api/badge/${badge.id}`,

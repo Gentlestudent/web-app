@@ -1,10 +1,11 @@
-import { Assertion, User, Participation, Opportunity, Issuer } from '../../../sql/sqlClient';
+import getSqlClient from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
 import { roles, errorCodes } from '../../../constants';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
+    const { Assertion, User, Participation, Opportunity, Issuer } = await getSqlClient();
     await verifyToken(req, res);
     const { user, authenticated } = req.auth;
 

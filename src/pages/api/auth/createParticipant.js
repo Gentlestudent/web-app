@@ -2,14 +2,16 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { nanoid } from 'nanoid';
 import { sendEmailVerification } from '../../../utils/postmark';
-import { User } from '../../../sql/sqlClient';
-import { errorCodes, jwtSecret, frontendUrl } from '../../../constants';
+import getSqlClient from '../../../sql/sqlClient';
+import { errorCodes } from '../../../constants';
 import { createApiErrorMessage } from '../../../utils';
+import getEnvironmentVar from '../../../../environments';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(404).end();
 
   const { email, password, firstName, lastName, institute } = req.body;
+  const { User } = await getSqlClient();
 
   try {
     const participantCount = await User.count({
@@ -41,6 +43,8 @@ export default async function handler(req, res) {
   }
 
   try {
+    const jwtSecret = await getEnvironmentVar('JWT_SECRET');
+    const frontendUrl = await getEnvironmentVar('HOST_URL');
     const emailToken = jwt.sign(
       { email },
       jwtSecret,

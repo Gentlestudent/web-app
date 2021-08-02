@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { promisify } from 'util';
-import { Opportunity, Issuer } from '../../../sql/sqlClient';
+import getSqlClient from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
 import { roles, errorCodes } from '../../../constants';
@@ -10,6 +10,7 @@ const readFile = promisify(fs.readFile);
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
+    const { Opportunity } = await getSqlClient();
     let opportunities;
     try {
       opportunities = await Opportunity.findAll({
@@ -32,6 +33,8 @@ export default async function handler(req, res) {
     if (!authenticated || !hasRole(user, roles.ISSUER)) {
       return res.status(401).end();
     }
+
+    const { Opportunity, Issuer } = await getSqlClient();
 
     let issuer;
     try {

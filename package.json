@@ -20,7 +20,6 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "bcrypt": "^5.0.1",
-    "dotenv": "^6.2.0",
     "firebase": "^8.6.3",
     "firebase-admin": "^9.9.0",
     "formidable": "^1.2.2",

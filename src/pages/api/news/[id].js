@@ -1,9 +1,10 @@
-import { News } from '../../../sql/sqlClient';
+import getSqlClient from '../../../sql/sqlClient';
 import { createApiErrorMessage } from '../../../utils';
 import { errorCodes } from '../../../constants';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
+    const { News } = await getSqlClient();
     let news;
     try {
       news = await News.findOne({

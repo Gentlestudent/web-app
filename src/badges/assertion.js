@@ -1,9 +1,10 @@
 import { saltedHash } from '../utils';
 // import { featTypes } from '../constants';
-import { frontendUrl } from '../constants';
+import getEnvironmentVar from '../../environments';
 
-function buildAssertion(assertion) {
+async function buildAssertion(assertion) {
   const { hash: identity, salt } = saltedHash(assertion.recipient.email);
+  const frontendUrl = await getEnvironmentVar('HOST_URL');
   return {
     '@context': 'https://w3id.org/openbadges/v2',
     id: `${frontendUrl}/api/assertion/${assertion.id}`,

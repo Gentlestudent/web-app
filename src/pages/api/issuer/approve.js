@@ -1,4 +1,4 @@
-import { Issuer, User } from '../../../sql/sqlClient';
+import getSqlClient from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
 import { getPostmarkClient } from '../../../utils/postmark';
@@ -17,6 +17,8 @@ export default async function handler(req, res) {
     if (!issuerId) {
       return res.status(400).json(createApiErrorMessage(errorCodes.MISSING_ISSUER_ID));
     }
+
+    const { Issuer, User } = await getSqlClient();
 
     let issuer;
     try {

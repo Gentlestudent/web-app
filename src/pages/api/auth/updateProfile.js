@@ -1,4 +1,4 @@
-import { User } from '../../../sql/sqlClient';
+import getSqlClient from '../../../sql/sqlClient';
 import { errorCodes } from '../../../constants';
 import { createApiErrorMessage } from '../../../utils';
 import { verifyToken } from '../../../utils/middleware';
@@ -20,6 +20,7 @@ export default async function handler(req, res) {
     }
 
     const { email, firstName, lastName, institute, notifApp, notifEmail } = req.body;
+    const { User } = await getSqlClient();
 
     try {
       await User.update({

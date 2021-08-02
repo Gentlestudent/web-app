@@ -1,9 +1,10 @@
-import { Participation, Opportunity, User } from '../../../sql/sqlClient';
-import { errorCodes, frontendUrl } from '../../../constants';
+import getSqlClient from '../../../sql/sqlClient';
+import { errorCodes } from '../../../constants';
 import { createApiErrorMessage } from '../../../utils';
 import { verifyToken } from '../../../utils/middleware';
 import { getPostmarkClient } from '../../../utils/postmark';
 import { participationAccepted, participationDenied, participationFinished } from '../../../emailTemplates';
+import getEnvironmentVar from '../../../../environments';
 
 const allowedPreviousStatus = {
   0: 2, // a 'denied(2)' participation can be set to 'new(0)'
@@ -34,6 +35,8 @@ export default async function handler(req, res) {
     if (!availableStatuses.has(status)) {
       return res.status(400).json(createApiErrorMessage(errorCodes.INVALID_PARTICIPATION_STATUS));
     }
+
+    const { Participation, Opportunity, User } = await getSqlClient();
 
     let participation;
     try {
@@ -69,6 +72,7 @@ export default async function handler(req, res) {
       const postmarkClient = await getPostmarkClient();
       const emailTemplate = emailTemplates[Number(status)];
       if (emailTemplate) {
+        const frontendUrl = await getEnvironmentVar('HOST_URL');
         const opportunityLink = `${frontendUrl}/opportunities/${participation.Opportunity.id}`;
         const { firstName, lastName, email } = participation.User;
         const displayName = `${firstName} ${lastName}`;
