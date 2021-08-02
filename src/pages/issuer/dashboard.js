@@ -79,56 +79,6 @@ const Dashboard = () => {
             margin: ${spacers.medium} 0 6rem;
           }
 
-          .steps {
-            margin-top: ${spacers.medium};
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-gap: ${spacers.medium};
-          }
-
-          .step {
-            padding: ${spacers.medium};
-            background: ${colors.blueLight};
-            position: relative;
-            overflow: hidden;
-          }
-
-          .step::before {
-            content: '1';
-            position: absolute;
-            right: -1rem;
-            bottom: 0;
-            color: ${colors.blue};
-            font-size: 15rem;
-            font-weight: 600;
-            line-height: 0.7;
-            opacity: 0.15;
-          }
-
-          .step-two::before {
-            content: '2';
-          }
-
-          .step-three::before {
-            content: '3';
-          }
-
-          .button-wrapper {
-            margin-top: ${spacers.large};
-            display: flex;
-            justify-content: center;
-          }
-
-          @media (max-width: 900px) {
-            .steps {
-              grid-template-columns: repeat(1, 1fr);
-            }
-
-            .button-wrapper {
-              margin-top: ${spacers.small};
-            }
-          }
-
           @media (max-width: ${breakpoints.medium}) {
             .opportunities {
               grid-template: 1fr 1fr / repeat(2, 1fr);

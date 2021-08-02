@@ -13,3 +13,4 @@ export { default as useNewsItem } from './useNewsItem';
 export { default as useIssuers } from './useIssuers';
 export { default as useAssertions } from './useAssertions';
 export { default as useParticipations } from './useParticipations';
+export { default as useParticipants } from './useParticipants';

@@ -12,29 +12,31 @@ export default async function handler(req, res) {
       return res.status(401).end();
     }
 
-    const { Issuer, User } = await getSqlClient();
+    const { User } = await getSqlClient();
 
-    let issuers;
+    let users;
     try {
+      if (req.query.roles === '') {
+        req.query.roles = '0'; // if the 'roles' query parameter is defined but the list is empty we should return an empty list of users
+      }
       const options = {
         where: {
-          ...(!!req.query.validated && { validated: req.query.validated }),
-          ...(!!req.query.userId && { userId: req.query.userId })
+          ...(!!req.query.roles && { role: req.query.roles.split(',') })
         }
       };
       if (req.query.count === 'true') {
-        issuers = await Issuer.count(options);
+        users = await User.count(options);
       } else {
-        issuers = await Issuer.findAll({
+        users = await User.findAll({
           ...options,
-          include: [{ model: User, as: 'user', attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] } }]
+          attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] }
         });
       }
     } catch (error) {
       console.error(error);
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
-    return res.json(issuers);
+    return res.json(users);
   }
   return res.status(404).end();
 }

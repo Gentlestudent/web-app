@@ -64,3 +64,15 @@ export const updateProfile = async (values) => {
 
   // if (user.displayName !== name) await user.updateProfile({ displayName: name });
 };
+
+export const getUsers = async ({ searchParams } = {}) => {
+  const ky = await getAuthenticatedKy();
+  if (searchParams) {
+    searchParams =
+      searchParams instanceof window.URLSearchParams
+        ? searchParams
+        : new window.URLSearchParams(searchParams);
+    return ky.get(`/api/user?${searchParams.toString()}`);
+  }
+  return ky.get('/api/user');
+};

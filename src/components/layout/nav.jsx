@@ -98,6 +98,9 @@ const Nav = () => {
                         {hasRole(currentUser, roles.ADMIN) && (
                           <>
                             <DropdownMenu.Separator />
+                            <DropdownMenu.Option href={routes.admin.DASHBOARD}>
+                              Admin dashboard
+                            </DropdownMenu.Option>
                             <DropdownMenu.Option href={routes.admin.VALIDATE_ISSUER}>
                               Valideer issuer
                             </DropdownMenu.Option>
