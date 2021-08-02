@@ -17,8 +17,10 @@ export default async function handler(req, res) {
         where: {
           authority: 1,
           ...(!!req.query.authority && { authority: req.query.authority }),
-          ...(!!req.query.issuerId && { issuerId: req.query.issuerId })
-        }
+          ...(!!req.query.issuer && { issuerId: req.query.issuer })
+        },
+        limit: Number(req.query.limit || 100),
+        offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0
       });
     } catch (error) {
       console.error(error);
@@ -26,6 +28,7 @@ export default async function handler(req, res) {
     }
     return res.json(opportunities);
   }
+
   if (req.method === 'POST') {
     await verifyToken(req, res);
     const { user, authenticated } = req.auth;
@@ -101,6 +104,7 @@ export default async function handler(req, res) {
     }
     return res.status(204).end();
   }
+
   return res.status(404).end();
 }
 
