@@ -6,7 +6,7 @@ function htmlBody(data) {
 
     <p>Je taken bij leerkans <a href="${data.opportunityLink}">${data.opportunityTitle}</a> zijn voltooid.</p>
 
-    <p>Je kan je badge <a href="${data.opportunityLink}">hier claimen</a>.</p>
+    <p>Je kan je nieuwe badge <a href="${data.profileLink}">hier bekijken</a>.</p>
 
     <p>Met vriendelijke groet,</p>
 
@@ -20,7 +20,7 @@ function textBody(data) {
 
     Je taken bij leerkans ${data.opportunityTitle} zijn voltooid.
 
-    Je kan je badge claimen via deze url: ${data.opportunityLink}.
+    Je kan je nieuwe badge bekijken via deze url: ${data.profileLink}.
 
     Met vriendelijke groet,
 

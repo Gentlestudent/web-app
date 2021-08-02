@@ -74,6 +74,7 @@ export default async function handler(req, res) {
       if (emailTemplate) {
         const frontendUrl = await getEnvironmentVar('HOST_URL');
         const opportunityLink = `${frontendUrl}${routes.OPPORTUNITIES}/${participation.Opportunity.id}`;
+        const profileLink = `${frontendUrl}${routes.user.PROFILE}`;
         const { firstName, lastName, email } = participation.User;
         const displayName = `${firstName} ${lastName}`;
 
@@ -84,12 +85,14 @@ export default async function handler(req, res) {
           HtmlBody: emailTemplate.htmlBody({
             displayName,
             opportunityTitle: participation.Opportunity.title,
-            opportunityLink
+            opportunityLink,
+            profileLink
           }),
           TextBody: emailTemplate.textBody({
             displayName,
             opportunityTitle: participation.Opportunity.title,
-            opportunityLink
+            opportunityLink,
+            profileLink
           }),
           MessageStream: 'outbound'
         });
