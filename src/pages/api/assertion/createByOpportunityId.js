@@ -17,13 +17,17 @@ export default async function handler(req, res) {
       return res.status(400).json(createApiErrorMessage(errorCodes.ERROR_OPPORTUNITY_ID_QUERY_PARAMETER_IS_REQUIRED));
     }
 
-    const id = req.query.id;
+    if (!req.query.participant) {
+      return res.status(400).json(createApiErrorMessage(errorCodes.ERROR_PARTICIPANT_ID_QUERY_PARAMETER_IS_REQUIRED));
+    }
+
+    const { id: opportunityId, participant: participantId } = req.query;
 
     let participation;
     try {
       participation = await Participation.findOne({
         where: {
-          OpportunityId: id
+          OpportunityId: opportunityId
         },
         attributes: ['id', 'status', 'UserId'],
         include: [{
@@ -56,7 +60,7 @@ export default async function handler(req, res) {
     try {
       const assertion = await Assertion.findOne({
         where: {
-          recipientId: participation.User.id,
+          recipientId: participantId,
           badgeId: participation.Opportunity.badgeId
         }
       });

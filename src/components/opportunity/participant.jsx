@@ -24,7 +24,7 @@ const Participant = ({ participant, withButtons, opportunity, reloadOpportunity 
     }
     try {
       await updateParticipationStatus({ id: participant.Participation.id, status: 3 });
-      await createAssertion({ opportunityId: opportunity.id });
+      await createAssertion({ opportunity: opportunity.id, participant: participant.id });
       reloadOpportunity();
     } catch (error) {
       // TODO show error

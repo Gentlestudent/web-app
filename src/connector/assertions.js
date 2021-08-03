@@ -12,9 +12,9 @@ const getAssertions = async ({ searchParams } = {}) => {
   return ky.get('/api/assertion');
 };
 
-const createAssertion = async ({ opportunityId } = {}) => {
+const createAssertion = async ({ opportunity, participant } = {}) => {
   const ky = await getAuthenticatedKy();
-  const searchParams = new window.URLSearchParams({ id: opportunityId });
+  const searchParams = new window.URLSearchParams({ id: opportunity, participant });
   return ky.get(`/api/assertion/createByOpportunityId?${searchParams.toString()}`);
 };
 
