@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getNewsById } from '../connector/news';
 
-function useNews(id, initialNews = null) {
+function useNews(initialNews = null, id) {
   const [news, setNews] = useState(initialNews);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);

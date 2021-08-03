@@ -9,7 +9,7 @@ import { approveIssuer, denyIssuer } from '../../connector/issuers';
 
 const ValidateIssuers = () => {
   const options = useMemo(() => ({ searchParams: { validated: false } }), []);
-  const [errorIssuers, loadingIssuers, issuers, reloadIssuers] = useIssuers(options, []);
+  const [errorIssuers, loadingIssuers, issuers, reloadIssuers] = useIssuers([], options);
   // TODO handle error & add loading icon
 
   return (

@@ -10,7 +10,7 @@ import { getBase64AsDataUrl } from '../../utils';
 const MyOpportunities = () => {
   const { currentUser } = useAuth();
   const options = useMemo(() => ({ searchParams: { issuer: currentUser?.issuer?.id } }), [currentUser]);
-  const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities(options);
+  const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities([], options);
   // TODO handle error & show loading
 
   return (

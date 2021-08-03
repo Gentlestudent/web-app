@@ -18,3 +18,4 @@ export { default as BannerSplit } from './banner-split';
 export { default as ErrorMessage } from './error-message';
 export { default as SuccessMessage } from './success-message';
 export { default as DropdownMenu } from './dropdown-menu';
+export { default as Pagination } from './pagination';

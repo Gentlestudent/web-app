@@ -27,6 +27,8 @@ export default async function handler(req, res) {
       } else {
         issuers = await Issuer.findAll({
           ...options,
+          limit: Number(req.query.limit || 100),
+          offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0,
           include: [{ model: User, as: 'user', attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] } }]
         });
       }

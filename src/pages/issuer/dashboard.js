@@ -13,18 +13,18 @@ const Dashboard = () => {
 
   const opportunitiesOptions = useMemo(() => ({ searchParams: { authority: [0, 1], issuer: currentUser?.issuer?.id } }), [currentUser]);
   const opportunitiesCountOptions = useMemo(() => ({ searchParams: { count: true, authority: [0, 1], issuer: currentUser?.issuer?.id } }), [currentUser]);
-  const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities(opportunitiesOptions, []);
-  const [errorOpportunitiesCount, loadingOpportunitiesCount, opportunitiesCount] = useOpportunities(opportunitiesCountOptions, 0);
+  const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities([], opportunitiesOptions);
+  const [errorOpportunitiesCount, loadingOpportunitiesCount, opportunitiesCount] = useOpportunities(0, opportunitiesCountOptions);
 
   const participationsOptions = useMemo(() => ({ searchParams: { opportunities: opportunities?.map(({ id }) => id) || [0] } }), [opportunities]);
   const participationsCountOptions = useMemo(() => ({ searchParams: { count: true, opportunities: opportunities?.map(({ id }) => id) || [0] } }), [opportunities]);
-  const [errorParticipations, loadingParticipations, participations] = useParticipations(participationsOptions, []);
-  const [errorParticipationsCount, loadingParticipationsCount, participationsCount] = useParticipations(participationsCountOptions, 0);
+  const [errorParticipations, loadingParticipations, participations] = useParticipations([], participationsOptions);
+  const [errorParticipationsCount, loadingParticipationsCount, participationsCount] = useParticipations(0, participationsCountOptions);
 
   const assertionsOptions = useMemo(() => ({ searchParams: { badges: opportunities?.map(({ badgeId }) => badgeId) || [0] } }), [opportunities]);
   const assertionsCountOptions = useMemo(() => ({ searchParams: { count: true, badges: opportunities?.map(({ badgeId }) => badgeId) || [0] } }), [opportunities]);
-  const [errorAssertions, loadingAssertions, assertions] = useAssertions(assertionsOptions, []);
-  const [errorAssertionsCount, loadingAssertionsCount, assertionsCount] = useAssertions(assertionsCountOptions, 0);
+  const [errorAssertions, loadingAssertions, assertions] = useAssertions([], assertionsOptions);
+  const [errorAssertionsCount, loadingAssertionsCount, assertionsCount] = useAssertions(0, assertionsCountOptions);
 
   // TODO handle error & show loading
 

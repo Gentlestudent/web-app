@@ -101,11 +101,11 @@ const Nav = () => {
                             <DropdownMenu.Option href={routes.admin.DASHBOARD}>
                               Admin dashboard
                             </DropdownMenu.Option>
-                            <DropdownMenu.Option href={routes.admin.VALIDATE_ISSUER}>
-                              Valideer issuer
+                            <DropdownMenu.Option href={routes.admin.ISSUERS}>
+                              Issuers
                             </DropdownMenu.Option>
-                            <DropdownMenu.Option href={routes.admin.VALIDATE_OPPORTUNITY}>
-                              Valideer leerkans
+                            <DropdownMenu.Option href={routes.admin.OPPORTUNITIES}>
+                              Leerkansen
                             </DropdownMenu.Option>
                           </>
                         )}

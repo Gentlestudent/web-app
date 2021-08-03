@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getUsers } from '../connector/users';
 
-function useParticipants(options, initialParticipants = []) {
+function useParticipants(initialParticipants = [], options) {
   const [participants, setParticipants] = useState(initialParticipants);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);

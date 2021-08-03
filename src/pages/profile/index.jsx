@@ -9,7 +9,7 @@ import { hasRole, getBase64AsDataUrl } from '../../utils';
 const Profile = () => {
   const { currentUser } = useAuth();
   const options = useMemo(() => ({ searchParams: { recipient: currentUser?.id } }), [currentUser]);
-  const [assertionsError, assertionsLoading, assertions] = useAssertions(options);
+  const [assertionsError, assertionsLoading, assertions] = useAssertions([], options);
   usePrivateRoute();
 
   const isAdmin = hasRole(currentUser, roles.ADMIN);

@@ -37,6 +37,8 @@ export const routes = {
   admin: {
     VALIDATE_OPPORTUNITY: '/admin/validate-opportunities',
     VALIDATE_ISSUER: '/admin/validate-issuers',
+    ISSUERS: '/admin/issuers',
+    OPPORTUNITIES: '/admin/opportunities',
     DASHBOARD: '/admin/dashboard'
   }
 };
@@ -121,4 +123,10 @@ export const authority = {
   BLOCKED: 0,
   APPROVED: 1,
   DELETED: 2
+};
+
+export const authorityLabels = {
+  0: 'nieuw',
+  1: 'goedgekeurd',
+  2: 'afgekeurd'
 };

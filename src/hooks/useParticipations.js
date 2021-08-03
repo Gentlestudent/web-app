@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getParticipations } from '../connector/participations';
 
-function useParticipations(options, initialParticipations = []) {
+function useParticipations(initialParticipations = [], options) {
   const [participations, setParticipations] = useState(initialParticipations);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);

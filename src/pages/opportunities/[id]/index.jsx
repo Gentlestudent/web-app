@@ -12,8 +12,8 @@ const Opportunity = () => {
   const router = useRouter();
   const { currentUser } = useAuth();
   const [errorOpportunity, loadingOpportunity, opportunity, reloadOpportunity] = useOpportunity(
-    router.query.id || null,
-    {}
+    {},
+    router.query.id || null
   );
   // TODO handle error & show loading
 

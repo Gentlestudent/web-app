@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getIssuers } from '../connector/issuers';
 
-function useIssuers(options, initialIssuers = []) {
+function useIssuers(initialIssuers = [], options) {
   const [issuers, setIssuers] = useState(initialIssuers);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);

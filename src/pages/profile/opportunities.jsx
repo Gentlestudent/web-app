@@ -11,7 +11,7 @@ const MyOpportunities = () => {
   const { currentUser } = useAuth();
   usePrivateRoute();
   const options = useMemo(() => ({ searchParams: { user: currentUser?.id } }), [currentUser]);
-  const [participationsError, participationsLoading, participations] = useParticipations(options);
+  const [participationsError, participationsLoading, participations] = useParticipations([], options);
   // TODO handle error & show loading
 
   return (

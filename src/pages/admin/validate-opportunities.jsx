@@ -10,7 +10,7 @@ import { approveOpportunity } from '../../connector/opportunities';
 
 const ValidateOpportunities = () => {
   const options = useMemo(() => ({ searchParams: { authority: 0 } }), []);
-  const [opportunitiesError, opportunitiesLoading, opportunities, reloadOpportunities] = useOpportunities(options);
+  const [opportunitiesError, opportunitiesLoading, opportunities, reloadOpportunities] = useOpportunities([], options);
   // TODO handle error & add loading icon
 
   return (

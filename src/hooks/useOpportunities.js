@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getOpportunities } from '../connector/opportunities';
 
-function useOpportunities(options, initialOpportunities = []) {
+function useOpportunities(initialOpportunities = [], options) {
   const [opportunities, setOpportunities] = useState(initialOpportunities);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);

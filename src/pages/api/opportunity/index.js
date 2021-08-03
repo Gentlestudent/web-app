@@ -10,7 +10,7 @@ const readFile = promisify(fs.readFile);
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    const { Opportunity } = await getSqlClient();
+    const { Opportunity, Issuer, User } = await getSqlClient();
     let opportunities;
     try {
       const options = {
@@ -23,10 +23,26 @@ export default async function handler(req, res) {
       if (req.query.count === 'true') {
         opportunities = await Opportunity.count(options);
       } else {
+        const include = [];
+        if (req.query.includeIssuers === 'true') {
+          include.push({
+            model: Issuer,
+            as: 'issuer',
+            include: {
+              model: User,
+              as: 'user',
+              attributes: {
+                exclude: ['password', 'emailVerificationId', 'sessionId']
+              }
+            }
+          });
+        }
         opportunities = await Opportunity.findAll({
           ...options,
           limit: Number(req.query.limit || 100),
-          offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0
+          offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0,
+          order: [['beginDate', 'DESC']],
+          include
         });
       }
     } catch (error) {

@@ -6,19 +6,19 @@ import { useOpportunities, useIssuers, useParticipations, useAssertions, usePart
 
 const Dashboard = () => {
   const opportunitiesCountOptions = useMemo(() => ({ searchParams: { count: true, authority: [0, 1] } }), []);
-  const [errorOpportunitiesCount, loadingOpportunitiesCount, opportunitiesCount] = useOpportunities(opportunitiesCountOptions, 0);
+  const [errorOpportunitiesCount, loadingOpportunitiesCount, opportunitiesCount] = useOpportunities(0, opportunitiesCountOptions);
 
   const participationsCountOptions = useMemo(() => ({ searchParams: { count: true } }), []);
-  const [errorParticipationsCount, loadingParticipationsCount, participationsCount] = useParticipations(participationsCountOptions, 0);
+  const [errorParticipationsCount, loadingParticipationsCount, participationsCount] = useParticipations(0, participationsCountOptions);
 
   const participantsCountOptions = useMemo(() => ({ searchParams: { count: true, roles: roles.PARTICIPANT } }), []);
-  const [errorParticipantsCount, loadingParticipantsCount, participantsCount] = useParticipants(participantsCountOptions, 0);
+  const [errorParticipantsCount, loadingParticipantsCount, participantsCount] = useParticipants(0, participantsCountOptions);
 
   const issuersCountOptions = useMemo(() => ({ searchParams: { count: true, validated: true } }), []);
-  const [errorIssuersCount, loadingIssuersCount, issuersCount] = useIssuers(issuersCountOptions, 0);
+  const [errorIssuersCount, loadingIssuersCount, issuersCount] = useIssuers(0, issuersCountOptions);
 
   const assertionsCountOptions = useMemo(() => ({ searchParams: { count: true } }), []);
-  const [errorAssertionsCount, loadingAssertionsCount, assertionsCount] = useAssertions(assertionsCountOptions, 0);
+  const [errorAssertionsCount, loadingAssertionsCount, assertionsCount] = useAssertions(0, assertionsCountOptions);
 
   // TODO handle error & show loading
 
