@@ -11,45 +11,48 @@ const readFile = promisify(fs.readFile);
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     const { Opportunity, Issuer, User } = await getSqlClient();
-    let opportunities;
     try {
       const options = {
         where: {
           authority: 1,
           ...(!!req.query.authority && { authority: req.query.authority.split(',') }),
           ...(!!req.query.issuer && { issuerId: req.query.issuer })
-        }
+        },
+        limit: Number(req.query.limit || 100),
+        offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0,
+        order: [['beginDate', 'DESC']]
       };
-      if (req.query.count === 'true') {
-        opportunities = await Opportunity.count(options);
-      } else {
-        const include = [];
-        if (req.query.includeIssuers === 'true') {
-          include.push({
-            model: Issuer,
-            as: 'issuer',
-            include: {
-              model: User,
-              as: 'user',
-              attributes: {
-                exclude: ['password', 'emailVerificationId', 'sessionId']
-              }
+      const include = [];
+      if (req.query.includeIssuers === 'true') {
+        include.push({
+          model: Issuer,
+          as: 'issuer',
+          include: {
+            model: User,
+            as: 'user',
+            attributes: {
+              exclude: ['password', 'emailVerificationId', 'sessionId']
             }
-          });
-        }
-        opportunities = await Opportunity.findAll({
-          ...options,
-          limit: Number(req.query.limit || 100),
-          offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0,
-          order: [['beginDate', 'DESC']],
-          include
+          }
         });
       }
+      const [count, opportunities] = await Promise.all([
+        Opportunity.count({ where: options.where }),
+        Opportunity.findAll({
+          ...options,
+          include
+        })
+      ]);
+      return res.json({
+        data: opportunities,
+        count,
+        page: options.offset,
+        limit: options.limit
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
-    return res.json(opportunities);
   }
 
   if (req.method === 'POST') {

@@ -9,7 +9,7 @@ import { approveIssuer, denyIssuer } from '../../connector/issuers';
 
 const ValidateIssuers = () => {
   const options = useMemo(() => ({ searchParams: { validated: false } }), []);
-  const [errorIssuers, loadingIssuers, issuers, reloadIssuers] = useIssuers([], options);
+  const [errorIssuers, loadingIssuers, issuers, reloadIssuers] = useIssuers({}, options);
   // TODO handle error & add loading icon
 
   return (
@@ -17,11 +17,11 @@ const ValidateIssuers = () => {
       <Container>
         <Heading title="Issuers valideren" level={1} color="black" />
         {loadingIssuers && <div>...laden</div>}
-        {!loadingIssuers && !issuers.length && (
+        {!loadingIssuers && !issuers?.data?.length && (
           <div>Er zijn geen te valideren issuers.</div>
         )}
         <div className="list">
-          {issuers.map(issuer => <Issuer key={issuer.id} issuer={issuer} reloadIssuers={reloadIssuers} />)}
+          {(issuers?.data || []).map(issuer => <Issuer key={issuer.id} issuer={issuer} reloadIssuers={reloadIssuers} />)}
         </div>
       </Container>
 

@@ -14,7 +14,6 @@ export default async function handler(req, res) {
 
     const { Participation, Opportunity } = await getSqlClient();
 
-    let participations;
     try {
       if (req.query.opportunities === '') {
         req.query.opportunities = '0'; // if the 'opportunities' query parameter is defined but the list is empty we should return an empty list of participations
@@ -23,26 +22,28 @@ export default async function handler(req, res) {
         where: {
           ...(!!req.query.user && { UserId: req.query.user }),
           ...(!!req.query.opportunities && { OpportunityId: req.query.opportunities.split(',') })
-        }
+        },
+        limit: Number(req.query.limit || 100),
+        offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0,
+        include: [{
+          model: Opportunity,
+          as: 'Opportunity'
+        }]
       };
-      if (req.query.count === 'true') {
-        participations = await Participation.count(options);
-      } else {
-        participations = await Participation.findAll({
-          ...options,
-          limit: Number(req.query.limit || 100),
-          offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0,
-          include: [{
-            model: Opportunity,
-            as: 'Opportunity'
-          }]
-        });
-      }
+      const [count, participations] = await Promise.all([
+        Participation.count({ where: options.where }),
+        Participation.findAll(options)
+      ]);
+      return res.json({
+        data: participations,
+        count,
+        page: options.offset,
+        limit: options.limit
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
-    return res.json(participations);
   }
 
   if (req.method === 'POST') {

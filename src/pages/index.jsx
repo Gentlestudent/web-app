@@ -14,8 +14,8 @@ const Home = () => {
       <Banner image={banner} />
       <HomeHeader />
       <Container>
-        <Opportunities opportunities={opportunities} />
-        <News news={news} />
+        <Opportunities opportunities={opportunities?.data || []} />
+        <News news={news?.data || []} />
       </Container>
       <Download />
     </>

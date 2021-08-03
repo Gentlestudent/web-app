@@ -14,7 +14,6 @@ export default async function handler(req, res) {
 
     const { Assertion, User, Badge } = await getSqlClient();
 
-    let assertions;
     try {
       if (req.query.badges === '') {
         req.query.badges = '0'; // if the 'badges' query parameter is defined but the list is empty we should return an empty list of assertions
@@ -23,29 +22,31 @@ export default async function handler(req, res) {
         where: {
           ...(!!req.query.recipient && { recipientId: req.query.recipient }),
           ...(!!req.query.badges && { badgeId: req.query.badges.split(',') })
-        }
+        },
+        include: [{
+          model: User,
+          as: 'recipient',
+          attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] }
+        },
+        {
+          model: Badge,
+          as: 'badge'
+        }]
       };
-      if (req.query.count === 'true') {
-        assertions = await Assertion.count(options);
-      } else {
-        assertions = await Assertion.findAll({
-          ...options,
-          include: [{
-            model: User,
-            as: 'recipient',
-            attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] }
-          },
-          {
-            model: Badge,
-            as: 'badge'
-          }]
-        });
-      }
+      const [count, assertions] = await Promise.all([
+        Assertion.count({ where: options.where }),
+        Assertion.findAll(options)
+      ]);
+      return res.json({
+        data: assertions,
+        count,
+        page: options.offset,
+        limit: options.limit
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
-    return res.json(assertions);
   }
 
   return res.status(404).end();

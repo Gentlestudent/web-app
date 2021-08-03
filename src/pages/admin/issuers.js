@@ -14,7 +14,7 @@ const Issuers = () => {
       limit: page.limit
     }
   }), [page]);
-  const [errorIssuers, loadingIssuers, issuers] = useIssuers([], options);
+  const [errorIssuers, loadingIssuers, issuers] = useIssuers({}, options);
   // TODO handle error & add loading icon
 
   function handlePageChange(newPage) {
@@ -39,8 +39,8 @@ const Issuers = () => {
           </thead>
           <tbody>
             {loadingIssuers && <tr><td colSpan={5}>...laden</td></tr>}
-            {!loadingIssuers && !issuers.length && <tr><td colSpan={5}>Er zijn nog geen issuers.</td></tr>}
-            {issuers.map(issuer => {
+            {!loadingIssuers && !issuers?.data?.length && <tr><td colSpan={5}>Er zijn nog geen issuers.</td></tr>}
+            {(issuers?.data || []).map(issuer => {
               return (
                 <tr key={issuer.id}>
                   <td>{`${issuer.user?.firstName || ''} ${issuer.user?.lastName || ''}`}</td>

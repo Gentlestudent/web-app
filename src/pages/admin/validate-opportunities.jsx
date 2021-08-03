@@ -10,7 +10,7 @@ import { approveOpportunity } from '../../connector/opportunities';
 
 const ValidateOpportunities = () => {
   const options = useMemo(() => ({ searchParams: { authority: 0 } }), []);
-  const [opportunitiesError, opportunitiesLoading, opportunities, reloadOpportunities] = useOpportunities([], options);
+  const [opportunitiesError, opportunitiesLoading, opportunities, reloadOpportunities] = useOpportunities({}, options);
   // TODO handle error & add loading icon
 
   return (
@@ -18,11 +18,11 @@ const ValidateOpportunities = () => {
       <Container>
         <Heading title="Leerkansen valideren" level={1} color="black" />
         {opportunitiesLoading && <div>...laden</div>}
-        {!opportunitiesLoading && !opportunities.length && (
+        {!opportunitiesLoading && !opportunities.data?.length && (
           <div>Er zijn geen te valideren leerkansen.</div>
         )}
         <div className="list">
-          {opportunities.map(opportunity => <div key={opportunity.id}><Opportunity opportunity={opportunity} reloadOpportunities={reloadOpportunities} /></div>)}
+          {(opportunities.data || []).map(opportunity => <div key={opportunity.id}><Opportunity opportunity={opportunity} reloadOpportunities={reloadOpportunities} /></div>)}
         </div>
       </Container>
 

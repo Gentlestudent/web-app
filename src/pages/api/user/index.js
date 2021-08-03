@@ -14,7 +14,6 @@ export default async function handler(req, res) {
 
     const { User } = await getSqlClient();
 
-    let users;
     try {
       if (req.query.roles === '') {
         req.query.roles = '0'; // if the 'roles' query parameter is defined but the list is empty we should return an empty list of users
@@ -22,21 +21,25 @@ export default async function handler(req, res) {
       const options = {
         where: {
           ...(!!req.query.roles && { role: req.query.roles.split(',') })
-        }
+        },
+        limit: Number(req.query.limit || 100),
+        offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0,
+        attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] }
       };
-      if (req.query.count === 'true') {
-        users = await User.count(options);
-      } else {
-        users = await User.findAll({
-          ...options,
-          attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] }
-        });
-      }
+      const [count, users] = await Promise.all([
+        User.count({ where: options.where }),
+        User.findAll(options)
+      ]);
+      return res.json({
+        data: users,
+        count,
+        page: options.offset,
+        limit: options.limit
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
-    return res.json(users);
   }
   return res.status(404).end();
 }

@@ -14,7 +14,7 @@ export default function News() {
       <Container>
         <Heading title="Nieuws" level={1} marginTop />
         <article className="news-items">
-          {news.map((newsItem) => (
+          {(news?.data || []).map((newsItem) => (
             <Card
               onClick={() => Router.push(`${routes.NEWS}/${newsItem.id}`)}
               key={newsItem.id}

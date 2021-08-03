@@ -22,11 +22,11 @@ const Opportunities = () => {
           </div>
 
           <div className="map-wrapper">
-            <Map opportunities={opportunities} />
+            <Map opportunities={opportunities?.data || []} />
           </div>
 
           <article className="cards">
-            {opportunities.map((opportunity) => (
+            {(opportunities?.data || []).map((opportunity) => (
               <Card
                 onClick={() => Router.push(`${routes.OPPORTUNITIES}/${opportunity.id}`)}
                 key={opportunity.id}

@@ -14,29 +14,30 @@ export default async function handler(req, res) {
 
     const { Issuer, User } = await getSqlClient();
 
-    let issuers;
     try {
       const options = {
         where: {
           ...(!!req.query.validated && { validated: req.query.validated }),
           ...(!!req.query.userId && { userId: req.query.userId })
-        }
+        },
+        limit: Number(req.query.limit || 100),
+        offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0,
+        include: [{ model: User, as: 'user', attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] } }]
       };
-      if (req.query.count === 'true') {
-        issuers = await Issuer.count(options);
-      } else {
-        issuers = await Issuer.findAll({
-          ...options,
-          limit: Number(req.query.limit || 100),
-          offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0,
-          include: [{ model: User, as: 'user', attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] } }]
-        });
-      }
+      const [count, issuers] = await Promise.all([
+        Issuer.count({ where: options.where }),
+        Issuer.findAll(options)
+      ]);
+      return res.json({
+        data: issuers,
+        count,
+        page: options.offset,
+        limit: options.limit
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
-    return res.json(issuers);
   }
   return res.status(404).end();
 }

@@ -25,7 +25,7 @@ const Register = () => {
   usePrivateRoute(routes.REGISTER);
   const { currentUser } = useAuth();
   const options = useMemo(() => ({ searchParams: { userId: currentUser?.id } }), [currentUser]);
-  const [errorIssuers, loadingIssuers, issuers] = useIssuers([], options);
+  const [errorIssuers, loadingIssuers, issuers] = useIssuers({}, options);
   // TODO handle error & show loading icon
   const [registrationComplete, setRegistrationComplete] = useState(false);
 
@@ -37,7 +37,7 @@ const Register = () => {
     );
   }
 
-  if (issuers.length) {
+  if (issuers?.data?.length) {
     return (
       <Container>
         <Panel>Issuer registratie goedkeuring in afwachting.</Panel>

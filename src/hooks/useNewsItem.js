@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getNewsById } from '../connector/news';
 
-function useNews(initialNews = null, id) {
+function useNewsItem(initialNews = null, id) {
   const [news, setNews] = useState(initialNews);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -25,4 +25,4 @@ function useNews(initialNews = null, id) {
   return [error, loading, news];
 }
 
-export default useNews;
+export default useNewsItem;

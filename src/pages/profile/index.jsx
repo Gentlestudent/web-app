@@ -9,7 +9,7 @@ import { hasRole, getBase64AsDataUrl } from '../../utils';
 const Profile = () => {
   const { currentUser } = useAuth();
   const options = useMemo(() => ({ searchParams: { recipient: currentUser?.id } }), [currentUser]);
-  const [assertionsError, assertionsLoading, assertions] = useAssertions([], options);
+  const [assertionsError, assertionsLoading, assertions] = useAssertions({}, options);
   usePrivateRoute();
 
   const isAdmin = hasRole(currentUser, roles.ADMIN);
@@ -49,7 +49,7 @@ const Profile = () => {
         <Container>
           <Heading title="Mijn badges" marginTop level={1} />
           <Grid>
-            {assertions.map(assertion => (
+            {(assertions?.data || []).map(assertion => (
               <div key={assertion.id} className="badge">
                 <img src={getBase64AsDataUrl(assertion.badge.image)} alt={assertion.badge.name} />
                 <div>

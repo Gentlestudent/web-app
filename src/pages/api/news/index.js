@@ -6,14 +6,27 @@ import { roles, errorCodes } from '../../../constants';
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     const { News } = await getSqlClient();
-    let news;
     try {
-      news = await News.findAll();
+      const options = {
+        where: {},
+        limit: Number(req.query.limit || 100),
+        offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0,
+        order: [['published', 'DESC']]
+      };
+      const [count, news] = await Promise.all([
+        News.count({ where: options.where }),
+        News.findAll(options)
+      ]);
+      return res.json({
+        data: news,
+        count,
+        page: options.offset,
+        limit: options.limit
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
-    return res.json(news);
   }
   if (req.method === 'POST') {
     await verifyToken(req, res);

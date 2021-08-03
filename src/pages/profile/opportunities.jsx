@@ -11,7 +11,7 @@ const MyOpportunities = () => {
   const { currentUser } = useAuth();
   usePrivateRoute();
   const options = useMemo(() => ({ searchParams: { user: currentUser?.id } }), [currentUser]);
-  const [participationsError, participationsLoading, participations] = useParticipations([], options);
+  const [participationsError, participationsLoading, participations] = useParticipations({}, options);
   // TODO handle error & show loading
 
   return (
@@ -20,7 +20,7 @@ const MyOpportunities = () => {
         <>
           <Heading title="Leerkansen" level={1} marginTop />
           <article className="cards">
-            {participations.map((participation) => (
+            {(participations?.data || []).map((participation) => (
               <Card
                 onClick={() => Router.push(`${routes.OPPORTUNITIES}/${participation.Opportunity.id}`)}
                 key={participation.Opportunity.id}

@@ -16,7 +16,7 @@ const Opportunities = () => {
       limit: page.limit
     }
   }), [page]);
-  const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities([], options);
+  const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities({}, options);
   // TODO handle error & add loading icon
 
   function handlePageChange(newPage) {
@@ -43,8 +43,8 @@ const Opportunities = () => {
           </thead>
           <tbody>
             {loadingOpportunities && <tr><td colSpan={7}>...laden</td></tr>}
-            {!loadingOpportunities && !opportunities.length && <tr><td colSpan={7}>Er zijn nog geen leerkansen.</td></tr>}
-            {opportunities.map(opportunity => {
+            {!loadingOpportunities && !opportunities.data?.length && <tr><td colSpan={7}>Er zijn nog geen leerkansen.</td></tr>}
+            {(opportunities.data || []).map(opportunity => {
               return (
                 <tr key={opportunity.id}>
                   <td><a href={`${routes.OPPORTUNITIES}/${opportunity.id}`}>&gt;</a></td>

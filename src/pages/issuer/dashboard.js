@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import Router from 'next/router';
-import { spacers, colors, breakpoints } from '../../assets/styles/constants';
+import { spacers, breakpoints } from '../../assets/styles/constants';
 import { Button, Heading, BannerSplit, Card } from '../../components/UI';
 import { Container } from '../../components/layout/index';
 import { routes, roles } from '../../constants';
@@ -12,29 +12,23 @@ const Dashboard = () => {
   const { currentUser } = useAuth();
 
   const opportunitiesOptions = useMemo(() => ({ searchParams: { authority: [0, 1], issuer: currentUser?.issuer?.id } }), [currentUser]);
-  const opportunitiesCountOptions = useMemo(() => ({ searchParams: { count: true, authority: [0, 1], issuer: currentUser?.issuer?.id } }), [currentUser]);
-  const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities([], opportunitiesOptions);
-  const [errorOpportunitiesCount, loadingOpportunitiesCount, opportunitiesCount] = useOpportunities(0, opportunitiesCountOptions);
+  const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities({}, opportunitiesOptions);
 
-  const participationsOptions = useMemo(() => ({ searchParams: { opportunities: opportunities?.map(({ id }) => id) || [0] } }), [opportunities]);
-  const participationsCountOptions = useMemo(() => ({ searchParams: { count: true, opportunities: opportunities?.map(({ id }) => id) || [0] } }), [opportunities]);
-  const [errorParticipations, loadingParticipations, participations] = useParticipations([], participationsOptions);
-  const [errorParticipationsCount, loadingParticipationsCount, participationsCount] = useParticipations(0, participationsCountOptions);
+  const participationsOptions = useMemo(() => ({ searchParams: { opportunities: (opportunities?.data || []).map(({ id }) => id) || [0] } }), [opportunities]);
+  const [errorParticipations, loadingParticipations, participations] = useParticipations({}, participationsOptions);
 
-  const assertionsOptions = useMemo(() => ({ searchParams: { badges: opportunities?.map(({ badgeId }) => badgeId) || [0] } }), [opportunities]);
-  const assertionsCountOptions = useMemo(() => ({ searchParams: { count: true, badges: opportunities?.map(({ badgeId }) => badgeId) || [0] } }), [opportunities]);
-  const [errorAssertions, loadingAssertions, assertions] = useAssertions([], assertionsOptions);
-  const [errorAssertionsCount, loadingAssertionsCount, assertionsCount] = useAssertions(0, assertionsCountOptions);
+  const assertionsOptions = useMemo(() => ({ searchParams: { badges: (opportunities?.data || []).map(({ badgeId }) => badgeId) || [0] } }), [opportunities]);
+  const [errorAssertions, loadingAssertions, assertions] = useAssertions({}, assertionsOptions);
 
   // TODO handle error & show loading
 
   const mappedParticipations = new Map();
-  participations.forEach(participation => {
+  (participations?.data || []).forEach(participation => {
     mappedParticipations.set(participation.OpportunityId, [...mappedParticipations.get(participation.OpportunityId) || [], participation]);
   });
 
   const mappedAssertions = new Map();
-  assertions.forEach(assertion => {
+  (assertions?.data || []).forEach(assertion => {
     mappedAssertions.set(assertion.badgeId, [...mappedAssertions.get(assertion.badgeId) || [], assertion]);
   });
 
@@ -42,15 +36,15 @@ const Dashboard = () => {
     <>
       <BannerSplit>
         <div>
-          <Heading title={`Aangemaakte leerkansen: ${opportunitiesCount}`} level={2} color="white" />
-          <Heading title={`Inschrijvingen: ${participationsCount}`} level={2} color="white" />
-          <Heading title={`Aangemaakte badges: ${assertionsCount}`} level={2} color="white" />
+          <Heading title={`Aangemaakte leerkansen: ${opportunities?.count || '-'}`} level={2} color="white" />
+          <Heading title={`Inschrijvingen: ${participations?.count || '-'}`} level={2} color="white" />
+          <Heading title={`Aangemaakte badges: ${assertions?.count || '-'}`} level={2} color="white" />
           <Button text="Leerkans aanmaken" primary href={routes.issuer.CREATE_OPPORTUNITY} />
         </div>
       </BannerSplit>
       <Container>
         <article className="opportunities">
-          {opportunities.map((opportunity) => {
+          {(opportunities?.data || []).map((opportunity) => {
             const myParticipations = mappedParticipations.get(opportunity.id) || [];
             const myAssertions = mappedAssertions.get(opportunity.badgeId) || [];
             return (
