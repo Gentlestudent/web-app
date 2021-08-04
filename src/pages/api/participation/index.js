@@ -57,7 +57,7 @@ export default async function handler(req, res) {
     const { Participation } = await getSqlClient();
 
     try {
-      Participation.create({
+      await Participation.create({
         message: req.body.message,
         reason: req.body.reason,
         OpportunityId: req.query.opportunity,

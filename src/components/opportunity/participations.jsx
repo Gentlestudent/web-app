@@ -25,6 +25,8 @@ const Participations = ({ opportunity, reloadOpportunity }) => {
     [[], [], [], []]
   );
 
+  const badgeIsFree = opportunity.difficulty === 0;
+
   return (
     <div>
       <Heading title="Inschrijvingen" level={1} marginTop />
@@ -38,15 +40,19 @@ const Participations = ({ opportunity, reloadOpportunity }) => {
         }
       </div>
 
-      <Heading title="Geaccepteerde inschrijvingen" level={2} marginTop />
-      <div className="participants">
-        {acceptedParticipants.length
-          ? acceptedParticipants.map((participant) => (
-            <Participant key={participant.id} participant={participant} reloadOpportunity={reloadOpportunity} opportunity={opportunity} />
-          ))
-          : <p className="participants__empty">Nog geen geaccepteerde inschrijvingen.</p>
-        }
-      </div>
+      {!badgeIsFree && (
+        <>
+          <Heading title="Geaccepteerde inschrijvingen" level={2} marginTop />
+          <div className="participants">
+            {acceptedParticipants.length
+              ? acceptedParticipants.map((participant) => (
+                <Participant key={participant.id} participant={participant} reloadOpportunity={reloadOpportunity} opportunity={opportunity} />
+              ))
+              : <p className="participants__empty">Nog geen geaccepteerde inschrijvingen.</p>
+            }
+          </div>
+        </>
+      )}
 
       <Heading title="Afgewerkte inschrijvingen" level={2} marginTop />
       <div className="participants">
@@ -58,15 +64,19 @@ const Participations = ({ opportunity, reloadOpportunity }) => {
         }
       </div>
 
-      <Heading title="Geweigerde inschrijvingen" level={2} marginTop />
-      <div className="participants">
-        {refusedParticipants.length
-          ? refusedParticipants.map((participant) => (
-            <Participant key={participant.id} participant={participant} reloadOpportunity={reloadOpportunity} />
-          ))
-          : <p className="participants__empty">Nog geen geweigerde inschrijvingen.</p>
-        }
-      </div>
+      {!badgeIsFree && (
+        <>
+          <Heading title="Geweigerde inschrijvingen" level={2} marginTop />
+          <div className="participants">
+            {refusedParticipants.length
+              ? refusedParticipants.map((participant) => (
+                <Participant key={participant.id} participant={participant} reloadOpportunity={reloadOpportunity} />
+              ))
+              : <p className="participants__empty">Nog geen geweigerde inschrijvingen.</p>
+            }
+          </div>
+        </>
+      )}
     </div>
   );
 }

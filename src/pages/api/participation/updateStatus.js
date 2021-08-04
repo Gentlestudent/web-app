@@ -40,29 +40,33 @@ export default async function handler(req, res) {
 
     let participation;
     try {
-      const [amountUpdated] = await Participation.update({
-        status: Number(status)
-      }, {
-        where: {
-          id,
-          status: allowedPreviousStatus[Number(status)] // make sure the participation we're updating has a status that can be updated to what we're setting it to now
-        }
-      });
-      if (amountUpdated !== 1) {
-        return res.status(400).json(createApiErrorMessage(errorCodes.NO_AVAILABLE_PARTICIPATION));
-      }
       participation = await Participation.findOne({
         where: { id },
         include: [{
           model: Opportunity,
           as: 'Opportunity',
-          attributes: ['id', 'title']
+          attributes: ['id', 'title', 'difficulty']
         }, {
           model: User,
           as: 'User',
           attributes: ['email', 'firstName', 'lastName']
         }]
       });
+      const difficultyIsEasy = participation?.Opportunity?.difficulty === 0;
+      // make sure the participation we're updating has a status that can be updated to what we're setting it to now
+      const previousParticipationStatus = difficultyIsEasy ? 0 : allowedPreviousStatus[Number(status)];
+
+      const [amountUpdated] = await Participation.update({
+        status: Number(status)
+      }, {
+        where: {
+          id,
+          status: previousParticipationStatus
+        }
+      });
+      if (amountUpdated !== 1) {
+        return res.status(400).json(createApiErrorMessage(errorCodes.NO_AVAILABLE_PARTICIPATION));
+      }
     } catch (error) {
       console.error(error);
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));

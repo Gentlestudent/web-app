@@ -4,7 +4,8 @@ import { Heading, Button } from '../../../components/UI';
 import { colors, spacers, breakpoints } from '../../../assets/styles/constants';
 import { Container } from '../../../components/layout/index';
 import { useOpportunity, useAuth } from '../../../hooks';
-import { createParticipation } from '../../../connector/participations';
+import { createParticipation, updateParticipationStatus } from '../../../connector/participations';
+import { createAssertion } from '../../../connector/assertions';
 import Participations from '../../../components/opportunity/participations';
 import { hasRole, getBase64AsDataUrl } from '../../../utils';
 
@@ -28,21 +29,43 @@ const Opportunity = () => {
   }
 
   async function handleRegisterClick() {
-    if (!opportunity.id) {
+    if (!opportunity?.id) {
       return;
     }
     try {
       await createParticipation(opportunity.id);
       reloadOpportunity();
     } catch (error) {
-      // handle error
+      // TODO handle error
       console.log(error);
     }
   }
 
-  const userIsParticipating = (opportunity?.participants || []).some(participant => participant.id === currentUser?.id);
+  async function handleClaimClick() {
+    if (!currentUser?.id || !opportunity?.id) {
+      return;
+    }
+    const myParticipation = (opportunity.participants || []).find(participant => participant.id === currentUser.id);
+    if (!myParticipation) {
+      return;
+    }
+    try {
+      await updateParticipationStatus({ id: myParticipation.Participation.id, status: 3 });
+      await createAssertion({ opportunity: opportunity.id, participant: currentUser.id });
+      reloadOpportunity();
+    } catch (error) {
+      // TODO handle error
+      console.log(error);
+    }
+  }
+
+  const currentUserParticipation = (opportunity?.participants || []).find(participant => participant.id === currentUser?.id);
   const userCanModifyParticipations = (opportunity?.issuer?.userId === currentUser?.id) || hasRole(currentUser, roles.ADMIN);
+  const badgeIsFree = opportunity?.difficulty === 0;
+
+  const userIsParticipating = !!currentUserParticipation;
   const userCanParticipate = !userCanModifyParticipations && currentUser;
+  const participationIsFinished = currentUserParticipation?.Participation?.status === 3;
 
   return (
     <>
@@ -69,10 +92,16 @@ const Opportunity = () => {
               <Heading title="Meer weten?" level={2} />
               <Button text="Bekijk meer" icon="arrow-right" href={opportunity.moreInfo} />
               <div>
-                {userCanParticipate && (
+                {participationIsFinished && (
+                  <p>Je hebt deze leerkans al voltooid.</p>
+                )}
+                {!participationIsFinished && userCanParticipate && (
                   userIsParticipating
                     ? <p>Je bent ingeschreven voor deze leerkans.</p>
                     : <Button icon="arrow-right" text="Schrijf je in" type="button" primary onClick={handleRegisterClick} />
+                )}
+                {!participationIsFinished && userCanParticipate && badgeIsFree && userIsParticipating && (
+                  <Button icon="arrow-right" text="Claim jouw badge" type="button" primary onClick={handleClaimClick} />
                 )}
               </div>
             </div>
