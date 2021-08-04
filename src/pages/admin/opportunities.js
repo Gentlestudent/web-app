@@ -1,44 +1,92 @@
 import { useState, useMemo } from 'react';
 import { roles, routes, authorityLabels } from '../../constants';
-import { Heading, Button, Pagination } from '../../components/UI';
+import { Heading, Button, Pagination, SortIcon } from '../../components/UI';
 import { Container } from '../../components/layout/index';
 import requiresRole from '../../hoc/requiresRole';
 import { useOpportunities } from '../../hooks';
 import { colors } from '../../assets/styles';
+import { approveOpportunity, denyOpportunity } from '../../connector/opportunities';
 
 const Opportunities = () => {
   const [page, setPage] = useState({ page: 1, limit: 100 });
+  const [sort, setSort] = useState('-beginDate');
   const options = useMemo(() => ({
     searchParams: {
       authority: [0, 1, 2],
       includeIssuers: true,
       page: page.page,
-      limit: page.limit
+      limit: page.limit,
+      sort
     }
-  }), [page]);
-  const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities({}, options);
+  }), [page, sort]);
+  const [errorOpportunities, loadingOpportunities, opportunities, reloadOpportunities] = useOpportunities({}, options);
   // TODO handle error & add loading icon
+  const [loading, setLoading] = useState(false);
 
   function handlePageChange(newPage) {
     setPage({ ...page, page: newPage });
+  }
+
+  function handleAcceptClick(opportunity) {
+    return async () => {
+      if (loading) {
+        return;
+      }
+      try {
+        setLoading(true);
+        await approveOpportunity(opportunity.id);
+        reloadOpportunities();
+      } catch (error) {
+        console.error(error);
+        // TODO show error message
+      } finally {
+        setLoading(false);
+      }
+    };
+  }
+
+  function handleDenyClick(opportunity) {
+    return async () => {
+      if (loading) {
+        return;
+      }
+      try {
+        setLoading(true);
+        await denyOpportunity(opportunity.id);
+        reloadOpportunities();
+      } catch (error) {
+        console.error(error);
+        // TODO show error message
+      } finally {
+        setLoading(false);
+      }
+    };
+  }
+
+  function handleSortChange(name) {
+    return () => {
+      if (sort === name) {
+        return setSort(`-${name}`);
+      }
+      setSort(name);
+    };
   }
 
   return (
     <>
       <Container>
         <Heading title="Leerkansen" level={1} color="black" />
-        <Button text="Leerkansen valideren" href={routes.admin.VALIDATE_OPPORTUNITY} primary />
         <Pagination page={page.page} setPage={handlePageChange} />
         <table>
           <thead>
             <tr>
               <th></th>
-              <th>Titel</th>
-              <th>Begin datum</th>
-              <th>Eind datum</th>
-              <th>Instelling</th>
+              <th className="sortable" onClick={handleSortChange('title')}><div>Titel <SortIcon sort={sort} name="title" /></div></th>
+              <th className="sortable" onClick={handleSortChange('beginDate')}><div>Begin datum <SortIcon sort={sort} name="beginDate" /></div></th>
+              <th className="sortable" onClick={handleSortChange('endDate')}><div>Eind datum <SortIcon sort={sort} name="endDate" /></div></th>
+              <th className="sortable" onClick={handleSortChange('institute')}><div>Instelling <SortIcon sort={sort} name="institute" /></div></th>
               <th>Issuer</th>
-              <th>Status</th>
+              <th className="sortable" onClick={handleSortChange('authority')}><div>Status <SortIcon sort={sort} name="authority" /></div></th>
             </tr>
           </thead>
           <tbody>
@@ -53,7 +101,15 @@ const Opportunities = () => {
                   <td>{opportunity.endDate}</td>
                   <td>{opportunity.issuer?.institute}</td>
                   <td>{`${opportunity.issuer?.user?.firstName || ''} ${opportunity.issuer?.user?.lastName || ''}`}</td>
-                  <td>{authorityLabels[opportunity.authority] || '-'}</td>
+                  <td>{opportunity.authority === 0
+                    ? (
+                      <div className="validation-buttons">
+                        <Button text="Accepteren" onClick={handleAcceptClick(opportunity)} />
+                        <Button text="Weigeren" onClick={handleDenyClick(opportunity)} />
+                      </div>
+                      )
+                    : authorityLabels[opportunity.authority] || '-'
+                  }</td>
                 </tr>
               );
             })}
@@ -65,8 +121,11 @@ const Opportunities = () => {
       <style jsx>
         {`
           table {
-            border: 1px solid ${colors.grayDark};
+            border: 1px solid ${colors.border};
             border-spacing: 0;
+            border-radius: 0.5rem;
+            width: 100%;
+            margin: 1em 0;
           }
 
           table th {
@@ -75,8 +134,26 @@ const Opportunities = () => {
           }
 
           table td {
-            border-top: 1px solid ${colors.grayDark};
+            border-top: 1px solid ${colors.border};
             padding: 8px;
+          }
+
+          .validation-buttons {
+            display: flex;
+            grid-gap: 0.5em;
+          }
+
+          .sortable {
+            cursor: pointer;
+          }
+
+          .sortable > div {
+            display: flex;
+            justify-content: space-between;
+          }
+
+          .sortable:hover {
+            background-color: ${colors.grayLight};
           }
         `}
       </style>

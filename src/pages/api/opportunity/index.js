@@ -22,6 +22,28 @@ export default async function handler(req, res) {
         offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0,
         order: [['beginDate', 'DESC']]
       };
+
+      // order
+      if (req.query.sort) {
+        const descending = req.query.sort[0] === '-';
+        const order = descending ? req.query.sort.slice(1) : req.query.sort;
+
+        const validOrderValues = new Set(['title', 'beginDate', 'endDate', 'institute', 'authority']);
+
+        if (validOrderValues.has(order)) {
+          options.order = [
+            [
+              order,
+              descending ? 'DESC' : 'ASC'
+            ]
+          ];
+
+          if (order === 'institute') {
+            options.order[0].unshift({ model: Issuer, as: 'issuer' });
+          }
+        }
+      }
+
       const include = [];
       if (req.query.includeIssuers === 'true') {
         include.push({

@@ -22,8 +22,31 @@ export default async function handler(req, res) {
         },
         limit: Number(req.query.limit || 100),
         offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0,
+        order: [[{ model: User, as: 'user' }, 'firstName', 'DESC']],
         include: [{ model: User, as: 'user', attributes: { exclude: ['password', 'emailVerificationId', 'sessionId'] } }]
       };
+
+      // order
+      if (req.query.sort) {
+        const descending = req.query.sort[0] === '-';
+        const order = descending ? req.query.sort.slice(1) : req.query.sort;
+
+        const validOrderValues = new Set(['firstName', 'institute', 'validated']);
+
+        if (validOrderValues.has(order)) {
+          options.order = [
+            [
+              order,
+              descending ? 'DESC' : 'ASC'
+            ]
+          ];
+
+          if (order === 'firstName') {
+            options.order[0].unshift({ model: User, as: 'user' });
+          }
+        }
+      }
+
       const [count, issuers] = await Promise.all([
         Issuer.count({ where: options.where }),
         Issuer.findAll(options)
