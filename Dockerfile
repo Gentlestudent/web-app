@@ -5,7 +5,6 @@ RUN npm i
 COPY next.config.js ./next.config.js
 COPY src ./src
 COPY environments ./environments
-COPY .env ./.env
 RUN npm run build
 
 FROM node:16-alpine AS release

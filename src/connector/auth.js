@@ -1,5 +1,3 @@
-// import { auth, Auth } from './firebase';
-
 import { getAuthenticatedKy, getPublicKy } from '../utils/getKy';
 
 export const registerWithEmailPassword = async ({
@@ -30,13 +28,10 @@ export const sendAccountVerificationEmail = async (email) => {
 export const reauthenticate = (email, password) => {
   console.warn('TODO update reauthenticate');
 };
-// export const reauthenticate = (email, password) =>
-//   auth.currentUser.reauthenticateWithCredential(Auth.EmailAuthProvider.credential(email, password));
 
 export const handleVerifyEmail = (actionCode) => {
   console.warn('TODO update handleVerifyEmail');
 };
-// export const handleVerifyEmail = (actionCode) => auth.applyActionCode(actionCode);
 
 export const signIn = async ({ email, password } = {}) => {
   const ky = await getPublicKy();

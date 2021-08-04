@@ -19,3 +19,8 @@ export default {
   //   defaultValue: Object.values(featTypes)[0]
   }
 };
+
+// export const featTypes = {
+//   LEARNING_OPPORTUNITY: 0,
+//   QUEST: 1
+// };

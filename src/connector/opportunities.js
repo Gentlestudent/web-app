@@ -5,7 +5,12 @@ const addOpportunity = async (opportunity) => {
 
   const formData = new FormData();
   const availableOpportunityFields = ['title', 'domain', 'expectations', 'level', 'description', 'website', 'email', 'startDate', 'endDate', 'street', 'number', 'city', 'postal', 'image', 'addressLongitude', 'addressLatitude'];
-  availableOpportunityFields.forEach(name => opportunity[name] !== null && opportunity[name] !== undefined && formData.append(name, opportunity[name]));
+  availableOpportunityFields.forEach(
+    (name) =>
+      opportunity[name] !== null &&
+      opportunity[name] !== undefined &&
+      formData.append(name, opportunity[name])
+  );
 
   return ky.post('/api/opportunity', {
     body: formData
@@ -31,14 +36,20 @@ const getOpportunityById = async (id) => {
 
 async function approveOpportunity(id) {
   const ky = await getAuthenticatedKy();
-  const searchParams = new window.URLSearchParams({ id })
+  const searchParams = new window.URLSearchParams({ id });
   return ky.get(`/api/opportunity/approve?${searchParams.toString()}`);
 }
 
 async function denyOpportunity(id) {
   const ky = await getAuthenticatedKy();
-  const searchParams = new window.URLSearchParams({ id })
+  const searchParams = new window.URLSearchParams({ id });
   return ky.get(`/api/opportunity/deny?${searchParams.toString()}`);
 }
 
-export { getOpportunities, getOpportunityById, addOpportunity, approveOpportunity, denyOpportunity };
+export {
+  getOpportunities,
+  getOpportunityById,
+  addOpportunity,
+  approveOpportunity,
+  denyOpportunity
+};

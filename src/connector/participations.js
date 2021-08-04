@@ -21,7 +21,7 @@ const createParticipation = async (opportunityId) => {
 async function updateParticipationStatus({ id, status }) {
   const ky = await getAuthenticatedKy();
   const searchParams = new window.URLSearchParams({ id, status });
-  return ky.get(`/api/participation/updateStatus?${searchParams.toString()}`)
+  return ky.get(`/api/participation/updateStatus?${searchParams.toString()}`);
 }
 
 export { getParticipations, createParticipation, updateParticipationStatus };

@@ -21,13 +21,13 @@ async function registerIssuer({ id, institute, longName, url, phonenumber }) {
 
 async function approveIssuer(id) {
   const ky = await getAuthenticatedKy();
-  const searchParams = new window.URLSearchParams({ id })
+  const searchParams = new window.URLSearchParams({ id });
   return ky.get(`/api/issuer/approve?${searchParams.toString()}`);
 }
 
 async function denyIssuer(id) {
   const ky = await getAuthenticatedKy();
-  const searchParams = new window.URLSearchParams({ id })
+  const searchParams = new window.URLSearchParams({ id });
   return ky.get(`/api/issuer/deny?${searchParams.toString()}`);
 }
 

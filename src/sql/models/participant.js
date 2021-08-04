@@ -10,7 +10,6 @@ export default {
     unique: true,
     primaryKey: true
   },
-  firebaseUid: DataTypes.STRING,
   email: DataTypes.STRING,
   institute: DataTypes.STRING,
   profilePicture: DataTypes.STRING,
