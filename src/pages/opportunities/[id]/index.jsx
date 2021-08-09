@@ -3,11 +3,11 @@ import { routes, roles } from '../../../constants';
 import { Heading, Button } from '../../../components/UI';
 import { colors, spacers, breakpoints } from '../../../assets/styles/constants';
 import { Container } from '../../../components/layout/index';
-import { useOpportunity, useAuth } from '../../../hooks';
+import { useOpportunity, useAuth, useErrorNotifier } from '../../../hooks';
 import { createParticipation, updateParticipationStatus } from '../../../connector/participations';
 import { createAssertion } from '../../../connector/assertions';
 import Participations from '../../../components/opportunity/participations';
-import { hasRole, getBase64AsDataUrl } from '../../../utils';
+import { hasRole, getBase64AsDataUrl, createNotification, getErrorResponse } from '../../../utils';
 
 const Opportunity = () => {
   const router = useRouter();
@@ -16,7 +16,9 @@ const Opportunity = () => {
     {},
     router.query.id || null
   );
-  // TODO handle error & show loading
+  // TODO show loading
+
+  useErrorNotifier([errorOpportunity]);
 
   function getAddress() {
     const {
@@ -36,7 +38,8 @@ const Opportunity = () => {
       await createParticipation(opportunity.id);
       reloadOpportunity();
     } catch (error) {
-      // TODO handle error
+      const errorResponse = await getErrorResponse(error);
+      createNotification({ message: errorResponse.message || error.message, style: 'error', duration: 5000 });
       console.log(error);
     }
   }
@@ -54,7 +57,8 @@ const Opportunity = () => {
       await createAssertion({ opportunity: opportunity.id, participant: currentUser.id });
       reloadOpportunity();
     } catch (error) {
-      // TODO handle error
+      const errorResponse = await getErrorResponse(error);
+      createNotification({ message: errorResponse.message || error.message, style: 'error', duration: 5000 });
       console.log(error);
     }
   }

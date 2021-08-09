@@ -5,7 +5,7 @@ import { Button, Heading, BannerSplit, Card } from '../../components/UI';
 import { Container } from '../../components/layout/index';
 import { routes, roles } from '../../constants';
 import requiresRole from '../../hoc/requiresRole';
-import { useOpportunities, useAuth, useParticipations, useAssertions } from '../../hooks';
+import { useOpportunities, useAuth, useParticipations, useAssertions, useErrorNotifier } from '../../hooks';
 import { getBase64AsDataUrl } from '../../utils';
 
 const Dashboard = () => {
@@ -20,7 +20,9 @@ const Dashboard = () => {
   const assertionsOptions = useMemo(() => ({ searchParams: { badges: (opportunities?.data || []).map(({ badgeId }) => badgeId) || [0] } }), [opportunities]);
   const [errorAssertions, loadingAssertions, assertions] = useAssertions({}, assertionsOptions);
 
-  // TODO handle error & show loading
+  // TODO show loading
+
+  useErrorNotifier([errorOpportunities, errorParticipations, errorAssertions]);
 
   const mappedParticipations = new Map();
   (participations?.data || []).forEach(participation => {

@@ -3,9 +3,10 @@ import { roles } from '../../constants';
 import { Heading, Button, Pagination, SortIcon } from '../../components/UI';
 import { Container } from '../../components/layout/index';
 import requiresRole from '../../hoc/requiresRole';
-import { useIssuers } from '../../hooks';
+import { useIssuers, useErrorNotifier } from '../../hooks';
 import { colors } from '../../assets/styles';
 import { approveIssuer, denyIssuer } from '../../connector/issuers';
+import { createNotification, getErrorResponse } from '../../utils';
 
 const Issuers = () => {
   const [page, setPage] = useState({ page: 1, limit: 100 });
@@ -18,8 +19,10 @@ const Issuers = () => {
     }
   }), [page, sort]);
   const [errorIssuers, loadingIssuers, issuers, reloadIssuers] = useIssuers({}, options);
-  // TODO handle error & add loading icon
+  // TODO add loading icon
   const [loading, setLoading] = useState(false);
+
+  useErrorNotifier([errorIssuers]);
 
   function handlePageChange(newPage) {
     setPage({ ...page, page: newPage });
@@ -35,8 +38,9 @@ const Issuers = () => {
         await approveIssuer(issuer.id);
         reloadIssuers();
       } catch (error) {
+        const errorResponse = await getErrorResponse(error);
+        createNotification({ message: errorResponse.message || error.message, style: 'error', duration: 5000 });
         console.error(error);
-        // TODO show error message
       } finally {
         setLoading(false);
       }
@@ -53,8 +57,9 @@ const Issuers = () => {
         await denyIssuer(issuer.id);
         reloadIssuers();
       } catch (error) {
+        const errorResponse = await getErrorResponse(error);
+        createNotification({ message: errorResponse.message || error.message, style: 'error', duration: 5000 });
         console.error(error);
-        // TODO show error message
       } finally {
         setLoading(false);
       }

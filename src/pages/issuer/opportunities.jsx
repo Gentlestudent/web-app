@@ -4,14 +4,16 @@ import { Container } from '../../components/layout/index';
 import { Card, Heading } from '../../components/UI';
 import { routes } from '../../constants';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
-import { useOpportunities, useAuth } from '../../hooks';
+import { useOpportunities, useAuth, useErrorNotifier } from '../../hooks';
 import { getBase64AsDataUrl } from '../../utils';
 
 const MyOpportunities = () => {
   const { currentUser } = useAuth();
   const options = useMemo(() => ({ searchParams: { issuer: currentUser?.issuer?.id } }), [currentUser]);
   const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities({}, options);
-  // TODO handle error & show loading
+  // TODO show loading
+
+  useErrorNotifier([errorOpportunities]);
 
   return (
     <>

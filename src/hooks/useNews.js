@@ -10,6 +10,7 @@ function useNews(initialNews = []) {
     (async () => {
       try {
         setLoading(true);
+        setError(null);
         const news = await (await getNews()).json();
         setNews(news);
       } catch (error) {

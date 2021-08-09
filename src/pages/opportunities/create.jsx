@@ -14,6 +14,7 @@ import { Heading, Button } from '../../components/UI';
 import { Container } from '../../components/layout/index';
 import requiresRole from '../../hoc/requiresRole';
 import { roles } from '../../constants';
+import { createNotification, getErrorResponse } from '../../utils';
 
 const CreateSchema = [
   Yup.object().shape({
@@ -80,7 +81,8 @@ const Create = () => {
         await addOpportunity({ ...values, website, addressLongitude: latLng.longitude, addressLatitude: latLng.latitude });
         setOpportunityCreated(true);
       } catch (error) {
-        // TODO show error
+        const errorResponse = await getErrorResponse(error);
+        createNotification({ message: errorResponse.message || error.message, style: 'error', duration: 5000 });
         console.error(error);
       }
     } else {

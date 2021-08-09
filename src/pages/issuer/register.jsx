@@ -5,7 +5,7 @@ import { Container } from '../../components/layout/index';
 import { Heading, Button } from '../../components/UI';
 import { Panel, InputField } from '../../components/form';
 import requiresMissingRole from '../../hoc/requiresMissingRole';
-import { useAuth, usePrivateRoute, useIssuers } from '../../hooks';
+import { useAuth, usePrivateRoute, useIssuers, useErrorNotifier } from '../../hooks';
 import { routes, roles } from '../../constants';
 import { registerIssuer } from '../../connector/issuers';
 
@@ -26,8 +26,10 @@ const Register = () => {
   const { currentUser } = useAuth();
   const options = useMemo(() => ({ searchParams: { userId: currentUser?.id } }), [currentUser]);
   const [errorIssuers, loadingIssuers, issuers] = useIssuers({}, options);
-  // TODO handle error & show loading icon
+  // TODO show loading icon
   const [registrationComplete, setRegistrationComplete] = useState(false);
+
+  useErrorNotifier([errorIssuers]);
 
   if (loadingIssuers) {
     return (

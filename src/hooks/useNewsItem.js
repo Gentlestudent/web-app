@@ -12,6 +12,7 @@ function useNewsItem(initialNews = null, id) {
     (async () => {
       try {
         setLoading(true);
+        setError(null);
         const news = await (await getNewsById(id)).json();
         setNews(news);
       } catch (error) {

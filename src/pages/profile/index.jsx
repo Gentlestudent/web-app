@@ -3,7 +3,7 @@ import { Container, Grid } from '../../components/layout/index';
 import { Heading, Button, BannerSplit } from '../../components/UI';
 import { colors, breakpoints } from '../../assets/styles/constants';
 import { routes, roles } from '../../constants';
-import { useAuth, usePrivateRoute, useAssertions } from '../../hooks';
+import { useAuth, usePrivateRoute, useAssertions, useErrorNotifier } from '../../hooks';
 import { hasRole, getBase64AsDataUrl } from '../../utils';
 
 const Profile = () => {
@@ -11,6 +11,8 @@ const Profile = () => {
   const options = useMemo(() => ({ searchParams: { recipient: currentUser?.id } }), [currentUser]);
   const [assertionsError, assertionsLoading, assertions] = useAssertions({}, options);
   usePrivateRoute();
+
+  useErrorNotifier([assertionsError]);
 
   const isAdmin = hasRole(currentUser, roles.ADMIN);
   const isIssuer = !isAdmin && hasRole(currentUser, roles.ISSUER);

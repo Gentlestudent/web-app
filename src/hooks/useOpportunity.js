@@ -17,6 +17,7 @@ function useOpportunity(initialOpportunity = null, id) {
     (async () => {
       try {
         setLoading(true);
+        setError(null);
         const opportunity = await (await getOpportunityById(id)).json();
         setOpportunity(opportunity);
       } catch (error) {

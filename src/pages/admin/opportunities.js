@@ -3,9 +3,10 @@ import { roles, routes, authorityLabels } from '../../constants';
 import { Heading, Button, Pagination, SortIcon } from '../../components/UI';
 import { Container } from '../../components/layout/index';
 import requiresRole from '../../hoc/requiresRole';
-import { useOpportunities } from '../../hooks';
+import { useOpportunities, useErrorNotifier } from '../../hooks';
 import { colors } from '../../assets/styles';
 import { approveOpportunity, denyOpportunity } from '../../connector/opportunities';
+import { createNotification, getErrorResponse } from '../../utils';
 
 const Opportunities = () => {
   const [page, setPage] = useState({ page: 1, limit: 100 });
@@ -20,8 +21,10 @@ const Opportunities = () => {
     }
   }), [page, sort]);
   const [errorOpportunities, loadingOpportunities, opportunities, reloadOpportunities] = useOpportunities({}, options);
-  // TODO handle error & add loading icon
+  // TODO add loading icon
   const [loading, setLoading] = useState(false);
+
+  useErrorNotifier([errorOpportunities]);
 
   function handlePageChange(newPage) {
     setPage({ ...page, page: newPage });
@@ -37,8 +40,9 @@ const Opportunities = () => {
         await approveOpportunity(opportunity.id);
         reloadOpportunities();
       } catch (error) {
+        const errorResponse = await getErrorResponse(error);
+        createNotification({ message: errorResponse.message || error.message, style: 'error', duration: 5000 });
         console.error(error);
-        // TODO show error message
       } finally {
         setLoading(false);
       }
@@ -55,8 +59,9 @@ const Opportunities = () => {
         await denyOpportunity(opportunity.id);
         reloadOpportunities();
       } catch (error) {
+        const errorResponse = await getErrorResponse(error);
+        createNotification({ message: errorResponse.message || error.message, style: 'error', duration: 5000 });
         console.error(error);
-        // TODO show error message
       } finally {
         setLoading(false);
       }

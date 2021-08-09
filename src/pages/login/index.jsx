@@ -10,7 +10,7 @@ import fetchStatusReducer from '../../reducers/fetchStatusReducer';
 import { signIn, signOut, sendAccountVerificationEmail } from '../../connector/auth';
 import { getProfile } from '../../connector/users';
 import loginEvents from '../../utils/loginEvents';
-import getErrorCode from '../../utils/getErrorCode';
+import { getErrorResponse } from '../../utils';
 
 const SigninSchema = Yup.object().shape({
   email: Yup.string().email('Ongeldig e-mail adres').required('Vul een e-mail adres in'),
@@ -40,9 +40,9 @@ const Login = () => {
       dispatch(['COMPLETE']);
       loginEvents.trigger('login');
     } catch (error) {
-      console.log('error', error);
-      const code = await getErrorCode(error);
-      dispatch(['ERROR', code || error.message]);
+      console.error(error);
+      const errorResponse = await getErrorResponse(error);
+      dispatch(['ERROR', errorResponse?.code || error.message]);
     }
   };
 

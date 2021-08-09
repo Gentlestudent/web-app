@@ -3,11 +3,13 @@ import { Container } from '../../components/layout/index';
 import { spacers } from '../../assets/styles/constants';
 import { Card, Heading } from '../../components/UI';
 import { routes } from '../../constants';
-import { useNews } from '../../hooks';
+import { useNews, useErrorNotifier } from '../../hooks';
 
 export default function News() {
   const [errorNews, loadingNews, news] = useNews();
-  // TODO handle error & show loading
+  // TODO show loading
+
+  useErrorNotifier([errorNews]);
 
   return (
     <>

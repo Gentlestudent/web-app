@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import AuthContext from '../context/auth';
 import { colors } from '../assets/styles';
 import Layout from '../components/layout';
+import Notifications from '../components/notifications';
 import globalStyles from '../assets/styles/global';
 import { useAuthState, useProgressBar } from '../hooks';
 
@@ -34,6 +35,7 @@ const App = ({ Component, pageProps }) => {
         <link rel="stylesheet" type="text/css" href="/nprogress.css" />
       </Head>
       <AuthContext.Provider value={authState}>
+        <Notifications />
         <Layout>
           <Component {...pageProps} />
         </Layout>

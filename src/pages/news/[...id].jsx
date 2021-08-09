@@ -4,12 +4,14 @@ import { colors, spacers, breakpoints } from '../../assets/styles/constants';
 import { Container } from '../../components/layout/index';
 import banner from '../../assets/img/home/banner.jpg';
 import { routes } from '../../constants';
-import { useNewsItem } from '../../hooks';
+import { useNewsItem, useErrorNotifier } from '../../hooks';
 
 export default function News() {
   const router = useRouter();
   const [errorNews, loadingNews, news] = useNewsItem({}, router.query.id || null);
-  // TODO handle error & show loading
+  // TODO show loading
+
+  useErrorNotifier([errorNews]);
 
   return (
     <>

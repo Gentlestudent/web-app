@@ -15,6 +15,7 @@ function useOpportunities(initialOpportunities = {}, options) {
     (async () => {
       try {
         setLoading(true);
+        setError(null);
         const opportunities = await (await getOpportunities(options)).json();
         setOpportunities(opportunities);
       } catch (error) {

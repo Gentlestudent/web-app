@@ -10,6 +10,7 @@ function useParticipants(initialParticipants = [], options) {
     (async () => {
       try {
         setLoading(true);
+        setError(null);
         const participants = await (await getUsers(options)).json();
         setParticipants(participants);
       } catch (error) {

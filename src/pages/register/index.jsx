@@ -10,7 +10,7 @@ import { Container } from '../../components/layout/index';
 import { usePublicRoute } from '../../hooks';
 import fetchStatusReducer from '../../reducers/fetchStatusReducer';
 import { routes } from '../../constants';
-import getErrorCode from '../../utils/getErrorCode';
+import { getErrorResponse } from '../../utils';
 
 const RegisterSchema = Yup.object().shape({
   email: Yup.string().email('Ongeldig e-mail adres').required('Vul een e-mail adres in'),
@@ -34,9 +34,9 @@ const Register = () => {
         pathname: routes.LOGIN
       });
     } catch (error) {
-      console.log('error', error);
-      const code = await getErrorCode(error);
-      dispatch(['ERROR', code || error.message]);
+      console.error(error);
+      const errorResponse = await getErrorResponse(error);
+      dispatch(['ERROR', errorResponse?.code || error.message]);
     }
   };
 

@@ -15,6 +15,7 @@ function useIssuers(initialIssuers = [], options) {
     (async () => {
       try {
         setLoading(true);
+        setError(null);
         const issuers = await (await getIssuers(options)).json();
         setIssuers(issuers);
       } catch (error) {

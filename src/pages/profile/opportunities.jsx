@@ -4,7 +4,7 @@ import { Container } from '../../components/layout/index';
 import { Card, Heading } from '../../components/UI';
 import { routes } from '../../constants';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
-import { useParticipations, usePrivateRoute, useAuth } from '../../hooks';
+import { useParticipations, usePrivateRoute, useAuth, useErrorNotifier } from '../../hooks';
 import { getBase64AsDataUrl } from '../../utils';
 
 const MyOpportunities = () => {
@@ -12,7 +12,9 @@ const MyOpportunities = () => {
   usePrivateRoute();
   const options = useMemo(() => ({ searchParams: { user: currentUser?.id } }), [currentUser]);
   const [participationsError, participationsLoading, participations] = useParticipations({}, options);
-  // TODO handle error & show loading
+  // TODO show loading
+
+  useErrorNotifier([participationsError]);
 
   return (
     <>

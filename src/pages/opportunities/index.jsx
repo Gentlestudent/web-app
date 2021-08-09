@@ -4,12 +4,14 @@ import { Container } from '../../components/layout/index';
 import { Card, Heading, Search } from '../../components/UI';
 import Map from '../../components/map/map';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
-import { useOpportunities } from '../../hooks';
+import { useOpportunities, useErrorNotifier } from '../../hooks';
 import { getBase64AsDataUrl } from '../../utils';
 
 const Opportunities = () => {
   const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities();
-  // TODO handle error & show loading
+  // TODO show loading
+
+  useErrorNotifier([errorOpportunities]);
 
   return (
     <>

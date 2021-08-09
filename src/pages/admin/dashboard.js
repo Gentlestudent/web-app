@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Heading, BannerSplit } from '../../components/UI';
 import { roles } from '../../constants';
 import requiresRole from '../../hoc/requiresRole';
-import { useOpportunities, useIssuers, useParticipations, useAssertions, useParticipants } from '../../hooks';
+import { useOpportunities, useIssuers, useParticipations, useAssertions, useParticipants, useErrorNotifier } from '../../hooks';
 
 const Dashboard = () => {
   const opportunitiesOptions = useMemo(() => ({ searchParams: { authority: [0, 1] } }), []);
@@ -18,7 +18,9 @@ const Dashboard = () => {
 
   const [errorAssertions, loadingAssertions, assertions] = useAssertions();
 
-  // TODO handle error & show loading
+  // TODO show loading
+
+  useErrorNotifier([errorOpportunities, errorParticipations, errorParticipants, errorIssuers, errorAssertions]);
 
   return (
     <>

@@ -10,6 +10,7 @@ function useParticipations(initialParticipations = [], options) {
     (async () => {
       try {
         setLoading(true);
+        setError(null);
         const participations = await (await getParticipations(options)).json();
         setParticipations(participations);
       } catch (error) {

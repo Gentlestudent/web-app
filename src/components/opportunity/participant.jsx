@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Icon } from '../UI';
 import { colors } from '../../assets/styles/constants';
-import { getFullDate } from '../../utils';
+import { getFullDate, createNotification, getErrorResponse } from '../../utils';
 import { updateParticipationStatus } from '../../connector/participations';
 import { createAssertion } from '../../connector/assertions';
 
@@ -12,7 +12,8 @@ const Participant = ({ participant, withButtons, opportunity, reloadOpportunity 
         await updateParticipationStatus({ id: participant.Participation.id, status });
         reloadOpportunity();
       } catch (error) {
-        // TODO show error
+        const errorResponse = await getErrorResponse(error);
+        createNotification({ message: errorResponse.message || error.message, style: 'error', duration: 5000 });
         console.error(error);
       }
     }
@@ -27,7 +28,8 @@ const Participant = ({ participant, withButtons, opportunity, reloadOpportunity 
       await createAssertion({ opportunity: opportunity.id, participant: participant.id });
       reloadOpportunity();
     } catch (error) {
-      // TODO show error
+      const errorResponse = await getErrorResponse(error);
+      createNotification({ message: errorResponse.message || error.message, style: 'error', duration: 5000 });
       console.error(error);
     }
   }

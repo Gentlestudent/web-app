@@ -10,6 +10,7 @@ function useAssertions(initialAssertions = [], options) {
     (async () => {
       try {
         setLoading(true);
+        setError(null);
         const assertions = await (await getAssertions(options)).json();
         setAssertions(assertions);
       } catch (error) {
