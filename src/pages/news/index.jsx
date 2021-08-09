@@ -1,13 +1,12 @@
 import Router from 'next/router';
 import { Container } from '../../components/layout/index';
 import { spacers } from '../../assets/styles/constants';
-import { Card, Heading } from '../../components/UI';
+import { Card, Heading, LoadingSpinner } from '../../components/UI';
 import { routes } from '../../constants';
 import { useNews, useErrorNotifier } from '../../hooks';
 
 export default function News() {
   const [errorNews, loadingNews, news] = useNews();
-  // TODO show loading
 
   useErrorNotifier([errorNews]);
 
@@ -16,6 +15,7 @@ export default function News() {
       <Container>
         <Heading title="Nieuws" level={1} marginTop />
         <article className="news-items">
+          {loadingNews && <LoadingSpinner />}
           {(news?.data || []).map((newsItem) => (
             <Card
               onClick={() => Router.push(`${routes.NEWS}/${newsItem.id}`)}
@@ -27,6 +27,7 @@ export default function News() {
               date={newsItem.published}
               alt={newsItem.alt ? newsItem.alt : newsItem.title}
               row
+              url={`${routes.NEWS}/${newsItem.id}`}
             />
           ))}
         </article>

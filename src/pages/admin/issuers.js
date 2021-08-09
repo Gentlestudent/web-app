@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { roles } from '../../constants';
-import { Heading, Button, Pagination, SortIcon } from '../../components/UI';
+import { Heading, Button, Pagination, SortIcon, LoadingSpinner } from '../../components/UI';
 import { Container } from '../../components/layout/index';
 import requiresRole from '../../hoc/requiresRole';
 import { useIssuers, useErrorNotifier } from '../../hooks';
@@ -19,7 +19,6 @@ const Issuers = () => {
     }
   }), [page, sort]);
   const [errorIssuers, loadingIssuers, issuers, reloadIssuers] = useIssuers({}, options);
-  // TODO add loading icon
   const [loading, setLoading] = useState(false);
 
   useErrorNotifier([errorIssuers]);
@@ -92,8 +91,8 @@ const Issuers = () => {
             </tr>
           </thead>
           <tbody>
-            {loadingIssuers && <tr><td colSpan={5}>...laden</td></tr>}
-            {!loadingIssuers && !issuers?.data?.length && <tr><td colSpan={5}>Er zijn nog geen issuers.</td></tr>}
+            {loadingIssuers && <tr><td colSpan={6}><LoadingSpinner /></td></tr>}
+            {!loadingIssuers && !issuers?.data?.length && <tr><td colSpan={6}>Er zijn nog geen issuers.</td></tr>}
             {(issuers?.data || []).map(issuer => {
               return (
                 <tr key={issuer.id}>
@@ -106,8 +105,15 @@ const Issuers = () => {
                     ? 'Ja'
                     : (
                       <div className="validation-buttons">
-                        <Button text="Accepteren" onClick={handleAcceptClick(issuer)} />
-                        <Button text="Weigeren" onClick={handleDenyClick(issuer)} />
+                        {loading
+                          ? <LoadingSpinner />
+                          : (
+                            <>
+                              <Button text="Accepteren" onClick={handleAcceptClick(issuer)} />
+                              <Button text="Weigeren" onClick={handleDenyClick(issuer)} />
+                            </>
+                            )
+                        }
                       </div>
                       )
                   }</td>

@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { Container } from '../../components/layout/index';
-import { Heading, Button } from '../../components/UI';
+import { Heading, Button, LoadingSpinner } from '../../components/UI';
 import { Panel, InputField } from '../../components/form';
 import requiresMissingRole from '../../hoc/requiresMissingRole';
 import { useAuth, usePrivateRoute, useIssuers, useErrorNotifier } from '../../hooks';
@@ -26,7 +26,6 @@ const Register = () => {
   const { currentUser } = useAuth();
   const options = useMemo(() => ({ searchParams: { userId: currentUser?.id } }), [currentUser]);
   const [errorIssuers, loadingIssuers, issuers] = useIssuers({}, options);
-  // TODO show loading icon
   const [registrationComplete, setRegistrationComplete] = useState(false);
 
   useErrorNotifier([errorIssuers]);
@@ -34,7 +33,7 @@ const Register = () => {
   if (loadingIssuers) {
     return (
       <Container>
-        <Panel>...</Panel>
+        <Panel><LoadingSpinner /></Panel>
       </Container>
     );
   }

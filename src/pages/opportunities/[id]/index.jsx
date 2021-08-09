@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { routes, roles } from '../../../constants';
-import { Heading, Button } from '../../../components/UI';
+import { Heading, Button, LoadingSpinner } from '../../../components/UI';
 import { colors, spacers, breakpoints } from '../../../assets/styles/constants';
 import { Container } from '../../../components/layout/index';
 import { useOpportunity, useAuth, useErrorNotifier } from '../../../hooks';
@@ -16,7 +17,7 @@ const Opportunity = () => {
     {},
     router.query.id || null
   );
-  // TODO show loading
+  const [loadingUpdate, setLoading] = useState(false);
 
   useErrorNotifier([errorOpportunity]);
 
@@ -35,12 +36,15 @@ const Opportunity = () => {
       return;
     }
     try {
+      setLoading(true);
       await createParticipation(opportunity.id);
       reloadOpportunity();
     } catch (error) {
       const errorResponse = await getErrorResponse(error);
       createNotification({ message: errorResponse.message || error.message, style: 'error', duration: 5000 });
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -53,6 +57,7 @@ const Opportunity = () => {
       return;
     }
     try {
+      setLoading(true);
       await updateParticipationStatus({ id: myParticipation.Participation.id, status: 3 });
       await createAssertion({ opportunity: opportunity.id, participant: currentUser.id });
       reloadOpportunity();
@@ -60,6 +65,8 @@ const Opportunity = () => {
       const errorResponse = await getErrorResponse(error);
       createNotification({ message: errorResponse.message || error.message, style: 'error', duration: 5000 });
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -89,6 +96,7 @@ const Opportunity = () => {
 
           <div className="detail__description">
             <div>
+              {loadingOpportunity && <LoadingSpinner />}
               <Heading title="Beschrijving" level={2} />
               <p>{opportunity.longDescription || '-'}</p>
               <Heading title="Wat wordt er verwacht?" level={2} />
@@ -102,10 +110,16 @@ const Opportunity = () => {
                 {!participationIsFinished && userCanParticipate && (
                   userIsParticipating
                     ? <p>Je bent ingeschreven voor deze leerkans.</p>
-                    : <Button icon="arrow-right" text="Schrijf je in" type="button" primary onClick={handleRegisterClick} />
+                    : (
+                        loadingUpdate
+                          ? <LoadingSpinner />
+                          : <Button icon="arrow-right" text="Schrijf je in" type="button" primary onClick={handleRegisterClick} />
+                      )
                 )}
                 {!participationIsFinished && userCanParticipate && badgeIsFree && userIsParticipating && (
-                  <Button icon="arrow-right" text="Claim jouw badge" type="button" primary onClick={handleClaimClick} />
+                  loadingUpdate
+                    ? <LoadingSpinner />
+                    : <Button icon="arrow-right" text="Claim jouw badge" type="button" primary onClick={handleClaimClick} />
                 )}
               </div>
             </div>

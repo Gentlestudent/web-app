@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Heading, BannerSplit } from '../../components/UI';
+import { BannerSplit, LoadingSpinner } from '../../components/UI';
 import { roles } from '../../constants';
 import requiresRole from '../../hoc/requiresRole';
 import { useOpportunities, useIssuers, useParticipations, useAssertions, useParticipants, useErrorNotifier } from '../../hooks';
@@ -18,24 +18,49 @@ const Dashboard = () => {
 
   const [errorAssertions, loadingAssertions, assertions] = useAssertions();
 
-  // TODO show loading
-
   useErrorNotifier([errorOpportunities, errorParticipations, errorParticipants, errorIssuers, errorAssertions]);
 
   return (
     <>
       <BannerSplit>
         <div>
-          <Heading title={`Aangemaakte leerkansen: ${opportunities?.count || '-'}`} level={2} color="white" />
-          <Heading title={`Inschrijvingen: ${participations?.count || '-'}`} level={2} color="white" />
-          <Heading title={`Deelnemers: ${participants?.count || '-'}`} level={2} color="white" />
-          <Heading title={`Issuers: ${issuers?.count || '-'}`} level={2} color="white" />
-          <Heading title={`Aangemaakte badges: ${assertions?.count || '-'}`} level={2} color="white" />
+          <div className="status-div">
+            <p>{`Aangemaakte leerkansen: ${opportunities?.count || ''}`}</p>
+            {loadingOpportunities && <LoadingSpinner />}
+          </div>
+          <div className="status-div">
+            <p>{`Inschrijvingen: ${participations?.count || ''}`}</p>
+            {loadingParticipations && <LoadingSpinner />}
+          </div>
+          <div className="status-div">
+            <p>{`Deelnemers: ${participants?.count || ''}`}</p>
+            {loadingParticipants && <LoadingSpinner />}
+          </div>
+          <div className="status-div">
+            <p>{`Issuers: ${issuers?.count || ''}`}</p>
+            {loadingIssuers && <LoadingSpinner />}
+          </div>
+          <div className="status-div">
+            <p>{`Aangemaakte badges: ${assertions?.count || ''}`}</p>
+            {loadingAssertions && <LoadingSpinner />}
+          </div>
         </div>
       </BannerSplit>
 
       <style jsx>
         {`
+          .status-div {
+            display: flex;
+            grid-gap: 4px;
+          }
+
+          .status-div p {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 2.7rem;
+            color: white;
+          }
         `}
       </style>
     </>

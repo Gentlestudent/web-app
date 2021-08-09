@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import Router from 'next/router';
 import { spacers, breakpoints } from '../../assets/styles/constants';
-import { Button, Heading, BannerSplit, Card } from '../../components/UI';
+import { Button, BannerSplit, Card, LoadingSpinner } from '../../components/UI';
 import { Container } from '../../components/layout/index';
 import { routes, roles } from '../../constants';
 import requiresRole from '../../hoc/requiresRole';
@@ -20,8 +20,6 @@ const Dashboard = () => {
   const assertionsOptions = useMemo(() => ({ searchParams: { badges: (opportunities?.data || []).map(({ badgeId }) => badgeId) || [0] } }), [opportunities]);
   const [errorAssertions, loadingAssertions, assertions] = useAssertions({}, assertionsOptions);
 
-  // TODO show loading
-
   useErrorNotifier([errorOpportunities, errorParticipations, errorAssertions]);
 
   const mappedParticipations = new Map();
@@ -38,14 +36,24 @@ const Dashboard = () => {
     <>
       <BannerSplit>
         <div>
-          <Heading title={`Aangemaakte leerkansen: ${opportunities?.count || '-'}`} level={2} color="white" />
-          <Heading title={`Inschrijvingen: ${participations?.count || '-'}`} level={2} color="white" />
-          <Heading title={`Aangemaakte badges: ${assertions?.count || '-'}`} level={2} color="white" />
+          <div className="status-div">
+            <p>{`Aangemaakte leerkansen: ${opportunities?.count || ''}`}</p>
+            {loadingOpportunities && <LoadingSpinner />}
+          </div>
+          <div className="status-div">
+            <p>{`Inschrijvingen: ${participations?.count || ''}`}</p>
+            {(loadingOpportunities || loadingParticipations) && <LoadingSpinner />}
+          </div>
+          <div className="status-div">
+            <p>{`Aangemaakte badges: ${assertions?.count || ''}`}</p>
+            {(loadingOpportunities || loadingAssertions) && <LoadingSpinner />}
+          </div>
           <Button text="Leerkans aanmaken" primary href={routes.issuer.CREATE_OPPORTUNITY} />
         </div>
       </BannerSplit>
       <Container>
         <article className="opportunities">
+          {loadingOpportunities && <LoadingSpinner />}
           {(opportunities?.data || []).map((opportunity) => {
             const myParticipations = mappedParticipations.get(opportunity.id) || [];
             const myAssertions = mappedAssertions.get(opportunity.badgeId) || [];
@@ -73,6 +81,19 @@ const Dashboard = () => {
             grid-template: auto / repeat(3, 1fr);
             grid-gap: ${spacers.medium};
             margin: ${spacers.medium} 0 6rem;
+          }
+
+          .status-div {
+            display: flex;
+            grid-gap: 4px;
+          }
+
+          .status-div p {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 2.7rem;
+            color: white;
           }
 
           @media (max-width: ${breakpoints.medium}) {

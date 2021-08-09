@@ -5,7 +5,7 @@ import { colors, spacers, breakpoints } from '../../assets/styles/constants';
 import arrow from '../../assets/img/icons/arrow-white.svg';
 import { routes } from '../../constants';
 
-const Card = ({ image, title, date, description, onClick, badge, alt, row, id }) => {
+const Card = ({ image, title, date, description, onClick, badge, alt, row, id, url }) => {
   const [hover, setHover] = useState(false);
 
   return (
@@ -38,7 +38,7 @@ const Card = ({ image, title, date, description, onClick, badge, alt, row, id })
           </div>
         </div>
 
-        <a className="card-button" href={`${routes.OPPORTUNITIES}/${id}`}>
+        <a className="card-button" href={url || `${routes.OPPORTUNITIES}/${id}`}>
           Meer info
         </a>
       </button>

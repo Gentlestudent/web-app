@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
 import Router from 'next/router';
 import { breakpoints } from '../../assets/styles/constants';
-import Button from './button';
-import Card from './card';
+import { Button, Card, LoadingSpinner } from '.';
 import { spacers } from '../../assets/styles';
 import { routes } from '../../constants';
 import { getBase64AsDataUrl } from '../../utils';
 
-const Opportunities = ({ opportunities = [] }) => {
+const Opportunities = ({ opportunities = [], loading = false }) => {
   return (
     <>
       <article className="oppertunities">
         <section className="cards">
+          {loading && <LoadingSpinner />}
           {opportunities.map((opportunity) => (
             <Card
               onClick={() => Router.push(`${routes.OPPORTUNITIES}/${opportunity.id}`)}

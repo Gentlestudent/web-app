@@ -1,15 +1,14 @@
 import Router from 'next/router';
 import { routes } from '../../constants';
 import { Container } from '../../components/layout/index';
-import { Card, Heading, Search } from '../../components/UI';
 import Map from '../../components/map/map';
+import { Card, Heading, Search, LoadingSpinner } from '../../components/UI';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
 import { useOpportunities, useErrorNotifier } from '../../hooks';
 import { getBase64AsDataUrl } from '../../utils';
 
 const Opportunities = () => {
   const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities();
-  // TODO show loading
 
   useErrorNotifier([errorOpportunities]);
 
@@ -28,6 +27,7 @@ const Opportunities = () => {
           </div>
 
           <article className="cards">
+            {loadingOpportunities && <LoadingSpinner />}
             {(opportunities?.data || []).map((opportunity) => (
               <Card
                 onClick={() => Router.push(`${routes.OPPORTUNITIES}/${opportunity.id}`)}

@@ -7,7 +7,6 @@ import banner from '../assets/img/home/banner.jpg';
 const Home = () => {
   const [errorOpportunities, loadingOpportunities, opportunities] = useOpportunities();
   const [errorNews, loadingNews, news] = useNews();
-  // TODO show loading
 
   useErrorNotifier([errorOpportunities, errorNews]);
 
@@ -16,8 +15,8 @@ const Home = () => {
       <Banner image={banner} />
       <HomeHeader />
       <Container>
-        <Opportunities opportunities={opportunities?.data || []} />
-        <News news={news?.data || []} />
+        <Opportunities opportunities={opportunities?.data || []} loading={loadingOpportunities} />
+        <News news={news?.data || []} loading={loadingNews} />
       </Container>
       <Download />
     </>

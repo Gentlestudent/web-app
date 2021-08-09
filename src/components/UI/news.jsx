@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
-import Heading from './heading';
-import Button from './button';
+import { Heading, Button, LoadingSpinner } from '.';
 import { colors } from '../../assets/styles/constants';
 import { getFullDate } from '../../utils';
 
-const News = ({ news = [] }) => {
+const News = ({ news = [], loading = false }) => {
   return (
     <>
       <article className="news">
@@ -18,6 +17,7 @@ const News = ({ news = [] }) => {
             <Heading title="Lees meer" level={2} />
           </div>
           <ul className="news-list">
+            {loading && <LoadingSpinner />}
             {news.map((newsItem) => {
               return (
                 <li key={newsItem.id} className="news-item">

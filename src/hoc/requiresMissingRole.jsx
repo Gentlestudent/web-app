@@ -1,12 +1,12 @@
 import Error from 'next/error';
 import useAuth from '../hooks/useAuth';
 import { hasRole } from '../utils';
+import { LoadingSpinner } from '../components/UI';
 
 const requiresMissingRole = (Component, role) => (props) => {
   const { authStatusReported, isUserSignedIn, currentUser } = useAuth();
   if (!authStatusReported) {
-    // TODO show loading icon
-    return <div>loading</div>
+    return <div><LoadingSpinner /></div>
   }
   if (!isUserSignedIn || (isUserSignedIn && !hasRole(currentUser, role))) {
     return <Component {...props} />;

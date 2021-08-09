@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { roles, routes, authorityLabels } from '../../constants';
-import { Heading, Button, Pagination, SortIcon } from '../../components/UI';
+import { Heading, Button, Pagination, SortIcon, LoadingSpinner } from '../../components/UI';
 import { Container } from '../../components/layout/index';
 import requiresRole from '../../hoc/requiresRole';
 import { useOpportunities, useErrorNotifier } from '../../hooks';
@@ -21,7 +21,6 @@ const Opportunities = () => {
     }
   }), [page, sort]);
   const [errorOpportunities, loadingOpportunities, opportunities, reloadOpportunities] = useOpportunities({}, options);
-  // TODO add loading icon
   const [loading, setLoading] = useState(false);
 
   useErrorNotifier([errorOpportunities]);
@@ -95,7 +94,7 @@ const Opportunities = () => {
             </tr>
           </thead>
           <tbody>
-            {loadingOpportunities && <tr><td colSpan={7}>...laden</td></tr>}
+            {loadingOpportunities && <tr><td colSpan={7}><LoadingSpinner /></td></tr>}
             {!loadingOpportunities && !opportunities.data?.length && <tr><td colSpan={7}>Er zijn nog geen leerkansen.</td></tr>}
             {(opportunities.data || []).map(opportunity => {
               return (
@@ -109,8 +108,15 @@ const Opportunities = () => {
                   <td>{opportunity.authority === 0
                     ? (
                       <div className="validation-buttons">
-                        <Button text="Accepteren" onClick={handleAcceptClick(opportunity)} />
-                        <Button text="Weigeren" onClick={handleDenyClick(opportunity)} />
+                        {loading
+                          ? <LoadingSpinner />
+                          : (
+                            <>
+                              <Button text="Accepteren" onClick={handleAcceptClick(opportunity)} />
+                              <Button text="Weigeren" onClick={handleDenyClick(opportunity)} />
+                            </>
+                            )
+                        }
                       </div>
                       )
                     : authorityLabels[opportunity.authority] || '-'

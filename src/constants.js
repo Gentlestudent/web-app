@@ -25,7 +25,6 @@ export const routes = {
 
   /* issuer */
   issuer: {
-    OPPORTUNITIES: '/issuer/opportunities',
     OPPORTUNITY: '/issuer/opportunities/[id]',
     CREATE_OPPORTUNITY: '/opportunities/create',
     EDIT_OPPORTUNITY: '/opportunities/[id]/edit',

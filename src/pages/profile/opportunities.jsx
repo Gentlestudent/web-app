@@ -1,7 +1,7 @@
 import Router from 'next/router';
 import { useMemo } from 'react';
 import { Container } from '../../components/layout/index';
-import { Card, Heading } from '../../components/UI';
+import { Card, Heading, LoadingSpinner } from '../../components/UI';
 import { routes } from '../../constants';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
 import { useParticipations, usePrivateRoute, useAuth, useErrorNotifier } from '../../hooks';
@@ -12,7 +12,6 @@ const MyOpportunities = () => {
   usePrivateRoute();
   const options = useMemo(() => ({ searchParams: { user: currentUser?.id } }), [currentUser]);
   const [participationsError, participationsLoading, participations] = useParticipations({}, options);
-  // TODO show loading
 
   useErrorNotifier([participationsError]);
 
@@ -22,6 +21,7 @@ const MyOpportunities = () => {
         <>
           <Heading title="Leerkansen" level={1} marginTop />
           <article className="cards">
+            {participationsLoading && <LoadingSpinner />}
             {(participations?.data || []).map((participation) => (
               <Card
                 onClick={() => Router.push(`${routes.OPPORTUNITIES}/${participation.Opportunity.id}`)}

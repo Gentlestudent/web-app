@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Container, Grid } from '../../components/layout/index';
-import { Heading, Button, BannerSplit } from '../../components/UI';
+import { Heading, Button, BannerSplit, LoadingSpinner } from '../../components/UI';
 import { colors, breakpoints } from '../../assets/styles/constants';
 import { routes, roles } from '../../constants';
 import { useAuth, usePrivateRoute, useAssertions, useErrorNotifier } from '../../hooks';
@@ -51,6 +51,7 @@ const Profile = () => {
         <Container>
           <Heading title="Mijn badges" marginTop level={1} />
           <Grid>
+            {assertionsLoading && <LoadingSpinner />}
             {(assertions?.data || []).map(assertion => (
               <div key={assertion.id} className="badge">
                 <img src={getBase64AsDataUrl(assertion.badge.image)} alt={assertion.badge.name} />
