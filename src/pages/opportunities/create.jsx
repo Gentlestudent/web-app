@@ -125,6 +125,7 @@ const Create = () => {
                     endDate: '',
 
                     // STEP THREE
+                    region: 'ghent',
                     street: '',
                     number: '',
                     city: '',

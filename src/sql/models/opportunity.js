@@ -19,6 +19,7 @@ export default {
   difficulty: DataTypes.INTEGER,
   endDate: DataTypes.STRING,
   international: DataTypes.BOOLEAN,
+  region: DataTypes.STRING,
   longDescription: DataTypes.TEXT,
   shortDescription: DataTypes.STRING,
   moreInfo: DataTypes.STRING,

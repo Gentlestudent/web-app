@@ -1,7 +1,8 @@
-import { InputField } from '../form';
+import { InputField, SelectField } from '../form';
 import { spacers, colors, breakpoints } from '../../assets/styles/constants';
 import Map from '../map/mapMarkerPicker';
 import { useFormikContext } from 'formik';
+import { regions } from '../../constants';
 
 const FileInput = ({ ...props }) => {
   delete props.value;
@@ -20,6 +21,18 @@ const StepOne = ({ formik, setLatLng }) => {
 
   return (
     <>
+      <div>
+        <SelectField as="select" name="region" label="Selecteer een regio">
+          <>
+            {Object.entries(regions).map(([name, value]) => (
+              <option key={name} value={name}>
+                {value}
+              </option>
+            ))}
+          </>
+        </SelectField>
+      </div>
+
       <div className="step-three__address">
         <InputField name="street" type="text" label="Straat" placeholder="Straatnaam" />
         <InputField name="number" type="number" label="Straatnummer" placeholder="Nr" />

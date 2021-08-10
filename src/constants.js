@@ -129,3 +129,8 @@ export const authorityLabels = {
   1: 'goedgekeurd',
   2: 'afgekeurd'
 };
+
+export const regions = {
+  ghent: 'Gent',
+  antwerp: 'Antwerpen'
+}
