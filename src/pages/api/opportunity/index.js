@@ -1,9 +1,10 @@
 import fs from 'fs';
 import { promisify } from 'util';
+import { Op } from 'sequelize';
 import getSqlClient from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
 import { hasRole, createApiErrorMessage } from '../../../utils';
-import { roles, errorCodes } from '../../../constants';
+import { roles, errorCodes, categoryValues, categoryLabels } from '../../../constants';
 import formidable from 'formidable';
 
 const readFile = promisify(fs.readFile);
@@ -12,11 +13,25 @@ export default async function handler(req, res) {
   if (req.method === 'GET') {
     const { Opportunity, Issuer, User } = await getSqlClient();
     try {
+      // convert search string into category value so we can match it on the db
+      const searchCategory = categoryValues[(Object.entries(categoryLabels).find(([, label]) => label.toLowerCase() === (req.query.search || '').toLowerCase()) || [])[0]];
       const options = {
         where: {
-          authority: 1,
-          ...(!!req.query.authority && { authority: req.query.authority.split(',') }),
-          ...(!!req.query.issuer && { issuerId: req.query.issuer })
+          [Op.and]: [
+            { authority: req.query.authority ? req.query.authority.split(',') : 1 },
+            req.query.issuer ? { issuerId: req.query.issuer } : null,
+            req.query.search
+              ? {
+                  [Op.or]: [
+                    { title: { [Op.like]: `%${req.query.search}%` } },
+                    { addressCity: { [Op.like]: `%${req.query.search}%` } },
+                    { addressStreet: { [Op.like]: `%${req.query.search}%` } },
+                    searchCategory >= 0 ? { category: searchCategory } : null
+                  ]
+                }
+              : null,
+            req.query.region ? { region: req.query.region } : null
+          ]
         },
         limit: Number(req.query.limit || 100),
         offset: (Number(req.query.page - 1) * Number(req.query.limit || 100)) || 0,
@@ -124,6 +139,7 @@ export default async function handler(req, res) {
       return res.status(500).json(createApiErrorMessage(errorCodes.UNEXPECTED_ERROR));
     }
 
+    // TODO enforce required fields
     try {
       await Opportunity.create({
         beginDate: body.fields.startDate,
@@ -138,6 +154,7 @@ export default async function handler(req, res) {
         title: body.fields.title,
         expectations: body.fields.expectations,
         website: body.fields.website,
+        region: body.fields.region,
         addressCity: body.fields.city,
         ...(!!body.fields.number && { addressHousenumber: Number(body.fields.number) || 1 }),
         ...(!!body.fields.postal && { addressPostalcode: Number(body.fields.postal) || 1000 }),
