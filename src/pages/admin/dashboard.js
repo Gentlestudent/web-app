@@ -51,7 +51,7 @@ const Dashboard = () => {
         {`
           .status-div {
             display: flex;
-            grid-gap: 4px;
+            grid-gap: 0.5rem;
           }
 
           .status-div p {

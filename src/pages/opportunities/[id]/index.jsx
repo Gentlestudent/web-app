@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { routes, roles } from '../../../constants';
+import { routes, roles, categoryLabels, difficultyLabels } from '../../../constants';
 import { Heading, Button, LoadingSpinner } from '../../../components/UI';
 import { colors, spacers, breakpoints } from '../../../assets/styles/constants';
 import { Container } from '../../../components/layout/index';
@@ -8,7 +8,7 @@ import { useOpportunity, useAuth, useErrorNotifier } from '../../../hooks';
 import { createParticipation, updateParticipationStatus } from '../../../connector/participations';
 import { createAssertion } from '../../../connector/assertions';
 import Participations from '../../../components/opportunity/participations';
-import { hasRole, getBase64AsDataUrl, createNotification, getErrorResponse } from '../../../utils';
+import { hasRole, getBase64AsDataUrl, createNotification, getErrorResponse, getCategoryConstantName, getDifficultyConstantName } from '../../../utils';
 
 const Opportunity = () => {
   const router = useRouter();
@@ -97,6 +97,14 @@ const Opportunity = () => {
           <div className="detail__description">
             <div>
               {loadingOpportunity && <LoadingSpinner />}
+              <div className="info">
+                <Heading title="Domein:" level={2} />
+                <p>{categoryLabels[getCategoryConstantName(opportunity.category)] || '-'}</p>
+              </div>
+              <div className="info">
+                <Heading title="Niveau:" level={2} />
+                <p>{difficultyLabels[getDifficultyConstantName(opportunity.difficulty)] || '-'}</p>
+              </div>
               <Heading title="Beschrijving" level={2} />
               <p>{opportunity.longDescription || '-'}</p>
               <Heading title="Wat wordt er verwacht?" level={2} />
@@ -243,6 +251,15 @@ const Opportunity = () => {
           .info__label {
             width: 10rem;
             font-weight: bold;
+          }
+
+          .info {
+            display: flex;
+            grid-gap: 0.5rem;
+          }
+
+          .info p {
+            margin: 0;
           }
 
           @media (max-width: ${breakpoints.large}) {

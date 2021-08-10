@@ -3,21 +3,13 @@ import { promisify } from 'util';
 import path from 'path';
 import getSqlClient from '../../../sql/sqlClient';
 import { verifyToken } from '../../../utils/middleware';
-import { hasRole, createApiErrorMessage } from '../../../utils';
+import { hasRole, createApiErrorMessage, getCategoryConstantName } from '../../../utils';
 import { getPostmarkClient } from '../../../utils/postmark';
-import { roles, errorCodes, categoryValues, categoryLabels, routes } from '../../../constants';
+import { roles, errorCodes, categoryLabels, routes } from '../../../constants';
 import getEnvironmentVar from '../../../../environments';
 import { opportunityApproved } from '../../../emailTemplates';
 
 const readFileAsync = promisify(readFile);
-
-function getCategoryConstantName(category) {
-  try {
-    return Object.entries(categoryValues).find(([, value]) => value === category)[0];
-  } catch {
-    return category;
-  }
-}
 
 function getBadgeName(category) {
   return categoryLabels[getCategoryConstantName(category)] || category;

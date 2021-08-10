@@ -39,3 +39,5 @@ export { default as getBase64AsDataUrl } from './getBase64AsDataUrl';
 export { default as createApiErrorMessage } from './createApiErrorMessage';
 export { default as createNotification } from './createNotification';
 export { default as getErrorResponse } from './getErrorResponse';
+export { default as getCategoryConstantName } from './getCategoryConstantName';
+export { default as getDifficultyConstantName } from './getDifficultyConstantName';
