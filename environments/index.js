@@ -1,12 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const { promisify } = require('util');
 
-const readFile = promisify(fs.readFile);
 
 module.exports = (() => {
   const secrets = {};
-  const secretsDir = '/run/secrets';
 
   return async function getEnvironmentVar(name) {
     if (secrets[name]) {
@@ -14,7 +11,7 @@ module.exports = (() => {
     }
 
     try {
-      secrets[name] = process.env.NODE_ENV === 'development' ? (await import('./env.dev.js')).default[name] : await readFile(path.join(secretsDir, name), 'utf8');
+      secrets[name] = process.env.NODE_ENV === 'development' ? (await import('./env.dev.js')).default[name] : process.env[name];
       return getEnvironmentVar(name);
     } catch (error) {
       if (error.code === 'ENOENT') {
